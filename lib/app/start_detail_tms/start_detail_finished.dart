@@ -324,28 +324,6 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                                 ))
                                                         ],
                                                       ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Phụ phí",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                        ],
-                                                      )
                                                     ],
                                                   )),
                                             );
@@ -607,28 +585,6 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                           })
                                                         ],
                                                       ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Phụ phí",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                        ],
-                                                      )
                                                     ],
                                                   )),
                                             );
@@ -908,28 +864,6 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                           })
                                                         ],
                                                       ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Phụ phí",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                        ],
-                                                      )
                                                     ],
                                                   )),
                                             );
@@ -1233,30 +1167,6 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                               )),
                                                       ],
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                              Colors
-                                                                  .orangeAccent,
-                                                            ),
-                                                          ),
-                                                          onPressed: () {},
-                                                          child: const Text(
-                                                            "Phụ phí",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
                                                   ],
                                                 ),
                                               ),

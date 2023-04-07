@@ -89,9 +89,9 @@ class LoginController extends GetxController {
               color: Colors.red,
             ),
           ),
-          messageText: const Text(
-            "Nhập thiếu tài khoản hoặc mật khẩu !",
-            style: TextStyle(
+          messageText: Text(
+            "${e.response!.data} !",
+            style: const TextStyle(
               color: Colors.green,
             ),
           ),

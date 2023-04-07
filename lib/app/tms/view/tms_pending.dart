@@ -33,8 +33,8 @@ class TmsPending extends GetView<TmsPendingController> {
                                     20
                             ? ExpansionTile(
                                 initiallyExpanded: true,
-                                title: const Text(
-                                  '',
+                                title: Text(
+                                  '${controller.listOrder[i].maChuyen}',
                                   style: TextStyle(color: Colors.green),
                                 ),
                                 trailing: TextButton(
@@ -57,8 +57,7 @@ class TmsPending extends GetView<TmsPendingController> {
                                 ),
                                 children: <Widget>[
                                   ListTile(
-                                      title: Text(
-                                          '${controller.listOrder[i].maChuyen}'),
+                                      title: Text(''),
                                       trailing: SizedBox(
                                         width: 50,
                                         height: 30,

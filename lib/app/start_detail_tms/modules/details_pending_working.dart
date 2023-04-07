@@ -29,16 +29,6 @@ class DetailsPendingWorkingScreen
           },
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       Get.to(() => const CameraScreen());
-        //     },
-        //     icon: const Icon(
-        //       Icons.camera,
-        //     ),
-        //   ),
-        // ],
       ),
       body: GetBuilder<DetailsPendingWorkingController>(
         init: DetailsPendingWorkingController(),

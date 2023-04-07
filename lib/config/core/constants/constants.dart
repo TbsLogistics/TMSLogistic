@@ -19,5 +19,5 @@ class AppConstants {
 
   // Url
   // static const String urlBaseTMs = "https://api.tbslogistics.com.vn";
-  static const String urlBase = "http://192.168.0.254:8088";
+  static const String urlBase = "https://apitest.tbslogistics.com.vn";
 }

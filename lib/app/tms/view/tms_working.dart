@@ -25,8 +25,8 @@ class TmsWorking extends GetView<TmsWorkingController> {
                             "Chờ Vận Chuyển"
                         ? ExpansionTile(
                             initiallyExpanded: true,
-                            title: const Text(
-                              '',
+                            title: Text(
+                              '${controller.listOrder[i].maChuyen}',
                               style: TextStyle(color: Colors.green),
                             ),
                             trailing: TextButton(
@@ -49,8 +49,7 @@ class TmsWorking extends GetView<TmsWorkingController> {
                             ),
                             children: <Widget>[
                               ListTile(
-                                  title: Text(
-                                      '${controller.listOrder[i].maChuyen}'),
+                                  title: Text(''),
                                   trailing: SizedBox(
                                     width: 50,
                                     height: 30,

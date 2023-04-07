@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -94,12 +96,12 @@ class _CameraScreenState extends State<CameraScreen> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.orangeAccent,
                               ),
                             ),
                             hintText: "Nhập chú ý",
-                            contentPadding: EdgeInsets.only(
+                            contentPadding: const EdgeInsets.only(
                               left: 10,
                               right: 10,
                               top: 20,
@@ -168,12 +170,12 @@ class _CameraScreenState extends State<CameraScreen> {
                                   ),
                                 ),
                                 onPressed: () async {
-                                  final String filePath = '${imageFile!.path}';
+                                  final String filePath = imageFile!.path;
                                   final List<int> binaryData =
                                       await fileToBinary(filePath);
                                   // getCurrentLocation();
                                   print([
-                                    "data : $filePath",
+                                    "data : $imageFile",
                                     controller.noteController.text
                                   ]);
                                   controller.uploadImages(
@@ -189,6 +191,85 @@ class _CameraScreenState extends State<CameraScreen> {
                             ),
                           ],
                         ),
+                  const SizedBox(height: 15),
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    // color: Colors.amberAccent,
+                    child: Obx(
+                      () => ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, i) {
+                          //Chuyển đổi dạng base64 to image
+                          Uint8List byte = const Base64Decoder()
+                              .convert("${controller.image[i].image}");
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Get.defaultDialog(
+                                      backgroundColor: Colors.grey,
+                                      title: "Hình ${i + 1}",
+                                      content: Container(
+                                        // color: Colors.orangeAccent,
+                                        height: size.height * 0.6,
+                                        width: size.width,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: size.height * 0.4,
+                                              width: size.width,
+                                              color: Colors.orangeAccent,
+                                              child: Image.memory(
+                                                byte,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Expanded(
+                                              child: Text(
+                                                controller.image[i].note != null
+                                                    ? "${controller.image[i].note}"
+                                                    : "",
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 15),
+                                  height: 90,
+                                  width: 120,
+                                  color: Colors.orangeAccent,
+                                  child: Image.memory(
+                                    byte,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                controller.image[i].note != null
+                                    ? "${controller.image[i].note}"
+                                    : "",
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        itemCount: controller.image.length,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

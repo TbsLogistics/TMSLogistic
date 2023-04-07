@@ -1,4 +1,4 @@
-package com.tms.logistic.name
+package com.tbslogistic.tms.name
 
 import io.flutter.embedding.android.FlutterActivity
 

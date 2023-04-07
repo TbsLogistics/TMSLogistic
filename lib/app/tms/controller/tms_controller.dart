@@ -14,9 +14,9 @@ class TmsController extends GetxController
   late Response response;
 
   final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'Lệnh của tôi'),
-    const Tab(text: 'Lệnh pendinh'),
-    const Tab(text: 'Đã hoàn thành'),
+    const Tab(text: 'Lệnh chờ'),
+    const Tab(text: 'Lệnh thực hiện'),
+    const Tab(text: 'Lệnh hoàn thành'),
   ];
   late TabController controller;
 
@@ -48,7 +48,7 @@ class TmsController extends GetxController
     );
     if (response.statusCode == 200) {
       List<dynamic> data = response.data;
-      // print("listdata : $data");
+
       return data.map((e) => TmsOrdersModel.fromJson(e)).toList();
     }
     return response.data;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:collection/collection.dart";
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_data_for_place_model.dart';
@@ -38,6 +39,16 @@ class StartDetailFinishedController extends GetxController {
   RxList<ListDataForPlaceModel> listDataForGiveEmpty =
       <ListDataForPlaceModel>[].obs;
   RxList<ListDataForPlaceModel> listDataForReceiveEmpty =
+      <ListDataForPlaceModel>[].obs;
+
+  //Danh sach final
+  RxList<ListDataForPlaceModel> newListDataForReceive =
+      <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> newListDataForReceiveEmpty =
+      <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> newListDataForGive =
+      <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> newListDataForGiveEmpty =
       <ListDataForPlaceModel>[].obs;
 
   Rx<ListPlaceModel> placeModel = ListPlaceModel().obs;
@@ -101,91 +112,114 @@ class StartDetailFinishedController extends GetxController {
     );
 
     //Vòng for lọc vận đơn theo địa điểm
-    //++ Danh sách trả rỗng
+    //++ Danh sách trả rỗng---------------------------------------------------------------------
     for (var i = 0; i < placeModel.value.placeReceiveEmpty!.length; i++) {
+      var place = placeModel.value.placeReceiveEmpty![i];
       for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
         if (placeModel.value.placeReceiveEmpty![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemLayRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
           listReceiveEmpty.value.add(items);
-        }
-      }
-    }
-    for (var i = 0; i < placeModel.value.placeReceiveEmpty!.length; i++) {
-      for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
-        if (placeModel.value.placeReceiveEmpty![i] ==
-            listReceiveEmpty[j].diemLayRong) {
-          var place = placeModel.value.placeReceiveEmpty![i];
-          var getData = listOrder.value.getDataHandlingMobiles![j];
           listDataForReceiveEmpty.value.add(
-            ListDataForPlaceModel(place: "$place", getData: [getData]),
+            ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
       }
     }
-    //++ Danh sách lấy hàng
+    //Lọc địa điểm
+    var groupedReceiveEmpty =
+        listDataForReceiveEmpty.groupListsBy((element) => element.place);
+    // Lọc khóa
+    var keysReceiveEmpty = groupedReceiveEmpty.keys.toList();
+    //Chạy vòng for theo list keysReceiveEmpty
+    for (String? place in keysReceiveEmpty) {
+      //Gộp getDataMobiles theo Place
+      var dataReceiveEmpty =
+          groupedReceiveEmpty[place]?.map((e) => e.getData).toList();
+      //Bỏ dấu [] của các phần tử
+      var combineReceiveEmpty =
+          dataReceiveEmpty?.expand((element) => element!).toList();
+      //Thêm dữ liệu vào danh sách final
+      newListDataForReceiveEmpty.add(ListDataForPlaceModel(
+          place: place, getData: combineReceiveEmpty ?? []));
+    }
+
+    //++ Danh sách lấy hàng-------------------------------------------------------------------
     for (var i = 0; i < placeModel.value.placeReceive!.length; i++) {
+      var place = placeModel.value.placeReceive![i];
       for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
         if (placeModel.value.placeReceive![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemLayHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
           listReceive.value.add(items);
-        }
-      }
-    }
-    for (var i = 0; i < placeModel.value.placeReceive!.length; i++) {
-      for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
-        if (placeModel.value.placeReceive![i] == listReceive[j].diemLayHang) {
-          var place = placeModel.value.placeReceive![i];
-          var getData = listOrder.value.getDataHandlingMobiles![j];
           listDataForReceive.value.add(
-            ListDataForPlaceModel(place: "$place", getData: [getData]),
+            ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
       }
     }
-    //++ Danh sách trả hàng
+    //Lọc địa điểm
+    var groupedReceive =
+        listDataForReceive.groupListsBy((element) => element.place);
+    // Lọc khóa
+    var keysReceive = groupedReceive.keys.toList();
+    //Chạy vòng for theo list keysReceive
+    for (String? place in keysReceive) {
+      //Gộp getDataMobiles theo Place
+      var dataReceive = groupedReceive[place]?.map((e) => e.getData).toList();
+      //Bỏ dấu [] của các phần tử
+      var combineReceive = dataReceive?.expand((element) => element!).toList();
+      //Thêm dữ liệu vào danh sách final
+      newListDataForReceive.add(
+          ListDataForPlaceModel(place: place, getData: combineReceive ?? []));
+    }
+    //++ Danh sách trả hàng----------------------------------------------------------------------
     for (var i = 0; i < placeModel.value.placeGive!.length; i++) {
+      var place = placeModel.value.placeGive![i];
       for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
         if (placeModel.value.placeGive![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemTraHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
           listGive.value.add(items);
-        }
-      }
-    }
-    for (var i = 0; i < placeModel.value.placeGive!.length; i++) {
-      for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
-        if (placeModel.value.placeGive![i] == listGive[j].diemTraHang) {
-          var place = placeModel.value.placeGive![i];
-          var getData = listOrder.value.getDataHandlingMobiles![j];
           listDataForGive.value.add(
-            ListDataForPlaceModel(place: "$place", getData: [getData]),
+            ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
       }
     }
-    //++ Danh sách trả rỗng
+    var groupedGive = listDataForGive.groupListsBy((element) => element.place);
+    var keysGive = groupedGive.keys.toList();
+    for (String? place in keysGive) {
+      var dataGive = groupedGive[place]?.map((e) => e.getData).toList();
+      var combineGive = dataGive?.expand((element) => element!).toList();
+      newListDataForGive
+          .add(ListDataForPlaceModel(place: place, getData: combineGive ?? []));
+    }
+
+    //++ Danh sách trả rỗng-------------------------------------------------------------------------
     for (var i = 0; i < placeModel.value.placeGiveEmpty!.length; i++) {
+      var place = placeModel.value.placeGiveEmpty![i];
       for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
         if (placeModel.value.placeGiveEmpty![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemTraRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
           listGiveEmpty.value.add(items);
-        }
-      }
-    }
-    for (var i = 0; i < placeModel.value.placeGiveEmpty!.length; i++) {
-      for (var j = 0; j < listOrder.value.getDataHandlingMobiles!.length; j++) {
-        if (placeModel.value.placeGiveEmpty![i] ==
-            listGiveEmpty[j].diemTraRong) {
-          var place = placeModel.value.placeGiveEmpty![i];
-          var getData = listOrder.value.getDataHandlingMobiles![j];
           listDataForGiveEmpty.value.add(
-            ListDataForPlaceModel(place: "$place", getData: [getData]),
+            ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
       }
+    }
+    var groupedGiveEmpty =
+        listDataForGiveEmpty.groupListsBy((element) => element.place);
+    var keysGiveEmpty = groupedGiveEmpty.keys.toList();
+    for (String? place in keysGiveEmpty) {
+      var dataGiveEmpty =
+          groupedGiveEmpty[place]?.map((e) => e.getData).toList();
+      var combineGiveEmpty =
+          dataGiveEmpty?.expand((element) => element!).toList();
+      newListDataForGiveEmpty.add(
+          ListDataForPlaceModel(place: place, getData: combineGiveEmpty ?? []));
     }
 
     super.onInit();

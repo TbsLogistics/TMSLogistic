@@ -4,19 +4,46 @@ import 'package:dio/dio.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_data_for_place_model.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
 
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class CancelPendingController extends GetxController {
   var handlingId = 0.obs;
+  RxString idList = "".obs;
+  var firstIndex = 0.obs;
+  var secondsIndex = 0.obs;
+
+  RxList<ListDataForPlaceModel> listDataForReceiveEmpty =
+      <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> listDataForReceive =
+      <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> listDataForGive = <ListDataForPlaceModel>[].obs;
+  RxList<ListDataForPlaceModel> listDataForGiveEmpty =
+      <ListDataForPlaceModel>[].obs;
+
   TextEditingController cancelController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
   void onInit() {
     formKey;
-    var idHanlding = Get.arguments;
+    var idHanlding = Get.arguments[0];
+    var id = Get.arguments[1];
+    var first = Get.arguments[2];
+    var seconds = Get.arguments[3];
+    var dataForm = Get.arguments[4];
+    print(dataForm[1]);
+    var forReceiveEmpty = dataForm[0];
+    var forReceive = dataForm[1];
+    var forGive = dataForm[2];
+    var forGiveEmpty = dataForm[3];
+    listDataForReceiveEmpty.value = forReceiveEmpty;
+    listDataForReceive.value = forReceive;
+    listDataForGive.value = forGive;
+    listDataForGiveEmpty.value = forGiveEmpty;
     handlingId.value = idHanlding;
+    idList.value = id;
     super.onInit();
   }
 
@@ -52,6 +79,85 @@ class CancelPendingController extends GetxController {
             ),
           ),
         );
+        switch (idList.value) {
+          case "lr":
+            switch (listDataForReceiveEmpty[firstIndex.value]
+                .getData![secondsIndex.value]
+                .maTrangThai) {
+              case 17:
+                for (var i = 0;
+                    i <
+                        listDataForReceiveEmpty[firstIndex.value]
+                            .getData!
+                            .length;
+                    i++) {
+                  listDataForReceiveEmpty[firstIndex.value]
+                      .getData![i]
+                      .maTrangThai = 37;
+                  print(
+                      "ma trang thai$i : ${listDataForReceiveEmpty[firstIndex.value].getData![i].maTrangThai}");
+                }
+                break;
+
+              default:
+            }
+            break;
+          case "lh":
+            switch (listDataForReceive[firstIndex.value]
+                .getData![secondsIndex.value]
+                .maTrangThai) {
+              case 37:
+                for (var i = 0;
+                    i < listDataForReceive[firstIndex.value].getData!.length;
+                    i++) {
+                  listDataForReceive[firstIndex.value].getData![i].maTrangThai =
+                      18;
+                  print(
+                      "ma trang thai$i : ${listDataForReceive[firstIndex.value].getData![i].maTrangThai}");
+                }
+                break;
+              case 40:
+                for (var i = 0;
+                    i < listDataForReceive[firstIndex.value].getData!.length;
+                    i++) {
+                  listDataForReceive[firstIndex.value].getData![i].maTrangThai =
+                      18;
+                  print(
+                      "ma trang thai$i : ${listDataForReceive[firstIndex.value].getData![i].maTrangThai}");
+                }
+                break;
+
+              default:
+            }
+            break;
+          case "th":
+            switch (listDataForGive[firstIndex.value]
+                .getData![secondsIndex.value]
+                .maTrangThai) {
+              case 18:
+                for (var i = 0;
+                    i < listDataForGive[firstIndex.value].getData!.length;
+                    i++) {
+                  listDataForGive[firstIndex.value].getData![i].maTrangThai =
+                      36;
+                }
+                break;
+              default:
+            }
+            break;
+          case "tr":
+            switch (listDataForGiveEmpty[firstIndex.value]
+                .getData![secondsIndex.value]
+                .maTrangThai) {
+              case 18:
+                listDataForGiveEmpty[firstIndex.value]
+                    .getData![secondsIndex.value]
+                    .maTrangThai = 36;
+                break;
+              default:
+            }
+            break;
+        }
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {

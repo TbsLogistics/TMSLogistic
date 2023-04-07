@@ -40,7 +40,7 @@ class TmsFinishedController extends GetxController {
     try {
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        print("data $data");
+        // print("data $data");
         listOrder.value = data.map((e) => TmsOrdersModel.fromJson(e)).toList();
       }
     } catch (e) {

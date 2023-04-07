@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_data_for_place_model.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/list_subfee_model.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/sur_changes_model.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
-import 'package:tbs_logistics_tms/config/model/tms_orders_model.dart';
+
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class SurChangesController extends GetxController {
@@ -20,7 +21,9 @@ class SurChangesController extends GetxController {
   var priceText = "".obs;
   var ghichu = "".obs;
 
-  Rx<GetDataHandlingMobiles> getdataMobiles = GetDataHandlingMobiles().obs;
+  var maChuyen = "".obs;
+
+  Rx<ListDataForPlaceModel> listDataForPlace = ListDataForPlaceModel().obs;
   var idPlaced = 0.obs;
 
   final formKey = GlobalKey<FormState>();
@@ -29,10 +32,12 @@ class SurChangesController extends GetxController {
 
   @override
   void onInit() {
-    var getdataMobile = Get.arguments as GetDataHandlingMobiles;
-
-    getdataMobiles.value = getdataMobile;
-
+    var dataForPlace = Get.arguments[0] as ListDataForPlaceModel;
+    var idChuyen = Get.arguments[1];
+    var maPlace = Get.arguments[2];
+    maChuyen.value = idChuyen;
+    listDataForPlace.value = dataForPlace;
+    idPlaced.value = maPlace;
     formKey;
     super.onInit();
   }
@@ -49,16 +54,15 @@ class SurChangesController extends GetxController {
   }) {
     listSur.add(
       SurChangesModel(
-        idTcommand: getdataMobiles.value.handlingId,
-        transportId: "${getdataMobiles.value.maVanDon}",
-        placeId: getdataMobiles.value.maDiemLayRong,
+        idTcommand: 0,
+        transportId: "",
+        placeId: idPlaced.value,
         sfId: sfId,
         sfName: sfName,
         finalPrice: price,
         note: note,
       ),
     );
-    print("listSur1 : $listSur");
   }
 
   void postData(List<SurChangesModel> listSur) async {
@@ -68,8 +72,9 @@ class SurChangesController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    print("data2 : $listSur");
-    var url = "${AppConstants.urlBase}/api/Mobile/CreateSFeeByTCommand";
+
+    var url =
+        "${AppConstants.urlBase}/api/Mobile/CreateSFeeByTCommand?maChuyen=${maChuyen.value}";
     try {
       response = await dio.post(
         url,
@@ -93,7 +98,7 @@ class SurChangesController extends GetxController {
           ),
           messageText: Text(
             "${data["message"]}",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.green,
             ),
           ),
@@ -116,13 +121,24 @@ class SurChangesController extends GetxController {
           ),
           messageText: Text(
             "${e.response!.data["message"]}",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.green,
             ),
           ),
         );
       }
     }
+  }
+
+  void listSubFeeIncurred() async {
+    var dio = Dio();
+    Response response;
+    var tokens = await SharePerApi().getToken();
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $tokens"
+    };
+    var url =
+        "${AppConstants.urlBase}/api/Mobile/GetListSubfeeIncurred?handlingId=335";
   }
 
   Future<List<ListSubFeeModel>> getSubFee(query) async {
