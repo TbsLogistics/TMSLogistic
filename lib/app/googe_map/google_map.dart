@@ -1,14 +1,20 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MyApp extends StatefulWidget {
+/// This is a stateful widget for displaying a Google Map with geolocation functionality.
+class GoogleMapGeolocator extends StatefulWidget {
+  const GoogleMapGeolocator({super.key});
+
   // location
   @override
-  _MyAppState createState() => _MyAppState();
+  // ignore: library_private_types_in_public_api
+  _GoogleMapGeolocatorState createState() => _GoogleMapGeolocatorState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _GoogleMapGeolocatorState extends State<GoogleMapGeolocator> {
   var locationMessage = '';
   late String latitude;
   late String longitude;
@@ -74,8 +80,9 @@ class _MyAppState extends State<MyApp> {
 
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
-    } else
+    } else {
       throw ("Couldn't open google maps");
+    }
   }
 
   @override
@@ -93,15 +100,13 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.location_on,
                 size: 45.0,
                 color: Colors.white,
               ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Text(
+              const SizedBox(height: 20.0),
+              const Text(
                 "Get User Location",
                 style: TextStyle(
                   fontSize: 25.0,
@@ -109,16 +114,14 @@ class _MyAppState extends State<MyApp> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(
-                height: 30.0,
-              ),
+              const SizedBox(height: 30.0),
               Text(
                 locationMessage,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 05.0,
               ),
 
@@ -128,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () async {
                   getCurrentLocation();
                 },
-                child: Text("Get User Location"),
+                child: const Text("Get User Location"),
               ),
 
               TextButton(
@@ -136,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   googleMap();
                 },
-                child: Text("Open GoogleMap"),
+                child: const Text("Open GoogleMap"),
               ),
             ],
           ),

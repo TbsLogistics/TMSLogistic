@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -84,7 +86,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 60,
                         width: size.width * 0.8,
                         // padding: EdgeInsets.symmetric(horizontal: 15),
@@ -119,7 +121,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 45,
                               width: 150,
                               child: ElevatedButton(
@@ -174,10 +176,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                   final List<int> binaryData =
                                       await fileToBinary(filePath);
                                   // getCurrentLocation();
-                                  print([
-                                    "data : $imageFile",
-                                    controller.noteController.text
-                                  ]);
+
                                   controller.uploadImages(
                                     file: filePath,
                                     note: controller.noteController.text,
@@ -211,7 +210,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                   Get.defaultDialog(
                                       backgroundColor: Colors.grey,
                                       title: "Hình ${i + 1}",
-                                      content: Container(
+                                      content: SizedBox(
                                         // color: Colors.orangeAccent,
                                         height: size.height * 0.6,
                                         width: size.width,
@@ -338,7 +337,6 @@ class _CameraScreenState extends State<CameraScreen> {
 
     setState(() {
       locationMessage = "Latitude: $lat and Longitude: $long";
-      print(locationMessage);
     });
   }
 }

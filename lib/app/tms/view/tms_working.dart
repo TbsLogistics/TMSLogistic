@@ -15,7 +15,6 @@ class TmsWorking extends GetView<TmsWorkingController> {
         children: [
           Obx(
             () {
-              print(controller.listOrder.length);
               return Expanded(
                 child: ListView.builder(
                   itemCount: controller.listOrder.length,
@@ -27,7 +26,7 @@ class TmsWorking extends GetView<TmsWorkingController> {
                             initiallyExpanded: true,
                             title: Text(
                               '${controller.listOrder[i].maChuyen}',
-                              style: TextStyle(color: Colors.green),
+                              style: const TextStyle(color: Colors.green),
                             ),
                             trailing: TextButton(
                               style: TextButton.styleFrom(
@@ -49,7 +48,7 @@ class TmsWorking extends GetView<TmsWorkingController> {
                             ),
                             children: <Widget>[
                               ListTile(
-                                  title: Text(''),
+                                  title: const Text(''),
                                   trailing: SizedBox(
                                     width: 50,
                                     height: 30,

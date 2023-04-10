@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
 import 'package:tbs_logistics_tms/config/model/tms_orders_model.dart';
-import 'package:tbs_logistics_tms/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class DetailsPendingWorkingController extends GetxController {
@@ -113,8 +112,6 @@ class DetailsPendingWorkingController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print("oke");
-
         Get.back();
 
         Get.snackbar("Thông báo", "Bắt đầu chuyến đi thành công !",
@@ -124,6 +121,7 @@ class DetailsPendingWorkingController extends GetxController {
                 color: Colors.green,
               ),
             ));
+        // ignore: unused_local_variable
         var data = response.data;
       }
     } on DioError catch (e) {

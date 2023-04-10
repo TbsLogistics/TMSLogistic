@@ -131,31 +131,31 @@ class GetDataHandlingMobiles {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['handlingId'] = this.handlingId;
-    data['thuTuGiaoHang'] = this.thuTuGiaoHang;
-    data['bookingNo'] = this.bookingNo;
-    data['maVanDon'] = this.maVanDon;
-    data['loaiVanDon'] = this.loaiVanDon;
-    data['diemLayHang'] = this.diemLayHang;
-    data['diemTraHang'] = this.diemTraHang;
-    data['diemTraRong'] = this.diemTraRong;
-    data['diemLayRong'] = this.diemLayRong;
-    data['maDiemLayHang'] = this.maDiemLayHang;
-    data['maDiemTraHang'] = this.maDiemTraHang;
-    data['maDiemTraRong'] = this.maDiemTraRong;
-    data['maDiemLayRong'] = this.maDiemLayRong;
-    data['hangTau'] = this.hangTau;
-    data['ghiChu'] = this.ghiChu;
-    data['contNo'] = this.contNo;
-    data['khoiLuong'] = this.khoiLuong;
-    data['theTich'] = this.theTich;
-    data['soKien'] = this.soKien;
-    data['trangThai'] = this.trangThai;
-    data['maTrangThai'] = this.maTrangThai;
-    data['thoiGianLayHang'] = this.thoiGianLayHang;
-    data['thoiGianTraHang'] = this.thoiGianTraHang;
-    data['thoiGianCoMat'] = this.thoiGianCoMat;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['handlingId'] = handlingId;
+    data['thuTuGiaoHang'] = thuTuGiaoHang;
+    data['bookingNo'] = bookingNo;
+    data['maVanDon'] = maVanDon;
+    data['loaiVanDon'] = loaiVanDon;
+    data['diemLayHang'] = diemLayHang;
+    data['diemTraHang'] = diemTraHang;
+    data['diemTraRong'] = diemTraRong;
+    data['diemLayRong'] = diemLayRong;
+    data['maDiemLayHang'] = maDiemLayHang;
+    data['maDiemTraHang'] = maDiemTraHang;
+    data['maDiemTraRong'] = maDiemTraRong;
+    data['maDiemLayRong'] = maDiemLayRong;
+    data['hangTau'] = hangTau;
+    data['ghiChu'] = ghiChu;
+    data['contNo'] = contNo;
+    data['khoiLuong'] = khoiLuong;
+    data['theTich'] = theTich;
+    data['soKien'] = soKien;
+    data['trangThai'] = trangThai;
+    data['maTrangThai'] = maTrangThai;
+    data['thoiGianLayHang'] = thoiGianLayHang;
+    data['thoiGianTraHang'] = thoiGianTraHang;
+    data['thoiGianCoMat'] = thoiGianCoMat;
     return data;
   }
 }

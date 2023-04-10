@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this, unnecessary_brace_in_string_interps
+
 class ListSubFeeModel {
   int? subFeeId;
   String? subFeeName;
@@ -38,5 +40,6 @@ class ListSubFeeModel {
     return this.subFeeName == model.subFeeName;
   }
 
+  @override
   String toString() => subFeeName!;
 }

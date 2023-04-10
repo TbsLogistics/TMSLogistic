@@ -51,6 +51,7 @@ class LoginController extends GetxController {
         );
         Map<String, dynamic> decodedToken = JwtDecoder.decode(data);
 
+        // ignore: unused_local_variable
         var idTX = await prefs.setString(
           AppConstants.KEY_ID_TX,
           decodedToken["UserName"],

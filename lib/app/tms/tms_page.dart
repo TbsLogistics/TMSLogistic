@@ -87,7 +87,7 @@ class TmsPage extends GetView<TmsController> {
                   Expanded(
                     child: TabBarView(
                       controller: controller.controller,
-                      children: [
+                      children: const [
                         TmsWorking(),
                         TmsPending(),
                         TmsFinished(),

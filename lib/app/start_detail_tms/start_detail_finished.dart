@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_unnecessary_containers
+
 import "dart:math" as math;
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/controller/start_detail_finished_controller.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
-import 'package:tbs_logistics_tms/config/routes/pages.dart';
 
 class FinishedDetailTms extends GetView<StartDetailFinishedController> {
   const FinishedDetailTms({super.key});
@@ -43,16 +44,16 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          controller.listReceiveEmpty.value.isNotEmpty
+                          controller.listReceiveEmpty.isNotEmpty
                               ? _buildReciveEmpty()
                               : Container(),
-                          controller.listReceive.value.isNotEmpty
+                          controller.listReceive.isNotEmpty
                               ? _buildRecive()
                               : Container(),
-                          controller.listGive.value.isNotEmpty
+                          controller.listGive.isNotEmpty
                               ? _buildGive()
                               : Container(),
-                          controller.listGiveEmpty.value.isNotEmpty
+                          controller.listGiveEmpty.isNotEmpty
                               ? _buildGiveEmpty()
                               : Container(),
                         ],
@@ -532,7 +533,7 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                                               TextStyle(color: Colors.white),
                                                                         ),
                                                                       )
-                                                                : Center(
+                                                                : const Center(
                                                                     child:
                                                                         CircularProgressIndicator(
                                                                       color: Colors
@@ -662,15 +663,14 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                           //List điểm lấy rỗng
                           child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  controller.listDataForGive.value.length,
+                              itemCount: controller.listDataForGive.length,
                               itemBuilder: (ctx, i) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 5),
                                   height: (180 *
-                                      double.parse(controller.listDataForGive
-                                          .value[i].getData!.length
+                                      double.parse(controller
+                                          .listDataForGive[i].getData!.length
                                           .toString())),
                                   color: Colors.white,
                                   child: Column(
@@ -680,8 +680,8 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                             MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            controller.listDataForGive.value[i]
-                                                .place!,
+                                            controller
+                                                .listDataForGive[i].place!,
                                             style: const TextStyle(
                                               color: Colors.orangeAccent,
                                               fontSize: 14,
@@ -941,16 +941,14 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                           //List điểm lấy rỗng
                           child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  controller.listDataForGiveEmpty.value.length,
+                              itemCount: controller.listDataForGiveEmpty.length,
                               itemBuilder: (ctx, i) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 5),
                                   height: (180 *
                                       double.parse(controller
-                                          .listDataForGiveEmpty
-                                          .value[i]
+                                          .listDataForGiveEmpty[i]
                                           .getData!
                                           .length
                                           .toString())),
@@ -962,8 +960,8 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                             MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            controller.listDataForGiveEmpty
-                                                .value[i].place!,
+                                            controller
+                                                .listDataForGiveEmpty[i].place!,
                                             style: const TextStyle(
                                               color: Colors.orangeAccent,
                                               fontSize: 14,

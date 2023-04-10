@@ -45,14 +45,36 @@ class NotePendingController extends GetxController {
           ),
           messageText: Text(
             "${data["message"]}",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.green,
             ),
           ),
         );
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode]);
+      if (e.response!.statusCode == 400) {
+        getSnack(message: e.response!.data["message"]);
+      }
     }
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

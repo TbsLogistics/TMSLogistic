@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import "package:collection/collection.dart";
 import 'package:get/get.dart';
@@ -69,7 +71,7 @@ class StartDetailFinishedController extends GetxController {
           listOrder.value.getDataHandlingMobiles![i].diemLayRong != "") {
         String idPlaceReceiveEmpted =
             listOrder.value.getDataHandlingMobiles![i].diemLayRong!;
-        idPlaceReceiveEmpty.value.add(idPlaceReceiveEmpted);
+        idPlaceReceiveEmpty.add(idPlaceReceiveEmpted);
       }
     }
     // idSameReceive
@@ -96,7 +98,7 @@ class StartDetailFinishedController extends GetxController {
           listOrder.value.getDataHandlingMobiles![i].diemTraRong != "") {
         String idPlaceGiveEmpted =
             listOrder.value.getDataHandlingMobiles![i].diemTraRong!;
-        idPlaceGiveEmpty.value.add(idPlaceGiveEmpted);
+        idPlaceGiveEmpty.add(idPlaceGiveEmpted);
       }
     }
     idSameReceiveEmpty.value = idPlaceReceiveEmpty.toSet().toList();
@@ -105,10 +107,10 @@ class StartDetailFinishedController extends GetxController {
     idSameGiveEmpty.value = idPlaceGiveEmpty.toSet().toList();
 
     placeModel.value = ListPlaceModel(
-      placeReceiveEmpty: idSameReceiveEmpty.value,
-      placeReceive: idSameReceive.value,
-      placeGive: idSameGive.value,
-      placeGiveEmpty: idSameGiveEmpty.value,
+      placeReceiveEmpty: idSameReceiveEmpty,
+      placeReceive: idSameReceive,
+      placeGive: idSameGive,
+      placeGiveEmpty: idSameGiveEmpty,
     );
 
     //Vòng for lọc vận đơn theo địa điểm
@@ -119,8 +121,8 @@ class StartDetailFinishedController extends GetxController {
         if (placeModel.value.placeReceiveEmpty![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemLayRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
-          listReceiveEmpty.value.add(items);
-          listDataForReceiveEmpty.value.add(
+          listReceiveEmpty.add(items);
+          listDataForReceiveEmpty.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -151,8 +153,8 @@ class StartDetailFinishedController extends GetxController {
         if (placeModel.value.placeReceive![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemLayHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
-          listReceive.value.add(items);
-          listDataForReceive.value.add(
+          listReceive.add(items);
+          listDataForReceive.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -180,8 +182,8 @@ class StartDetailFinishedController extends GetxController {
         if (placeModel.value.placeGive![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemTraHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
-          listGive.value.add(items);
-          listDataForGive.value.add(
+          listGive.add(items);
+          listDataForGive.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -203,8 +205,8 @@ class StartDetailFinishedController extends GetxController {
         if (placeModel.value.placeGiveEmpty![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemTraRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
-          listGiveEmpty.value.add(items);
-          listDataForGiveEmpty.value.add(
+          listGiveEmpty.add(items);
+          listDataForGiveEmpty.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }

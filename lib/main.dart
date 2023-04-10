@@ -43,3 +43,23 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+
+void getSnack({required String message}) {
+  Get.snackbar(
+    "",
+    "",
+    backgroundColor: Colors.white,
+    titleText: const Text(
+      "Thông báo",
+      style: TextStyle(
+        color: Colors.red,
+      ),
+    ),
+    messageText: Text(
+      message,
+      style: const TextStyle(
+        color: Colors.green,
+      ),
+    ),
+  );
+}

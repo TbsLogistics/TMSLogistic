@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'dart:math' as math;
 import 'package:expandable/expandable.dart';
 
@@ -74,13 +76,15 @@ class DetailsPendingWorkingScreen
                                               hasIcon: false,
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Text("Đơn nhận",
-                                                style: TextStyle(
-                                                  color: Color(0xffE18229),
-                                                  fontSize: 18,
-                                                  // fontWeight: FontWeight.bold,
-                                                )),
+                                          const Expanded(
+                                            child: Text(
+                                              "Đơn nhận",
+                                              style: TextStyle(
+                                                color: Color(0xffE18229),
+                                                fontSize: 18,
+                                                // fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),

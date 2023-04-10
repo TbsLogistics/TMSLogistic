@@ -34,7 +34,6 @@ class CameraController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    print(await MultipartFile.fromFile(file, filename: 'upload.txt'));
     var url = "${AppConstants.urlBase}/api/Mobile/UploadImage";
     final formData = FormData.fromMap({
       'note': note,
@@ -56,7 +55,9 @@ class CameraController extends GetxController {
         getSnack(message: response.data["message"]);
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.data]);
+      if (e.response!.statusCode == 400) {
+        getSnack(message: e.response!.data["message"]);
+      }
     }
   }
 
@@ -97,8 +98,8 @@ class CameraController extends GetxController {
     try {
       response = await dio.get(url, options: Options(headers: headers));
       if (response.statusCode == 200) {
+        // ignore: unused_local_variable
         var data = response.data;
-        print("images: $data");
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
@@ -125,6 +126,5 @@ class CameraController extends GetxController {
         ),
       ),
     );
-    ;
   }
 }

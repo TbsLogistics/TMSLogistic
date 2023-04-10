@@ -16,7 +16,7 @@ abstract class AppPages {
   static final pages = [
     GetPage(
       name: Routes.LOGIN_PAGE,
-      page: () => LoginScreen(),
+      page: () => const LoginScreen(),
     ),
     GetPage(
       name: Routes.SPLASH,
@@ -25,42 +25,42 @@ abstract class AppPages {
     //TMS_PAGE
     GetPage(
       name: Routes.TMS_PAGE,
-      page: () => TmsPage(),
+      page: () => const TmsPage(),
     ),
     GetPage(
       name: Routes.START_DETAIL_TMS,
-      page: () => StartDetailTms(),
+      page: () => const StartDetailTms(),
     ),
     GetPage(
       name: Routes.PENDING_DETAIL_TMS,
-      page: () => PendingDetailTms(),
+      page: () => const PendingDetailTms(),
     ),
     GetPage(
       name: Routes.FINISHED_DETAIL_TMS,
-      page: () => FinishedDetailTms(),
+      page: () => const FinishedDetailTms(),
     ),
     //PENDING
     GetPage(
       name: Routes.DETAILS_PENDING_WORKING_SCREEN,
-      page: () => DetailsPendingWorkingScreen(),
+      page: () => const DetailsPendingWorkingScreen(),
     ),
     GetPage(
       name: Routes.NOTE_PENDING_SCREEN,
-      page: () => NotePendingScreen(),
+      page: () => const NotePendingScreen(),
     ),
     GetPage(
       name: Routes.CANCEL_PENDING_SCREEN,
-      page: () => CancelPendingScreen(),
+      page: () => const CancelPendingScreen(),
     ),
     //CAMERA
     GetPage(
       name: Routes.CAMERA,
-      page: () => CameraScreen(),
+      page: () => const CameraScreen(),
     ),
     //SurChange
     GetPage(
       name: Routes.SUR_CHANGE_SCREEN,
-      page: () => SurChangesScreen(),
+      page: () => const SurChangesScreen(),
     ),
   ];
 }

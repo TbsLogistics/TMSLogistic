@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -33,7 +35,7 @@ class CancelPendingController extends GetxController {
     var first = Get.arguments[2];
     var seconds = Get.arguments[3];
     var dataForm = Get.arguments[4];
-    print(dataForm[1]);
+
     var forReceiveEmpty = dataForm[0];
     var forReceive = dataForm[1];
     var forGive = dataForm[2];
@@ -94,8 +96,6 @@ class CancelPendingController extends GetxController {
                   listDataForReceiveEmpty[firstIndex.value]
                       .getData![i]
                       .maTrangThai = 37;
-                  print(
-                      "ma trang thai$i : ${listDataForReceiveEmpty[firstIndex.value].getData![i].maTrangThai}");
                 }
                 break;
 
@@ -112,8 +112,6 @@ class CancelPendingController extends GetxController {
                     i++) {
                   listDataForReceive[firstIndex.value].getData![i].maTrangThai =
                       18;
-                  print(
-                      "ma trang thai$i : ${listDataForReceive[firstIndex.value].getData![i].maTrangThai}");
                 }
                 break;
               case 40:
@@ -122,8 +120,6 @@ class CancelPendingController extends GetxController {
                     i++) {
                   listDataForReceive[firstIndex.value].getData![i].maTrangThai =
                       18;
-                  print(
-                      "ma trang thai$i : ${listDataForReceive[firstIndex.value].getData![i].maTrangThai}");
                 }
                 break;
 

@@ -1,10 +1,11 @@
 // import 'package:dropdown_search/dropdown_search.dart';
+// ignore_for_file: avoid_init_to_null, unused_local_variable, unused_element
+
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/surcharges/controller/surchanges_controller.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/list_subfee_model.dart';
-import 'package:tbs_logistics_tms/app/surcharges/model/sur_changes_model.dart';
 
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
 
@@ -47,7 +48,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
               child: Form(
                 key: controller.formKey,
                 child: SingleChildScrollView(
-                  child: Container(
+                  child: SizedBox(
                     height: 200,
                     // width: 350,
                     child: Column(
@@ -142,7 +143,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                 return Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       height: 30,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -172,7 +173,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 45,
                     width: 200,
                     child: ElevatedButton(
@@ -190,7 +191,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                             sfName: controller.subFee.value,
                             note: controller.noteController.text,
                           );
-                          controller.postData(controller.listSur.value);
+                          controller.postData(controller.listSur);
                           controller.listSur.value = [];
                           controller.itemList.value = [];
                           controller.priceController.clear();

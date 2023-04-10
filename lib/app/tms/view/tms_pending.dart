@@ -17,7 +17,6 @@ class TmsPending extends GetView<TmsPendingController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Obx(() {
-            print(controller.listOrder);
             return Expanded(
               child: controller.isLoad.value
                   ? ListView.builder(
@@ -35,7 +34,7 @@ class TmsPending extends GetView<TmsPendingController> {
                                 initiallyExpanded: true,
                                 title: Text(
                                   '${controller.listOrder[i].maChuyen}',
-                                  style: TextStyle(color: Colors.green),
+                                  style: const TextStyle(color: Colors.green),
                                 ),
                                 trailing: TextButton(
                                   style: TextButton.styleFrom(
@@ -57,7 +56,7 @@ class TmsPending extends GetView<TmsPendingController> {
                                 ),
                                 children: <Widget>[
                                   ListTile(
-                                      title: Text(''),
+                                      title: const Text(''),
                                       trailing: SizedBox(
                                         width: 50,
                                         height: 30,
@@ -80,7 +79,7 @@ class TmsPending extends GetView<TmsPendingController> {
                             : Container();
                       },
                     )
-                  : Center(
+                  : const Center(
                       child: CircularProgressIndicator(
                         color: Colors.orangeAccent,
                       ),

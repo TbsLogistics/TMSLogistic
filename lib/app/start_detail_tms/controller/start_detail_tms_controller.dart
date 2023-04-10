@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -74,23 +76,7 @@ class StartDetailTmsController extends GetxController {
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
         if (e.response!.data["message"] == "Vui lòng cập nhật ContNo") {
-          Get.snackbar(
-            "",
-            "",
-            backgroundColor: Colors.white,
-            titleText: const Text(
-              "Thông báo",
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
-            messageText: Text(
-              "${e.response!.data["messag"]} !",
-              style: const TextStyle(
-                color: Colors.green,
-              ),
-            ),
-          );
+          getSnack(message: e.response!.data["message"]);
         } else {
           Get.defaultDialog(
             title: "Thông báo",
@@ -203,5 +189,25 @@ class StartDetailTmsController extends GetxController {
     } catch (e) {
       rethrow;
     }
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

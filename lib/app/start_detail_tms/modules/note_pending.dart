@@ -30,7 +30,7 @@ class NotePendingScreen extends GetView<NotePendingController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.words,
@@ -39,12 +39,12 @@ class NotePendingScreen extends GetView<NotePendingController> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.orangeAccent,
                     ),
                   ),
                   hintText: "Nhập chú ý",
-                  contentPadding: EdgeInsets.only(
+                  contentPadding: const EdgeInsets.only(
                     left: 10,
                     right: 10,
                     top: 20,
