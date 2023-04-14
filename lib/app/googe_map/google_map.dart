@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// This is a stateful widget for displaying a Google Map with geolocation functionality.
@@ -54,11 +55,14 @@ class _GoogleMapGeolocatorState extends State<GoogleMapGeolocator> {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      // return Future.error(
+      //     'Location permissions are permanently denied, we cannot request permissions.');
+      return getSnack(
+          message:
+              'Location permissions are permanently denied, we cannot request permissions.');
     }
     var position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.reduced,
+      desiredAccuracy: LocationAccuracy.high,
     );
     var lat = position.latitude;
     var long = position.longitude;
@@ -95,6 +99,15 @@ class _GoogleMapGeolocatorState extends State<GoogleMapGeolocator> {
       ),
       home: Scaffold(
         backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: const Text("Google Map"),
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -143,6 +156,26 @@ class _GoogleMapGeolocatorState extends State<GoogleMapGeolocator> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
         ),
       ),
     );

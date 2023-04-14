@@ -106,7 +106,7 @@ class DetailsPendingWorkingScreen
                                             children: [
                                               Text(
                                                 "${controller.handingMobiles.value.maVanDon}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 16,
                                                 ),
@@ -131,7 +131,7 @@ class DetailsPendingWorkingScreen
                                                           .handlingId,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Ghi chú",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -161,15 +161,13 @@ class DetailsPendingWorkingScreen
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    print(controller
-                                                        .handingMobiles.value);
                                                     Get.toNamed(
                                                       Routes.CAMERA,
                                                       arguments: controller
                                                           .handingMobiles.value,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Chụp chứng từ",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -197,7 +195,7 @@ class DetailsPendingWorkingScreen
                                                           .handlingId,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Hủy nhận hàng",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -229,7 +227,7 @@ class DetailsPendingWorkingScreen
                                                                 .toString(),
                                                           );
                                                         },
-                                                        child: Text(
+                                                        child: const Text(
                                                           "Hoàn thành",
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -257,7 +255,7 @@ class DetailsPendingWorkingScreen
                                                                 .idChuyen.value,
                                                           );
                                                         },
-                                                        child: Text(
+                                                        child: const Text(
                                                           "Hoàn thành",
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -312,7 +310,7 @@ class DetailsPendingWorkingScreen
                                               hasIcon: false,
                                             ),
                                           ),
-                                          Expanded(
+                                          const Expanded(
                                             child: Text("Đơn giao",
                                                 style: TextStyle(
                                                   color: Color(0xffE18229),
@@ -340,7 +338,7 @@ class DetailsPendingWorkingScreen
                                             children: [
                                               Text(
                                                 "${controller.handingMobiles.value.maVanDon}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 16,
                                                 ),
@@ -356,10 +354,6 @@ class DetailsPendingWorkingScreen
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    print(controller
-                                                        .handingMobiles
-                                                        .value
-                                                        .handlingId);
                                                     Get.toNamed(
                                                       Routes
                                                           .NOTE_PENDING_SCREEN,
@@ -369,7 +363,7 @@ class DetailsPendingWorkingScreen
                                                           .handlingId,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Ghi chú",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -399,19 +393,13 @@ class DetailsPendingWorkingScreen
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    print([
-                                                      controller
-                                                          .handingMobiles.value,
-                                                      controller.handingMobiles
-                                                          .value.handlingId,
-                                                    ]);
                                                     Get.toNamed(
                                                       Routes.CAMERA,
                                                       arguments: controller
                                                           .handingMobiles.value,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Chụp chứng từ",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -430,10 +418,6 @@ class DetailsPendingWorkingScreen
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    print(
-                                                      controller.handingMobiles
-                                                          .value.handlingId,
-                                                    );
                                                     Get.toNamed(
                                                       Routes
                                                           .CANCEL_PENDING_SCREEN,
@@ -443,7 +427,7 @@ class DetailsPendingWorkingScreen
                                                           .handlingId,
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Hủy giao hàng",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -473,7 +457,7 @@ class DetailsPendingWorkingScreen
                                                           .toString(),
                                                     );
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Hoàn thành",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -496,7 +480,7 @@ class DetailsPendingWorkingScreen
                 Container(
                   height: 50,
                   width: size.width,
-                  padding: EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -504,7 +488,7 @@ class DetailsPendingWorkingScreen
                         height: 40,
                         width: 100,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 90, 155, 213),
+                          color: const Color.fromARGB(255, 90, 155, 213),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextButton(
@@ -527,7 +511,7 @@ class DetailsPendingWorkingScreen
                         height: 35,
                         width: 150,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 90, 155, 213),
+                          color: const Color.fromARGB(255, 90, 155, 213),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextButton(
@@ -567,7 +551,7 @@ class DetailsPendingWorkingScreen
       child: ListView.builder(
         itemCount: 3,
         itemBuilder: (ctx, i) {
-          return ListTile(
+          return const ListTile(
             title: Text("data"),
           );
         },

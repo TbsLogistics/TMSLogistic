@@ -7,17 +7,23 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_data_for_place_model.dart';
+import 'package:tbs_logistics_tms/app/surcharges/model/list_sub_fee_curred_model.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/list_subfee_model.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/sur_changes_model.dart';
+import 'package:tbs_logistics_tms/app/surcharges/model/sur_fee_post_model.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
 
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
-class SurChangesController extends GetxController {
+class SurChangesController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   var listSurchanges = <SurChangesModel>[].obs;
 
-  var itemList = <String>[].obs;
+  var listSurRegisted = <ListSubFeeIncurredModel>[].obs;
+  var listSurRegister = <SurFeeModel>[].obs;
   var listSur = <SurChangesModel>[].obs;
+
+  var itemList = <String>[].obs;
   var selectedValue = 0.obs;
   var subFee = "".obs;
   var priceText = "".obs;
@@ -32,6 +38,12 @@ class SurChangesController extends GetxController {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
 
+  final List<Tab> myTabs = <Tab>[
+    const Tab(text: 'Danh sách thêm'),
+    const Tab(text: 'Danh sách đã thêm'),
+  ];
+  late TabController tabController;
+
   @override
   void onInit() {
     var dataForPlace = Get.arguments[0] as ListDataForPlaceModel;
@@ -40,6 +52,8 @@ class SurChangesController extends GetxController {
     maChuyen.value = idChuyen;
     listDataForPlace.value = dataForPlace;
     idPlaced.value = maPlace;
+    listSubFeeIncurred();
+    tabController = TabController(vsync: this, length: myTabs.length);
     formKey;
     super.onInit();
   }
@@ -56,8 +70,6 @@ class SurChangesController extends GetxController {
   }) {
     listSur.add(
       SurChangesModel(
-        idTcommand: 0,
-        transportId: "",
         placeId: idPlaced.value,
         sfId: sfId,
         sfName: sfName,
@@ -67,7 +79,23 @@ class SurChangesController extends GetxController {
     );
   }
 
-  void postData(List<SurChangesModel> listSur) async {
+  addSurFee({
+    required int price,
+    required int sfId,
+    required String note,
+  }) {
+    listSurRegister.add(
+      SurFeeModel(
+        placeId: idPlaced.value,
+        sfId: sfId,
+        finalPrice: price,
+        note: note,
+      ),
+    );
+    print("listSurRegister : $listSurRegister");
+  }
+
+  void postData(List<SurFeeModel> listSur) async {
     var dio = Dio();
     Response response;
     var tokens = await SharePerApi().getToken();
@@ -89,22 +117,7 @@ class SurChangesController extends GetxController {
         var data = response.data;
 
         Get.back();
-        Get.snackbar(
-          "",
-          "",
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: data["message"]);
       } else {
         // Handle error
       }
@@ -112,22 +125,7 @@ class SurChangesController extends GetxController {
       // Handle exception
 
       if (e.response!.statusCode == 400) {
-        Get.snackbar(
-          "",
-          "",
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${e.response!.data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: e.response!.data["message"]);
       }
     }
   }
@@ -140,7 +138,23 @@ class SurChangesController extends GetxController {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
     var url =
-        "${AppConstants.urlBase}/api/Mobile/GetListSubfeeIncurred?handlingId=335";
+        "${AppConstants.urlBase}/api/Mobile/GetListSubfeeIncurred?maChuyen=${maChuyen.value}&placeId=${idPlaced.value}";
+
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+      );
+      if (response.statusCode == 200) {
+        List data = response.data;
+        listSurRegisted.value =
+            data.map((e) => ListSubFeeIncurredModel.fromJson(e)).toList();
+      }
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {
+        getSnack(message: e.response!.data["message"]);
+      }
+    }
   }
 
   Future<List<ListSubFeeModel>> getSubFee(query) async {
@@ -151,7 +165,8 @@ class SurChangesController extends GetxController {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
 
-    var url = "${AppConstants.urlBase}/api/Mobile/GetListSubFeeSelect";
+    var url =
+        "${AppConstants.urlBase}/api/Mobile/GetListSubFeeSelect?placeId=${idPlaced.value}";
 
     try {
       response = await dio.get(
@@ -170,5 +185,25 @@ class SurChangesController extends GetxController {
     } catch (e) {
       rethrow;
     }
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

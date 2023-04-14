@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/change_password/change_password.dart';
+import 'package:tbs_logistics_tms/app/googe_map/google_map.dart';
 
 import 'package:tbs_logistics_tms/app/tms/view/tms_finished.dart';
 import 'package:tbs_logistics_tms/app/tms/view/tms_pending.dart';
@@ -33,6 +34,14 @@ class TmsPage extends GetView<TmsController> {
             centerTitle: true,
             // automaticallyImplyLeading: false,
             backgroundColor: CustomColor.backgroundAppbar,
+            // actions: [
+            //   IconButton(
+            //     onPressed: () {
+            //       Get.to(() => GoogleMapGeolocator());
+            //     },
+            //     icon: Icon(Icons.language),
+            //   ),
+            // ],
           ),
           drawer: Drawer(
             child: Container(

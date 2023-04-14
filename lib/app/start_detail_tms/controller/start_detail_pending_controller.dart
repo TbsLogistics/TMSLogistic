@@ -1,9 +1,13 @@
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
+
 import 'dart:io';
 import "package:collection/collection.dart";
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:get_storage/get_storage.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/model/geoLocationModel.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_data_for_place_model.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_place_model.dart';
 import 'package:tbs_logistics_tms/app/surcharges/model/status_model.dart';
@@ -13,6 +17,14 @@ import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dar
 
 class StartDetailPendingController extends GetxController {
   Rx<TmsOrdersModel> listOrder = TmsOrdersModel().obs;
+
+  //Google map
+  var locationMessage = ''.obs;
+  late String latitude;
+  late String longitude;
+  late LocationPermission permission;
+
+  //status
 
   RxList<StatusModel> checkStatus = <StatusModel>[].obs;
   final storage = GetStorage();
@@ -100,7 +112,7 @@ class StartDetailPendingController extends GetxController {
           listOrder.value.getDataHandlingMobiles![i].diemLayRong != "") {
         String idPlaceReceiveEmpted =
             listOrder.value.getDataHandlingMobiles![i].diemLayRong!;
-        idPlaceReceiveEmpty.value.add(idPlaceReceiveEmpted);
+        idPlaceReceiveEmpty.add(idPlaceReceiveEmpted);
       }
     }
     // idSameReceive
@@ -127,7 +139,7 @@ class StartDetailPendingController extends GetxController {
           listOrder.value.getDataHandlingMobiles![i].diemTraRong != "") {
         String idPlaceGiveEmpted =
             listOrder.value.getDataHandlingMobiles![i].diemTraRong!;
-        idPlaceGiveEmpty.value.add(idPlaceGiveEmpted);
+        idPlaceGiveEmpty.add(idPlaceGiveEmpted);
       }
     }
     idSameReceiveEmpty.value = idPlaceReceiveEmpty.toSet().toList();
@@ -136,10 +148,10 @@ class StartDetailPendingController extends GetxController {
     idSameGiveEmpty.value = idPlaceGiveEmpty.toSet().toList();
 
     placeModel.value = ListPlaceModel(
-      placeReceiveEmpty: idSameReceiveEmpty.value,
-      placeReceive: idSameReceive.value,
-      placeGive: idSameGive.value,
-      placeGiveEmpty: idSameGiveEmpty.value,
+      placeReceiveEmpty: idSameReceiveEmpty,
+      placeReceive: idSameReceive,
+      placeGive: idSameGive,
+      placeGiveEmpty: idSameGiveEmpty,
     );
 
     //Vòng for lọc vận đơn theo địa điểm
@@ -151,8 +163,8 @@ class StartDetailPendingController extends GetxController {
             listOrder.value.getDataHandlingMobiles![j].diemLayRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
 
-          listReceiveEmpty.value.add(items);
-          listDataForReceiveEmpty.value.add(
+          listReceiveEmpty.add(items);
+          listDataForReceiveEmpty.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -184,8 +196,8 @@ class StartDetailPendingController extends GetxController {
             listOrder.value.getDataHandlingMobiles![j].diemLayHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
 
-          listReceive.value.add(items);
-          listDataForReceive.value.add(
+          listReceive.add(items);
+          listDataForReceive.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -215,8 +227,8 @@ class StartDetailPendingController extends GetxController {
             listOrder.value.getDataHandlingMobiles![j].diemTraHang) {
           var items = listOrder.value.getDataHandlingMobiles![j];
 
-          listGive.value.add(items);
-          listDataForGive.value.add(
+          listGive.add(items);
+          listDataForGive.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -238,8 +250,8 @@ class StartDetailPendingController extends GetxController {
         if (placeModel.value.placeGiveEmpty![i] ==
             listOrder.value.getDataHandlingMobiles![j].diemTraRong) {
           var items = listOrder.value.getDataHandlingMobiles![j];
-          listGiveEmpty.value.add(items);
-          listDataForGiveEmpty.value.add(
+          listGiveEmpty.add(items);
+          listDataForGiveEmpty.add(
             ListDataForPlaceModel(place: place, getData: [items]),
           );
         }
@@ -306,36 +318,51 @@ class StartDetailPendingController extends GetxController {
                 .obs;
       }
     }
+
     isLoad(true);
     super.onInit();
   }
 
-  void updateReceiveEmpty(int index) {
+  void updateReceiveEmpty({required int index, required int placeId}) {
+    isLoadStatus(false);
     isPlacedReceiveEmpty[index] = !isPlacedReceiveEmpty[index];
     // Store the updated boolean list in get_storage
     storage.write(
         'ReceiveEmpty$index${listOrder.value.maChuyen}', isPlacedReceiveEmpty);
+    getCurrentLocation();
+    postGeolorcation(placeId: placeId);
+    isLoadStatus(true);
   }
 
-  void updateReceive(int index) {
+  void updateReceive({required int index, required int placeId}) {
+    isLoadStatus(false);
     isPlacedReceive[index] = !isPlacedReceive[index];
     // Store the updated boolean list in get_storage
     storage.write('Receive$index${listOrder.value.maChuyen}', isPlacedReceive);
+    getCurrentLocation();
+    postGeolorcation(placeId: placeId);
+    isLoadStatus(true);
   }
 
-  void updateGive(int index) {
+  void updateGive({required int index, required int placeId}) {
+    isLoadStatus(false);
     isPlacedGive[index] = !isPlacedGive[index];
     // Store the updated boolean list in get_storage
     storage.write('Give$index${listOrder.value.maChuyen}', isPlacedGive);
-
-    print("isPlacedGiveTest : $isPlacedGive");
+    getCurrentLocation();
+    postGeolorcation(placeId: placeId);
+    isLoadStatus(true);
   }
 
-  void updateGiveEmpty(int index) {
+  void updateGiveEmpty({required int index, required int placeId}) {
+    isLoadStatus(false);
     isPlacedGiveEmpty[index] = !isPlacedGiveEmpty[index];
     // Store the updated boolean list in get_storage
     storage.write(
         'GiveEmpty$index${listOrder.value.maChuyen}', isPlacedGiveEmpty);
+    getCurrentLocation();
+    postGeolorcation(placeId: placeId);
+    isLoadStatus(true);
   }
 
   void postSetRuning(
@@ -369,25 +396,8 @@ class StartDetailPendingController extends GetxController {
       if (response.statusCode == 200) {
         var data = response.data;
         Get.back();
-        // loadData();
+        getSnack(message: "${data["message"]}");
 
-        Get.snackbar(
-          "",
-          "",
-          backgroundColor: Colors.white,
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${data["message"]} !",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
         switch (listOrder.value.maPTVC) {
           case "LCL":
             switch (listOrder.value.getDataHandlingMobiles![0].loaiVanDon) {
@@ -409,7 +419,6 @@ class StartDetailPendingController extends GetxController {
                               .maTrangThai = 37;
                         }
                         break;
-
                       default:
                     }
                     break;
@@ -427,7 +436,6 @@ class StartDetailPendingController extends GetxController {
                             .getData![secondIndex]
                             .maTrangThai = 18;
                         break;
-
                       default:
                     }
                     break;
@@ -456,7 +464,6 @@ class StartDetailPendingController extends GetxController {
                             .getData![secondIndex]
                             .maTrangThai = 20;
                         break;
-
                       default:
                     }
                     break;
@@ -480,7 +487,6 @@ class StartDetailPendingController extends GetxController {
                               .maTrangThai = 37;
                         }
                         break;
-
                       default:
                     }
                     break;
@@ -512,7 +518,6 @@ class StartDetailPendingController extends GetxController {
                               .maTrangThai = 18;
                         }
                         break;
-
                       default:
                     }
                     break;
@@ -731,27 +736,13 @@ class StartDetailPendingController extends GetxController {
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
         if (e.response!.data["message"] == "Vui lòng cập nhật ContNo") {
-          Get.snackbar(
-            "",
-            "",
-            backgroundColor: Colors.white,
-            titleText: const Text(
-              "Thông báo",
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
-            messageText: Text(
-              "${e.response!.data["message"]} !",
-              style: const TextStyle(
-                color: Colors.green,
-              ),
-            ),
-          );
+          getSnack(message: "${e.response!.data["message"]}");
+        } else {
+          getSnack(message: "${e.response!.data["message"]}");
         }
       }
     } finally {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 2), () {
         isLoad(true);
         isLoading(false);
         isLoadStatus(true);
@@ -779,22 +770,7 @@ class StartDetailPendingController extends GetxController {
       if (response.statusCode == 200) {
         var data = response.data;
 
-        Get.snackbar(
-          "",
-          "",
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: "${response.data["message"]}");
         switch (idList) {
           case "lr":
             switch (listDataForReceiveEmpty[firstIndex]
@@ -854,22 +830,7 @@ class StartDetailPendingController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        Get.snackbar(
-          "",
-          "",
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${e.response!.data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: "${e.response!.data["message"]}");
       }
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
@@ -902,23 +863,7 @@ class StartDetailPendingController extends GetxController {
         var data = response.data;
 
         Get.back(result: true);
-        Get.snackbar(
-          "",
-          "",
-          backgroundColor: Colors.white,
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${data["message"]} !",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: "${response.data["message"]}");
         listOrder
             .value
             .getDataHandlingMobiles![
@@ -928,24 +873,7 @@ class StartDetailPendingController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        // print(e.response!.statusCode);
-
-        Get.snackbar(
-          "",
-          "",
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: const Text(
-            "Mã điều phối không tồn tại !",
-            style: TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: "${e.response!.data["message"]}");
       }
     }
   }
@@ -966,50 +894,19 @@ class StartDetailPendingController extends GetxController {
         var data = response.data;
 
         Get.back(result: true);
-        Get.snackbar(
-          "Thông báo",
-          "Lỗi thực thi",
-          backgroundColor: Colors.white,
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${response.data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+
+        getSnack(message: "${response.data["message"]}");
         listOrder.value.getDataHandlingMobiles![0].contNo = contNo;
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        Get.snackbar(
-          "Thông báo",
-          "Lỗi thực thi",
-          backgroundColor: Colors.white,
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${e.response!.data["message"]}",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        getSnack(message: "${e.response!.data["message"]}");
       }
     }
   }
 
   void loadData() async {
-    isLoading.value = true; // Set loading to true before starting operation
+    // isLoading.value = true; // Set loading to true before starting operation
 
     Get.defaultDialog(
       barrierDismissible: false,
@@ -1026,9 +923,100 @@ class StartDetailPendingController extends GetxController {
         ],
       ),
     );
+  }
 
-    await Future.delayed(Duration(seconds: 1)); // Simulate loading
+  void getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-    isLoading.value = false; // Set loading to false after operation is complete
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return getSnack(message: 'Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return getSnack(message: 'Location permissions are denied.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return getSnack(
+            message:
+                'Location permissions are permanently denied, we cannot request permissions.');
+      }
+    }
+    var position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    var lat = position.latitude;
+    var long = position.longitude;
+
+    // passing this to latitude and longitude strings
+    latitude = "$lat";
+    longitude = "$long";
+
+    locationMessage.value = "$lat,$long";
+  }
+
+  void postGeolorcation({required int placeId}) async {
+    var dio = Dio();
+    Response response;
+    var tokens = await SharePerApi().getToken();
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $tokens"
+    };
+    print("locationMessage : ${locationMessage.value}");
+    var geoLocation = GeoLocationModel(
+      placeId: placeId,
+      gps: locationMessage.value,
+    );
+    var jsonData = geoLocation.toJson();
+    print("jsonData : $jsonData");
+    var url =
+        "${AppConstants.urlBase}/api/Mobile/LogGPS?maChuyen=${listOrder.value.maChuyen}";
+    print("url : $url");
+    try {
+      response = await dio.post(
+        url,
+        options: Options(headers: headers),
+        data: jsonData,
+      );
+
+      if (response.statusCode == 200) {
+        var data = response.data;
+        getSnack(message: "${response.data["message"]}");
+      }
+    } on DioError catch (e) {
+      print(e.response!.statusCode);
+      if (e.response!.statusCode == 400) {
+        getSnack(message: "${e.response!.data["message"]}");
+      }
+    }
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

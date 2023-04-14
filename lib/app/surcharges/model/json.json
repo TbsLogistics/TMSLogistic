@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "Diadiem": "String",
+        "MaVanDon": "String",
+        "MaSoXe": "String",
+        "TaiXe": "String",
+        "SubFee": "String",
+        "Price": 0.0,
+        "Type": "String",
+        "TrangThai": "String"
+    },
+    {
+        "id": 1,
+        "Diadiem": "String",
+        "MaVanDon": "String",
+        "MaSoXe": "String",
+        "TaiXe": "String",
+        "SubFee": "String",
+        "Price": 0.0,
+        "Type": "String",
+        "TrangThai": "String"
+    }
+]

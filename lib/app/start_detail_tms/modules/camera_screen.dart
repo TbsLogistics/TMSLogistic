@@ -3,12 +3,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/controller/camera_controller.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/model/list_doc_type.dart';
+import 'package:tbs_logistics_tms/app/surcharges/model/list_subfee_model.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -55,24 +58,24 @@ class _CameraScreenState extends State<CameraScreen> {
                   if (imageFile != null)
                     Container(
                       width: size.width * 0.9,
-                      height: size.width * 0.9,
+                      height: size.width * 0.7,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         image: DecorationImage(
                             image: FileImage(imageFile!), fit: BoxFit.cover),
-                        border: Border.all(width: 8, color: Colors.black),
+                        border: Border.all(width: 2, color: Colors.black),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     )
                   else
                     Container(
                       width: size.width * 0.9,
-                      height: size.width * 0.9,
+                      height: size.width * 0.7,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.grey,
-                        border: Border.all(width: 8, color: Colors.black12),
+                        border: Border.all(width: 2, color: Colors.black12),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: const Text(
@@ -80,40 +83,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         style: TextStyle(fontSize: 26),
                       ),
                     ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 60,
-                        width: size.width * 0.8,
-                        // padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
-                          maxLines: 2,
-                          controller: controller.noteController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(.0),
-                              borderSide: const BorderSide(
-                                color: Colors.orangeAccent,
-                              ),
-                            ),
-                            hintText: "Nhập chú ý",
-                            contentPadding: const EdgeInsets.only(
-                              left: 10,
-                              right: 10,
-                              top: 20,
-                              bottom: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(height: 10),
                   const SizedBox(
                     height: 20,
                   ),
@@ -144,52 +114,101 @@ class _CameraScreenState extends State<CameraScreen> {
                             ),
                           ],
                         )
-                      : Row(
+                      : Container(),
+                  imageFile != null
+                      ? Column(
                           children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    Colors.orangeAccent,
-                                  ),
-                                ),
-                                onPressed: () =>
-                                    getImage(source: ImageSource.camera),
-                                child: const Text(
-                                  'Chụp lại',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
+                            _buildInput(
+                              textCapitalization: TextCapitalization.words,
+                              size: size,
+                              controller: controller.noteController,
+                              text: "Nhập chú thích",
+                              title: 'Chú thích',
                             ),
-                            const SizedBox(width: 15),
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    Colors.orangeAccent,
+                            const SizedBox(height: 10),
+                            _buildSearchInput(controller),
+                            const SizedBox(height: 10),
+                            Obx(
+                              () => controller.selectedValue.value == 1
+                                  ? _buildInput(
+                                      size: size,
+                                      controller: controller.contController,
+                                      text: "Nhập số Cont",
+                                      title: 'Số Cont',
+                                      textCapitalization:
+                                          TextCapitalization.characters,
+                                    )
+                                  : Container(),
+                            ),
+                            const SizedBox(height: 10),
+                            Obx(
+                              () => controller.selectedValue.value == 1
+                                  ? _buildInput(
+                                      size: size,
+                                      controller: controller.sealController,
+                                      text: "Nhập số Seal",
+                                      title: 'Số Seal',
+                                      textCapitalization:
+                                          TextCapitalization.characters,
+                                    )
+                                  : Container(),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: 45,
+                                  width: 120,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        Colors.orangeAccent,
+                                      ),
+                                    ),
+                                    onPressed: () =>
+                                        getImage(source: ImageSource.camera),
+                                    child: const Text(
+                                      'Chụp lại',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ),
-                                onPressed: () async {
-                                  final String filePath = imageFile!.path;
-                                  final List<int> binaryData =
-                                      await fileToBinary(filePath);
-                                  // getCurrentLocation();
+                                // const SizedBox(width: 30),
+                                SizedBox(
+                                  height: 45,
+                                  width: 120,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        Colors.orangeAccent,
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      final String filePath = imageFile!.path;
+                                      final List<int> binaryData =
+                                          await fileToBinary(filePath);
+                                      // getCurrentLocation();
 
-                                  controller.uploadImages(
-                                    file: filePath,
-                                    note: controller.noteController.text,
-                                  );
-                                },
-                                child: const Text(
-                                  'Gửi',
-                                  style: TextStyle(fontSize: 18),
+                                      controller.uploadImages(
+                                        docType: controller.selectedValue.value,
+                                        file: filePath,
+                                        note: controller.noteController.text,
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Gửi',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              ],
+                            )
                           ],
-                        ),
+                        )
+                      : Container(),
                   const SizedBox(height: 15),
                   SizedBox(
                     height: 120,
@@ -274,6 +293,170 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildSearchInput(CameraController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 60,
+            width: 75,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text(
+                  "Chứng từ",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: FindDropdown<ListDocTypeModel>(
+              onFind: (String filter) => controller.getListDocType(filter),
+              onChanged: (ListDocTypeModel? data) {
+                controller.selectedValue.value =
+                    int.parse(data!.maLoaiChungTu.toString());
+                controller.subFee.value = data.tenLoaiChungTu!;
+                print(
+                    [controller.selectedValue.value, controller.subFee.value]);
+              },
+              dropdownBuilder: (BuildContext context, ListDocTypeModel? item) {
+                return Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Theme.of(context).dividerColor),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: (item?.tenLoaiChungTu == null)
+                      ? Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Chọn chứng từ",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.black,
+                            )
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                item!.tenLoaiChungTu!,
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                );
+              },
+              dropdownItemBuilder: (BuildContext context, ListDocTypeModel item,
+                  bool isSelected) {
+                return Container(
+                  decoration: !isSelected
+                      ? null
+                      : BoxDecoration(
+                          border:
+                              Border.all(color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                        ),
+                  child: Card(
+                    shape: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.orangeAccent,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: ListTile(
+                      selected: isSelected,
+                      title: Text(
+                        item.tenLoaiChungTu!,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      subtitle: Text(
+                        item.maLoaiDiaDiem!,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInput({
+    required Size size,
+    required String title,
+    required TextEditingController controller,
+    required String text,
+    required TextCapitalization textCapitalization,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 60,
+            width: 75,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 50,
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                maxLines: 2,
+                controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  hintText: text,
+                  contentPadding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 20,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

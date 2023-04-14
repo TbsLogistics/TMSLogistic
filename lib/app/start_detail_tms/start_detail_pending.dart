@@ -1,10 +1,13 @@
 import "dart:math" as math;
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:tbs_logistics_tms/app/start_detail_tms/controller/start_detail_pending_controller.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/widgets/button_success.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/widgets/text_success.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
 import 'package:tbs_logistics_tms/config/routes/pages.dart';
 
@@ -62,55 +65,43 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                     text: "Kết thúc chuyến",
                                     onPressed: () {
                                       Get.defaultDialog(
-                                        backgroundColor: Colors.white,
-                                        title: "Thông báo",
-                                        content: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
-                                              "Hãy chắc rằng hàng hóa đã được giao nhận",
-                                              style: TextStyle(
-                                                color: Colors.orangeAccent,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        confirm: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.orangeAccent),
+                                          backgroundColor: Colors.white,
+                                          title: "Thông báo",
+                                          content: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: const [
+                                              TextCustomComment(
+                                                  text:
+                                                      "Hãy chắc rằng hàng hóa đã được giao nhận")
+                                            ],
                                           ),
-                                          onPressed: () {
-                                            controller.postSetRuningTypeFull(
-                                              handlingId: int.parse(
-                                                controller
-                                                    .listOrder
-                                                    .value
-                                                    .getDataHandlingMobiles![
-                                                        length - 1]
-                                                    .handlingId
-                                                    .toString(),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text("Xác nhận",
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ),
-                                        cancel: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.orangeAccent),
-                                          ),
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                          child: const Text("Hủy"),
-                                        ),
-                                      );
+                                          confirm: Obx(() => controller
+                                                  .isLoading.value
+                                              ? const CircularProgressIndicator(
+                                                  color: Colors.orangeAccent,
+                                                )
+                                              : ButtonComment(
+                                                  text: "Kết thúc chuyến",
+                                                  onPressed: () {
+                                                    controller
+                                                        .postSetRuningTypeFull(
+                                                      handlingId: int.parse(
+                                                        controller
+                                                            .listOrder
+                                                            .value
+                                                            .getDataHandlingMobiles![
+                                                                length - 1]
+                                                            .handlingId
+                                                            .toString(),
+                                                      ),
+                                                    );
+                                                  })),
+                                          cancel: ButtonComment(
+                                              text: "Hủy",
+                                              onPressed: () {
+                                                Get.back();
+                                              }));
                                     },
                                     color: Colors.orangeAccent)
                                 : _buttonStatus(
@@ -142,38 +133,6 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buttonStatus(
-      {required String text,
-      required VoidCallback onPressed,
-      required Color color}) {
-    return Container(
-      height: 45,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: 40,
-            width: 150,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: TextButton(
-              onPressed: onPressed,
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
@@ -239,63 +198,46 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                       Obx(() {
                                         return controller
                                                 .isPlacedReceiveEmpty[i]
-                                            ? TextButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                              Color>(
-                                                          Colors.orangeAccent),
-                                                ),
+                                            ? ButtonComment(
+                                                text: "Đã đến",
                                                 onPressed: () {},
-                                                child: const Text(
-                                                  "Đã đến",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
                                               )
-                                            : TextButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                              Color>(
-                                                          Colors.orangeAccent),
-                                                ),
+                                            : ButtonComment(
+                                                text: "Đến",
                                                 onPressed: () {
-                                                  controller
-                                                      .updateReceiveEmpty(i);
+                                                  controller.updateReceiveEmpty(
+                                                    index: i,
+                                                    placeId: int.parse(
+                                                      controller
+                                                          .listOrder
+                                                          .value
+                                                          .getDataHandlingMobiles![
+                                                              0]
+                                                          .maDiemLayRong
+                                                          .toString(),
+                                                    ),
+                                                  );
                                                 },
-                                                child: const Text(
-                                                  "Đến",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
                                               );
                                       }),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.orangeAccent),
-                                        ),
-                                        onPressed: () {
-                                          Get.toNamed(
-                                            Routes.SUR_CHANGE_SCREEN,
-                                            arguments: [
-                                              controller
-                                                  .newListDataForReceiveEmpty[i],
-                                              controller
-                                                  .listOrder.value.maChuyen,
-                                              controller
-                                                  .newListDataForReceiveEmpty[i]
-                                                  .getData![0]
-                                                  .maDiemLayRong
-                                            ],
-                                          );
-                                        },
-                                        child: const Text("Phụ phí",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                      ),
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForReceiveEmpty[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForReceiveEmpty[
+                                                        i]
+                                                    .getData![0]
+                                                    .maDiemLayRong
+                                              ],
+                                            );
+                                          }),
                                     ],
                                   )
                                 ],
@@ -318,304 +260,214 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                             itemBuilder: (ctx, k) {
                               return Card(
                                 child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 5),
-                                    height: 110,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "${controller.newListDataForReceiveEmpty[i].getData![k].maVanDon}",
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                              ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  height: 110,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${controller.newListDataForReceiveEmpty[i].getData![k].maVanDon}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
                                             ),
-                                            Obx(
-                                              () => controller
-                                                      .isLoadStatus.value
-                                                  ? controller
-                                                              .newListDataForReceiveEmpty[
-                                                                  i]
-                                                              .getData![k]
-                                                              .maTrangThai !=
-                                                          17
-                                                      ? const Text(
-                                                          "Đã lấy rỗng",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                          ),
-                                                        )
-                                                      : controller
-                                                              .isPlacedReceive[i]
-                                                          ? Text(
-                                                              "${controller.newListDataForReceiveEmpty[i].getData![k].trangThai}",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
-                                                          : const Text(
-                                                              "Đang lấy rỗng",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
-                                                  : Container(),
-                                            ),
-                                            TextButton.icon(
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.NOTE_PENDING_SCREEN,
-                                                  arguments: controller
-                                                      .newListDataForReceiveEmpty[
-                                                          i]
-                                                      .getData![k]
-                                                      .handlingId,
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                  Icons.edit_note_outlined,
-                                                  color: Colors.orangeAccent),
-                                              label: const Text(
-                                                "Ghi chú",
-                                                style: TextStyle(
-                                                    color: Colors.orangeAccent),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.CAMERA,
-                                                  arguments: controller
-                                                      .newListDataForReceiveEmpty[
-                                                          i]
-                                                      .getData![k],
-                                                );
-                                              },
-                                              child: const Text("Chứng từ",
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                            ),
-                                            Obx(() => controller
-                                                    .isLoadStatus.value
+                                          ),
+                                          Obx(
+                                            () => controller.isLoadStatus.value
                                                 ? controller
-                                                            .newListDataForReceiveEmpty[
-                                                                i]
-                                                            .getData![k]
-                                                            .maTrangThai ==
-                                                        17
-                                                    ? TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(
-                                                                      Colors
-                                                                          .red),
-                                                        ),
-                                                        onPressed: () {
-                                                          _cancelButton(
-                                                            size: size,
-                                                            onPressed:
-                                                                () async {
-                                                              if (controller
-                                                                  .formKey
-                                                                  .currentState!
-                                                                  .validate()) {
-                                                                controller.postCancel(
-                                                                    idList:
-                                                                        "lr",
-                                                                    firstIndex:
-                                                                        i,
-                                                                    id: controller
-                                                                        .newListDataForReceiveEmpty[
-                                                                            i]
-                                                                        .getData![
-                                                                            k]
-                                                                        .handlingId!,
-                                                                    secondsIndex:
-                                                                        k);
-                                                              }
-                                                            },
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
-                                                      )
-                                                    : TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.4)),
-                                                        ),
+                                                        .isPlacedReceiveEmpty[i]
+                                                    ? controller
+                                                                .newListDataForReceiveEmpty[
+                                                                    i]
+                                                                .getData![k]
+                                                                .maTrangThai ==
+                                                            17
+                                                        ? const TextCustom(
+                                                            text:
+                                                                "Đang lấy rỗng")
+                                                        : const TextCustom(
+                                                            text: "Đã lấy rỗng")
+                                                    : const Text("")
+                                                : Container(),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                Routes.NOTE_PENDING_SCREEN,
+                                                arguments: controller
+                                                    .newListDataForReceiveEmpty[
+                                                        i]
+                                                    .getData![k]
+                                                    .handlingId,
+                                              );
+                                            },
+                                            icon: const Icon(
+                                                Icons.edit_note_outlined,
+                                                color: Colors.orangeAccent),
+                                            label: const TextCustomComment(
+                                                text: "Ghi chú"),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          ButtonComment(
+                                            text: "Chứng từ",
+                                            onPressed: () {
+                                              Get.toNamed(Routes.CAMERA,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForReceiveEmpty[
+                                                            i]
+                                                        .getData![k],
+                                                    controller
+                                                        .newListDataForReceiveEmpty[
+                                                            i]
+                                                        .getData![k]
+                                                        .maDiemLayRong
+                                                  ]);
+                                            },
+                                          ),
+                                          Obx(
+                                            () => controller
+                                                    .isPlacedReceiveEmpty[i]
+                                                ? controller.isLoadStatus.value
+                                                    ? controller
+                                                                .newListDataForReceiveEmpty[
+                                                                    i]
+                                                                .getData![k]
+                                                                .maTrangThai ==
+                                                            17
+                                                        ? ButtonError(
+                                                            text:
+                                                                "Hủy hoàn thành",
+                                                            onPressed: () {
+                                                              _cancelButton(
+                                                                size: size,
+                                                                onPressed:
+                                                                    () async {
+                                                                  if (controller
+                                                                      .formKey
+                                                                      .currentState!
+                                                                      .validate()) {
+                                                                    controller.postCancel(
+                                                                        idList:
+                                                                            "lr",
+                                                                        firstIndex:
+                                                                            i,
+                                                                        id: controller
+                                                                            .newListDataForReceiveEmpty[
+                                                                                i]
+                                                                            .getData![
+                                                                                k]
+                                                                            .handlingId!,
+                                                                        secondsIndex:
+                                                                            k);
+                                                                  }
+                                                                },
+                                                              );
+                                                            })
+                                                        : ButtonFinal(
+                                                            text:
+                                                                "Hủy hoàn thành",
+                                                            onPressed: () {},
+                                                          )
+                                                    : ButtonFinal(
+                                                        text: "",
                                                         onPressed: () {},
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
                                                       )
-                                                : const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color:
-                                                          Colors.orangeAccent,
-                                                    ),
-                                                  )),
-                                            Obx(() {
-                                              return controller
-                                                      .isLoadStatus.value
-                                                  ? controller
-                                                              .newListDataForReceiveEmpty[
-                                                                  i]
-                                                              .getData![k]
-                                                              .maTrangThai ==
-                                                          17
-                                                      ? TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                                        Colors
-                                                                            .green),
-                                                          ),
-                                                          onPressed: () async {
-                                                            var result = await Get
-                                                                .defaultDialog(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              title:
-                                                                  "Thông báo",
-                                                              content: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: const [
-                                                                  Text(
-                                                                    "Hãy chắc rằng hàng hóa đã được giao nhận",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .orangeAccent,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              confirm:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
-                                                                ),
-                                                                onPressed: () {
-                                                                  // controller
-                                                                  //     .loadData();
-                                                                  controller.postSetRuning(
-                                                                      idList:
-                                                                          "lr",
-                                                                      firstIndex:
-                                                                          i,
-                                                                      id: controller
-                                                                          .newListDataForReceiveEmpty[
-                                                                              i]
-                                                                          .getData![
-                                                                              k]
-                                                                          .handlingId!,
-                                                                      secondIndex:
-                                                                          k);
-                                                                },
-                                                                child: const Text(
-                                                                    "Xác nhận",
-                                                                    style: TextStyle(
+                                                : ButtonFinal(
+                                                    text: "Hủy hoàn thành",
+                                                    onPressed: () {},
+                                                  ),
+                                          ),
+                                          Obx(() {
+                                            return controller
+                                                    .isPlacedReceiveEmpty[i]
+                                                ? controller.isLoadStatus.value
+                                                    ? controller
+                                                                .newListDataForReceiveEmpty[
+                                                                    i]
+                                                                .getData![k]
+                                                                .maTrangThai ==
+                                                            17
+                                                        ? ButtonSuccess(
+                                                            text: "Hoàn thành",
+                                                            onPressed: () {
+                                                              Get.defaultDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                title:
+                                                                    "Thông báo",
+                                                                content: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: const [
+                                                                    Text(
+                                                                      "Hãy chắc rằng hàng hóa đã được giao nhận",
+                                                                      style:
+                                                                          TextStyle(
                                                                         color: Colors
-                                                                            .white)),
-                                                              ),
-                                                              cancel:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
+                                                                            .orangeAccent,
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                        "Hủy"),
-                                                              ),
-                                                            );
-                                                            if (result
-                                                                    is bool &&
-                                                                result ==
-                                                                    true) {
-                                                              controller
-                                                                  .newListDataForReceiveEmpty[
-                                                                      i]
-                                                                  .getData![k];
-                                                            }
-                                                          },
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)),
-                                                        )
-                                                      : TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty.all<
-                                                                        Color>(
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.4)),
-                                                          ),
-                                                          onPressed: () {},
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)))
-                                                  : const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color:
-                                                            Colors.orangeAccent,
-                                                      ),
-                                                    );
-                                            })
-                                          ],
-                                        ),
-                                      ],
-                                    )),
+                                                                confirm: Obx(
+                                                                  () => controller
+                                                                          .isLoading
+                                                                          .value
+                                                                      ? const CircularProgressIndicator(
+                                                                          color:
+                                                                              Colors.orangeAccent,
+                                                                        )
+                                                                      : ElevaButtonSuccess(
+                                                                          text:
+                                                                              "Xác nhận",
+                                                                          onPressed:
+                                                                              () {
+                                                                            controller.postSetRuning(
+                                                                              idList: "lr",
+                                                                              firstIndex: i,
+                                                                              id: controller.newListDataForReceiveEmpty[i].getData![k].handlingId!,
+                                                                              secondIndex: k,
+                                                                            );
+                                                                          },
+                                                                        ),
+                                                                ),
+                                                                cancel:
+                                                                    ElevaButtonSuccess(
+                                                                        text:
+                                                                            "Hủy",
+                                                                        onPressed:
+                                                                            () {
+                                                                          Get.back();
+                                                                        }),
+                                                              );
+                                                            })
+                                                        : ButtonFinal(
+                                                            text: "Hoàn thành",
+                                                            onPressed: () {})
+                                                    : ButtonFinal(
+                                                        text: "Hoàn thành",
+                                                        onPressed: () {})
+                                                : ButtonFinal(
+                                                    text: "Hoàn thành",
+                                                    onPressed: () {});
+                                          })
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                           ),
@@ -676,73 +528,56 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "${controller.newListDataForReceive[i].place}",
-                                    style: const TextStyle(
-                                        color: Colors.orangeAccent,
-                                        fontSize: 18),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        controller
+                                            .newListDataForReceive[i].place!
+                                            .trim(),
+                                        style: const TextStyle(
+                                            color: Colors.orangeAccent,
+                                            fontSize: 18),
+                                      )
+                                    ],
                                   ),
                                   Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Obx(() => controller.isPlacedReceive[i]
-                                          ? TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {},
-                                              child: const Text(
-                                                "Đã đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          : TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
+                                          ? ButtonComment(
+                                              text: "Đã đến", onPressed: () {})
+                                          : ButtonComment(
+                                              text: "Đến",
                                               onPressed: () {
-                                                print("Recrive$i");
-                                                controller.updateReceive(i);
-                                              },
-                                              child: const Text(
-                                                "Đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.orangeAccent),
-                                        ),
-                                        onPressed: () {
-                                          Get.toNamed(
-                                            Routes.SUR_CHANGE_SCREEN,
-                                            arguments: [
-                                              controller
-                                                  .newListDataForReceive[i],
-                                              controller
-                                                  .listOrder.value.maChuyen,
-                                              controller
-                                                  .newListDataForReceive[i]
-                                                  .getData![0]
-                                                  .maDiemLayHang
-                                            ],
-                                          );
-                                        },
-                                        child: const Text("Phụ phí",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                      ),
+                                                controller.updateReceive(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemLayHang
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              })),
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForReceive[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForReceive[i]
+                                                    .getData![0]
+                                                    .maDiemLayHang
+                                              ],
+                                            );
+                                          })
                                     ],
                                   ),
                                 ],
@@ -786,292 +621,225 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                               () => controller
                                                       .isLoadStatus.value
                                                   ? controller
-                                                                  .newListDataForReceive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              34 &&
-                                                          controller
-                                                                  .newListDataForReceive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              40
-                                                      ? const Text(
-                                                          "Đã lấy hàng",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                          ),
-                                                        )
-                                                      : controller
-                                                              .isPlacedReceive[i]
-                                                          ? Text(
-                                                              "${controller.newListDataForReceive[i].getData![k].trangThai}",
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
-                                                          : const Text(
-                                                              "Đang đi lấy hàng",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
+                                                          .isPlacedReceive[i]
+                                                      ? controller
+                                                                      .newListDataForReceive[
+                                                                          i]
+                                                                      .getData![
+                                                                          k]
+                                                                      .maTrangThai ==
+                                                                  37 ||
+                                                              controller
+                                                                      .newListDataForReceive[
+                                                                          i]
+                                                                      .getData![
+                                                                          k]
+                                                                      .maTrangThai ==
+                                                                  40
+                                                          ? const TextCustom(
+                                                              text:
+                                                                  "Đang lấy hàng")
+                                                          : const TextCustom(
+                                                              text:
+                                                                  "Đã lấy hàng")
+                                                      : const Text("")
                                                   : Container(),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.NOTE_PENDING_SCREEN,
-                                                  arguments: controller
-                                                      .newListDataForReceive[i]
-                                                      .getData![k]
-                                                      .handlingId,
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                  Icons.edit_note_outlined,
-                                                  color: Colors.orangeAccent),
-                                              label: const Text(
-                                                "Ghi chú",
-                                                style: TextStyle(
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.NOTE_PENDING_SCREEN,
+                                                    arguments: controller
+                                                        .newListDataForReceive[
+                                                            i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                    Icons.edit_note_outlined,
                                                     color: Colors.orangeAccent),
-                                              ),
-                                            ),
+                                                label: const TextCustom(
+                                                  text: "Ghi chú",
+                                                )),
                                           ],
                                         ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.CAMERA,
-                                                  arguments: controller
-                                                      .newListDataForReceive[i]
-                                                      .getData![k],
-                                                );
-                                              },
-                                              child: const Text("Chứng từ",
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                            ),
+                                            ButtonComment(
+                                                text: "Chứng từ",
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.CAMERA,
+                                                    arguments: [
+                                                      controller
+                                                          .newListDataForReceive[
+                                                              i]
+                                                          .getData![k],
+                                                      controller
+                                                          .newListDataForReceive[
+                                                              i]
+                                                          .getData![k]
+                                                          .maDiemLayHang,
+                                                    ],
+                                                  );
+                                                }),
                                             Obx(() => controller
-                                                    .isLoadStatus.value
-                                                ? controller
-                                                                .newListDataForReceive[
-                                                                    i]
-                                                                .getData![k]
-                                                                .maTrangThai ==
-                                                            37 ||
-                                                        controller
-                                                                .newListDataForReceive[
-                                                                    i]
-                                                                .getData![k]
-                                                                .maTrangThai ==
-                                                            40
-                                                    ? TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(
-                                                                      Colors
-                                                                          .red),
-                                                        ),
-                                                        onPressed: () {
-                                                          _cancelButton(
-                                                            size: size,
+                                                    .isPlacedReceive[i]
+                                                ? controller.isLoadStatus.value
+                                                    ? controller
+                                                                    .newListDataForReceive[
+                                                                        i]
+                                                                    .getData![k]
+                                                                    .maTrangThai ==
+                                                                37 ||
+                                                            controller
+                                                                    .newListDataForReceive[
+                                                                        i]
+                                                                    .getData![k]
+                                                                    .maTrangThai ==
+                                                                40
+                                                        ? ButtonError(
+                                                            text:
+                                                                "Hủy hoàn thành",
                                                             onPressed: () {
-                                                              if (controller
-                                                                  .formKey
-                                                                  .currentState!
-                                                                  .validate()) {
-                                                                controller.postCancel(
-                                                                    idList:
-                                                                        "lh",
-                                                                    firstIndex:
-                                                                        i,
-                                                                    id: controller
-                                                                        .newListDataForReceive[
-                                                                            i]
-                                                                        .getData![
-                                                                            k]
-                                                                        .handlingId!,
-                                                                    secondsIndex:
-                                                                        k);
-                                                              }
-                                                            },
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
-                                                      )
-                                                    : TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.4)),
-                                                        ),
+                                                              _cancelButton(
+                                                                size: size,
+                                                                onPressed: () {
+                                                                  if (controller
+                                                                      .formKey
+                                                                      .currentState!
+                                                                      .validate()) {
+                                                                    controller.postCancel(
+                                                                        idList:
+                                                                            "lh",
+                                                                        firstIndex:
+                                                                            i,
+                                                                        id: controller
+                                                                            .newListDataForReceive[
+                                                                                i]
+                                                                            .getData![
+                                                                                k]
+                                                                            .handlingId!,
+                                                                        secondsIndex:
+                                                                            k);
+                                                                  }
+                                                                },
+                                                              );
+                                                            })
+                                                        : ButtonFinal(
+                                                            text:
+                                                                "Hủy hoàn thành",
+                                                            onPressed: () {},
+                                                          )
+                                                    : ButtonFinal(
+                                                        text: "",
                                                         onPressed: () {},
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
                                                       )
-                                                : const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color:
-                                                          Colors.orangeAccent,
-                                                    ),
+                                                : ButtonFinal(
+                                                    text: "Hủy hoàn thành",
+                                                    onPressed: () {},
                                                   )),
                                             Obx(() {
                                               return controller
-                                                      .isLoadStatus.value
+                                                      .isPlacedReceive[i]
                                                   ? controller
-                                                                  .newListDataForReceive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai ==
-                                                              37 ||
-                                                          controller
-                                                                  .newListDataForReceive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai ==
-                                                              40
-                                                      ? TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                                        Colors
-                                                                            .green),
-                                                          ),
-                                                          onPressed: () async {
-                                                            var result = await Get
-                                                                .defaultDialog(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              title:
-                                                                  "Thông báo",
-                                                              content: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: const [
-                                                                  Text(
-                                                                    "Hãy chắc rằng hàng hóa đã được giao nhận",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .orangeAccent,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              confirm:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
-                                                                ),
-                                                                onPressed: () {
-                                                                  controller.postSetRuning(
-                                                                      idList:
-                                                                          "lh",
-                                                                      firstIndex:
-                                                                          i,
-                                                                      id: controller
-                                                                          .newListDataForReceive[
-                                                                              i]
-                                                                          .getData![
-                                                                              k]
-                                                                          .handlingId!,
-                                                                      secondIndex:
-                                                                          k);
-                                                                },
-                                                                child: const Text(
-                                                                    "Xác nhận",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white)),
-                                                              ),
-                                                              cancel:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                        "Hủy"),
-                                                              ),
-                                                            );
-                                                            if (result
-                                                                    is bool &&
-                                                                result ==
-                                                                    true) {
+                                                          .isLoadStatus.value
+                                                      ? controller
+                                                                      .newListDataForReceive[
+                                                                          i]
+                                                                      .getData![
+                                                                          k]
+                                                                      .maTrangThai ==
+                                                                  37 ||
                                                               controller
-                                                                  .newListDataForReceive[
-                                                                      i]
-                                                                  .getData![k];
-                                                            }
-                                                          },
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)),
-                                                        )
-                                                      : TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty.all<
-                                                                        Color>(
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.4)),
-                                                          ),
-                                                          onPressed: () {},
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)))
-                                                  : const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color:
-                                                            Colors.orangeAccent,
-                                                      ),
-                                                    );
+                                                                      .newListDataForReceive[
+                                                                          i]
+                                                                      .getData![
+                                                                          k]
+                                                                      .maTrangThai ==
+                                                                  40
+                                                          ? ButtonSuccess(
+                                                              text:
+                                                                  "Hoàn thành",
+                                                              onPressed: () {
+                                                                Get.defaultDialog(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  title:
+                                                                      "Thông báo",
+                                                                  content:
+                                                                      Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: const [
+                                                                      Text(
+                                                                        "Hãy chắc rằng hàng hóa đã được giao nhận",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.orangeAccent,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  confirm: controller
+                                                                          .isLoading
+                                                                          .value
+                                                                      ? const CircularProgressIndicator(
+                                                                          color:
+                                                                              Colors.orangeAccent,
+                                                                        )
+                                                                      : ElevatedButton(
+                                                                          style:
+                                                                              ButtonStyle(
+                                                                            backgroundColor:
+                                                                                MaterialStateProperty.all<Color>(Colors.orangeAccent),
+                                                                          ),
+                                                                          onPressed:
+                                                                              () {
+                                                                            controller.postSetRuning(
+                                                                                idList: "lh",
+                                                                                firstIndex: i,
+                                                                                id: controller.newListDataForReceive[i].getData![k].handlingId!,
+                                                                                secondIndex: k);
+                                                                          },
+                                                                          child: const Text(
+                                                                              "Xác nhận",
+                                                                              style: TextStyle(color: Colors.white)),
+                                                                        ),
+                                                                  cancel:
+                                                                      ElevatedButton(
+                                                                    style:
+                                                                        ButtonStyle(
+                                                                      backgroundColor: MaterialStateProperty.all<
+                                                                              Color>(
+                                                                          Colors
+                                                                              .orangeAccent),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Get.back();
+                                                                    },
+                                                                    child: const Text(
+                                                                        "Hủy"),
+                                                                  ),
+                                                                );
+                                                              })
+                                                          : ButtonFinal(
+                                                              text:
+                                                                  "Hoàn thành",
+                                                              onPressed: () {})
+                                                      : ButtonFinal(
+                                                          text: "",
+                                                          onPressed: () {})
+                                                  : ButtonFinal(
+                                                      text: "Hoàn thành",
+                                                      onPressed: () {});
                                             })
                                           ],
                                         ),
@@ -1146,62 +914,39 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                   Column(
                                     children: [
                                       Obx(() => controller.isPlacedGive[i]
-                                          ? TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
+                                          ? ButtonComment(
+                                              text: "Đã đến", onPressed: () {})
+                                          : ButtonComment(
+                                              text: "Đến",
                                               onPressed: () {
-                                                print("Give$i");
-                                                // controller.updateReceive(i);
-                                              },
-                                              child: const Text(
-                                                "Đã đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          : TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {
-                                                print("Give$i");
-                                                controller.updateGive(i);
-                                              },
-                                              child: const Text(
-                                                "Đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.orangeAccent),
-                                        ),
-                                        onPressed: () {
-                                          Get.toNamed(
-                                            Routes.SUR_CHANGE_SCREEN,
-                                            arguments: [
-                                              controller.newListDataForGive[i],
-                                              controller
-                                                  .listOrder.value.maChuyen,
-                                              controller.newListDataForGive[i]
-                                                  .getData![0].maDiemTraHang
-                                            ],
-                                          );
-                                        },
-                                        child: const Text("Phụ phí",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                      ),
+                                                controller.updateGive(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemTraHang
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              })),
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForGive[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller.newListDataForGive[i]
+                                                    .getData![0].maDiemTraHang
+                                              ],
+                                            );
+                                          })
                                     ],
                                   )
                                 ],
@@ -1242,314 +987,158 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                             Obx(
                                               () => controller
                                                       .isLoadStatus.value
-                                                  ? controller
+                                                  ? controller.isPlacedGive[i]
+                                                      ? controller
                                                                   .newListDataForGive[
                                                                       i]
                                                                   .getData![k]
-                                                                  .maTrangThai !=
-                                                              18 &&
-                                                          controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              37 &&
-                                                          controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              40 &&
-                                                          controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              17
-                                                      ? const Text(
-                                                          "Đã giao hàng",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                          ),
-                                                        )
-                                                      : controller
-                                                              .isPlacedGive[i]
-                                                          ? Text(
-                                                              "${controller.newListDataForGive[i].getData![k].trangThai}",
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
-                                                          : const Text(
-                                                              "Đang đi giao hàng",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                              ),
-                                                            )
+                                                                  .maTrangThai ==
+                                                              18
+                                                          ? const TextCustom(
+                                                              text:
+                                                                  "Đang giao hàng")
+                                                          : const TextCustom(
+                                                              text:
+                                                                  "Đã giao hàng")
+                                                      : const Text("")
                                                   : Container(),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.NOTE_PENDING_SCREEN,
-                                                  arguments: controller
-                                                      .newListDataForGive[i]
-                                                      .getData![k]
-                                                      .handlingId,
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                  Icons.edit_note_outlined,
-                                                  color: Colors.orangeAccent),
-                                              label: const Text(
-                                                "Ghi chú",
-                                                style: TextStyle(
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.NOTE_PENDING_SCREEN,
+                                                    arguments: controller
+                                                        .newListDataForGive[i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                    Icons.edit_note_outlined,
                                                     color: Colors.orangeAccent),
-                                              ),
-                                            ),
+                                                label: const TextCustom(
+                                                    text: "Ghi chú")),
                                           ],
                                         ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                  Routes.CAMERA,
-                                                  arguments: controller
-                                                      .newListDataForGive[i]
-                                                      .getData![k],
-                                                );
-                                              },
-                                              child: const Text("Chứng từ",
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                            ),
-                                            Obx(() => controller
-                                                    .isLoadStatus.value
-                                                ? controller
+                                            ButtonComment(
+                                                text: "Chứng từ",
+                                                onPressed: () {
+                                                  Get.toNamed(Routes.CAMERA,
+                                                      arguments: [
+                                                        controller
+                                                            .newListDataForGive[
+                                                                i]
+                                                            .getData![k],
+                                                        controller
+                                                            .newListDataForGive[
+                                                                i]
+                                                            .getData![k]
+                                                            .maDiemLayHang
+                                                      ]);
+                                                }),
+                                            Obx(() => controller.isPlacedGive[i]
+                                                ? controller.isLoadStatus.value
+                                                    ? controller
                                                                 .newListDataForGive[
                                                                     i]
                                                                 .getData![k]
                                                                 .maTrangThai ==
-                                                            18 &&
-                                                        controller
-                                                                .newListDataForGive[
-                                                                    i]
-                                                                .getData![k]
-                                                                .maTrangThai !=
-                                                            43
-                                                    ? TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(
-                                                                      Colors
-                                                                          .red),
-                                                        ),
-                                                        onPressed: () {
-                                                          _cancelButton(
-                                                            size: size,
+                                                            18
+                                                        ? ButtonComment(
+                                                            text:
+                                                                "Hủy hoàn thành",
                                                             onPressed: () {
-                                                              if (controller
-                                                                  .formKey
-                                                                  .currentState!
-                                                                  .validate()) {
-                                                                controller.postCancel(
-                                                                    idList:
-                                                                        "lh",
-                                                                    firstIndex:
-                                                                        i,
-                                                                    id: controller
-                                                                        .newListDataForGive[
-                                                                            i]
-                                                                        .getData![
-                                                                            k]
-                                                                        .handlingId!,
-                                                                    secondsIndex:
-                                                                        k);
-                                                              }
-                                                            },
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
-                                                      )
-                                                    : TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.4)),
-                                                        ),
-                                                        onPressed: () {},
-                                                        child: const Text(
-                                                            "Hủy hoàn thành",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white)),
-                                                      )
-                                                : const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color:
-                                                          Colors.orangeAccent,
-                                                    ),
-                                                  )),
+                                                              _cancelButton(
+                                                                size: size,
+                                                                onPressed: () {
+                                                                  if (controller
+                                                                      .formKey
+                                                                      .currentState!
+                                                                      .validate()) {
+                                                                    controller.postCancel(
+                                                                        idList:
+                                                                            "lh",
+                                                                        firstIndex:
+                                                                            i,
+                                                                        id: controller
+                                                                            .newListDataForGive[
+                                                                                i]
+                                                                            .getData![
+                                                                                k]
+                                                                            .handlingId!,
+                                                                        secondsIndex:
+                                                                            k);
+                                                                  }
+                                                                },
+                                                              );
+                                                            })
+                                                        : ButtonFinal(
+                                                            text:
+                                                                "Hủy hoàn thành",
+                                                            onPressed: () {})
+                                                    : ButtonFinal(
+                                                        text: "",
+                                                        onPressed: () {})
+                                                : ButtonFinal(
+                                                    text: "Hủy hoàn thành",
+                                                    onPressed: () {})),
                                             Obx(() {
-                                              return controller
-                                                      .isLoadStatus.value
+                                              return controller.isPlacedGive[i]
                                                   ? controller
+                                                          .isLoadStatus.value
+                                                      ? controller
                                                                   .newListDataForGive[
                                                                       i]
                                                                   .getData![k]
                                                                   .maTrangThai ==
-                                                              18 &&
-                                                          controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai !=
-                                                              43
-                                                      ? TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                                        Colors
-                                                                            .green),
-                                                          ),
-                                                          onPressed: () async {
-                                                            var result = await Get
-                                                                .defaultDialog(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              title:
-                                                                  "Thông báo",
-                                                              content: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: const [
-                                                                  Text(
-                                                                    "Hãy chắc rằng hàng hóa đã được giao nhận",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .orangeAccent,
+                                                              18
+                                                          ? ButtonSuccess(
+                                                              text:
+                                                                  "Hoàn thành",
+                                                              onPressed: () {
+                                                                Get.defaultDialog(
+                                                                    backgroundColor: Colors.white,
+                                                                    title: "Thông báo",
+                                                                    content: Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: const [
+                                                                        TextCustomComment(
+                                                                            text:
+                                                                                "Hãy chắc rằng hàng hóa đã được giao nhận")
+                                                                      ],
                                                                     ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              confirm:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
-                                                                ),
-                                                                onPressed: () {
-                                                                  controller.postSetRuning(
-                                                                      idList:
-                                                                          "th",
-                                                                      firstIndex:
-                                                                          i,
-                                                                      id: controller
-                                                                          .newListDataForGive[
-                                                                              i]
-                                                                          .getData![
-                                                                              k]
-                                                                          .handlingId!,
-                                                                      secondIndex:
-                                                                          k);
-
-                                                                  // controller
-                                                                  //     .toggleCompleteGive(k);
-                                                                },
-                                                                child: const Text(
-                                                                    "Xác nhận",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white)),
-                                                              ),
-                                                              cancel:
-                                                                  ElevatedButton(
-                                                                style:
-                                                                    ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .orangeAccent),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                        "Hủy"),
-                                                              ),
-                                                            );
-                                                            if (result
-                                                                    is bool &&
-                                                                result ==
-                                                                    true) {
-                                                              controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k];
-                                                            }
-                                                          },
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)),
-                                                        )
-                                                      : TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty.all<
-                                                                        Color>(
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.4)),
-                                                          ),
-                                                          onPressed: () {
-                                                            print(controller
-                                                                .newListDataForGive[
-                                                                    i]
-                                                                .getData![k]
-                                                                .maTrangThai);
-                                                          },
-                                                          child: const Text(
-                                                              "Hoàn thành",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white)))
-                                                  : const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color:
-                                                            Colors.orangeAccent,
-                                                      ),
-                                                    );
+                                                                    confirm: Obx(() => controller.isLoading.value
+                                                                        ? const CircularProgressIndicator(
+                                                                            color:
+                                                                                Colors.orangeAccent,
+                                                                          )
+                                                                        : ButtonComment(
+                                                                            text: "Xác nhận",
+                                                                            onPressed: () {
+                                                                              controller.postSetRuning(idList: "th", firstIndex: i, id: controller.newListDataForGive[i].getData![k].handlingId!, secondIndex: k);
+                                                                            })),
+                                                                    cancel: ButtonComment(
+                                                                        text: "Hủy",
+                                                                        onPressed: () {
+                                                                          Get.back();
+                                                                        }));
+                                                              })
+                                                          : ButtonFinal(
+                                                              text:
+                                                                  "Hoàn thành",
+                                                              onPressed: () {})
+                                                      : ButtonFinal(
+                                                          text: "",
+                                                          onPressed: () {})
+                                                  : ButtonFinal(
+                                                      text: "Hoàn thành",
+                                                      onPressed: () {});
                                             })
                                           ],
                                         ),
@@ -1620,60 +1209,40 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                   children: [
                                     Obx(() {
                                       return controller.isPlacedGiveEmpty[i]
-                                          ? TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
-                                              onPressed: () {},
-                                              child: const Text(
-                                                "Đã đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          : TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                            Color>(
-                                                        Colors.orangeAccent),
-                                              ),
+                                          ? ButtonComment(
+                                              text: "Đã đến", onPressed: () {})
+                                          : ButtonComment(
+                                              text: "Đến",
                                               onPressed: () {
-                                                controller.updateGiveEmpty(i);
-                                              },
-                                              child: const Text(
-                                                "Đến",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            );
+                                                controller.updateGiveEmpty(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemTraRong
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              });
                                     }),
-                                    TextButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.orangeAccent),
-                                      ),
-                                      onPressed: () {
-                                        Get.toNamed(Routes.SUR_CHANGE_SCREEN,
-                                            arguments: [
-                                              controller
-                                                  .newListDataForGiveEmpty[i],
-                                              controller
-                                                  .listOrder.value.maChuyen,
-                                              controller
-                                                  .newListDataForGiveEmpty[i]
-                                                  .getData![0]
-                                                  .maDiemTraRong
-                                            ]);
-                                      },
-                                      child: const Text("Phụ phí",
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForGiveEmpty[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForGiveEmpty[i]
+                                                    .getData![0]
+                                                    .maDiemTraRong
+                                              ]);
+                                        })
                                   ],
                                 )
                               ],
@@ -1714,266 +1283,178 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                           ),
                                         ),
                                         Obx(
-                                          () => controller
-                                                          .newListDataForGiveEmpty[
-                                                              i]
-                                                          .getData![k]
-                                                          .maTrangThai ==
-                                                      35 ||
-                                                  controller
-                                                          .newListDataForGiveEmpty[
-                                                              i]
-                                                          .getData![k]
-                                                          .maTrangThai ==
-                                                      36
-                                              ? const Text(
-                                                  "Đã trả rỗng",
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                  ),
-                                                )
-                                              : controller.isPlacedGiveEmpty[i]
-                                                  ? const Text(
-                                                      "Đang trả rỗng",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                      ),
-                                                    )
-                                                  : const Text(
-                                                      "Đang đi trả rỗng",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
+                                          () => controller.isLoadStatus.value
+                                              ? controller.isPlacedGiveEmpty[i]
+                                                  ? controller
+                                                              .newListDataForGiveEmpty[
+                                                                  i]
+                                                              .getData![k]
+                                                              .maTrangThai ==
+                                                          35
+                                                      ? const TextCustom(
+                                                          text: "Đang trả rỗng")
+                                                      : const TextCustom(
+                                                          text: "Đã trả rỗng")
+                                                  : const Text("")
+                                              : Container(),
                                         ),
                                         TextButton.icon(
-                                          onPressed: () {
-                                            Get.toNamed(
-                                                Routes.NOTE_PENDING_SCREEN,
-                                                arguments: [
-                                                  controller
-                                                      .newListDataForGiveEmpty[
-                                                          i]
-                                                      .getData![k]
-                                                      .handlingId,
-                                                  "lr"
-                                                ]);
-                                          },
-                                          icon: const Icon(
-                                              Icons.edit_note_outlined,
-                                              color: Colors.orangeAccent),
-                                          label: const Text(
-                                            "Ghi chú",
-                                            style: TextStyle(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                  Routes.NOTE_PENDING_SCREEN,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForGiveEmpty[
+                                                            i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                    "lr"
+                                                  ]);
+                                            },
+                                            icon: const Icon(
+                                                Icons.edit_note_outlined,
                                                 color: Colors.orangeAccent),
-                                          ),
-                                        ),
+                                            label: const TextCustomComment(
+                                                text: "Ghi chú")),
                                       ],
                                     ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TextButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.orangeAccent),
-                                          ),
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.CAMERA,
-                                              arguments: controller
-                                                  .newListDataForGiveEmpty[i]
-                                                  .getData![k],
-                                            );
-                                          },
-                                          child: const Text("Chứng từ",
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ),
-                                        Obx(() => controller.isLoadStatus.value
-                                            ? controller
+                                        ButtonComment(
+                                            text: "Chứng từ",
+                                            onPressed: () {
+                                              Get.toNamed(Routes.CAMERA,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForGiveEmpty[
+                                                            i]
+                                                        .getData![k],
+                                                    controller
                                                         .newListDataForGiveEmpty[
                                                             i]
                                                         .getData![k]
-                                                        .maTrangThai ==
-                                                    35
-                                                ? TextButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty
-                                                              .all<Color>(
-                                                                  Colors.red),
-                                                    ),
-                                                    onPressed: () {
-                                                      _cancelButton(
-                                                        size: size,
+                                                        .maDiemTraRong
+                                                  ]);
+                                            }),
+                                        Obx(() => controller
+                                                .isPlacedGiveEmpty[i]
+                                            ? controller.isLoadStatus.value
+                                                ? controller
+                                                            .newListDataForGiveEmpty[
+                                                                i]
+                                                            .getData![k]
+                                                            .maTrangThai ==
+                                                        35
+                                                    ? ButtonError(
+                                                        text: "Hủy hoàn thành",
                                                         onPressed: () {
-                                                          if (controller.formKey
-                                                              .currentState!
-                                                              .validate()) {
-                                                            controller.postCancel(
-                                                                idList: "tr",
-                                                                firstIndex: i,
-                                                                id: controller
-                                                                    .newListDataForGiveEmpty[
-                                                                        i]
-                                                                    .getData![k]
-                                                                    .handlingId!,
-                                                                secondsIndex:
-                                                                    k);
-                                                          }
-                                                        },
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                        "Hủy hoàn thành",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  )
-                                                : TextButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty
-                                                              .all<Color>(Colors
-                                                                  .black
-                                                                  .withOpacity(
-                                                                      0.4)),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: const Text(
-                                                        "Hủy hoàn thành",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  )
-                                            : const Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.orangeAccent,
-                                                ),
-                                              )),
+                                                          _cancelButton(
+                                                            size: size,
+                                                            onPressed: () {
+                                                              if (controller
+                                                                  .formKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                controller.postCancel(
+                                                                    idList:
+                                                                        "tr",
+                                                                    firstIndex:
+                                                                        i,
+                                                                    id: controller
+                                                                        .newListDataForGiveEmpty[
+                                                                            i]
+                                                                        .getData![
+                                                                            k]
+                                                                        .handlingId!,
+                                                                    secondsIndex:
+                                                                        k);
+                                                              }
+                                                            },
+                                                          );
+                                                        })
+                                                    : ButtonFinal(
+                                                        text: "Hủy hoàn thành",
+                                                        onPressed: () {})
+                                                : ButtonFinal(
+                                                    text: "", onPressed: () {})
+                                            : ButtonFinal(
+                                                text: "Hủy hoàn thành",
+                                                onPressed: () {})),
                                         Obx(() {
-                                          return controller.isLoadStatus.value
-                                              ? controller
-                                                          .newListDataForGiveEmpty[
-                                                              i]
-                                                          .getData![k]
-                                                          .maTrangThai ==
-                                                      35
-                                                  ? TextButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    Colors
-                                                                        .green),
-                                                      ),
-                                                      onPressed: () async {
-                                                        var result = await Get
-                                                            .defaultDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title: "Thông báo",
-                                                          content: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: const [
-                                                              Text(
-                                                                "Hãy chắc rằng hàng hóa đã được giao nhận",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .orangeAccent,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          confirm:
-                                                              ElevatedButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {
-                                                              controller.postSetRuning(
-                                                                  idList: "tr",
-                                                                  firstIndex: i,
-                                                                  id: controller
-                                                                      .newListDataForGiveEmpty[
-                                                                          i]
-                                                                      .getData![
-                                                                          k]
-                                                                      .handlingId!,
-                                                                  secondIndex:
-                                                                      k);
-
-                                                              // controller
-                                                              //     .toggleCompleteGive(k);
-                                                            },
-                                                            child: const Text(
-                                                                "Xác nhận",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                          cancel:
-                                                              ElevatedButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {
-                                                              Get.back();
-                                                            },
-                                                            child: const Text(
-                                                                "Hủy"),
-                                                          ),
-                                                        );
-                                                        if (result is bool &&
-                                                            result == true) {
-                                                          controller
+                                          return controller.isPlacedGiveEmpty[i]
+                                              ? controller.isLoadStatus.value
+                                                  ? controller
                                                               .newListDataForGiveEmpty[
                                                                   i]
-                                                              .getData![k];
-                                                        }
-                                                      },
-                                                      child: const Text(
-                                                          "Hoàn thành",
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .white)),
-                                                    )
-                                                  : TextButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.4)),
+                                                              .getData![k]
+                                                              .maTrangThai ==
+                                                          35
+                                                      ? ButtonSuccess(
+                                                          text: "Hoàn thành",
+                                                          onPressed: () {
+                                                            Get.defaultDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                title:
+                                                                    "Thông báo",
+                                                                content: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: const [
+                                                                    Text(
+                                                                      "Hãy chắc rằng hàng hóa đã được giao nhận",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .orangeAccent,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                confirm: Obx(() => controller
+                                                                        .isLoading
+                                                                        .value
+                                                                    ? const CircularProgressIndicator(
+                                                                        color: Colors
+                                                                            .orangeAccent,
+                                                                      )
+                                                                    : ButtonComment(
+                                                                        text:
+                                                                            "Xác nhận",
+                                                                        onPressed:
+                                                                            () {
+                                                                          controller.postSetRuning(
+                                                                              idList: "tr",
+                                                                              firstIndex: i,
+                                                                              id: controller.newListDataForGiveEmpty[i].getData![k].handlingId!,
+                                                                              secondIndex: k);
+                                                                        })),
+                                                                cancel:
+                                                                    ButtonComment(
+                                                                        text:
+                                                                            "Hủy",
+                                                                        onPressed:
+                                                                            () {
+                                                                          Get.back();
+                                                                        }));
+                                                          })
+                                                      : ButtonFinal(
+                                                          text: "Hoàn thành",
+                                                          onPressed: () {})
+                                                  : const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color:
+                                                            Colors.orangeAccent,
                                                       ),
-                                                      onPressed: () {},
-                                                      child: const Text(
-                                                          "Hoàn thành",
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .white)))
-                                              : const Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Colors.orangeAccent,
-                                                  ),
-                                                );
+                                                    )
+                                              : ButtonFinal(
+                                                  text: "Hoàn thành",
+                                                  onPressed: () {});
                                         })
                                       ],
                                     ),
@@ -2063,6 +1544,39 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
           Get.back();
         },
         child: const Text("Hủy"),
+      ),
+    );
+  }
+
+  Widget _buttonStatus({
+    required String text,
+    required VoidCallback onPressed,
+    required Color color,
+  }) {
+    return Container(
+      height: 45,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 40,
+            width: 150,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: TextButton(
+              onPressed: onPressed,
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
