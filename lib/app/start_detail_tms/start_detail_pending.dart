@@ -54,66 +54,62 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                         _buildRecive(size),
                         _buildGive(size),
                         _buildGiveEmpty(size),
-                        Obx(() => controller.isLoad.value
-                            ? controller
-                                        .listOrder
-                                        .value
-                                        .getDataHandlingMobiles![length - 1]
-                                        .maTrangThai ==
-                                    36
-                                ? _buttonStatus(
-                                    text: "Kết thúc chuyến",
-                                    onPressed: () {
-                                      Get.defaultDialog(
-                                          backgroundColor: Colors.white,
-                                          title: "Thông báo",
-                                          content: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: const [
-                                              TextCustomComment(
-                                                  text:
-                                                      "Hãy chắc rằng hàng hóa đã được giao nhận")
-                                            ],
-                                          ),
-                                          confirm: Obx(() => controller
-                                                  .isLoading.value
-                                              ? const CircularProgressIndicator(
-                                                  color: Colors.orangeAccent,
-                                                )
-                                              : ButtonComment(
-                                                  text: "Kết thúc chuyến",
-                                                  onPressed: () {
-                                                    controller
-                                                        .postSetRuningTypeFull(
-                                                      handlingId: int.parse(
-                                                        controller
-                                                            .listOrder
-                                                            .value
-                                                            .getDataHandlingMobiles![
-                                                                length - 1]
-                                                            .handlingId
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                  })),
-                                          cancel: ButtonComment(
-                                              text: "Hủy",
-                                              onPressed: () {
-                                                Get.back();
-                                              }));
-                                    },
-                                    color: Colors.orangeAccent)
-                                : _buttonStatus(
-                                    text: "Kêt thúc chuyến",
-                                    onPressed: () {},
-                                    color: Colors.black.withOpacity(0.4),
-                                  )
-                            : _buttonStatus(
-                                text: "Kêt thúc chuyến",
-                                onPressed: () {},
-                                color: Colors.black.withOpacity(0.4),
-                              )),
+                        Obx(
+                          () => controller
+                                      .listOrder
+                                      .value
+                                      .getDataHandlingMobiles![length - 1]
+                                      .maTrangThai ==
+                                  36
+                              ? _buttonStatus(
+                                  text: "Kết thúc chuyến",
+                                  onPressed: () {
+                                    Get.defaultDialog(
+                                        backgroundColor: Colors.white,
+                                        title: "Thông báo",
+                                        content: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            TextCustomComment(
+                                                text:
+                                                    "Hãy chắc rằng hàng hóa đã được giao nhận")
+                                          ],
+                                        ),
+                                        confirm: Obx(() => controller
+                                                .isLoading.value
+                                            ? const CircularProgressIndicator(
+                                                color: Colors.orangeAccent,
+                                              )
+                                            : ButtonComment(
+                                                text: "Kết thúc chuyến",
+                                                onPressed: () {
+                                                  controller
+                                                      .postSetRuningTypeFull(
+                                                    handlingId: int.parse(
+                                                      controller
+                                                          .listOrder
+                                                          .value
+                                                          .getDataHandlingMobiles![
+                                                              length - 1]
+                                                          .handlingId
+                                                          .toString(),
+                                                    ),
+                                                  );
+                                                })),
+                                        cancel: ButtonComment(
+                                            text: "Hủy",
+                                            onPressed: () {
+                                              Get.back();
+                                            }));
+                                  },
+                                  color: Colors.orangeAccent)
+                              : _buttonStatus(
+                                  text: "Kêt thúc chuyến",
+                                  onPressed: () {},
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                        ),
                       ],
                     )
                   : controller.listOrder.value.getDataHandlingMobiles!.isEmpty

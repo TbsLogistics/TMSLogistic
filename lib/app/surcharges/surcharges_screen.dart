@@ -52,30 +52,13 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
             builder: (controller) => Stack(
                   children: [
                     SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: size.height,
-                            child: ListView.builder(
-                              itemCount: 2,
-                              itemBuilder: (ctx, i) {
-                                return i == 0
-                                    ? _buildInputForm(controller)
-                                    : _buildListSurFee(controller, size);
-                              },
-                            ),
-                          ),
+                          _buildInputForm(controller),
+                          _buildListSurFee(controller, size),
                         ],
                       ),
                     ),
-                    // Column(
-                    //   children: [
-                    //     _buildInputForm(controller),
-                    //     _buildListSurFee(controller)
-                    //   ],
-                    // ),
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -86,6 +69,40 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            // SizedBox(
+                            //   height: 45,
+                            //   width: 150,
+                            //   child: ElevatedButton(
+                            //     style: ButtonStyle(
+                            //       backgroundColor: MaterialStateProperty.all(
+                            //           Colors.orangeAccent),
+                            //     ),
+                            //     onPressed: () {
+                            //       if (controller.formKey.currentState!
+                            //           .validate()) {
+                            //         controller.addItem(
+                            //             controller.priceController.text);
+                            //         controller.addSurTimes(
+                            //           price:
+                            //               int.parse(controller.priceText.value),
+                            //           sfId: int.parse(
+                            //               controller.selectedValue.toString()),
+                            //           sfName: controller.subFee.value,
+                            //           note: controller.noteController.text,
+                            //         );
+                            //         controller.addSurFee(
+                            //           price:
+                            //               int.parse(controller.priceText.value),
+                            //           sfId: int.parse(
+                            //               controller.selectedValue.toString()),
+                            //           note: controller.noteController.text,
+                            //         );
+                            //       }
+                            //     },
+                            //     child: const Text('Thêm'),
+                            //   ),
+                            // ),
+                            // const SizedBox(width: 15),
                             SizedBox(
                               height: 45,
                               width: 150,
@@ -114,27 +131,14 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                                           controller.selectedValue.toString()),
                                       note: controller.noteController.text,
                                     );
+                                    controller
+                                        .postData(controller.listSurRegister);
+                                    controller.listSur.value = [];
+                                    controller.itemList.value = [];
+                                    controller.listSurRegisted.value = [];
+                                    controller.priceController.clear();
+                                    controller.noteController.clear();
                                   }
-                                },
-                                child: const Text('Thêm'),
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            SizedBox(
-                              height: 45,
-                              width: 150,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.orangeAccent),
-                                ),
-                                onPressed: () {
-                                  controller
-                                      .postData(controller.listSurRegister);
-                                  controller.listSur.value = [];
-                                  controller.itemList.value = [];
-                                  controller.priceController.clear();
-                                  controller.noteController.clear();
                                 },
                                 child: const Text('Gửi'),
                               ),
@@ -179,41 +183,12 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
   }
 
   Widget _buildListSurFee(SurChangesController controller, Size size) {
-    return Container(
+    return SizedBox(
       height: size.height,
       child: Column(
-        children: [
-          Container(
-            height: 50,
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(
-                25.0,
-              ),
-            ),
-            child: TabBar(
-              controller: controller.tabController,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  25.0,
-                ),
-                color: Colors.orangeAccent.shade200,
-              ),
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              tabs: controller.myTabs,
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: controller.tabController,
-              children: const [
-                ListAddScreen(),
-                ListAddedScreen(),
-              ],
-            ),
-          ),
+        children: const [
+          // ListAddScreen(),
+          ListAddedScreen(),
         ],
       ),
     );
@@ -224,91 +199,192 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       child: Form(
         key: controller.formKey,
-        child: SizedBox(
-          height: 200,
-          // width: 350,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 4,
-                child: FindDropdown<ListSubFeeModel>(
-                  label: "Phụ phí",
-                  onFind: (String filter) => controller.getSubFee(filter),
-                  onChanged: (ListSubFeeModel? data) {
-                    controller.selectedValue.value = data!.subFeeId!;
-                    controller.subFee.value = data.subFeeName!;
-                  },
-                  dropdownBuilder:
-                      (BuildContext context, ListSubFeeModel? item) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Theme.of(context).dividerColor),
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                      ),
-                      child: (item?.subFeeName == null)
-                          ? const ListTile(title: Text("Chọn phụ phí"))
-                          : ListTile(
-                              title: Text(item!.subFeeName!),
-                            ),
-                    );
-                  },
-                  dropdownItemBuilder: (BuildContext context,
-                      ListSubFeeModel item, bool isSelected) {
-                    return Container(
-                      decoration: !isSelected
-                          ? null
-                          : BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor),
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white,
-                            ),
-                      child: ListTile(
-                        selected: isSelected,
-                        title: Text(item.subFeeName!),
-                      ),
-                    );
-                  },
-                ),
+        child: Column(
+          children: [
+            FindDropdown<ListSubFeeModel>(
+              label: "Phụ phí",
+              labelStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-              Expanded(
-                flex: 3,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: controller.priceController,
-                  decoration: const InputDecoration(
-                    hintText: 'Nhập giá',
+              onFind: (String filter) => controller.getSubFee(filter),
+              onChanged: (ListSubFeeModel? data) {
+                controller.selectedValue.value = data!.subFeeId!;
+                controller.subFee.value = data.subFeeName!;
+              },
+              dropdownBuilder: (BuildContext context, ListSubFeeModel? item) {
+                return Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Theme.of(context).dividerColor),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Chưa nhập giá';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    controller.priceText.value = value;
-                  },
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  controller: controller.noteController,
-                  decoration: const InputDecoration(
-                    hintText: 'Nhập ghi chú',
+                  child: (item?.subFeeName == null)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Chọn chứng từ",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.black,
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                item!.subFeeName!.trim(),
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                );
+              },
+              dropdownItemBuilder: (BuildContext context, ListSubFeeModel item,
+                  bool isSelected) {
+                return Container(
+                  decoration: !isSelected
+                      ? null
+                      : BoxDecoration(
+                          border:
+                              Border.all(color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                        ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(item.subFeeName!),
                   ),
-                  onChanged: (value) {
-                    controller.ghichu.value = value;
-                  },
-                ),
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            _inputSubFee(controller),
+            const SizedBox(height: 10),
+            _inputNotes(controller),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _inputSubFee(SurChangesController controller) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: SizedBox(
+            height: 40,
+            child: Row(
+              children: const [
+                Text(
+                  "Giá phụ phí : ",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 8,
+          child: Container(
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border:
+                  Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
+            ),
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              controller: controller.priceController,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(top: 5, left: 10),
+                hintText: 'Nhập giá',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide.none),
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Chưa nhập giá';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                controller.priceText.value = value;
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _inputNotes(SurChangesController controller) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: SizedBox(
+            height: 40,
+            child: Row(
+              children: const [
+                Text(
+                  "Ghi chú : ",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 8,
+          child: Container(
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border:
+                  Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
+            ),
+            child: TextFormField(
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
+              controller: controller.noteController,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(top: 5, left: 10),
+                hintText: 'Nhập ghi chú',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide.none),
+              ),
+              onChanged: (value) {
+                controller.ghichu.value = value;
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 

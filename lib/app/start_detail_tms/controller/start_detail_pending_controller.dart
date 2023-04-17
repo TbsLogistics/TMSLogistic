@@ -92,7 +92,7 @@ class StartDetailPendingController extends GetxController {
   Rx<ListPlaceModel> placeModel = ListPlaceModel().obs;
   RxList<String> listPlace = <String>[].obs;
 
-  var isLoad = false.obs;
+  var isLoad = true.obs;
   var isLoadStatus = true.obs;
   var isLoading = false.obs;
 
@@ -835,7 +835,6 @@ class StartDetailPendingController extends GetxController {
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoad(true);
-        isLoading(false);
       });
     }
   }
@@ -875,6 +874,10 @@ class StartDetailPendingController extends GetxController {
       if (e.response!.statusCode == 400) {
         getSnack(message: "${e.response!.data["message"]}");
       }
+    } finally {
+      Future.delayed(const Duration(seconds: 1), () {
+        isLoad(true);
+      });
     }
   }
 
@@ -977,10 +980,10 @@ class StartDetailPendingController extends GetxController {
       gps: locationMessage.value,
     );
     var jsonData = geoLocation.toJson();
-    print("jsonData : $jsonData");
+
     var url =
         "${AppConstants.urlBase}/api/Mobile/LogGPS?maChuyen=${listOrder.value.maChuyen}";
-    print("url : $url");
+
     try {
       response = await dio.post(
         url,
@@ -990,7 +993,7 @@ class StartDetailPendingController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data;
-        getSnack(message: "${response.data["message"]}");
+        // getSnack(message: "${response.data["message"]}");
       }
     } on DioError catch (e) {
       print(e.response!.statusCode);

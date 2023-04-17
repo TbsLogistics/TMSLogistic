@@ -31,6 +31,8 @@ class SurChangesController extends GetxController
 
   var maChuyen = "".obs;
 
+  var isLoadListSur = false.obs;
+
   Rx<ListDataForPlaceModel> listDataForPlace = ListDataForPlaceModel().obs;
   var idPlaced = 0.obs;
 
@@ -46,15 +48,20 @@ class SurChangesController extends GetxController
 
   @override
   void onInit() {
+    isLoadListSur(false);
     var dataForPlace = Get.arguments[0] as ListDataForPlaceModel;
     var idChuyen = Get.arguments[1];
     var maPlace = Get.arguments[2];
+    print([maPlace, idChuyen]);
     maChuyen.value = idChuyen;
     listDataForPlace.value = dataForPlace;
     idPlaced.value = maPlace;
     listSubFeeIncurred();
     tabController = TabController(vsync: this, length: myTabs.length);
     formKey;
+    Future.delayed(const Duration(seconds: 1), () {
+      isLoadListSur(true);
+    });
     super.onInit();
   }
 
@@ -95,21 +102,23 @@ class SurChangesController extends GetxController
     print("listSurRegister : $listSurRegister");
   }
 
-  void postData(List<SurFeeModel> listSur) async {
+  void postData(List<SurFeeModel> listSurRegister) async {
     var dio = Dio();
     Response response;
     var tokens = await SharePerApi().getToken();
+
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
 
     var url =
         "${AppConstants.urlBase}/api/Mobile/CreateSFeeByTCommand?maChuyen=${maChuyen.value}";
+    // print(listSurRegister);
     try {
       response = await dio.post(
         url,
         options: Options(headers: headers),
-        data: jsonEncode(listSur),
+        data: jsonEncode(listSurRegister),
       );
 
       if (response.statusCode == 200) {
@@ -118,6 +127,8 @@ class SurChangesController extends GetxController
 
         Get.back();
         getSnack(message: data["message"]);
+
+        listSurRegisted.refresh();
       } else {
         // Handle error
       }

@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/controller/start_detail_finished_controller.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/widgets/button_success.dart';
+import 'package:tbs_logistics_tms/app/start_detail_tms/widgets/text_success.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
+import 'package:tbs_logistics_tms/config/routes/pages.dart';
 
 class FinishedDetailTms extends GetView<StartDetailFinishedController> {
   const FinishedDetailTms({super.key});
@@ -32,1160 +35,755 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
       ),
       body: GetBuilder<StartDetailFinishedController>(
         init: StartDetailFinishedController(),
-        builder: (controller) => Container(
-          height: size.height,
-          width: size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Column(
-            children: [
-              Obx(
-                () {
-                  return Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          controller.listReceiveEmpty.isNotEmpty
-                              ? _buildReciveEmpty()
-                              : Container(),
-                          controller.listReceive.isNotEmpty
-                              ? _buildRecive()
-                              : Container(),
-                          controller.listGive.isNotEmpty
-                              ? _buildGive()
-                              : Container(),
-                          controller.listGiveEmpty.isNotEmpty
-                              ? _buildGiveEmpty()
-                              : Container(),
-                        ],
+        builder: (controller) {
+          var length =
+              controller.listOrder.value.getDataHandlingMobiles!.length;
+          return SingleChildScrollView(
+            child: Container(
+                // height: size.height,
+                width: size.width,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: controller.isLoad.value
+                    ? Column(children: [
+                        _buildReciveEmpty(size),
+                        _buildRecive(size),
+                        _buildGive(size),
+                        _buildGiveEmpty(size),
+                      ])
+                    : Container()),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buttonStatus({
+    required String text,
+    required VoidCallback onPressed,
+    required Color color,
+  }) {
+    return Container(
+      height: 45,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 40,
+            width: 150,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: TextButton(
+              onPressed: onPressed,
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReciveEmpty(Size size) {
+    return Column(
+      children: [
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: controller.newListDataForReceiveEmpty.length,
+            itemBuilder: (ctx, i) {
+              return ExpandableNotifier(
+                  child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: ScrollOnExpand(
+                    child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      ExpandablePanel(
+                        theme: const ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapBodyToExpand: true,
+                          tapBodyToCollapse: true,
+                          hasIcon: false,
+                        ),
+                        header: Container(
+                          // color: Colors.indigoAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(children: [
+                              ExpandableIcon(
+                                theme: const ExpandableThemeData(
+                                  expandIcon: Icons.arrow_right,
+                                  collapseIcon: Icons.arrow_drop_down,
+                                  iconColor: Color(0xffE18229),
+                                  iconSize: 35.0,
+                                  iconRotationAngle: math.pi / 2,
+                                  iconPadding: EdgeInsets.only(right: 5),
+                                  hasIcon: false,
+                                ),
+                              ),
+                              Expanded(
+                                  child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${controller.newListDataForReceiveEmpty[i].place}",
+                                        style: const TextStyle(
+                                            color: Colors.orangeAccent,
+                                            fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForReceiveEmpty[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForReceiveEmpty[
+                                                        i]
+                                                    .getData![0]
+                                                    .maDiemLayRong
+                                              ],
+                                            );
+                                          }),
+                                    ],
+                                  )
+                                ],
+                              )),
+                            ]),
+                          ),
+                        ),
+                        collapsed: Container(),
+                        expanded: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          height: (120 *
+                              double.parse(controller
+                                  .newListDataForReceiveEmpty[i].getData!.length
+                                  .toString())),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller
+                                .newListDataForReceiveEmpty[i].getData!.length,
+                            itemBuilder: (ctx, k) {
+                              return Card(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  height: 110,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${controller.newListDataForReceiveEmpty[i].getData![k].maVanDon}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                Routes.NOTE_PENDING_SCREEN,
+                                                arguments: controller
+                                                    .newListDataForReceiveEmpty[
+                                                        i]
+                                                    .getData![k]
+                                                    .handlingId,
+                                              );
+                                            },
+                                            icon: const Icon(
+                                                Icons.edit_note_outlined,
+                                                color: Colors.orangeAccent),
+                                            label: const TextCustomComment(
+                                                text: "Ghi chú"),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          ButtonComment(
+                                            text: "Chứng từ",
+                                            onPressed: () {
+                                              Get.toNamed(Routes.CAMERA,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForReceiveEmpty[
+                                                            i]
+                                                        .getData![k],
+                                                    controller
+                                                        .newListDataForReceiveEmpty[
+                                                            i]
+                                                        .getData![k]
+                                                        .maDiemLayRong
+                                                  ]);
+                                            },
+                                          ),
+                                          ButtonFinal(
+                                            text: "Hủy hoàn thành",
+                                            onPressed: () {},
+                                          ),
+                                          ButtonFinal(
+                                            text: "Hoàn thành",
+                                            onPressed: () {},
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ));
+            }),
+      ],
+    );
+  }
+
+  Widget _buildRecive(Size size) {
+    return Column(
+      children: [
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: controller.newListDataForReceive.length,
+            itemBuilder: (ctx, i) {
+              return ExpandableNotifier(
+                  child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: ScrollOnExpand(
+                    child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      ExpandablePanel(
+                        theme: const ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapBodyToExpand: true,
+                          tapBodyToCollapse: true,
+                          hasIcon: false,
+                        ),
+                        header: Container(
+                          // color: Colors.indigoAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(children: [
+                              ExpandableIcon(
+                                theme: const ExpandableThemeData(
+                                  expandIcon: Icons.arrow_right,
+                                  collapseIcon: Icons.arrow_drop_down,
+                                  iconColor: Color(0xffE18229),
+                                  iconSize: 35.0,
+                                  iconRotationAngle: math.pi / 2,
+                                  iconPadding: EdgeInsets.only(right: 5),
+                                  hasIcon: false,
+                                ),
+                              ),
+                              Expanded(
+                                  child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        controller
+                                            .newListDataForReceive[i].place!
+                                            .trim(),
+                                        style: const TextStyle(
+                                            color: Colors.orangeAccent,
+                                            fontSize: 18),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForReceive[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForReceive[i]
+                                                    .getData![0]
+                                                    .maDiemLayHang
+                                              ],
+                                            );
+                                          })
+                                    ],
+                                  ),
+                                ],
+                              )),
+                            ]),
+                          ),
+                        ),
+                        collapsed: Container(),
+                        expanded: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          height: (120 *
+                              double.parse(controller
+                                  .newListDataForReceive[i].getData!.length
+                                  .toString())),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller
+                                .newListDataForReceive[i].getData!.length,
+                            itemBuilder: (ctx, k) {
+                              return Card(
+                                child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    height: 110,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${controller.newListDataForReceive[i].getData![k].maVanDon}",
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            TextButton.icon(
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.NOTE_PENDING_SCREEN,
+                                                    arguments: controller
+                                                        .newListDataForReceive[
+                                                            i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                    Icons.edit_note_outlined,
+                                                    color: Colors.orangeAccent),
+                                                label: const TextCustom(
+                                                  text: "Ghi chú",
+                                                )),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ButtonComment(
+                                                text: "Chứng từ",
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.CAMERA,
+                                                    arguments: [
+                                                      controller
+                                                          .newListDataForReceive[
+                                                              i]
+                                                          .getData![k],
+                                                      controller
+                                                          .newListDataForReceive[
+                                                              i]
+                                                          .getData![k]
+                                                          .maDiemLayHang,
+                                                    ],
+                                                  );
+                                                }),
+                                            ButtonFinal(
+                                              text: "Hủy hoàn thành",
+                                              onPressed: () {},
+                                            ),
+                                            ButtonFinal(
+                                              text: "Hoàn thành",
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ));
+            })
+      ],
+    );
+  }
+
+  Widget _buildGive(Size size) {
+    return Column(
+      children: [
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: controller.newListDataForGive.length,
+            itemBuilder: (ctx, i) {
+              return ExpandableNotifier(
+                  child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: ScrollOnExpand(
+                    child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      ExpandablePanel(
+                        theme: const ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapBodyToExpand: true,
+                          tapBodyToCollapse: true,
+                          hasIcon: false,
+                        ),
+                        header: Container(
+                          // color: Colors.indigoAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(children: [
+                              ExpandableIcon(
+                                theme: const ExpandableThemeData(
+                                  expandIcon: Icons.arrow_right,
+                                  collapseIcon: Icons.arrow_drop_down,
+                                  iconColor: Color(0xffE18229),
+                                  iconSize: 35.0,
+                                  iconRotationAngle: math.pi / 2,
+                                  iconPadding: EdgeInsets.only(right: 5),
+                                  hasIcon: false,
+                                ),
+                              ),
+                              Expanded(
+                                  child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${controller.newListDataForGive[i].place}",
+                                    style: const TextStyle(
+                                        color: Colors.orangeAccent,
+                                        fontSize: 18),
+                                  ),
+                                  Column(
+                                    children: [
+                                      ButtonComment(
+                                          text: "Phụ phí",
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForGive[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller.newListDataForGive[i]
+                                                    .getData![0].maDiemTraHang
+                                              ],
+                                            );
+                                          })
+                                    ],
+                                  )
+                                ],
+                              )),
+                            ]),
+                          ),
+                        ),
+                        collapsed: Container(),
+                        expanded: Container(
+                          height: (120 *
+                              double.parse(controller
+                                  .newListDataForGive[i].getData!.length
+                                  .toString())),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller
+                                .newListDataForGive[i].getData!.length,
+                            itemBuilder: (ctx, k) {
+                              return Card(
+                                child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    height: 110,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${controller.newListDataForGive[i].getData![k].maVanDon}",
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            TextButton.icon(
+                                                onPressed: () {
+                                                  Get.toNamed(
+                                                    Routes.NOTE_PENDING_SCREEN,
+                                                    arguments: controller
+                                                        .newListDataForGive[i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                    Icons.edit_note_outlined,
+                                                    color: Colors.orangeAccent),
+                                                label: const TextCustom(
+                                                    text: "Ghi chú")),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ButtonComment(
+                                                text: "Chứng từ",
+                                                onPressed: () {
+                                                  Get.toNamed(Routes.CAMERA,
+                                                      arguments: [
+                                                        controller
+                                                            .newListDataForGive[
+                                                                i]
+                                                            .getData![k],
+                                                        controller
+                                                            .newListDataForGive[
+                                                                i]
+                                                            .getData![k]
+                                                            .maDiemLayHang
+                                                      ]);
+                                                }),
+                                            ButtonFinal(
+                                                text: "Hủy hoàn thành",
+                                                onPressed: () {}),
+                                            ButtonFinal(
+                                                text: "Hoàn thành",
+                                                onPressed: () {}),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ));
+            })
+      ],
+    );
+  }
+
+  Widget _buildGiveEmpty(Size size) {
+    return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: controller.newListDataForGiveEmpty.length,
+        itemBuilder: (ctx, i) {
+          return ExpandableNotifier(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: ScrollOnExpand(
+                child: Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ExpandablePanel(
+                    theme: const ExpandableThemeData(
+                      headerAlignment: ExpandablePanelHeaderAlignment.center,
+                      tapBodyToExpand: true,
+                      tapBodyToCollapse: true,
+                      hasIcon: false,
+                    ),
+                    header: Container(
+                      // color: Colors.indigoAccent,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(children: [
+                          ExpandableIcon(
+                            theme: const ExpandableThemeData(
+                              expandIcon: Icons.arrow_right,
+                              collapseIcon: Icons.arrow_drop_down,
+                              iconColor: Color(0xffE18229),
+                              iconSize: 35.0,
+                              iconRotationAngle: math.pi / 2,
+                              iconPadding: EdgeInsets.only(right: 5),
+                              hasIcon: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${controller.newListDataForGiveEmpty[i].place}",
+                                  style: const TextStyle(
+                                      color: Colors.orangeAccent, fontSize: 18),
+                                ),
+                                Column(
+                                  children: [
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(Routes.SUR_CHANGE_SCREEN,
+                                              arguments: [
+                                                controller
+                                                    .newListDataForGiveEmpty[i],
+                                                controller
+                                                    .listOrder.value.maChuyen,
+                                                controller
+                                                    .newListDataForGiveEmpty[i]
+                                                    .getData![0]
+                                                    .maDiemTraRong
+                                              ]);
+                                        })
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ]),
                       ),
                     ),
-                  );
-                },
+                    collapsed: Container(
+                      color: Colors.amberAccent,
+                    ),
+                    expanded: Container(
+                      height: (120 *
+                          double.parse(controller
+                              .newListDataForGiveEmpty[i].getData!.length
+                              .toString())),
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller
+                            .newListDataForGiveEmpty[i].getData!.length,
+                        itemBuilder: (ctx, k) {
+                          return Card(
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                height: 110,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${controller.newListDataForGiveEmpty[i].getData![k].maVanDon}",
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        TextButton.icon(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                  Routes.NOTE_PENDING_SCREEN,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForGiveEmpty[
+                                                            i]
+                                                        .getData![k]
+                                                        .handlingId,
+                                                    "lr"
+                                                  ]);
+                                            },
+                                            icon: const Icon(
+                                                Icons.edit_note_outlined,
+                                                color: Colors.orangeAccent),
+                                            label: const TextCustomComment(
+                                                text: "Ghi chú")),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ButtonComment(
+                                            text: "Chứng từ",
+                                            onPressed: () {
+                                              Get.toNamed(Routes.CAMERA,
+                                                  arguments: [
+                                                    controller
+                                                        .newListDataForGiveEmpty[
+                                                            i]
+                                                        .getData![k],
+                                                    controller
+                                                        .newListDataForGiveEmpty[
+                                                            i]
+                                                        .getData![k]
+                                                        .maDiemTraRong
+                                                  ]);
+                                            }),
+                                        ButtonFinal(
+                                            text: "Hủy hoàn thành",
+                                            onPressed: () {}),
+                                        ButtonFinal(
+                                            text: "Hoàn thành",
+                                            onPressed: () {})
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildReciveEmpty() {
-    return ExpandableNotifier(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ScrollOnExpand(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: <Widget>[
-                ExpandablePanel(
-                  theme: const ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    tapBodyToExpand: true,
-                    tapBodyToCollapse: true,
-                    hasIcon: false,
-                  ),
-                  header: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(children: [
-                        ExpandableIcon(
-                          theme: const ExpandableThemeData(
-                            expandIcon: Icons.arrow_right,
-                            collapseIcon: Icons.arrow_drop_down,
-                            iconColor: Color(0xffE18229),
-                            iconSize: 35.0,
-                            iconRotationAngle: math.pi / 2,
-                            iconPadding: EdgeInsets.only(right: 5),
-                            hasIcon: false,
-                          ),
-                        ),
-                        const Expanded(
-                            child: Text(
-                          "Điểm lấy rỗng",
-                          style: TextStyle(
-                              color: Colors.orangeAccent, fontSize: 18),
-                        )),
-                      ]),
-                    ),
-                  ),
-                  collapsed: Container(),
-                  expanded: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: (180 *
-                        double.parse(controller.listDataForReceiveEmpty.length
-                            .toString())),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          //List điểm lấy rỗng
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  controller.listDataForReceiveEmpty.length,
-                              itemBuilder: (ctx, i) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  height: (180 *
-                                      double.parse(controller
-                                          .listDataForReceiveEmpty[i]
-                                          .getData!
-                                          .length
-                                          .toString())),
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${controller.listReceiveEmpty[i].diemLayRong}",
-                                            style: const TextStyle(
-                                              color: Colors.orangeAccent,
-                                              fontSize: 14,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      // List vận đơn tại địa điểm
-                                      Expanded(child: Obx(() {
-                                        return ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: controller
-                                              .listDataForReceiveEmpty[i]
-                                              .getData!
-                                              .length,
-                                          itemBuilder: (ctx, j) {
-                                            return Card(
-                                              child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 5),
-                                                  height: 170,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "${controller.listDataForReceiveEmpty[i].getData![j].maVanDon}",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            controller.listReceiveEmpty[j]
-                                                                        .loaiVanDon ==
-                                                                    "xuat"
-                                                                ? "Giao hàng"
-                                                                : "Nhận hàng",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                          TextButton.icon(
-                                                            onPressed: () {},
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .edit_note_outlined,
-                                                                color: Colors
-                                                                    .orangeAccent),
-                                                            label: const Text(
-                                                              "Ghi chú",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .orangeAccent),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Chứng từ",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                          Obx(() {
-                                                            return controller
-                                                                    .isLoadStatus
-                                                                    .value
-                                                                ? controller
-                                                                            .listOrder
-                                                                            .value
-                                                                            .getDataHandlingMobiles![j]
-                                                                            .maTrangThai ==
-                                                                        17
-                                                                    ? TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor:
-                                                                              MaterialStateProperty.all<Color>(Colors.red),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child:
-                                                                            const Text(
-                                                                          "Hủy hoàn thành",
-                                                                          style:
-                                                                              TextStyle(color: Colors.white),
-                                                                        ),
-                                                                      )
-                                                                    : TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                              .black
-                                                                              .withOpacity(0.4)),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hủy hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      )
-                                                                : const Center(
-                                                                    child:
-                                                                        CircularProgressIndicator(),
-                                                                  );
-                                                          }),
-                                                          Obx(() => controller
-                                                                  .isLoadStatus
-                                                                  .value
-                                                              ? controller
-                                                                          .listOrder
-                                                                          .value
-                                                                          .getDataHandlingMobiles![
-                                                                              j]
-                                                                          .maTrangThai ==
-                                                                      17
-                                                                  ? TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor:
-                                                                            MaterialStateProperty.all<Color>(Colors.green),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child:
-                                                                          const Text(
-                                                                        "Hoàn thành",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white),
-                                                                      ),
-                                                                    )
-                                                                  : TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                            .black
-                                                                            .withOpacity(0.4)),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child:
-                                                                          const Text(
-                                                                        "Hoàn thành",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white),
-                                                                      ),
-                                                                    )
-                                                              : const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .orangeAccent,
-                                                                  ),
-                                                                ))
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  )),
-                                            );
-                                          },
-                                        );
-                                      }))
-                                    ],
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRecive() {
-    return ExpandableNotifier(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ScrollOnExpand(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: <Widget>[
-                ExpandablePanel(
-                  theme: const ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    tapBodyToExpand: true,
-                    tapBodyToCollapse: true,
-                    hasIcon: false,
-                  ),
-                  header: Container(
-                    // color: Colors.indigoAccent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(children: [
-                        ExpandableIcon(
-                          theme: const ExpandableThemeData(
-                            expandIcon: Icons.arrow_right,
-                            collapseIcon: Icons.arrow_drop_down,
-                            iconColor: Color(0xffE18229),
-                            iconSize: 35.0,
-                            iconRotationAngle: math.pi / 2,
-                            iconPadding: EdgeInsets.only(right: 5),
-                            hasIcon: false,
-                          ),
-                        ),
-                        const Expanded(
-                            child: Text(
-                          "Điểm lấy hàng",
-                          style: TextStyle(
-                              color: Colors.orangeAccent, fontSize: 18),
-                        )),
-                      ]),
-                    ),
-                  ),
-                  collapsed: Container(),
-                  expanded: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: (180 *
-                        double.parse(
-                            controller.listDataForReceive.length.toString())),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          //List điểm lấy rỗng
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.listDataForReceive.length,
-                              itemBuilder: (ctx, i) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  height: (180 *
-                                      double.parse(controller
-                                          .listDataForReceive[i].getData!.length
-                                          .toString())),
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      Expanded(child: Obx(() {
-                                        return ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: controller
-                                              .listDataForReceive[i]
-                                              .getData!
-                                              .length,
-                                          itemBuilder: (ctx, j) {
-                                            return Card(
-                                              child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 5),
-                                                  height: 170,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "${controller.listDataForReceive[i].getData![j].maVanDon}",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            controller
-                                                                        .listDataForReceive[
-                                                                            i]
-                                                                        .getData![
-                                                                            j]
-                                                                        .loaiVanDon ==
-                                                                    "xuat"
-                                                                ? "Giao hàng"
-                                                                : "Nhận hàng",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                          TextButton.icon(
-                                                            onPressed: () {},
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .edit_note_outlined,
-                                                                color: Colors
-                                                                    .orangeAccent),
-                                                            label: const Text(
-                                                              "Ghi chú",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .orangeAccent),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Chứng từ",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                          Obx(() {
-                                                            return controller
-                                                                    .isLoadStatus
-                                                                    .value
-                                                                ? controller.listOrder.value.getDataHandlingMobiles![j].maTrangThai ==
-                                                                            40 ||
-                                                                        controller.listOrder.value.getDataHandlingMobiles![j].maTrangThai ==
-                                                                            37
-                                                                    ? TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor:
-                                                                              MaterialStateProperty.all<Color>(Colors.red),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hủy hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      )
-                                                                    : TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                              .black
-                                                                              .withOpacity(0.4)),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child:
-                                                                            const Text(
-                                                                          "Hủy hoành thành",
-                                                                          style:
-                                                                              TextStyle(color: Colors.white),
-                                                                        ),
-                                                                      )
-                                                                : const Center(
-                                                                    child:
-                                                                        CircularProgressIndicator(
-                                                                      color: Colors
-                                                                          .orangeAccent,
-                                                                    ),
-                                                                  );
-                                                          }),
-                                                          Obx(() {
-                                                            return controller
-                                                                    .isLoadStatus
-                                                                    .value
-                                                                ? controller.listOrder.value.getDataHandlingMobiles![j].maTrangThai ==
-                                                                            40 ||
-                                                                        controller.listOrder.value.getDataHandlingMobiles![j].maTrangThai ==
-                                                                            37
-                                                                    ? TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor:
-                                                                              MaterialStateProperty.all<Color>(Colors.green),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      )
-                                                                    : TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                              .black
-                                                                              .withOpacity(0.4)),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      )
-                                                                : const Center(
-                                                                    child:
-                                                                        CircularProgressIndicator(
-                                                                      color: Colors
-                                                                          .orangeAccent,
-                                                                    ),
-                                                                  );
-                                                          })
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  )),
-                                            );
-                                          },
-                                        );
-                                      }))
-                                    ],
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGive() {
-    return ExpandableNotifier(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ScrollOnExpand(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: <Widget>[
-                ExpandablePanel(
-                  theme: const ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    tapBodyToExpand: true,
-                    tapBodyToCollapse: true,
-                    hasIcon: false,
-                  ),
-                  header: Container(
-                    // color: Colors.indigoAccent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(children: [
-                        ExpandableIcon(
-                          theme: const ExpandableThemeData(
-                            expandIcon: Icons.arrow_right,
-                            collapseIcon: Icons.arrow_drop_down,
-                            iconColor: Color(0xffE18229),
-                            iconSize: 35.0,
-                            iconRotationAngle: math.pi / 2,
-                            iconPadding: EdgeInsets.only(right: 5),
-                            hasIcon: false,
-                          ),
-                        ),
-                        const Expanded(
-                            child: Text(
-                          "Điểm trả hàng",
-                          style: TextStyle(
-                              color: Colors.orangeAccent, fontSize: 18),
-                        )),
-                      ]),
-                    ),
-                  ),
-                  collapsed: Container(),
-                  expanded: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: (180 *
-                        double.parse(
-                          controller.listDataForGive.length.toString(),
-                        )),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          //List điểm lấy rỗng
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.listDataForGive.length,
-                              itemBuilder: (ctx, i) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  height: (180 *
-                                      double.parse(controller
-                                          .listDataForGive[i].getData!.length
-                                          .toString())),
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller
-                                                .listDataForGive[i].place!,
-                                            style: const TextStyle(
-                                              color: Colors.orangeAccent,
-                                              fontSize: 14,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      // List vận đơn tại địa điểm
-                                      Expanded(child: Obx(() {
-                                        return ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: controller
-                                              .listDataForGive[i]
-                                              .getData!
-                                              .length,
-                                          itemBuilder: (ctx, j) {
-                                            return Card(
-                                              child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 5),
-                                                  height: 170,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "${controller.listDataForGive[i].getData![j].maVanDon}",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            controller
-                                                                        .listDataForGive[
-                                                                            i]
-                                                                        .getData![
-                                                                            j]
-                                                                        .loaiVanDon ==
-                                                                    "xuat"
-                                                                ? "Giao hàng"
-                                                                : "Nhận hàng",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                          TextButton.icon(
-                                                            onPressed: () {},
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .edit_note_outlined,
-                                                                color: Colors
-                                                                    .orangeAccent),
-                                                            label: const Text(
-                                                              "Ghi chú",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .orangeAccent),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .orangeAccent),
-                                                            ),
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Chứng từ",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                          Obx(() => controller
-                                                                  .isLoadStatus
-                                                                  .value
-                                                              ? controller
-                                                                          .listOrder
-                                                                          .value
-                                                                          .getDataHandlingMobiles![
-                                                                              j]
-                                                                          .maTrangThai ==
-                                                                      18
-                                                                  ? TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor:
-                                                                            MaterialStateProperty.all<Color>(Colors.red),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child: const Text(
-                                                                          "Hủy hoàn thành",
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)),
-                                                                    )
-                                                                  : TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                            .black
-                                                                            .withOpacity(0.4)),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child: const Text(
-                                                                          "Hủy hoàn thành",
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)),
-                                                                    )
-                                                              : const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .orangeAccent,
-                                                                  ),
-                                                                )),
-                                                          Obx(() {
-                                                            return controller
-                                                                    .isLoadStatus
-                                                                    .value
-                                                                ? controller
-                                                                            .listOrder
-                                                                            .value
-                                                                            .getDataHandlingMobiles![
-                                                                                j]
-                                                                            .maTrangThai ==
-                                                                        18
-                                                                    ? TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor:
-                                                                              MaterialStateProperty.all<Color>(Colors.green),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      )
-                                                                    : TextButton(
-                                                                        style:
-                                                                            ButtonStyle(
-                                                                          backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                              .black
-                                                                              .withOpacity(0.4)),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child: const Text(
-                                                                            "Hoàn thành",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)))
-                                                                : const Center(
-                                                                    child:
-                                                                        CircularProgressIndicator(
-                                                                      color: Colors
-                                                                          .orangeAccent,
-                                                                    ),
-                                                                  );
-                                                          })
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  )),
-                                            );
-                                          },
-                                        );
-                                      }))
-                                    ],
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGiveEmpty() {
-    return ExpandableNotifier(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ScrollOnExpand(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: <Widget>[
-                ExpandablePanel(
-                  theme: const ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    tapBodyToExpand: true,
-                    tapBodyToCollapse: true,
-                    hasIcon: false,
-                  ),
-                  header: Container(
-                    // color: Colors.indigoAccent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(children: [
-                        ExpandableIcon(
-                          theme: const ExpandableThemeData(
-                            expandIcon: Icons.arrow_right,
-                            collapseIcon: Icons.arrow_drop_down,
-                            iconColor: Color(0xffE18229),
-                            iconSize: 35.0,
-                            iconRotationAngle: math.pi / 2,
-                            iconPadding: EdgeInsets.only(right: 5),
-                            hasIcon: false,
-                          ),
-                        ),
-                        const Expanded(
-                            child: Text(
-                          "Điểm trả rỗng",
-                          style: TextStyle(
-                              color: Colors.orangeAccent, fontSize: 18),
-                        )),
-                      ]),
-                    ),
-                  ),
-                  collapsed: Container(),
-                  expanded: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: (180 *
-                        double.parse(
-                          controller.listDataForGiveEmpty.length.toString(),
-                        )),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          //List điểm lấy rỗng
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.listDataForGiveEmpty.length,
-                              itemBuilder: (ctx, i) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  height: (180 *
-                                      double.parse(controller
-                                          .listDataForGiveEmpty[i]
-                                          .getData!
-                                          .length
-                                          .toString())),
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller
-                                                .listDataForGiveEmpty[i].place!,
-                                            style: const TextStyle(
-                                              color: Colors.orangeAccent,
-                                              fontSize: 14,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      // List vận đơn tại địa điểm
-                                      Expanded(child: Obx(() {
-                                        return ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: controller
-                                              .listDataForGiveEmpty[i]
-                                              .getData!
-                                              .length,
-                                          itemBuilder: (ctx, j) {
-                                            return Card(
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 5),
-                                                height: 170,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "${controller.listDataForGiveEmpty[i].getData![j].maVanDon}",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          controller
-                                                                      .listDataForGiveEmpty[
-                                                                          i]
-                                                                      .getData![
-                                                                          j]
-                                                                      .loaiVanDon ==
-                                                                  "xuat"
-                                                              ? "Giao hàng"
-                                                              : "Nhận hàng",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14,
-                                                          ),
-                                                        ),
-                                                        TextButton.icon(
-                                                          onPressed: () {},
-                                                          icon: const Icon(
-                                                              Icons
-                                                                  .edit_note_outlined,
-                                                              color: Colors
-                                                                  .orangeAccent),
-                                                          label: const Text(
-                                                            "Ghi chú",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .orangeAccent),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        TextButton(
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                                        Colors
-                                                                            .orangeAccent),
-                                                          ),
-                                                          onPressed: () {},
-                                                          child: const Text(
-                                                            "Chứng từ",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        Obx(
-                                                          () => controller
-                                                                  .isLoadStatus
-                                                                  .value
-                                                              ? controller
-                                                                          .listOrder
-                                                                          .value
-                                                                          .getDataHandlingMobiles![
-                                                                              j]
-                                                                          .maTrangThai ==
-                                                                      35
-                                                                  ? TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor:
-                                                                            MaterialStateProperty.all<Color>(Colors.red),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child:
-                                                                          const Text(
-                                                                        "Hủy hoàn thành",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                  : TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                            .black
-                                                                            .withOpacity(0.3)),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child:
-                                                                          const Text(
-                                                                        "Hủy hoàn thành",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white),
-                                                                      ),
-                                                                    )
-                                                              : const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .orangeAccent,
-                                                                  ),
-                                                                ),
-                                                        ),
-                                                        Obx(() => controller
-                                                                .isLoadStatus
-                                                                .value
-                                                            ? controller
-                                                                        .listOrder
-                                                                        .value
-                                                                        .getDataHandlingMobiles![
-                                                                            j]
-                                                                        .maTrangThai ==
-                                                                    35
-                                                                ? TextButton(
-                                                                    style:
-                                                                        ButtonStyle(
-                                                                      backgroundColor: MaterialStateProperty.all<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .green),
-                                                                    ),
-                                                                    onPressed:
-                                                                        () {},
-                                                                    child:
-                                                                        const Text(
-                                                                      "Hoàn thành",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                : TextButton(
-                                                                    style:
-                                                                        ButtonStyle(
-                                                                      backgroundColor: MaterialStateProperty.all<Color>(Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                              0.3)),
-                                                                    ),
-                                                                    onPressed:
-                                                                        () {},
-                                                                    child:
-                                                                        const Text(
-                                                                      "Hoàn thành",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  )
-                                                            : const Center(
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  color: Colors
-                                                                      .orangeAccent,
-                                                                ),
-                                                              )),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }))
-                                    ],
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+            )),
+          ));
+        });
   }
 }

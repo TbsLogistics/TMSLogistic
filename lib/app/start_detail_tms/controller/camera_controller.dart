@@ -21,8 +21,8 @@ class CameraController extends GetxController {
 
   RxList<ListImageModel> image = <ListImageModel>[].obs;
   TextEditingController noteController = TextEditingController();
-  TextEditingController contController = TextEditingController();
-  TextEditingController sealController = TextEditingController();
+  TextEditingController contController = TextEditingController(text: "");
+  TextEditingController sealController = TextEditingController(text: "");
 
   @override
   void onInit() {
@@ -52,6 +52,13 @@ class CameraController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
+    print([
+      selectedValue.value,
+      handlingId.value,
+      contController.text,
+      sealController.text
+    ]);
+
     var url = "${AppConstants.urlBase}/api/Mobile/CreateDoc";
     final formData = FormData.fromMap({
       'note': note,
@@ -76,8 +83,10 @@ class CameraController extends GetxController {
         getSnack(message: response.data["message"]);
       }
     } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
-        getSnack(message: e.response!.data["message"]);
+        // getSnack(message: e.response!.data["message"]);
+        getSnack(message: e.response!.data);
       }
     }
   }
