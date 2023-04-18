@@ -395,8 +395,14 @@ class StartDetailPendingController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data;
+
+        // String content = data["message"];
+        // var lengthContent = content.length;
+        // var customMessage = content.substring(30, lengthContent);
+
         Get.back();
-        getSnack(message: "${data["message"]}");
+        // getSnack(message: "${data["message"]}");
+        getDialog(message: data["message"]);
 
         switch (listOrder.value.maPTVC) {
           case "LCL":
@@ -1021,5 +1027,48 @@ class StartDetailPendingController extends GetxController {
         ),
       ),
     );
+  }
+
+  void getDialog({required String message}) {
+    Get.defaultDialog(
+        backgroundColor: Colors.white,
+        title: "Thông báo",
+        titleStyle: const TextStyle(
+          color: Colors.red,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        content: Column(
+          children: [
+            Text(
+              message,
+              style: const TextStyle(
+                color: Colors.orangeAccent,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        confirm: Container(
+          decoration: BoxDecoration(
+            color: Colors.orangeAccent,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(width: 1, color: Colors.white),
+          ),
+          height: 45,
+          width: 120,
+          child: TextButton(
+            child: const Text(
+              "Xác nhận",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ));
   }
 }

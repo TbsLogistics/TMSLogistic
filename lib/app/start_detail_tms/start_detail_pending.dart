@@ -1423,6 +1423,8 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                             "Xác nhận",
                                                                         onPressed:
                                                                             () {
+                                                                          print(
+                                                                              Get.isSnackbarOpen);
                                                                           controller.postSetRuning(
                                                                               idList: "tr",
                                                                               firstIndex: i,

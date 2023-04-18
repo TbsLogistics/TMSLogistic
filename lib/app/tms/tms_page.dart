@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tbs_logistics_tms/app/change_password/change_password.dart';
-import 'package:tbs_logistics_tms/app/googe_map/google_map.dart';
+
+import 'package:tbs_logistics_tms/app/tms/modules/drawer.dart';
 
 import 'package:tbs_logistics_tms/app/tms/view/tms_finished.dart';
 import 'package:tbs_logistics_tms/app/tms/view/tms_pending.dart';
@@ -11,7 +11,6 @@ import 'package:tbs_logistics_tms/app/tms/view/tms_working.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
 
 import 'package:tbs_logistics_tms/app/tms/controller/tms_controller.dart';
-import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class TmsPage extends GetView<TmsController> {
   const TmsPage({super.key});
@@ -43,49 +42,7 @@ class TmsPage extends GetView<TmsController> {
             //   ),
             // ],
           ),
-          drawer: Drawer(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        height: size.height * 0.3,
-                        color: Colors.green,
-                        child: const Center(
-                          child: Text("Username"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      ListTile(
-                        onTap: () async {
-                          await SharePerApi().postLogout();
-                        },
-                        title: const Text("Logout"),
-                        leading: const Icon(
-                          Icons.logout_outlined,
-                        ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Get.to(() => ChangePasswordScreen());
-                        },
-                        title: const Text("Chang PassWord"),
-                        leading: const Icon(
-                          Icons.language_outlined,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          drawer: const DrawerScreen(),
           body: GetBuilder<TmsController>(
             init: TmsController(),
             builder: (controller) => Container(

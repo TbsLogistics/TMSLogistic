@@ -21,8 +21,8 @@ class CameraController extends GetxController {
 
   RxList<ListImageModel> image = <ListImageModel>[].obs;
   TextEditingController noteController = TextEditingController();
-  TextEditingController contController = TextEditingController(text: "");
-  TextEditingController sealController = TextEditingController(text: "");
+  TextEditingController contController = TextEditingController();
+  TextEditingController sealController = TextEditingController();
 
   @override
   void onInit() {
@@ -34,8 +34,6 @@ class CameraController extends GetxController {
     transportId.value = int.parse(idTransport.toString());
     handlingId.value = int.parse(idHanlding.toString());
     idPlaced.value = idPlacing;
-    print(idPlaced.value);
-
     getListImage();
     getImage();
     super.onInit();
@@ -83,7 +81,7 @@ class CameraController extends GetxController {
         getSnack(message: response.data["message"]);
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      // print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
         // getSnack(message: e.response!.data["message"]);
         getSnack(message: e.response!.data);

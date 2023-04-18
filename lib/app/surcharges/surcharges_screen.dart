@@ -48,107 +48,93 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
           ),
         ),
         body: GetBuilder<SurChangesController>(
-            init: SurChangesController(),
-            builder: (controller) => Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          _buildInputForm(controller),
-                          _buildListSurFee(controller, size),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      child: Container(
-                        height: 55,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // SizedBox(
-                            //   height: 45,
-                            //   width: 150,
-                            //   child: ElevatedButton(
-                            //     style: ButtonStyle(
-                            //       backgroundColor: MaterialStateProperty.all(
-                            //           Colors.orangeAccent),
-                            //     ),
-                            //     onPressed: () {
-                            //       if (controller.formKey.currentState!
-                            //           .validate()) {
-                            //         controller.addItem(
-                            //             controller.priceController.text);
-                            //         controller.addSurTimes(
-                            //           price:
-                            //               int.parse(controller.priceText.value),
-                            //           sfId: int.parse(
-                            //               controller.selectedValue.toString()),
-                            //           sfName: controller.subFee.value,
-                            //           note: controller.noteController.text,
-                            //         );
-                            //         controller.addSurFee(
-                            //           price:
-                            //               int.parse(controller.priceText.value),
-                            //           sfId: int.parse(
-                            //               controller.selectedValue.toString()),
-                            //           note: controller.noteController.text,
-                            //         );
-                            //       }
-                            //     },
-                            //     child: const Text('Thêm'),
-                            //   ),
-                            // ),
-                            // const SizedBox(width: 15),
-                            SizedBox(
-                              height: 45,
-                              width: 150,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.orangeAccent),
-                                ),
-                                onPressed: () {
-                                  if (controller.formKey.currentState!
-                                      .validate()) {
-                                    controller.addItem(
-                                        controller.priceController.text);
-                                    controller.addSurTimes(
-                                      price:
-                                          int.parse(controller.priceText.value),
-                                      sfId: int.parse(
-                                          controller.selectedValue.toString()),
-                                      sfName: controller.subFee.value,
-                                      note: controller.noteController.text,
-                                    );
-                                    controller.addSurFee(
-                                      price:
-                                          int.parse(controller.priceText.value),
-                                      sfId: int.parse(
-                                          controller.selectedValue.toString()),
-                                      note: controller.noteController.text,
-                                    );
-                                    controller
-                                        .postData(controller.listSurRegister);
-                                    controller.listSur.value = [];
-                                    controller.itemList.value = [];
-                                    controller.listSurRegisted.value = [];
-                                    controller.priceController.clear();
-                                    controller.noteController.clear();
-                                  }
-                                },
-                                child: const Text('Gửi'),
-                              ),
-                            ),
-                          ],
+          init: SurChangesController(),
+          builder: (controller) => SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildInputForm(controller),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Danh sách đã phụ phí đã thêm : ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
-                )),
+                ),
+                const SizedBox(height: 15),
+                _buildListSurFee(controller, size, day, hour),
+                Container(
+                  height: 55,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 45,
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.orangeAccent),
+                          ),
+                          onPressed: () {
+                            if (controller.formKey.currentState!.validate()) {
+                              controller
+                                  .addItem(controller.priceController.text);
+                              controller.addSurTimes(
+                                price: int.parse(controller.priceText.value),
+                                sfId: int.parse(
+                                    controller.selectedValue.toString()),
+                                sfName: controller.subFee.value,
+                                note: controller.noteController.text,
+                              );
+                              controller.addSurFee(
+                                price: int.parse(controller.priceText.value),
+                                sfId: int.parse(
+                                    controller.selectedValue.toString()),
+                                note: controller.noteController.text,
+                              );
+                              controller.postData(controller.listSurRegister);
+                              controller.listSur.value = [];
+                              controller.itemList.value = [];
+                              controller.listSurRegisted.value = [];
+                              controller.priceController.clear();
+                              controller.noteController.clear();
+                            }
+                          },
+                          child: Obx(
+                            () => controller.listSurRegisted.isNotEmpty
+                                ? const Text(
+                                    'Thêm',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Gửi',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -166,8 +152,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
           side: const BorderSide(
             color: Color(0xFFF3BD60),
           ),
-
-          borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: ListTile(
           style: ListTileStyle.drawer,
@@ -182,16 +167,61 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
     );
   }
 
-  Widget _buildListSurFee(SurChangesController controller, Size size) {
-    return SizedBox(
-      height: size.height,
-      child: Column(
-        children: const [
-          // ListAddScreen(),
-          ListAddedScreen(),
-        ],
-      ),
-    );
+  Widget _buildListSurFee(SurChangesController controller, Size size,
+      DateFormat day, DateFormat hour) {
+    return Obx(() => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: controller.listSurRegisted.length,
+            itemBuilder: (ctx, i) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide:
+                      const BorderSide(color: Colors.orangeAccent, width: 1),
+                ),
+                child: ListTile(
+                  title: Text(
+                    "${controller.listSurRegisted[i].subFee}",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    " ${NumberFormat.simpleCurrency(locale: 'vi-VN', decimalDigits: 0).format(controller.listSurRegisted[i].price)}",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${controller.listSurRegisted[i].trangThai}",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        "${day.format(DateTime.parse(controller.listSurRegisted[i].createdDate.toString()))} ${hour.format(DateTime.parse(controller.listSurRegisted[i].createdDate.toString()))}",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ));
   }
 
   Widget _buildInputForm(SurChangesController controller) {
@@ -227,7 +257,7 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                             Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
-                                "Chọn chứng từ",
+                                "Chọn phụ phí",
                                 style: TextStyle(fontSize: 15),
                               ),
                             ),
@@ -284,107 +314,113 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
   }
 
   Widget _inputSubFee(SurChangesController controller) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: SizedBox(
-            height: 40,
-            child: Row(
-              children: const [
-                Text(
-                  "Giá phụ phí : ",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 8,
-          child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border:
-                  Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
-            ),
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              controller: controller.priceController,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(top: 5, left: 10),
-                hintText: 'Nhập giá',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide.none),
+    return SizedBox(
+      height: 40,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              height: 40,
+              child: Row(
+                children: const [
+                  Text(
+                    "Giá phụ phí : ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
               ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Chưa nhập giá';
-                }
-                return null;
-              },
-              onChanged: (value) {
-                controller.priceText.value = value;
-              },
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 8,
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border:
+                    Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
+              ),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: controller.priceController,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 5, left: 10),
+                  hintText: 'Nhập giá',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Chưa nhập giá';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  controller.priceText.value = value;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _inputNotes(SurChangesController controller) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: SizedBox(
-            height: 40,
-            child: Row(
-              children: const [
-                Text(
-                  "Ghi chú : ",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 8,
-          child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border:
-                  Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
-            ),
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.words,
-              controller: controller.noteController,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(top: 5, left: 10),
-                hintText: 'Nhập ghi chú',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide.none),
+    return SizedBox(
+      height: 40,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              height: 40,
+              child: Row(
+                children: const [
+                  Text(
+                    "Ghi chú : ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
               ),
-              onChanged: (value) {
-                controller.ghichu.value = value;
-              },
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 8,
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border:
+                    Border.all(width: 1, color: Colors.black.withOpacity(0.4)),
+              ),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                controller: controller.noteController,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 5, left: 10),
+                  hintText: 'Nhập ghi chú',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none),
+                ),
+                onChanged: (value) {
+                  controller.ghichu.value = value;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -418,7 +454,6 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
               Text(price),
             ],
           ),
-          Column(),
         ],
       ),
     );

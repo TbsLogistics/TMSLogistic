@@ -1,8 +1,14 @@
 {
-    "place": "DONG NAI",
-    "getData": [
-        {
-            "id": 1
-        }
-    ]
+    "sub": "JWTToken",
+    "jti": "e42e7e0a-b098-428f-98c8-75f86a58da49",
+    "iat": " 4/18/2023 6: 54: 18 AM",
+    "UserId": 35,
+    "UserName": 1515000012,
+    "FullName": "Nguyễn Quốc Tuấn",
+    "Department": "KH",
+    "AccType": "NCC",
+    "Role": 12,
+    "exp": 1681811658,
+    "iss": "TBSLogistics",
+    "aud": "TMSClient"
 }

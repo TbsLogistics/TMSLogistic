@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:tbs_logistics_tms/app/tms/model/user_model.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
 import 'package:tbs_logistics_tms/config/model/tms_orders_model.dart';
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
@@ -14,6 +15,8 @@ class TmsController extends GetxController
     with GetSingleTickerProviderStateMixin {
   var dio = Dio();
   late Response response;
+
+  Rx<UserModel> user = UserModel().obs;
 
   final List<Tab> myTabs = <Tab>[
     const Tab(text: 'Lệnh chờ'),
@@ -32,11 +35,16 @@ class TmsController extends GetxController
   void getUser() async {
     var token = await SharePerApi().getToken();
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    user.value = UserModel.fromJson(decodedToken);
+    print(decodedToken);
+    print(user.value);
   }
 
   Future<List<TmsOrdersModel>> getData(
       {required String id, required String status}) async {
     var token = await SharePerApi().getToken();
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
     var url =
         "${AppConstants.urlBase}/api/Mobile/GetDataTransport?driver=$id&isCompleted=$status";
     Map<String, dynamic> headers = {
