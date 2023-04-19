@@ -190,13 +190,22 @@ class _CameraScreenState extends State<CameraScreen> {
                                       final String filePath = imageFile!.path;
                                       final List<int> binaryData =
                                           await fileToBinary(filePath);
+
                                       // getCurrentLocation();
 
-                                      controller.uploadImages(
-                                        docType: controller.selectedValue.value,
-                                        file: filePath,
-                                        note: controller.noteController.text,
-                                      );
+                                      // ignore: unrelated_type_equality_checks
+                                      if (controller.selectedValue.value !=
+                                          "") {
+                                        controller.uploadImages(
+                                          docType:
+                                              controller.selectedValue.value,
+                                          file: filePath,
+                                          note: controller.noteController.text,
+                                        );
+                                      } else {
+                                        Get.snackbar(
+                                            "title", "Chọn loại chứng từ !");
+                                      }
                                     },
                                     child: const Text(
                                       'Gửi',
@@ -521,5 +530,25 @@ class _CameraScreenState extends State<CameraScreen> {
     setState(() {
       locationMessage = "Latitude: $lat and Longitude: $long";
     });
+  }
+
+  void getSnack({required String message}) {
+    Get.snackbar(
+      "",
+      "",
+      backgroundColor: Colors.white,
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

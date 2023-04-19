@@ -92,7 +92,7 @@ class StartDetailPendingController extends GetxController {
   Rx<ListPlaceModel> placeModel = ListPlaceModel().obs;
   RxList<String> listPlace = <String>[].obs;
 
-  var isLoad = true.obs;
+  var isLoad = false.obs;
   var isLoadStatus = true.obs;
   var isLoading = false.obs;
 
@@ -532,9 +532,16 @@ class StartDetailPendingController extends GetxController {
                         .getData![secondIndex]
                         .maTrangThai) {
                       case 18:
-                        newListDataForGive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 35;
+                        for (var i = 0;
+                            i < newListDataForGive[firstIndex].getData!.length;
+                            i++) {
+                          newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai = 35;
+                        }
+                        // newListDataForGive[firstIndex]
+                        //     .getData![secondIndex]
+                        //     .maTrangThai = 35;
                         break;
                       default:
                     }
@@ -645,11 +652,20 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 18:
-                    listOrder
-                        .value
-                        .getDataHandlingMobiles![
-                            listOrder.value.getDataHandlingMobiles!.length - 1]
-                        .maTrangThai = 36;
+                    // isLoad(false);
+                    // listOrder
+                    //     .value
+                    //     .getDataHandlingMobiles![
+                    //         listOrder.value.getDataHandlingMobiles!.length - 1]
+                    //     .maTrangThai = 36;
+                    // isLoad(true);
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      newListDataForGive[firstIndex].getData![i].maTrangThai =
+                          36;
+                    }
+
                     break;
                   default:
                 }
@@ -877,6 +893,7 @@ class StartDetailPendingController extends GetxController {
         isLoad(true);
       }
     } on DioError catch (e) {
+      print(e.response!.statusCode);
       if (e.response!.statusCode == 400) {
         getSnack(message: "${e.response!.data["message"]}");
       }

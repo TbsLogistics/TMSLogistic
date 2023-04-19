@@ -50,24 +50,18 @@ class CameraController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    print([
-      selectedValue.value,
-      handlingId.value,
-      contController.text,
-      sealController.text
-    ]);
 
     var url = "${AppConstants.urlBase}/api/Mobile/CreateDoc";
     final formData = FormData.fromMap({
-      'note': note,
-      // 'transportId': transportId.value,
-      'docType': selectedValue.value,
       'handlingId': handlingId.value,
-      'files':
-          await MultipartFile.fromFile(file, filename: file.split("/").last),
+      'docType': selectedValue.value,
+      'note': note,
       'contNo': contController.text,
       'sealNp': sealController.text,
+      'fileImage':
+          await MultipartFile.fromFile(file, filename: file.split("/").last),
     });
+
     try {
       response = await dio.post(
         url,
@@ -81,10 +75,10 @@ class CameraController extends GetxController {
         getSnack(message: response.data["message"]);
       }
     } on DioError catch (e) {
-      // print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
-        // getSnack(message: e.response!.data["message"]);
-        getSnack(message: e.response!.data);
+        getSnack(message: e.response!.data["message"]);
+      } else if (e.response!.statusCode == 500) {
+        getSnack(message: "Lỗi máy chủ");
       }
     }
   }
