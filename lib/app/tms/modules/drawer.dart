@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/change_password/change_password.dart';
 import 'package:tbs_logistics_tms/app/tms/controller/tms_controller.dart';
+import 'package:tbs_logistics_tms/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -133,7 +134,10 @@ class DrawerScreen extends StatelessWidget {
                   ),
                   ListTile(
                     onTap: () {
-                      Get.to(() => ChangePasswordScreen());
+                      Get.toNamed(
+                        Routes.CHANGE_PASSWORD__FULL_SCREEN,
+                        arguments: controller.user.value.userName,
+                      );
                     },
                     title: const Text(
                       "Đổi mật khẩu",

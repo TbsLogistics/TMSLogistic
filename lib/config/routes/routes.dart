@@ -23,4 +23,6 @@ abstract class Routes {
   static const CAMERA = "/CAMERA";
   //SUR_CHANGE_SCREEN
   static const SUR_CHANGE_SCREEN = "/SUR_CHANGE_SCREEN";
+  //CHANGE_PASSWORD__FULL_SCREEN
+  static const CHANGE_PASSWORD__FULL_SCREEN = "/CHANGE_PASSWORD__FULL_SCREEN";
 }

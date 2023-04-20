@@ -113,7 +113,7 @@ class SurChangesController extends GetxController
 
     var url =
         "${AppConstants.urlBase}/api/Mobile/CreateSFeeByTCommand?maChuyen=${maChuyen.value}";
-    // print(listSurRegister);
+    print("listSurRegister : ${listSurRegister[0].sfId}");
     try {
       response = await dio.post(
         url,
@@ -124,9 +124,10 @@ class SurChangesController extends GetxController
       if (response.statusCode == 200) {
         // Handle success
         var data = response.data;
+        String message = data["message"];
 
         Get.back();
-        getSnack(message: data["message"]);
+        getSnack(message: message.trim());
 
         listSurRegisted.refresh();
       } else {

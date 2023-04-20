@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tbs_logistics_tms/app/change_password/change_password.dart';
 import 'package:tbs_logistics_tms/app/start_detail_tms/modules/camera_screen.dart';
 import 'package:tbs_logistics_tms/app/login/login_screen.dart';
 import 'package:tbs_logistics_tms/app/splash/splash_screen.dart';
@@ -61,6 +62,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.SUR_CHANGE_SCREEN,
       page: () => const SurChangesScreen(),
+    ),
+    //CHANGE_PASSWORD__FULL_SCREEN
+    GetPage(
+      name: Routes.CHANGE_PASSWORD__FULL_SCREEN,
+      page: () => ChangePasswordScreen(),
     ),
   ];
 }

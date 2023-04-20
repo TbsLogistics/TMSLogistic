@@ -379,8 +379,6 @@ class StartDetailPendingController extends GetxController {
 
     isLoadStatus(false);
 
-    isLoad(false);
-
     isLoading(true);
 
     var url =
@@ -420,9 +418,31 @@ class StartDetailPendingController extends GetxController {
                                     .getData!
                                     .length;
                             i++) {
-                          newListDataForReceiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 37;
+                          if (newListDataForReceiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              17) {
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 37;
+                          }
+                        }
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i <
+                                newListDataForReceiveEmpty[firstIndex]
+                                    .getData!
+                                    .length;
+                            i++) {
+                          if (newListDataForReceiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
                         }
                         break;
                       default:
@@ -433,14 +453,34 @@ class StartDetailPendingController extends GetxController {
                         .getData![secondIndex]
                         .maTrangThai) {
                       case 37:
-                        newListDataForReceive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 18;
+                        if (newListDataForReceive[firstIndex]
+                                .getData![secondIndex]
+                                .maTrangThai ==
+                            37) {
+                          newListDataForReceive[firstIndex]
+                              .getData![secondIndex]
+                              .maTrangThai = 18;
+                        }
                         break;
                       case 40:
-                        newListDataForReceive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 18;
+                        if (newListDataForReceive[firstIndex]
+                                .getData![secondIndex]
+                                .maTrangThai ==
+                            40) {
+                          newListDataForReceive[firstIndex]
+                              .getData![secondIndex]
+                              .maTrangThai = 18;
+                        }
+                        break;
+                      case 46:
+                        if (newListDataForReceive[firstIndex]
+                                .getData![secondIndex]
+                                .maTrangThai ==
+                            46) {
+                          newListDataForReceive[firstIndex]
+                              .getData![secondIndex]
+                              .maTrangThai = 46;
+                        }
                         break;
                       default:
                     }
@@ -453,9 +493,28 @@ class StartDetailPendingController extends GetxController {
                         for (var i = 0;
                             i < newListDataForGive[firstIndex].getData!.length;
                             i++) {
-                          newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 36;
+                          if (newListDataForGive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              18) {
+                            newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 36;
+                          }
+                        }
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i < newListDataForGive[firstIndex].getData!.length;
+                            i++) {
+                          if (newListDataForGive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
                         }
                         break;
                       default:
@@ -466,9 +525,26 @@ class StartDetailPendingController extends GetxController {
                         .getData![secondIndex]
                         .maTrangThai) {
                       case 35:
-                        newListDataForGiveEmpty[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 20;
+                        if (newListDataForGiveEmpty[firstIndex]
+                                .getData![secondIndex]
+                                .maTrangThai ==
+                            35) {
+                          newListDataForGiveEmpty[firstIndex]
+                              .getData![secondIndex]
+                              .maTrangThai = 20;
+                        }
+
+                        break;
+                      case 46:
+                        if (newListDataForGiveEmpty[firstIndex]
+                                .getData![secondIndex]
+                                .maTrangThai ==
+                            46) {
+                          newListDataForGiveEmpty[firstIndex]
+                              .getData![secondIndex]
+                              .maTrangThai = 46;
+                        }
+
                         break;
                       default:
                     }
@@ -488,9 +564,31 @@ class StartDetailPendingController extends GetxController {
                                     .getData!
                                     .length;
                             i++) {
-                          newListDataForReceiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 37;
+                          if (newListDataForReceiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              17) {
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 37;
+                          }
+                        }
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i <
+                                newListDataForReceiveEmpty[firstIndex]
+                                    .getData!
+                                    .length;
+                            i++) {
+                          if (newListDataForReceiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
                         }
                         break;
                       default:
@@ -507,9 +605,31 @@ class StartDetailPendingController extends GetxController {
                                     .getData!
                                     .length;
                             i++) {
-                          newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 18;
+                          if (newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              37) {
+                            newListDataForReceive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 18;
+                          }
+                        }
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i <
+                                newListDataForReceive[firstIndex]
+                                    .getData!
+                                    .length;
+                            i++) {
+                          if (newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForReceive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
                         }
                         break;
                       case 40:
@@ -519,9 +639,14 @@ class StartDetailPendingController extends GetxController {
                                     .getData!
                                     .length;
                             i++) {
-                          newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 18;
+                          if (newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              40) {
+                            newListDataForReceive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 18;
+                          }
                         }
                         break;
                       default:
@@ -535,13 +660,29 @@ class StartDetailPendingController extends GetxController {
                         for (var i = 0;
                             i < newListDataForGive[firstIndex].getData!.length;
                             i++) {
-                          newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 35;
+                          if (newListDataForGive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              18) {
+                            newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 35;
+                          }
                         }
-                        // newListDataForGive[firstIndex]
-                        //     .getData![secondIndex]
-                        //     .maTrangThai = 35;
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i < newListDataForGive[firstIndex].getData!.length;
+                            i++) {
+                          if (newListDataForGive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
+                        }
                         break;
                       default:
                     }
@@ -557,11 +698,32 @@ class StartDetailPendingController extends GetxController {
                                     .getData!
                                     .length;
                             i++) {
-                          newListDataForGiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 20;
+                          if (newListDataForGiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              35) {
+                            newListDataForGiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 20;
+                          }
                         }
-
+                        break;
+                      case 46:
+                        for (var i = 0;
+                            i <
+                                newListDataForGiveEmpty[firstIndex]
+                                    .getData!
+                                    .length;
+                            i++) {
+                          if (newListDataForGiveEmpty[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              46) {
+                            newListDataForGiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai = 46;
+                          }
+                        }
                         break;
                       default:
                     }
@@ -577,24 +739,47 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 37:
-                    for (var j = 0; j < newListDataForReceive.length; j++) {
+                    if (newListDataForReceive[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai ==
+                        37) {
                       for (var i = 0;
-                          i < newListDataForReceive[j].getData!.length;
+                          i < newListDataForReceive[firstIndex].getData!.length;
                           i++) {
-                        newListDataForReceive[j].getData![i].maTrangThai = 18;
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
                       }
                     }
                     break;
                   case 40:
+                    if (newListDataForReceive[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai ==
+                        40) {
+                      for (var i = 0;
+                          i < newListDataForReceive[firstIndex].getData!.length;
+                          i++) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+                    break;
+                  case 46:
                     for (var i = 0;
                         i < newListDataForReceive[firstIndex].getData!.length;
                         i++) {
-                      newListDataForReceive[firstIndex]
-                          .getData![i]
-                          .maTrangThai = 18;
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 46;
+                      }
                     }
                     break;
-
                   default:
                 }
                 break;
@@ -603,9 +788,31 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 18:
-                    newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 20;
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      newListDataForGive[firstIndex].getData![i].maTrangThai =
+                          20;
+                      // listOrder
+                      //     .value
+                      //     .getDataHandlingMobiles![
+                      //         listOrder.value.getDataHandlingMobiles!.length -
+                      //             1]
+                      //     .maTrangThai = 36;
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            46;
+                      }
+                    }
                     break;
                   default:
                 }
@@ -616,34 +823,38 @@ class StartDetailPendingController extends GetxController {
             break;
           case "FTL":
             switch (idList) {
-              case "lr":
-                switch (newListDataForReceiveEmpty[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 17:
-                    newListDataForReceiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 37;
-                    break;
-
-                  default:
-                }
-                break;
               case "lh":
                 switch (newListDataForReceive[firstIndex]
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 37:
-                    newListDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 18;
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          37) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
                     break;
                   case 40:
-                    newListDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 18;
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          40) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
                     break;
-
                   default:
                 }
                 break;
@@ -652,36 +863,39 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 18:
-                    // isLoad(false);
-                    // listOrder
-                    //     .value
-                    //     .getDataHandlingMobiles![
-                    //         listOrder.value.getDataHandlingMobiles!.length - 1]
-                    //     .maTrangThai = 36;
-                    // isLoad(true);
                     for (var i = 0;
                         i < newListDataForGive[firstIndex].getData!.length;
                         i++) {
-                      newListDataForGive[firstIndex].getData![i].maTrangThai =
-                          36;
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          18) {
+                        listOrder
+                            .value
+                            .getDataHandlingMobiles![
+                                listOrder.value.getDataHandlingMobiles!.length -
+                                    1]
+                            .maTrangThai = 36;
+                      }
                     }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            46;
+                      }
+                    }
+                    break;
+                  default:
+                }
+                break;
 
-                    break;
-                  default:
-                }
-                break;
-              case "tr":
-                switch (newListDataForGiveEmpty[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 35:
-                    newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 20;
-                    break;
-                  default:
-                }
-                break;
               default:
             }
             break;
@@ -693,9 +907,38 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 17:
-                    newListDataForReceiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 37;
+                    for (var i = 0;
+                        i <
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData!
+                                .length;
+                        i++) {
+                      if (newListDataForReceiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          17) {
+                        newListDataForReceiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 37;
+                      }
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i <
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData!
+                                .length;
+                        i++) {
+                      if (newListDataForReceiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForReceiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 46;
+                      }
+                    }
                     break;
 
                   default:
@@ -706,14 +949,46 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 37:
-                    newListDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 18;
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          37) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
                     break;
                   case 40:
-                    listDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 18;
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          40) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 46;
+                      }
+                    }
                     break;
 
                   default:
@@ -724,14 +999,53 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 18:
-                    newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 35;
-                    listOrder
-                        .value
-                        .getDataHandlingMobiles![
-                            listOrder.value.getDataHandlingMobiles!.length - 1]
-                        .maTrangThai = 36;
+                    if (newListDataForGive[firstIndex]
+                            .getData![secondIndex]
+                            .loaiVanDon ==
+                        "nhap") {
+                      for (var i = 0;
+                          i < newListDataForGive[firstIndex].getData!.length;
+                          i++) {
+                        if (newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            18) {
+                          newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai = 35;
+                        }
+                      }
+                    } else {
+                      for (var i = 0;
+                          i < newListDataForGive[firstIndex].getData!.length;
+                          i++) {
+                        if (newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            18) {
+                          listOrder
+                              .value
+                              .getDataHandlingMobiles![listOrder
+                                      .value.getDataHandlingMobiles!.length -
+                                  1]
+                              .maTrangThai = 36;
+                        }
+                      }
+                    }
+
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            46;
+                      }
+                    }
                     break;
                   default:
                 }
@@ -741,9 +1055,32 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 35:
-                    newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 20;
+                    for (var i = 0;
+                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          35) {
+                        newListDataForGiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 20;
+                      }
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 46;
+                      }
+                    }
                     break;
 
                   default:
@@ -765,7 +1102,6 @@ class StartDetailPendingController extends GetxController {
       }
     } finally {
       Future.delayed(const Duration(seconds: 2), () {
-        isLoad(true);
         isLoading(false);
         isLoadStatus(true);
       });
@@ -783,7 +1119,8 @@ class StartDetailPendingController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    isLoad(false);
+    // isLoad(false);
+    isLoadStatus(false);
     var url =
         "${AppConstants.urlBase}/api/Mobile/CancelHandling?handlingId=$id";
     Get.back(result: true);
@@ -801,7 +1138,7 @@ class StartDetailPendingController extends GetxController {
               case 17:
                 listDataForReceiveEmpty[firstIndex]
                     .getData![secondsIndex]
-                    .maTrangThai = 20;
+                    .maTrangThai = 46;
                 break;
 
               default:
@@ -814,12 +1151,12 @@ class StartDetailPendingController extends GetxController {
               case 37:
                 listDataForReceive[firstIndex]
                     .getData![secondsIndex]
-                    .maTrangThai = 20;
+                    .maTrangThai = 46;
                 break;
               case 40:
                 listDataForReceive[firstIndex]
                     .getData![secondsIndex]
-                    .maTrangThai = 20;
+                    .maTrangThai = 46;
                 break;
 
               default:
@@ -831,7 +1168,7 @@ class StartDetailPendingController extends GetxController {
                 .maTrangThai) {
               case 18:
                 listDataForGive[firstIndex].getData![secondsIndex].maTrangThai =
-                    20;
+                    46;
                 break;
               default:
             }
@@ -843,7 +1180,7 @@ class StartDetailPendingController extends GetxController {
               case 18:
                 listDataForGiveEmpty[firstIndex]
                     .getData![secondsIndex]
-                    .maTrangThai = 20;
+                    .maTrangThai = 46;
                 break;
               default:
             }
@@ -856,7 +1193,7 @@ class StartDetailPendingController extends GetxController {
       }
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
-        isLoad(true);
+        isLoadStatus(true);
       });
     }
   }

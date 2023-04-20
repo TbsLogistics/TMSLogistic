@@ -58,60 +58,62 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                           _buildGive(size),
                           _buildGiveEmpty(size),
                           Obx(() {
-                            print(controller
-                                .listOrder
-                                .value
-                                .getDataHandlingMobiles![length - 1]
-                                .maTrangThai);
-                            return controller
-                                        .listOrder
-                                        .value
-                                        .getDataHandlingMobiles![length - 1]
-                                        .maTrangThai ==
-                                    36
-                                ? _buttonStatus(
-                                    text: "Kết thúc chuyến",
-                                    onPressed: () {
-                                      Get.defaultDialog(
-                                          backgroundColor: Colors.white,
-                                          title: "Thông báo",
-                                          content: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: const [
-                                              TextCustomComment(
-                                                  text:
-                                                      "Hãy chắc rằng hàng hóa đã được giao nhận")
-                                            ],
-                                          ),
-                                          confirm: Obx(() => controller
-                                                  .isLoading.value
-                                              ? const CircularProgressIndicator(
-                                                  color: Colors.orangeAccent,
-                                                )
-                                              : ButtonComment(
-                                                  text: "Kết thúc chuyến",
-                                                  onPressed: () {
-                                                    controller
-                                                        .postSetRuningTypeFull(
-                                                      handlingId: int.parse(
+                            return controller.isLoadStatus.value
+                                ? controller
+                                            .listOrder
+                                            .value
+                                            .getDataHandlingMobiles![length - 1]
+                                            .maTrangThai ==
+                                        36
+                                    ? _buttonStatus(
+                                        text: "Kết thúc chuyến",
+                                        onPressed: () {
+                                          Get.defaultDialog(
+                                              backgroundColor: Colors.white,
+                                              title: "Thông báo",
+                                              content: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  TextCustomComment(
+                                                      text:
+                                                          "Hãy chắc rằng hàng hóa đã được giao nhận")
+                                                ],
+                                              ),
+                                              confirm: Obx(() => controller
+                                                      .isLoading.value
+                                                  ? const CircularProgressIndicator(
+                                                      color:
+                                                          Colors.orangeAccent,
+                                                    )
+                                                  : ButtonComment(
+                                                      text: "Kết thúc chuyến",
+                                                      onPressed: () {
                                                         controller
-                                                            .listOrder
-                                                            .value
-                                                            .getDataHandlingMobiles![
-                                                                length - 1]
-                                                            .handlingId
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                  })),
-                                          cancel: ButtonComment(
-                                              text: "Hủy",
-                                              onPressed: () {
-                                                Get.back();
-                                              }));
-                                    },
-                                    color: Colors.orangeAccent)
+                                                            .postSetRuningTypeFull(
+                                                          handlingId: int.parse(
+                                                            controller
+                                                                .listOrder
+                                                                .value
+                                                                .getDataHandlingMobiles![
+                                                                    length - 1]
+                                                                .handlingId
+                                                                .toString(),
+                                                          ),
+                                                        );
+                                                      })),
+                                              cancel: ButtonComment(
+                                                  text: "Hủy",
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  }));
+                                        },
+                                        color: Colors.orangeAccent)
+                                    : _buttonStatus(
+                                        text: "Kêt thúc chuyến",
+                                        onPressed: () {},
+                                        color: Colors.black.withOpacity(0.4),
+                                      )
                                 : _buttonStatus(
                                     text: "Kêt thúc chuyến",
                                     onPressed: () {},
@@ -291,12 +293,22 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                     i]
                                                                 .getData![k]
                                                                 .maTrangThai ==
-                                                            17
-                                                        ? const TextCustom(
+                                                            46
+                                                        ? TextCustom(
                                                             text:
-                                                                "Đang lấy rỗng")
-                                                        : const TextCustom(
-                                                            text: "Đã lấy rỗng")
+                                                                "${controller.newListDataForReceiveEmpty[i].getData![k].trangThai}")
+                                                        : controller
+                                                                    .newListDataForReceiveEmpty[
+                                                                        i]
+                                                                    .getData![k]
+                                                                    .maTrangThai ==
+                                                                17
+                                                            ? const TextCustom(
+                                                                text:
+                                                                    "Đang lấy rỗng")
+                                                            : const TextCustom(
+                                                                text:
+                                                                    "Đã lấy rỗng")
                                                     : const Text("")
                                                 : Container(),
                                           ),
@@ -352,7 +364,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                             17
                                                         ? ButtonError(
                                                             text:
-                                                                "Hủy hoàn thành",
+                                                                "Hủy lấy rỗng",
                                                             onPressed: () {
                                                               _cancelButton(
                                                                 size: size,
@@ -381,15 +393,15 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                             })
                                                         : ButtonFinal(
                                                             text:
-                                                                "Hủy hoàn thành",
+                                                                "Hủy lấy rỗng",
                                                             onPressed: () {},
                                                           )
                                                     : ButtonFinal(
-                                                        text: "",
+                                                        text: "Hủy lấy rỗng",
                                                         onPressed: () {},
                                                       )
                                                 : ButtonFinal(
-                                                    text: "Hủy hoàn thành",
+                                                    text: "Hủy lấy rỗng",
                                                     onPressed: () {},
                                                   ),
                                           ),
@@ -627,28 +639,37 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                               () => controller
                                                       .isLoadStatus.value
                                                   ? controller
-                                                          .isPlacedReceive[i]
-                                                      ? controller
-                                                                      .newListDataForReceive[
-                                                                          i]
-                                                                      .getData![
-                                                                          k]
-                                                                      .maTrangThai ==
-                                                                  37 ||
-                                                              controller
-                                                                      .newListDataForReceive[
-                                                                          i]
-                                                                      .getData![
-                                                                          k]
-                                                                      .maTrangThai ==
-                                                                  40
-                                                          ? const TextCustom(
-                                                              text:
-                                                                  "Đang lấy hàng")
-                                                          : const TextCustom(
-                                                              text:
-                                                                  "Đã lấy hàng")
-                                                      : const Text("")
+                                                              .newListDataForReceive[
+                                                                  i]
+                                                              .getData![k]
+                                                              .maTrangThai ==
+                                                          46
+                                                      ? TextCustom(
+                                                          text:
+                                                              "${controller.newListDataForReceive[i].getData![k].trangThai}")
+                                                      : controller.isPlacedReceive[
+                                                              i]
+                                                          ? controller
+                                                                          .newListDataForReceive[
+                                                                              i]
+                                                                          .getData![
+                                                                              k]
+                                                                          .maTrangThai ==
+                                                                      37 ||
+                                                                  controller
+                                                                          .newListDataForReceive[
+                                                                              i]
+                                                                          .getData![
+                                                                              k]
+                                                                          .maTrangThai ==
+                                                                      40
+                                                              ? const TextCustom(
+                                                                  text:
+                                                                      "Đang lấy hàng")
+                                                              : const TextCustom(
+                                                                  text:
+                                                                      "Đã lấy hàng")
+                                                          : const Text("")
                                                   : Container(),
                                             ),
                                             TextButton.icon(
@@ -708,8 +729,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                     .maTrangThai ==
                                                                 40
                                                         ? ButtonError(
-                                                            text:
-                                                                "Hủy hoàn thành",
+                                                            text: "Hủy nhận",
                                                             onPressed: () {
                                                               _cancelButton(
                                                                 size: size,
@@ -736,16 +756,15 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                               );
                                                             })
                                                         : ButtonFinal(
-                                                            text:
-                                                                "Hủy hoàn thành",
+                                                            text: "Hủy nhận",
                                                             onPressed: () {},
                                                           )
                                                     : ButtonFinal(
-                                                        text: "",
+                                                        text: "Hủy nhận",
                                                         onPressed: () {},
                                                       )
                                                 : ButtonFinal(
-                                                    text: "Hủy hoàn thành",
+                                                    text: "Hủy nhận",
                                                     onPressed: () {},
                                                   )),
                                             Obx(() {
@@ -999,13 +1018,23 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                       i]
                                                                   .getData![k]
                                                                   .maTrangThai ==
-                                                              18
-                                                          ? const TextCustom(
+                                                              46
+                                                          ? TextCustom(
                                                               text:
-                                                                  "Đang giao hàng")
-                                                          : const TextCustom(
-                                                              text:
-                                                                  "Đã giao hàng")
+                                                                  "${controller.newListDataForGive[i].getData![k].trangThai}")
+                                                          : controller
+                                                                      .newListDataForGive[
+                                                                          i]
+                                                                      .getData![
+                                                                          k]
+                                                                      .maTrangThai ==
+                                                                  18
+                                                              ? const TextCustom(
+                                                                  text:
+                                                                      "Đang giao hàng")
+                                                              : const TextCustom(
+                                                                  text:
+                                                                      "Đã giao hàng")
                                                       : const Text("")
                                                   : Container(),
                                             ),
@@ -1054,10 +1083,14 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                 .getData![k]
                                                                 .maTrangThai ==
                                                             18
-                                                        ? ButtonComment(
-                                                            text:
-                                                                "Hủy hoàn thành",
+                                                        ? ButtonError(
+                                                            text: "Hủy giao",
                                                             onPressed: () {
+                                                              print(controller
+                                                                  .newListDataForGive[
+                                                                      i]
+                                                                  .getData![k]
+                                                                  .maTrangThai);
                                                               _cancelButton(
                                                                 size: size,
                                                                 onPressed: () {
@@ -1067,7 +1100,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                       .validate()) {
                                                                     controller.postCancel(
                                                                         idList:
-                                                                            "lh",
+                                                                            "th",
                                                                         firstIndex:
                                                                             i,
                                                                         id: controller
@@ -1083,14 +1116,13 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                               );
                                                             })
                                                         : ButtonFinal(
-                                                            text:
-                                                                "Hủy hoàn thành",
+                                                            text: "Hủy giao",
                                                             onPressed: () {})
                                                     : ButtonFinal(
-                                                        text: "",
+                                                        text: "Hủy giao",
                                                         onPressed: () {})
                                                 : ButtonFinal(
-                                                    text: "Hủy hoàn thành",
+                                                    text: "Hủy giao",
                                                     onPressed: () {})),
                                             Obx(() {
                                               return controller.isPlacedGive[i]
@@ -1296,11 +1328,22 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                   i]
                                                               .getData![k]
                                                               .maTrangThai ==
-                                                          35
-                                                      ? const TextCustom(
-                                                          text: "Đang trả rỗng")
-                                                      : const TextCustom(
-                                                          text: "Đã trả rỗng")
+                                                          46
+                                                      ? TextCustom(
+                                                          text:
+                                                              "${controller.newListDataForGiveEmpty[i].getData![k].trangThai}")
+                                                      : controller
+                                                                  .newListDataForGiveEmpty[
+                                                                      i]
+                                                                  .getData![k]
+                                                                  .maTrangThai ==
+                                                              35
+                                                          ? const TextCustom(
+                                                              text:
+                                                                  "Đang trả rỗng")
+                                                          : const TextCustom(
+                                                              text:
+                                                                  "Đã trả rỗng")
                                                   : const Text("")
                                               : Container(),
                                         ),
@@ -1354,7 +1397,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                             .maTrangThai ==
                                                         35
                                                     ? ButtonError(
-                                                        text: "Hủy hoàn thành",
+                                                        text: "Hủy trả rỗng",
                                                         onPressed: () {
                                                           _cancelButton(
                                                             size: size,
@@ -1381,12 +1424,13 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                           );
                                                         })
                                                     : ButtonFinal(
-                                                        text: "Hủy hoàn thành",
+                                                        text: "Hủy trả rỗng",
                                                         onPressed: () {})
                                                 : ButtonFinal(
-                                                    text: "", onPressed: () {})
+                                                    text: "Hủy trả rỗng",
+                                                    onPressed: () {})
                                             : ButtonFinal(
-                                                text: "Hủy hoàn thành",
+                                                text: "Hủy trả rỗng",
                                                 onPressed: () {})),
                                         Obx(() {
                                           return controller.isPlacedGiveEmpty[i]
@@ -1433,8 +1477,6 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                             "Xác nhận",
                                                                         onPressed:
                                                                             () {
-                                                                          print(
-                                                                              Get.isSnackbarOpen);
                                                                           controller.postSetRuning(
                                                                               idList: "tr",
                                                                               firstIndex: i,

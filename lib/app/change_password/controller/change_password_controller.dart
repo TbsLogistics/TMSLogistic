@@ -1,9 +1,117 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
+
+import 'package:tbs_logistics_tms/app/change_password/model/change_password_model.dart';
+import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
+import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
 
 class ChangePassController extends GetxController {
-  TextEditingController username = TextEditingController(text: "");
-  TextEditingController passwordNew = TextEditingController(text: "");
-  TextEditingController passwordOld = TextEditingController(text: "");
-  TextEditingController rePasswordNew = TextEditingController(text: "");
+  // TextEditingController username = TextEditingController();
+  TextEditingController passwordNew = TextEditingController();
+  TextEditingController passwordOld = TextEditingController();
+  TextEditingController rePasswordNew = TextEditingController();
+
+  RxString userName = "".obs;
+
+  RxBool isLoadLogin = false.obs;
+  final changePassKey = GlobalKey<FormState>();
+
+  @override
+  void onInit() {
+    var user = Get.arguments;
+    userName.value = user;
+    print(userName.value);
+    changePassKey;
+    super.onInit();
+  }
+
+  void changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String reNewPassword,
+  }) async {
+    Response response;
+    var dio = Dio();
+    var changePassword = ChangePasswordModel(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      reNewPassword: reNewPassword,
+    );
+    var tokens = await SharePerApi().getToken();
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $tokens"
+    };
+    var jsonData = changePassword.toJson();
+    var url =
+        "${AppConstants.urlBase}/api/Mobile/ChangePassword?username=${userName.value}";
+    try {
+      response = await dio.post(url,
+          data: jsonData, options: Options(headers: headers));
+      if (response.statusCode == 200) {
+        var data = response.data;
+
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Thông báo",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+          messageText: Text(
+            "${data["message"]}!",
+            style: const TextStyle(
+              color: Colors.green,
+            ),
+          ),
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        Get.snackbar(
+          "Thông báo",
+          "Nhập thiếu tài khoản hoặc mật khẩu !",
+          backgroundColor: Colors.white,
+          titleText: const Text(
+            "Thông báo",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+          messageText: Text(
+            "${e.response!.data} !",
+            style: const TextStyle(
+              color: Colors.green,
+            ),
+          ),
+        );
+      } else if (e.response!.statusCode == 500) {
+        Get.snackbar(
+          "Thông báo",
+          "Nhập thiếu tài khoản hoặc mật khẩu !",
+          backgroundColor: Colors.white,
+          titleText: const Text(
+            "Thông báo",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+          messageText: const Text(
+            "Lỗi máy chủ vui lòng xem lại mạng !",
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ),
+        );
+      }
+    } finally {
+      isLoadLogin(true);
+    }
+  }
 }

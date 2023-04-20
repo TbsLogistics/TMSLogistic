@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/change_password/controller/change_password_controller.dart';
@@ -13,7 +16,7 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
   final String routes = "/CHANGE_PASSWORD__FULL_SCREEN";
   @override
   var controller = Get.put(ChangePassController());
-  final _formKey = GlobalKey<FormState>();
+  // final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,38 +46,10 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Form(
-            key: _formKey,
+            key: controller.changePassKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  validator: (value) => Validate().username(value),
-                  controller: controller.username,
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orangeAccent, width: 2.0),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.teal)),
-                      hintText: 'Nhập UserName',
-                      labelText: 'Username',
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.person,
-                        color: Colors.orangeAccent,
-                      ),
-                      prefixText: ' ',
-                      suffixStyle: const TextStyle(color: Colors.green)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 TextFormField(
                   validator: (value) => Validate().password(value),
                   controller: controller.passwordOld,
@@ -104,7 +79,7 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                   height: 20,
                 ),
                 TextFormField(
-                  validator: (value) => Validate().password(value),
+                  validator: (value) => Validate().newPassword(value),
                   controller: controller.passwordNew,
                   decoration: InputDecoration(
                       focusedBorder: const OutlineInputBorder(
@@ -132,7 +107,8 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                   height: 20,
                 ),
                 TextFormField(
-                  validator: (value) => Validate().rePassword(value),
+                  validator: (value) => Validate()
+                      .reNewPassword(controller.passwordNew.text, value!),
                   controller: controller.rePasswordNew,
                   decoration: InputDecoration(
                       focusedBorder: const OutlineInputBorder(
@@ -163,7 +139,9 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                   height: 60,
                   width: size.width * 0.6,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _changePassWord(context, controller);
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<BeveledRectangleBorder>(
                           BeveledRectangleBorder(
@@ -187,5 +165,21 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
         ),
       ),
     );
+  }
+
+  void _changePassWord(BuildContext context, ChangePassController controller) {
+    var validate = controller.changePassKey.currentState!.validate();
+
+    if (!validate) {
+      print(md5.convert(utf8.encode(controller.passwordNew.text)).toString());
+      controller.changePassword(
+        oldPassword:
+            md5.convert(utf8.encode(controller.passwordOld.text)).toString(),
+        newPassword:
+            md5.convert(utf8.encode(controller.passwordNew.text)).toString(),
+        reNewPassword:
+            md5.convert(utf8.encode(controller.rePasswordNew.text)).toString(),
+      );
+    }
   }
 }
