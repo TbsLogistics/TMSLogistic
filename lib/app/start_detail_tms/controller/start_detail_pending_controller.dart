@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, unused_local_variable
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable, unrelated_type_equality_checks
 
 import 'dart:io';
 import "package:collection/collection.dart";
@@ -45,6 +45,9 @@ class StartDetailPendingController extends GetxController {
   RxList<String> idPlaceReceive = <String>[].obs;
   RxList<String> idPlaceGive = <String>[].obs;
   RxList<String> idPlaceGiveEmpty = <String>[].obs;
+  //+Danh sách status
+  RxList<int> idStatusGive = <int>[].obs;
+  RxList<int> idStatusGiveEmpty = <int>[].obs;
 
   //Danh sách getdataMobiles
   RxList<GetDataHandlingMobiles> getDataReceiveEmpty =
@@ -60,6 +63,9 @@ class StartDetailPendingController extends GetxController {
   RxList<String> idSameReceive = <String>[].obs;
   RxList<String> idSameGive = <String>[].obs;
   RxList<String> idSameGiveEmpty = <String>[].obs;
+  //++Danh sách trạng thái trùng nhau
+  RxList<int> idSameStatusGive = <int>[].obs;
+  RxList<int> idSameStatusGiveEmpty = <int>[].obs;
 
   //Danh sách vận đơn đi theo địa điểm
   RxList<GetDataHandlingMobiles> listReceiveEmpty =
@@ -242,6 +248,16 @@ class StartDetailPendingController extends GetxController {
       newListDataForGive
           .add(ListDataForPlaceModel(place: place, getData: combineGive ?? []));
     }
+    for (var i = 0; i < newListDataForGive.length; i++) {
+      for (var j = 0; j < newListDataForGive[i].getData!.length; j++) {
+        // ignore: unrelated_type_equality_checks
+        if (newListDataForGive[i].getData![j].maTrangThai != "" &&
+            newListDataForGive[i].getData![j].maTrangThai != null) {
+          int items = newListDataForGive[i].getData![j].maTrangThai!;
+          idStatusGive.add(items);
+        }
+      }
+    }
 
     //++ Danh sách trả rỗng ---------------------------------------------------------------
     for (var i = 0; i < placeModel.value.placeGiveEmpty!.length; i++) {
@@ -268,6 +284,17 @@ class StartDetailPendingController extends GetxController {
       newListDataForGiveEmpty.add(
           ListDataForPlaceModel(place: place, getData: combineGiveEmpty ?? []));
     }
+    for (var i = 0; i < newListDataForGiveEmpty.length; i++) {
+      for (var j = 0; j < newListDataForGiveEmpty[i].getData!.length; j++) {
+        // ignore: unrelated_type_equality_checks
+        if (newListDataForGiveEmpty[i].getData![j].maTrangThai != "" &&
+            newListDataForGiveEmpty[i].getData![j].maTrangThai != null) {
+          int items = newListDataForGiveEmpty[i].getData![j].maTrangThai!;
+          idStatusGiveEmpty.add(items);
+        }
+      }
+    }
+
 // List Bool nút "Đã đến" --------------------------------------------------------------------------------------
     isPlacedReceiveEmpty.value =
         List<bool>.generate(listDataForReceiveEmpty.length, (index) => false);
@@ -378,7 +405,7 @@ class StartDetailPendingController extends GetxController {
     };
 
     isLoadStatus(false);
-
+    // isLoad(false);
     isLoading(true);
 
     var url =
@@ -393,10 +420,6 @@ class StartDetailPendingController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data;
-
-        // String content = data["message"];
-        // var lengthContent = content.length;
-        // var customMessage = content.substring(30, lengthContent);
 
         Get.back();
         // getSnack(message: "${data["message"]}");
@@ -502,49 +525,29 @@ class StartDetailPendingController extends GetxController {
                                 .maTrangThai = 36;
                           }
                         }
-                        break;
-                      case 46:
+                        var listIdStatus = [];
+                        var listIdSameStatus = [];
                         for (var i = 0;
                             i < newListDataForGive[firstIndex].getData!.length;
                             i++) {
-                          if (newListDataForGive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
+                          var items = newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai;
+                          listIdStatus.add(items);
                         }
-                        break;
-                      default:
-                    }
-                    break;
-                  case "tr":
-                    switch (newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 35:
-                        if (newListDataForGiveEmpty[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai ==
-                            35) {
-                          newListDataForGiveEmpty[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 20;
+                        listIdSameStatus = listIdStatus.toSet().toList();
+                        if (listIdSameStatus.length == 1 &&
+                                listIdSameStatus.contains(36) == true ||
+                            listIdSameStatus.length == 2 &&
+                                listIdSameStatus.contains(36) == true &&
+                                listIdSameStatus.contains(46) == true) {
+                          listOrder
+                              .value
+                              .getDataHandlingMobiles![listOrder
+                                      .value.getDataHandlingMobiles!.length -
+                                  1]
+                              .maTrangThai = 36;
                         }
-
-                        break;
-                      case 46:
-                        if (newListDataForGiveEmpty[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai ==
-                            46) {
-                          newListDataForGiveEmpty[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 46;
-                        }
-
                         break;
                       default:
                     }
@@ -553,6 +556,13 @@ class StartDetailPendingController extends GetxController {
                 break;
               case "nhap":
                 switch (idList) {
+                  case "":
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 20;
+                    break;
                   case "lr":
                     switch (newListDataForReceiveEmpty[firstIndex]
                         .getData![secondIndex]
@@ -574,23 +584,7 @@ class StartDetailPendingController extends GetxController {
                           }
                         }
                         break;
-                      case 46:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
-                        }
-                        break;
+
                       default:
                     }
                     break;
@@ -615,23 +609,7 @@ class StartDetailPendingController extends GetxController {
                           }
                         }
                         break;
-                      case 46:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceive[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForReceive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
-                        }
-                        break;
+
                       case 40:
                         for (var i = 0;
                             i <
@@ -704,7 +682,13 @@ class StartDetailPendingController extends GetxController {
                               35) {
                             newListDataForGiveEmpty[firstIndex]
                                 .getData![i]
-                                .maTrangThai = 20;
+                                .maTrangThai = 48;
+                            listOrder
+                                .value
+                                .getDataHandlingMobiles![listOrder
+                                        .value.getDataHandlingMobiles!.length -
+                                    1]
+                                .maTrangThai = 48;
                           }
                         }
                         break;
@@ -746,9 +730,14 @@ class StartDetailPendingController extends GetxController {
                       for (var i = 0;
                           i < newListDataForReceive[firstIndex].getData!.length;
                           i++) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
+                        if (newListDataForReceive[firstIndex]
+                                .getData![i]
+                                .maTrangThai !=
+                            46) {
+                          newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai = 18;
+                        }
                       }
                     }
                     break;
@@ -766,20 +755,7 @@ class StartDetailPendingController extends GetxController {
                       }
                     }
                     break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 46;
-                      }
-                    }
-                    break;
+
                   default:
                 }
                 break;
@@ -788,30 +764,33 @@ class StartDetailPendingController extends GetxController {
                     .getData![secondIndex]
                     .maTrangThai) {
                   case 18:
-                    for (var i = 0;
-                        i < newListDataForGive[firstIndex].getData!.length;
-                        i++) {
-                      newListDataForGive[firstIndex].getData![i].maTrangThai =
-                          20;
-                      // listOrder
-                      //     .value
-                      //     .getDataHandlingMobiles![
-                      //         listOrder.value.getDataHandlingMobiles!.length -
-                      //             1]
-                      //     .maTrangThai = 36;
-                    }
-                    break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForGive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForGive[firstIndex].getData![i].maTrangThai =
-                            46;
+                    newListDataForGive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 36;
+                    var listIdStatus = [];
+                    var listSameStatus = [];
+                    for (var i = 0; i < newListDataForGive.length; i++) {
+                      for (var j = 0;
+                          j < newListDataForGive[i].getData!.length;
+                          j++) {
+                        var items =
+                            newListDataForGive[i].getData![j].maTrangThai;
+
+                        listIdStatus.add(items);
                       }
+                      listSameStatus = listIdStatus.toSet().toList();
+                    }
+                    if (listSameStatus.length == 1 &&
+                            listSameStatus.contains(36) == true ||
+                        listSameStatus.length == 2 &&
+                            listSameStatus.contains(46) == true &&
+                            listSameStatus.contains(36) == true) {
+                      listOrder
+                          .value
+                          .getDataHandlingMobiles![
+                              listOrder.value.getDataHandlingMobiles!.length -
+                                  1]
+                          .maTrangThai = 36;
                     }
                     break;
                   default:
@@ -923,22 +902,7 @@ class StartDetailPendingController extends GetxController {
                       }
                     }
                     break;
-                  case 46:
-                    for (var i = 0;
-                        i <
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData!
-                                .length;
-                        i++) {
-                      if (newListDataForReceiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForReceiveEmpty[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 46;
-                      }
-                    }
+
                     break;
 
                   default:
@@ -1034,19 +998,7 @@ class StartDetailPendingController extends GetxController {
                     }
 
                     break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForGive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForGive[firstIndex].getData![i].maTrangThai =
-                            46;
-                      }
-                    }
-                    break;
+
                   default:
                 }
                 break;
@@ -1062,27 +1014,15 @@ class StartDetailPendingController extends GetxController {
                               .getData![i]
                               .maTrangThai ==
                           35) {
-                        newListDataForGiveEmpty[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 20;
+                        listOrder
+                            .value
+                            .getDataHandlingMobiles![
+                                listOrder.value.getDataHandlingMobiles!.length -
+                                    1]
+                            .maTrangThai = 48;
                       }
                     }
                     break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForGiveEmpty[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 46;
-                      }
-                    }
-                    break;
-
                   default:
                 }
                 break;
@@ -1094,15 +1034,12 @@ class StartDetailPendingController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        if (e.response!.data["message"] == "Vui lòng cập nhật ContNo") {
-          getSnack(message: "${e.response!.data["message"]}");
-        } else {
-          getSnack(message: "${e.response!.data["message"]}");
-        }
+        getSnack(message: "${e.response!.data["message"]}");
       }
     } finally {
       Future.delayed(const Duration(seconds: 2), () {
         isLoading(false);
+        // isLoad(true);
         isLoadStatus(true);
       });
     }
@@ -1129,32 +1066,31 @@ class StartDetailPendingController extends GetxController {
       if (response.statusCode == 200) {
         var data = response.data;
 
-        getSnack(message: "${response.data["message"]}");
+        getDialog(message: data["message"]);
         switch (idList) {
           case "lr":
-            switch (listDataForReceiveEmpty[firstIndex]
+            switch (newListDataForReceiveEmpty[firstIndex]
                 .getData![secondsIndex]
                 .maTrangThai) {
               case 17:
-                listDataForReceiveEmpty[firstIndex]
+                newListDataForReceiveEmpty[firstIndex]
                     .getData![secondsIndex]
                     .maTrangThai = 46;
                 break;
-
               default:
             }
             break;
           case "lh":
-            switch (listDataForReceive[firstIndex]
+            switch (newListDataForReceive[firstIndex]
                 .getData![secondsIndex]
                 .maTrangThai) {
               case 37:
-                listDataForReceive[firstIndex]
+                newListDataForReceive[firstIndex]
                     .getData![secondsIndex]
                     .maTrangThai = 46;
                 break;
               case 40:
-                listDataForReceive[firstIndex]
+                newListDataForReceive[firstIndex]
                     .getData![secondsIndex]
                     .maTrangThai = 46;
                 break;
@@ -1163,22 +1099,23 @@ class StartDetailPendingController extends GetxController {
             }
             break;
           case "th":
-            switch (listDataForGive[firstIndex]
+            switch (newListDataForGive[firstIndex]
                 .getData![secondsIndex]
                 .maTrangThai) {
               case 18:
-                listDataForGive[firstIndex].getData![secondsIndex].maTrangThai =
-                    46;
+                newListDataForGive[firstIndex]
+                    .getData![secondsIndex]
+                    .maTrangThai = 46;
                 break;
               default:
             }
             break;
           case "tr":
-            switch (listDataForGiveEmpty[firstIndex]
+            switch (newListDataForGiveEmpty[firstIndex]
                 .getData![secondsIndex]
                 .maTrangThai) {
               case 18:
-                listDataForGiveEmpty[firstIndex]
+                newListDataForGiveEmpty[firstIndex]
                     .getData![secondsIndex]
                     .maTrangThai = 46;
                 break;
@@ -1194,11 +1131,12 @@ class StartDetailPendingController extends GetxController {
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoadStatus(true);
+        // isLoad(true);
       });
     }
   }
 
-  void postSetRuningTypeFull({required int handlingId}) async {
+  void postSetRuningTypeFull({required int id}) async {
     var dio = Dio();
     Response response;
     var tokens = await SharePerApi().getToken();
@@ -1208,7 +1146,7 @@ class StartDetailPendingController extends GetxController {
     isLoad(false);
 
     var url =
-        "${AppConstants.urlBase}/api/Mobile/ChangeStatusHandling?id=$handlingId&maChuyen=${listOrder.value.maChuyen}";
+        "${AppConstants.urlBase}/api/Mobile/ChangeStatusHandling?id=$id&maChuyen=${listOrder.value.maChuyen}";
     try {
       response = await dio.post(
         url,
@@ -1217,21 +1155,14 @@ class StartDetailPendingController extends GetxController {
 
       if (response.statusCode == 200) {
         listOrder.value;
-
         var data = response.data;
-
         Get.back(result: true);
         getSnack(message: "${response.data["message"]}");
-        listOrder
-            .value
-            .getDataHandlingMobiles![
-                listOrder.value.getDataHandlingMobiles!.length - 1]
-            .maTrangThai = 20;
-        isLoad(true);
       }
     } on DioError catch (e) {
-      print(e.response!.statusCode);
       if (e.response!.statusCode == 400) {
+        getSnack(message: "${e.response!.data["message"]}");
+      } else if (e.response!.statusCode == 500) {
         getSnack(message: "${e.response!.data["message"]}");
       }
     } finally {

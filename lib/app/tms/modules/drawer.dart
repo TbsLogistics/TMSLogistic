@@ -37,12 +37,14 @@ class DrawerScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                                height: size.height * 0.1,
-                                width: size.height * 0.1,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.brown.shade800,
-                                  child: const Text('AH'),
-                                )),
+                              height: size.height * 0.1,
+                              width: size.height * 0.1,
+                              child: const CircleAvatar(
+                                backgroundImage: AssetImage(
+                                  "assets/images/avatar_private.png",
+                                ),
+                              ),
+                            ),
                             int.parse(hour.format(
                                             DateTime.parse(now.toString()))) <=
                                         18 &&
@@ -90,26 +92,26 @@ class DrawerScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Center(
-                                child: Text(
-                                  "Số điện thoại : ${hour.format(DateTime.parse(now.toString()))}",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      // Expanded(
+                      //   flex: 1,
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Container(
+                      //         child: Center(
+                      //           child: Text(
+                      //             "Số điện thoại : ${hour.format(DateTime.parse(now.toString()))}",
+                      //             style: const TextStyle(
+                      //               color: Colors.black,
+                      //               fontSize: 14,
+                      //               fontWeight: FontWeight.bold,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

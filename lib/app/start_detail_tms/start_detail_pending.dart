@@ -59,12 +59,26 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                           _buildGiveEmpty(size),
                           Obx(() {
                             return controller.isLoadStatus.value
-                                ? controller
-                                            .listOrder
-                                            .value
-                                            .getDataHandlingMobiles![length - 1]
-                                            .maTrangThai ==
-                                        36
+                                ? controller.idStatusGiveEmpty.contains(48) &&
+                                            controller.listOrder.value.maPTVC ==
+                                                "LCL" ||
+                                        controller.idStatusGive.contains(36) &&
+                                            controller.listOrder.value.maPTVC ==
+                                                "LTL" ||
+                                        controller
+                                                .listOrder
+                                                .value
+                                                .getDataHandlingMobiles![
+                                                    length - 1]
+                                                .maTrangThai ==
+                                            48 ||
+                                        controller
+                                                .listOrder
+                                                .value
+                                                .getDataHandlingMobiles![
+                                                    length - 1]
+                                                .maTrangThai ==
+                                            36
                                     ? _buttonStatus(
                                         text: "Kết thúc chuyến",
                                         onPressed: () {
@@ -91,15 +105,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                       onPressed: () {
                                                         controller
                                                             .postSetRuningTypeFull(
-                                                          handlingId: int.parse(
-                                                            controller
-                                                                .listOrder
-                                                                .value
-                                                                .getDataHandlingMobiles![
-                                                                    length - 1]
-                                                                .handlingId
-                                                                .toString(),
-                                                          ),
+                                                          id: 0,
                                                         );
                                                       })),
                                               cancel: ButtonComment(
@@ -294,9 +300,8 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                 .getData![k]
                                                                 .maTrangThai ==
                                                             46
-                                                        ? TextCustom(
-                                                            text:
-                                                                "${controller.newListDataForReceiveEmpty[i].getData![k].trangThai}")
+                                                        ? const TextCustom(
+                                                            text: "Hủy ngang")
                                                         : controller
                                                                     .newListDataForReceiveEmpty[
                                                                         i]
@@ -644,9 +649,8 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                               .getData![k]
                                                               .maTrangThai ==
                                                           46
-                                                      ? TextCustom(
-                                                          text:
-                                                              "${controller.newListDataForReceive[i].getData![k].trangThai}")
+                                                      ? const TextCustom(
+                                                          text: "Hủy ngang")
                                                       : controller.isPlacedReceive[
                                                               i]
                                                           ? controller
@@ -1019,9 +1023,8 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                   .getData![k]
                                                                   .maTrangThai ==
                                                               46
-                                                          ? TextCustom(
-                                                              text:
-                                                                  "${controller.newListDataForGive[i].getData![k].trangThai}")
+                                                          ? const TextCustom(
+                                                              text: "Hủy ngang")
                                                           : controller
                                                                       .newListDataForGive[
                                                                           i]
@@ -1125,6 +1128,10 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                     text: "Hủy giao",
                                                     onPressed: () {})),
                                             Obx(() {
+                                              print(controller
+                                                  .newListDataForGive[i]
+                                                  .getData![k]
+                                                  .maTrangThai);
                                               return controller.isPlacedGive[i]
                                                   ? controller
                                                           .isLoadStatus.value
@@ -1159,6 +1166,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                                         : ButtonComment(
                                                                             text: "Xác nhận",
                                                                             onPressed: () {
+                                                                              print(controller.newListDataForGive[i].getData![k].handlingId!);
                                                                               controller.postSetRuning(idList: "th", firstIndex: i, id: controller.newListDataForGive[i].getData![k].handlingId!, secondIndex: k);
                                                                             })),
                                                                     cancel: ButtonComment(
@@ -1329,9 +1337,8 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                               .getData![k]
                                                               .maTrangThai ==
                                                           46
-                                                      ? TextCustom(
-                                                          text:
-                                                              "${controller.newListDataForGiveEmpty[i].getData![k].trangThai}")
+                                                      ? const TextCustom(
+                                                          text: "Hủy ngang")
                                                       : controller
                                                                   .newListDataForGiveEmpty[
                                                                       i]

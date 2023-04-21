@@ -9,8 +9,10 @@ class Validate {
   String password(String? value) {
     if (value!.isEmpty) {
       return "Nhập mật khẩu";
-    } else if (value.length >= 6 && value.length <= 30) {
-      return "Tối thiểu 6 kí tự và tối đa 30 kí tự";
+    } else {
+      if (value.length <= 6 && value.length >= 30) {
+        return "Tối thiểu 6 kí tự và tối đa 30 kí tự";
+      }
     }
     return "";
   }
@@ -18,7 +20,7 @@ class Validate {
   String newPassword(String? value) {
     if (value!.isEmpty) {
       return "Nhập mật khẩu";
-    } else if (value.length >= 6 && value.length <= 30) {
+    } else if (value.length <= 6 && value.length >= 30) {
       return "Tối thiểu 6 kí tự và tối đa 30 kí tự";
     }
     return "";

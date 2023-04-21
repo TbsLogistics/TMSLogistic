@@ -22,9 +22,9 @@ class TmsFinished extends GetView<TmsFinishedController> {
                       itemBuilder: (ctx, i) {
                         return ExpansionTile(
                           initiallyExpanded: true,
-                          title: const Text(
-                            '',
-                            style: TextStyle(color: Colors.green),
+                          title: Text(
+                            '${controller.listOrder[i].maChuyen}',
+                            style: const TextStyle(color: Colors.green),
                           ),
                           trailing: TextButton(
                             style: TextButton.styleFrom(
@@ -46,17 +46,16 @@ class TmsFinished extends GetView<TmsFinishedController> {
                           ),
                           children: <Widget>[
                             ListTile(
-                                title:
-                                    Text('${controller.listOrder[i].maChuyen}'),
+                                title: const Text(''),
                                 trailing: SizedBox(
-                                  width: 50,
+                                  width: 80,
                                   height: 30,
                                   // color: Colors.green,
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '${controller.listOrder[i].maPTVC}',
+                                          '${controller.listOrder[i].loaiPhuongTien}',
                                         ),
                                       ),
                                     ],

@@ -52,7 +52,8 @@ class ChangePassController extends GetxController {
           data: jsonData, options: Options(headers: headers));
       if (response.statusCode == 200) {
         var data = response.data;
-
+        print(data);
+        Get.back();
         Get.snackbar(
           "",
           "",
@@ -72,7 +73,6 @@ class ChangePassController extends GetxController {
         );
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
         Get.snackbar(
           "Thông báo",
@@ -85,7 +85,7 @@ class ChangePassController extends GetxController {
             ),
           ),
           messageText: Text(
-            "${e.response!.data} !",
+            "${e.response!.data["message"]} !",
             style: const TextStyle(
               color: Colors.green,
             ),

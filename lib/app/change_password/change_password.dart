@@ -171,7 +171,6 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
     var validate = controller.changePassKey.currentState!.validate();
 
     if (!validate) {
-      print(md5.convert(utf8.encode(controller.passwordNew.text)).toString());
       controller.changePassword(
         oldPassword:
             md5.convert(utf8.encode(controller.passwordOld.text)).toString(),
