@@ -431,45 +431,45 @@ class StartDetailPendingController extends GetxController {
               case "xuat":
                 switch (idList) {
                   case "lr":
-                    switch (newListDataForReceiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 17:
-                        for (var i = 0;
-                            i <
+                    switch (listOrder.value.loaiPhuongTien) {
+                      case "CONT40":
+                        switch (newListDataForReceiveEmpty[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai) {
+                          case 17:
+                            for (var i = 0;
+                                i <
+                                    newListDataForReceiveEmpty[firstIndex]
+                                        .getData!
+                                        .length;
+                                i++) {
+                              if (newListDataForReceiveEmpty[firstIndex]
+                                      .getData![i]
+                                      .maTrangThai ==
+                                  17) {
                                 newListDataForReceiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              17) {
+                                    .getData![i]
+                                    .maTrangThai = 37;
+                              }
+                            }
+                            break;
+                          default:
+                        }
+                        break;
+                      case "CONT20":
+                        switch (newListDataForReceiveEmpty[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai) {
+                          case 17:
                             newListDataForReceiveEmpty[firstIndex]
-                                .getData![i]
+                                .getData![secondIndex]
                                 .maTrangThai = 37;
-                          }
+                            break;
+                          default:
                         }
                         break;
-                      case 46:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
-                        }
-                        break;
-                      default:
                     }
+
                     break;
                   case "lh":
                     switch (newListDataForReceive[firstIndex]
@@ -1143,7 +1143,6 @@ class StartDetailPendingController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    isLoad(false);
 
     var url =
         "${AppConstants.urlBase}/api/Mobile/ChangeStatusHandling?id=$id&maChuyen=${listOrder.value.maChuyen}";
@@ -1167,7 +1166,7 @@ class StartDetailPendingController extends GetxController {
       }
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
-        isLoad(true);
+        isLoad(false);
       });
     }
   }

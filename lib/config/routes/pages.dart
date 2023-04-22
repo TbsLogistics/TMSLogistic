@@ -17,7 +17,7 @@ abstract class AppPages {
   static final pages = [
     GetPage(
       name: Routes.LOGIN_PAGE,
-      page: () => const LoginScreen(),
+      page: () => LoginScreen(),
     ),
     GetPage(
       name: Routes.SPLASH,

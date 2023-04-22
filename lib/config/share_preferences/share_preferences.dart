@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
+import 'package:tbs_logistics_tms/config/routes/pages.dart';
 
 class SharePerApi {
   Future<dynamic> getToken() async {
@@ -19,6 +20,6 @@ class SharePerApi {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove(AppConstants.KEY_ACCESS_TOKEN);
 
-    Get.toNamed("/LOGIN_PAGE");
+    Get.offAllNamed(Routes.LOGIN_PAGE);
   }
 }

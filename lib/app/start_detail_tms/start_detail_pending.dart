@@ -38,7 +38,16 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
         builder: (controller) {
           var length =
               controller.listOrder.value.getDataHandlingMobiles!.length;
-          print(length);
+          var listIdStatus = [];
+          var listIdSameStatus = [];
+          for (var j = 0;
+              j < controller.listOrder.value.getDataHandlingMobiles!.length;
+              j++) {
+            var items = controller
+                .listOrder.value.getDataHandlingMobiles![j].maTrangThai;
+            listIdStatus.add(items);
+          }
+          listIdSameStatus = listIdStatus.toSet().toList();
           return SingleChildScrollView(
             child: Obx(
               () => Container(
@@ -128,8 +137,7 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                           }),
                         ],
                       )
-                    : controller
-                            .listOrder.value.getDataHandlingMobiles!.isNotEmpty
+                    : listIdSameStatus.contains(20) == true
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [

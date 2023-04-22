@@ -50,14 +50,14 @@ class TmsWorking extends GetView<TmsWorkingController> {
                               ListTile(
                                   title: const Text(''),
                                   trailing: SizedBox(
-                                    width: 50,
+                                    width: 80,
                                     height: 30,
                                     // color: Colors.green,
                                     child: Row(
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '${controller.listOrder[i].maPTVC}',
+                                            '${controller.listOrder[i].loaiPhuongTien}',
                                           ),
                                         ),
                                       ],

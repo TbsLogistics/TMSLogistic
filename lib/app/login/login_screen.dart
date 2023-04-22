@@ -9,8 +9,10 @@ import 'package:tbs_logistics_tms/app/login/controller/login_controller.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends GetView<LoginController> {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
   final String routes = "/LOGIN_PAGE";
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class LoginScreen extends GetView<LoginController> {
                   gradient: CustomColor.gradient,
                 ),
                 child: Form(
-                  key: controller.formKey,
+                  key: formKey,
                   autovalidateMode: AutovalidateMode.always,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -192,7 +194,7 @@ class LoginScreen extends GetView<LoginController> {
   }
 
   void _signUpProcess(BuildContext context, LoginController controller) {
-    var validate = controller.formKey.currentState!.validate();
+    var validate = formKey.currentState!.validate();
 
     if (!validate) {
       controller.postLogin(

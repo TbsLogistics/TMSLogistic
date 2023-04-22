@@ -31,16 +31,7 @@ class TmsPage extends GetView<TmsController> {
           appBar: AppBar(
             title: const Text("Trang chủ"),
             centerTitle: true,
-            // automaticallyImplyLeading: false,
             backgroundColor: CustomColor.backgroundAppbar,
-            // actions: [
-            //   IconButton(
-            //     onPressed: () {
-            //       Get.to(() => GoogleMapGeolocator());
-            //     },
-            //     icon: Icon(Icons.language),
-            //   ),
-            // ],
           ),
           drawer: const DrawerScreen(),
           body: GetBuilder<TmsController>(

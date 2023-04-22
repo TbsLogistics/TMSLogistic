@@ -150,7 +150,7 @@ class DrawerScreen extends StatelessWidget {
                       ),
                     ),
                     leading: const Icon(
-                      Icons.language_outlined,
+                      Icons.lock_outlined,
                     ),
                   ),
                 ],
