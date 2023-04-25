@@ -29,7 +29,7 @@ class TmsOrdersModel {
     if (json['getDataHandlingMobiles'] != null) {
       getDataHandlingMobiles = <GetDataHandlingMobiles>[];
       json['getDataHandlingMobiles'].forEach((v) {
-        getDataHandlingMobiles!.add(GetDataHandlingMobiles.fromJson(v));
+        getDataHandlingMobiles?.add(GetDataHandlingMobiles.fromJson(v));
       });
     }
   }
@@ -53,8 +53,9 @@ class TmsOrdersModel {
 
 class GetDataHandlingMobiles {
   int? handlingId;
-  int? thuTuGiaoHang;
+  String? thuTuGiaoHang;
   String? bookingNo;
+  String? maPTVC;
   String? maVanDon;
   String? loaiVanDon;
   String? diemLayHang;
@@ -68,9 +69,9 @@ class GetDataHandlingMobiles {
   String? hangTau;
   String? ghiChu;
   String? contNo;
-  int? khoiLuong;
-  int? theTich;
-  int? soKien;
+  String? khoiLuong;
+  String? theTich;
+  String? soKien;
   String? trangThai;
   int? maTrangThai;
   String? thoiGianLayHang;
@@ -81,6 +82,7 @@ class GetDataHandlingMobiles {
       {this.handlingId,
       this.thuTuGiaoHang,
       this.bookingNo,
+      this.maPTVC,
       this.maVanDon,
       this.loaiVanDon,
       this.diemLayHang,
@@ -107,6 +109,7 @@ class GetDataHandlingMobiles {
     handlingId = json['handlingId'];
     thuTuGiaoHang = json['thuTuGiaoHang'];
     bookingNo = json['bookingNo'];
+    maPTVC = json['maPTVC'];
     maVanDon = json['maVanDon'];
     loaiVanDon = json['loaiVanDon'];
     diemLayHang = json['diemLayHang'];
@@ -135,6 +138,7 @@ class GetDataHandlingMobiles {
     data['handlingId'] = handlingId;
     data['thuTuGiaoHang'] = thuTuGiaoHang;
     data['bookingNo'] = bookingNo;
+    data['maPTVC'] = maPTVC;
     data['maVanDon'] = maVanDon;
     data['loaiVanDon'] = loaiVanDon;
     data['diemLayHang'] = diemLayHang;

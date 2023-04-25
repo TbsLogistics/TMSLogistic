@@ -424,613 +424,17 @@ class StartDetailPendingController extends GetxController {
         Get.back();
         // getSnack(message: "${data["message"]}");
         getDialog(message: data["message"]);
-
-        switch (listOrder.value.maPTVC) {
-          case "LCL":
-            switch (listOrder.value.getDataHandlingMobiles![0].loaiVanDon) {
-              case "xuat":
-                switch (idList) {
-                  case "lr":
-                    switch (listOrder.value.loaiPhuongTien) {
-                      case "CONT40":
-                        switch (newListDataForReceiveEmpty[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai) {
-                          case 17:
-                            for (var i = 0;
-                                i <
-                                    newListDataForReceiveEmpty[firstIndex]
-                                        .getData!
-                                        .length;
-                                i++) {
-                              if (newListDataForReceiveEmpty[firstIndex]
-                                      .getData![i]
-                                      .maTrangThai ==
-                                  17) {
-                                newListDataForReceiveEmpty[firstIndex]
-                                    .getData![i]
-                                    .maTrangThai = 37;
-                              }
-                            }
-                            break;
-                          default:
-                        }
-                        break;
-                      case "CONT20":
-                        switch (newListDataForReceiveEmpty[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai) {
-                          case 17:
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai = 37;
-                            break;
-                          default:
-                        }
-                        break;
-                    }
-
-                    break;
-                  case "lh":
-                    switch (newListDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 37:
-                        if (newListDataForReceive[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai ==
-                            37) {
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                        }
-                        break;
-                      case 40:
-                        if (newListDataForReceive[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai ==
-                            40) {
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                        }
-                        break;
-                      case 46:
-                        if (newListDataForReceive[firstIndex]
-                                .getData![secondIndex]
-                                .maTrangThai ==
-                            46) {
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 46;
-                        }
-                        break;
-                      default:
-                    }
-                    break;
-                  case "th":
-                    switch (newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 18:
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          if (newListDataForGive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              18) {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 36;
-                          }
-                        }
-                        var listIdStatus = [];
-                        var listIdSameStatus = [];
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          var items = newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai;
-                          listIdStatus.add(items);
-                        }
-                        listIdSameStatus = listIdStatus.toSet().toList();
-                        if (listIdSameStatus.length == 1 &&
-                                listIdSameStatus.contains(36) == true ||
-                            listIdSameStatus.length == 2 &&
-                                listIdSameStatus.contains(36) == true &&
-                                listIdSameStatus.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                        break;
-                      default:
-                    }
-                    break;
-                }
-                break;
-              case "nhap":
-                switch (idList) {
-                  case "":
-                    listOrder
-                        .value
-                        .getDataHandlingMobiles![
-                            listOrder.value.getDataHandlingMobiles!.length - 1]
-                        .maTrangThai = 20;
-                    break;
-                  case "lr":
-                    switch (newListDataForReceiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 17:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              17) {
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 37;
-                          }
-                        }
-                        break;
-
-                      default:
-                    }
-                    break;
-                  case "lh":
-                    switch (newListDataForReceive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 37:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceive[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              37) {
-                            newListDataForReceive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 18;
-                          }
-                        }
-                        break;
-
-                      case 40:
-                        for (var i = 0;
-                            i <
-                                newListDataForReceive[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForReceive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              40) {
-                            newListDataForReceive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 18;
-                          }
-                        }
-                        break;
-                      default:
-                    }
-                    break;
-                  case "th":
-                    switch (newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 18:
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          if (newListDataForGive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              18) {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 35;
-                          }
-                        }
-                        break;
-                      case 46:
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          if (newListDataForGive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
-                        }
-                        break;
-                      default:
-                    }
-                    break;
-                  case "tr":
-                    switch (newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai) {
-                      case 35:
-                        for (var i = 0;
-                            i <
-                                newListDataForGiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForGiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              35) {
-                            newListDataForGiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 48;
-                            listOrder
-                                .value
-                                .getDataHandlingMobiles![listOrder
-                                        .value.getDataHandlingMobiles!.length -
-                                    1]
-                                .maTrangThai = 48;
-                          }
-                        }
-                        break;
-                      case 46:
-                        for (var i = 0;
-                            i <
-                                newListDataForGiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForGiveEmpty[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai ==
-                              46) {
-                            newListDataForGiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 46;
-                          }
-                        }
-                        break;
-                      default:
-                    }
-                    break;
-                  default:
-                }
-            }
-            break;
-          case "LTL":
-            switch (idList) {
-              case "lh":
-                switch (newListDataForReceive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 37:
-                    if (newListDataForReceive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai ==
-                        37) {
-                      for (var i = 0;
-                          i < newListDataForReceive[firstIndex].getData!.length;
-                          i++) {
-                        if (newListDataForReceive[firstIndex]
-                                .getData![i]
-                                .maTrangThai !=
-                            46) {
-                          newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 18;
-                        }
-                      }
-                    }
-                    break;
-                  case 40:
-                    if (newListDataForReceive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai ==
-                        40) {
-                      for (var i = 0;
-                          i < newListDataForReceive[firstIndex].getData!.length;
-                          i++) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
-                      }
-                    }
-                    break;
-
-                  default:
-                }
-                break;
-              case "th":
-                switch (newListDataForGive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 18:
-                    newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maTrangThai = 36;
-                    var listIdStatus = [];
-                    var listSameStatus = [];
-                    for (var i = 0; i < newListDataForGive.length; i++) {
-                      for (var j = 0;
-                          j < newListDataForGive[i].getData!.length;
-                          j++) {
-                        var items =
-                            newListDataForGive[i].getData![j].maTrangThai;
-
-                        listIdStatus.add(items);
-                      }
-                      listSameStatus = listIdStatus.toSet().toList();
-                    }
-                    if (listSameStatus.length == 1 &&
-                            listSameStatus.contains(36) == true ||
-                        listSameStatus.length == 2 &&
-                            listSameStatus.contains(46) == true &&
-                            listSameStatus.contains(36) == true) {
-                      listOrder
-                          .value
-                          .getDataHandlingMobiles![
-                              listOrder.value.getDataHandlingMobiles!.length -
-                                  1]
-                          .maTrangThai = 36;
-                    }
-                    break;
-                  default:
-                }
-                break;
-
-              default:
-            }
-            break;
-          case "FTL":
-            switch (idList) {
-              case "lh":
-                switch (newListDataForReceive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 37:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          37) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
-                      }
-                    }
-                    break;
-                  case 40:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          40) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
-                      }
-                    }
-                    break;
-                  default:
-                }
-                break;
-              case "th":
-                switch (newListDataForGive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 18:
-                    for (var i = 0;
-                        i < newListDataForGive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          18) {
-                        listOrder
-                            .value
-                            .getDataHandlingMobiles![
-                                listOrder.value.getDataHandlingMobiles!.length -
-                                    1]
-                            .maTrangThai = 36;
-                      }
-                    }
-                    break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForGive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForGive[firstIndex].getData![i].maTrangThai =
-                            46;
-                      }
-                    }
-                    break;
-                  default:
-                }
-                break;
-
-              default:
-            }
-            break;
-
-          case "FCL":
-            switch (idList) {
-              case "lr":
-                switch (newListDataForReceiveEmpty[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 17:
-                    for (var i = 0;
-                        i <
-                            newListDataForReceiveEmpty[firstIndex]
-                                .getData!
-                                .length;
-                        i++) {
-                      if (newListDataForReceiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          17) {
-                        newListDataForReceiveEmpty[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 37;
-                      }
-                    }
-                    break;
-
-                    break;
-
-                  default:
-                }
-                break;
-              case "lh":
-                switch (newListDataForReceive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 37:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          37) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
-                      }
-                    }
-                    break;
-                  case 40:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          40) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 18;
-                      }
-                    }
-                    break;
-                  case 46:
-                    for (var i = 0;
-                        i < newListDataForReceive[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForReceive[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          46) {
-                        newListDataForReceive[firstIndex]
-                            .getData![i]
-                            .maTrangThai = 46;
-                      }
-                    }
-                    break;
-
-                  default:
-                }
-                break;
-              case "th":
-                switch (newListDataForGive[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 18:
-                    if (newListDataForGive[firstIndex]
-                            .getData![secondIndex]
-                            .loaiVanDon ==
-                        "nhap") {
-                      for (var i = 0;
-                          i < newListDataForGive[firstIndex].getData!.length;
-                          i++) {
-                        if (newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai ==
-                            18) {
-                          newListDataForGive[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 35;
-                        }
-                      }
-                    } else {
-                      for (var i = 0;
-                          i < newListDataForGive[firstIndex].getData!.length;
-                          i++) {
-                        if (newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai ==
-                            18) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                      }
-                    }
-
-                    break;
-
-                  default:
-                }
-                break;
-              case "tr":
-                switch (newListDataForGiveEmpty[firstIndex]
-                    .getData![secondIndex]
-                    .maTrangThai) {
-                  case 35:
-                    for (var i = 0;
-                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
-                        i++) {
-                      if (newListDataForGiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai ==
-                          35) {
-                        listOrder
-                            .value
-                            .getDataHandlingMobiles![
-                                listOrder.value.getDataHandlingMobiles!.length -
-                                    1]
-                            .maTrangThai = 48;
-                      }
-                    }
-                    break;
-                  default:
-                }
-                break;
-              default:
-            }
-            break;
-          default:
+        var listPTCVItems = [];
+        var listSamePTVCItems = [];
+        for (var i = 0;
+            i < listOrder.value.getDataHandlingMobiles!.length;
+            i++) {
+          var items = listOrder.value.getDataHandlingMobiles![i].maPTVC;
+          listPTCVItems.add(items);
         }
+        listSamePTVCItems = listPTCVItems.toSet().toList();
+        stateProcessing(
+            firstIndex: firstIndex, secondIndex: secondIndex, idList: idList);
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
@@ -1228,6 +632,7 @@ class StartDetailPendingController extends GetxController {
     }
 
     permission = await Geolocator.checkPermission();
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
@@ -1264,7 +669,7 @@ class StartDetailPendingController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $tokens"
     };
-    print("locationMessage : ${locationMessage.value}");
+
     var geoLocation = GeoLocationModel(
       placeId: placeId,
       gps: locationMessage.value,
@@ -1286,7 +691,6 @@ class StartDetailPendingController extends GetxController {
         // getSnack(message: "${response.data["message"]}");
       }
     } on DioError catch (e) {
-      print(e.response!.statusCode);
       if (e.response!.statusCode == 400) {
         getSnack(message: "${e.response!.data["message"]}");
       }
@@ -1354,5 +758,563 @@ class StartDetailPendingController extends GetxController {
             },
           ),
         ));
+  }
+
+  void stateProcessing(
+      {required int firstIndex,
+      required int secondIndex,
+      required String idList}) {
+    switch (listOrder.value.maPTVC) {
+      case "LCL":
+        switch (listOrder.value.getDataHandlingMobiles![0].loaiVanDon) {
+          case "xuat":
+            switch (idList) {
+              case "lr":
+                switch (newListDataForReceiveEmpty[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 17:
+                    for (var i = 0;
+                        i <
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData!
+                                .length;
+                        i++) {
+                      if (newListDataForReceiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          17) {
+                        newListDataForReceiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 37;
+                      }
+                    }
+                    break;
+                  default:
+                }
+                break;
+              case "lh":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    if (newListDataForReceive[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai ==
+                        37) {
+                      newListDataForReceive[firstIndex]
+                          .getData![secondIndex]
+                          .maTrangThai = 18;
+                    }
+                    break;
+                  case 40:
+                    if (newListDataForReceive[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai ==
+                        40) {
+                      newListDataForReceive[firstIndex]
+                          .getData![secondIndex]
+                          .maTrangThai = 18;
+                    }
+                    break;
+                  case 46:
+                    if (newListDataForReceive[firstIndex]
+                            .getData![secondIndex]
+                            .maTrangThai ==
+                        46) {
+                      newListDataForReceive[firstIndex]
+                          .getData![secondIndex]
+                          .maTrangThai = 46;
+                    }
+                    break;
+                  default:
+                }
+                break;
+              case "th":
+                switch (newListDataForGive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 18:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          18) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            36;
+                      }
+                    }
+                    var listIdStatus = [];
+                    var listIdSameStatus = [];
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      var items = newListDataForGive[firstIndex]
+                          .getData![i]
+                          .maTrangThai;
+                      listIdStatus.add(items);
+                    }
+                    listIdSameStatus = listIdStatus.toSet().toList();
+                    if (listIdSameStatus.length == 1 &&
+                            listIdSameStatus.contains(36) == true ||
+                        listIdSameStatus.length == 2 &&
+                            listIdSameStatus.contains(36) == true &&
+                            listIdSameStatus.contains(46) == true) {
+                      listOrder
+                          .value
+                          .getDataHandlingMobiles![
+                              listOrder.value.getDataHandlingMobiles!.length -
+                                  1]
+                          .maTrangThai = 36;
+                    }
+                    break;
+                  default:
+                }
+                break;
+            }
+            break;
+          case "nhap":
+            switch (idList) {
+              case "":
+                listOrder
+                    .value
+                    .getDataHandlingMobiles![
+                        listOrder.value.getDataHandlingMobiles!.length - 1]
+                    .maTrangThai = 20;
+                break;
+              case "lr":
+                switch (newListDataForReceiveEmpty[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 17:
+                    for (var i = 0;
+                        i <
+                            newListDataForReceiveEmpty[firstIndex]
+                                .getData!
+                                .length;
+                        i++) {
+                      if (newListDataForReceiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          17) {
+                        newListDataForReceiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 37;
+                      }
+                    }
+                    break;
+
+                  default:
+                }
+                break;
+              case "lh":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          37) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+                    break;
+
+                  case 40:
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          40) {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+                    break;
+                  default:
+                }
+                break;
+              case "th":
+                switch (newListDataForGive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 18:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          18) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            35;
+                      }
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGive[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGive[firstIndex].getData![i].maTrangThai =
+                            46;
+                      }
+                    }
+                    break;
+                  default:
+                }
+                break;
+              case "tr":
+                switch (newListDataForGiveEmpty[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 35:
+                    for (var i = 0;
+                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          35) {
+                        newListDataForGiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 48;
+                        listOrder
+                            .value
+                            .getDataHandlingMobiles![
+                                listOrder.value.getDataHandlingMobiles!.length -
+                                    1]
+                            .maTrangThai = 48;
+                      }
+                    }
+                    break;
+                  case 46:
+                    for (var i = 0;
+                        i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForGiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          46) {
+                        newListDataForGiveEmpty[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 46;
+                      }
+                    }
+                    break;
+                  default:
+                }
+                break;
+              default:
+            }
+        }
+        break;
+      case "LTL":
+        switch (idList) {
+          case "lh":
+            switch (newListDataForReceive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 37:
+                if (newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai ==
+                    37) {
+                  for (var i = 0;
+                      i < newListDataForReceive[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai !=
+                        46) {
+                      newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai = 18;
+                    }
+                  }
+                }
+                break;
+              case 40:
+                if (newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai ==
+                    40) {
+                  for (var i = 0;
+                      i < newListDataForReceive[firstIndex].getData!.length;
+                      i++) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        18;
+                  }
+                }
+                break;
+
+              default:
+            }
+            break;
+          case "th":
+            switch (newListDataForGive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 18:
+                newListDataForGive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai = 36;
+                var listIdStatus = [];
+                var listSameStatus = [];
+                for (var i = 0; i < newListDataForGive.length; i++) {
+                  for (var j = 0;
+                      j < newListDataForGive[i].getData!.length;
+                      j++) {
+                    var items = newListDataForGive[i].getData![j].maTrangThai;
+
+                    listIdStatus.add(items);
+                  }
+                  listSameStatus = listIdStatus.toSet().toList();
+                }
+                if (listSameStatus.length == 1 &&
+                        listSameStatus.contains(36) == true ||
+                    listSameStatus.length == 2 &&
+                        listSameStatus.contains(46) == true &&
+                        listSameStatus.contains(36) == true) {
+                  listOrder
+                      .value
+                      .getDataHandlingMobiles![
+                          listOrder.value.getDataHandlingMobiles!.length - 1]
+                      .maTrangThai = 36;
+                }
+                break;
+              default:
+            }
+            break;
+
+          default:
+        }
+        break;
+      case "FTL":
+        switch (idList) {
+          case "lh":
+            switch (newListDataForReceive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 37:
+                for (var i = 0;
+                    i < newListDataForReceive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      37) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        18;
+                  }
+                }
+                break;
+              case 40:
+                for (var i = 0;
+                    i < newListDataForReceive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      40) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        18;
+                  }
+                }
+                break;
+              default:
+            }
+            break;
+          case "th":
+            switch (newListDataForGive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 18:
+                for (var i = 0;
+                    i < newListDataForGive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForGive[firstIndex].getData![i].maTrangThai ==
+                      18) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 36;
+                  }
+                }
+                break;
+              case 46:
+                for (var i = 0;
+                    i < newListDataForGive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForGive[firstIndex].getData![i].maTrangThai ==
+                      46) {
+                    newListDataForGive[firstIndex].getData![i].maTrangThai = 46;
+                  }
+                }
+                break;
+              default:
+            }
+            break;
+
+          default:
+        }
+        break;
+
+      case "FCL":
+        switch (idList) {
+          case "lr":
+            switch (newListDataForReceiveEmpty[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 17:
+                for (var i = 0;
+                    i < newListDataForReceiveEmpty[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceiveEmpty[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      17) {
+                    newListDataForReceiveEmpty[firstIndex]
+                        .getData![i]
+                        .maTrangThai = 37;
+                  }
+                }
+                break;
+              default:
+            }
+            break;
+          case "lh":
+            switch (newListDataForReceive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 37:
+                for (var i = 0;
+                    i < newListDataForReceive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      37) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        18;
+                  }
+                }
+                break;
+              case 40:
+                for (var i = 0;
+                    i < newListDataForReceive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      40) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        18;
+                  }
+                }
+                break;
+              case 46:
+                for (var i = 0;
+                    i < newListDataForReceive[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceive[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      46) {
+                    newListDataForReceive[firstIndex].getData![i].maTrangThai =
+                        46;
+                  }
+                }
+                break;
+
+              default:
+            }
+            break;
+          case "th":
+            switch (newListDataForGive[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 18:
+                if (newListDataForGive[firstIndex]
+                        .getData![secondIndex]
+                        .loaiVanDon ==
+                    "nhap") {
+                  for (var i = 0;
+                      i < newListDataForGive[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGive[firstIndex]
+                            .getData![i]
+                            .maTrangThai ==
+                        18) {
+                      newListDataForGive[firstIndex].getData![i].maTrangThai =
+                          35;
+                    }
+                  }
+                } else {
+                  for (var i = 0;
+                      i < newListDataForGive[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGive[firstIndex]
+                            .getData![i]
+                            .maTrangThai ==
+                        18) {
+                      listOrder
+                          .value
+                          .getDataHandlingMobiles![
+                              listOrder.value.getDataHandlingMobiles!.length -
+                                  1]
+                          .maTrangThai = 36;
+                    }
+                  }
+                }
+
+                break;
+
+              default:
+            }
+            break;
+          case "tr":
+            switch (newListDataForGiveEmpty[firstIndex]
+                .getData![secondIndex]
+                .maTrangThai) {
+              case 35:
+                for (var i = 0;
+                    i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForGiveEmpty[firstIndex]
+                          .getData![i]
+                          .maTrangThai ==
+                      35) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 48;
+                  }
+                }
+                break;
+              default:
+            }
+            break;
+          default:
+        }
+        break;
+      default:
+    }
   }
 }
