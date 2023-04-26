@@ -32,20 +32,6 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
           },
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              LocationPermission permission =
-                  await Geolocator.checkPermission();
-              if (permission == LocationPermission.denied) {
-                diaLogMessage(size: size, onPressed: () {});
-              } else {
-                print("Đã có dữ liệu");
-              }
-            },
-            icon: const Icon(Icons.arrow_back_ios_new_outlined),
-          ),
-        ],
       ),
       body: GetBuilder<StartDetailPendingController>(
         init: StartDetailPendingController(),
