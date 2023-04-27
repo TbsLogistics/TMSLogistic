@@ -433,499 +433,13 @@ class StartDetailPendingController extends GetxController {
         }
         int position = listPTCVItems.indexOf('FCL');
         listSamePTVCItems = listPTCVItems.toSet().toList();
+        //Trường hợp cont đặc biệt
         if (listSamePTVCItems.length == 2) {
-          switch (listOrder.value.getDataHandlingMobiles![0].loaiVanDon) {
-            case "xuat":
-              switch (idList) {
-                case "lr":
-                  switch (newListDataForReceiveEmpty[firstIndex]
-                      .getData![secondIndex]
-                      .maPTVC) {
-                    case "LCL":
-                      for (var i = 0;
-                          i <
-                              newListDataForReceiveEmpty[firstIndex]
-                                  .getData!
-                                  .length;
-                          i++) {
-                        if (newListDataForReceiveEmpty[firstIndex]
-                                    .getData![i]
-                                    .maTrangThai ==
-                                17 &&
-                            i != position) {
-                          newListDataForReceiveEmpty[firstIndex]
-                              .getData![i]
-                              .maTrangThai = 37;
-                        }
-                      }
-
-                      break;
-                    case "FCL":
-                      newListDataForReceiveEmpty[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai = 37;
-                      break;
-                  }
-                  break;
-                case "lh":
-                  switch (newListDataForReceive[firstIndex]
-                      .getData![secondIndex]
-                      .maPTVC) {
-                    case "LCL":
-                      switch (newListDataForReceive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai) {
-                        case 37:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                        case 40:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                      }
-                      break;
-                    case "FCL":
-                      switch (newListDataForReceive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai) {
-                        case 37:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                        case 40:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                      }
-                      break;
-                  }
-                  break;
-                case "th":
-                  var listIdPlaceItems = [];
-                  var listSameIdPlaceItems = [];
-                  for (var i = 0;
-                      i < listOrder.value.getDataHandlingMobiles!.length;
-                      i++) {
-                    var itemsSamePlace =
-                        listOrder.value.getDataHandlingMobiles![i].diemTraHang;
-                    listIdPlaceItems.add(itemsSamePlace);
-                  }
-                  listSameIdPlaceItems = listIdPlaceItems.toSet().toList();
-                  if (listSameIdPlaceItems.length == 2) {
-                    switch (newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maPTVC) {
-                      case "LCL":
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          if (newListDataForGive[firstIndex]
-                                      .getData![i]
-                                      .maTrangThai ==
-                                  18 &&
-                              newListDataForGive[firstIndex]
-                                      .getData![i]
-                                      .maPTVC ==
-                                  "LCL") {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 36;
-                          }
-                        }
-                        var listIdStatus = [];
-                        var listIdSameStatus = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatus.add(items);
-                        }
-                        listIdSameStatus = listIdStatus.toSet().toList();
-                        if (listIdSameStatus.length == 1 &&
-                                listIdSameStatus.contains(36) == true ||
-                            listIdSameStatus.length == 2 &&
-                                listIdSameStatus.contains(36) == true &&
-                                listIdSameStatus.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                        break;
-                      case "FCL":
-                        newListDataForGive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 36;
-                        var listIdStatusItems = [];
-                        var listIdSameStatusItems = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatusItems.add(items);
-                        }
-                        listIdSameStatusItems =
-                            listIdStatusItems.toSet().toList();
-                        if (listIdSameStatusItems.length == 1 &&
-                                listIdSameStatusItems.contains(36) == true ||
-                            listIdSameStatusItems.length == 2 &&
-                                listIdSameStatusItems.contains(36) == true &&
-                                listIdSameStatusItems.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                        break;
-                    }
-                  } else {
-                    switch (newListDataForGive[firstIndex]
-                        .getData![secondIndex]
-                        .maPTVC) {
-                      case "LCL":
-                        for (var i = 0;
-                            i < newListDataForGive[firstIndex].getData!.length;
-                            i++) {
-                          if (newListDataForGive[firstIndex]
-                                      .getData![i]
-                                      .maTrangThai ==
-                                  18 &&
-                              i != position) {
-                            newListDataForGive[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 36;
-                          }
-                        }
-                        var listIdStatus = [];
-                        var listIdSameStatus = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatus.add(items);
-                        }
-                        listIdSameStatus = listIdStatus.toSet().toList();
-                        if (listIdSameStatus.length == 1 &&
-                                listIdSameStatus.contains(36) == true ||
-                            listIdSameStatus.length == 2 &&
-                                listIdSameStatus.contains(36) == true &&
-                                listIdSameStatus.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                        break;
-                      case "FCL":
-                        newListDataForGive[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 36;
-                        var listIdStatusItems = [];
-                        var listIdSameStatusItems = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatusItems.add(items);
-                        }
-                        listIdSameStatusItems =
-                            listIdStatusItems.toSet().toList();
-                        if (listIdSameStatusItems.length == 1 &&
-                                listIdSameStatusItems.contains(36) == true ||
-                            listIdSameStatusItems.length == 2 &&
-                                listIdSameStatusItems.contains(36) == true &&
-                                listIdSameStatusItems.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 36;
-                        }
-                        break;
-                    }
-                  }
-
-                  break;
-              }
-              break;
-            case "nhap":
-              switch (idList) {
-                case "lh":
-                  switch (newListDataForReceive[firstIndex]
-                      .getData![secondIndex]
-                      .maPTVC) {
-                    case "LCL":
-                      switch (newListDataForReceive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai) {
-                        case 37:
-                          for (var i = 0;
-                              i <
-                                  newListDataForReceive[firstIndex]
-                                      .getData!
-                                      .length;
-                              i++) {
-                            if (newListDataForReceive[firstIndex]
-                                        .getData![i]
-                                        .maTrangThai ==
-                                    37 &&
-                                newListDataForReceive[firstIndex]
-                                        .getData![i]
-                                        .maPTVC ==
-                                    "LCL") {
-                              newListDataForReceive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai = 18;
-                            }
-                          }
-
-                          break;
-                        case 40:
-                          for (var i = 0;
-                              i <
-                                  newListDataForReceive[firstIndex]
-                                      .getData!
-                                      .length;
-                              i++) {
-                            if (newListDataForReceive[firstIndex]
-                                        .getData![i]
-                                        .maTrangThai ==
-                                    40 &&
-                                newListDataForReceive[firstIndex]
-                                        .getData![i]
-                                        .maPTVC ==
-                                    "LCL") {
-                              newListDataForReceive[firstIndex]
-                                  .getData![i]
-                                  .maTrangThai = 18;
-                            }
-                          }
-                          break;
-                      }
-                      break;
-                    case "FCL":
-                      switch (newListDataForReceive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai) {
-                        case 37:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                        case 40:
-                          newListDataForReceive[firstIndex]
-                              .getData![secondIndex]
-                              .maTrangThai = 18;
-                          break;
-                      }
-                      break;
-                  }
-                  break;
-                case "th":
-                  switch (newListDataForGive[firstIndex]
-                      .getData![secondIndex]
-                      .maPTVC) {
-                    case "LCL":
-                      newListDataForGive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai = 35;
-                      break;
-                    case "FCL":
-                      newListDataForGive[firstIndex]
-                          .getData![secondIndex]
-                          .maTrangThai = 35;
-                      break;
-                  }
-
-                  break;
-                case "tr":
-                  var listIdPlaceItems = [];
-                  var listSameIdPlaceItems = [];
-                  for (var i = 0;
-                      i < listOrder.value.getDataHandlingMobiles!.length;
-                      i++) {
-                    var itemsSamePlace =
-                        listOrder.value.getDataHandlingMobiles![i].diemTraRong;
-                    listIdPlaceItems.add(itemsSamePlace);
-                  }
-                  listSameIdPlaceItems = listIdPlaceItems.toSet().toList();
-                  if (listSameIdPlaceItems.length == 2) {
-                    switch (newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maPTVC) {
-                      case "LCL":
-                        for (var i = 0;
-                            i <
-                                newListDataForGiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForGiveEmpty[firstIndex]
-                                      .getData![i]
-                                      .maTrangThai ==
-                                  18 &&
-                              newListDataForGiveEmpty[firstIndex]
-                                      .getData![i]
-                                      .maPTVC ==
-                                  "LCL") {
-                            newListDataForGiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 48;
-                          }
-                        }
-                        var listIdStatus = [];
-                        var listIdSameStatus = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatus.add(items);
-                        }
-                        listIdSameStatus = listIdStatus.toSet().toList();
-                        if (listIdSameStatus.length == 1 &&
-                                listIdSameStatus.contains(36) == true ||
-                            listIdSameStatus.length == 2 &&
-                                listIdSameStatus.contains(36) == true &&
-                                listIdSameStatus.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 48;
-                        }
-                        break;
-                      case "FCL":
-                        newListDataForGiveEmpty[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 48;
-                        var listIdStatusItems = [];
-                        var listIdSameStatusItems = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatusItems.add(items);
-                        }
-                        listIdSameStatusItems =
-                            listIdStatusItems.toSet().toList();
-                        if (listIdSameStatusItems.length == 1 &&
-                                listIdSameStatusItems.contains(48) == true ||
-                            listIdSameStatusItems.length == 2 &&
-                                listIdSameStatusItems.contains(48) == true &&
-                                listIdSameStatusItems.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 48;
-                        }
-                        break;
-                    }
-                  } else {
-                    print([
-                      newListDataForGiveEmpty[firstIndex]
-                          .getData![secondIndex]
-                          .maPTVC,
-                      position
-                    ]);
-                    switch (newListDataForGiveEmpty[firstIndex]
-                        .getData![secondIndex]
-                        .maPTVC) {
-                      case "LCL":
-                        for (var i = 0;
-                            i <
-                                newListDataForGiveEmpty[firstIndex]
-                                    .getData!
-                                    .length;
-                            i++) {
-                          if (newListDataForGiveEmpty[firstIndex]
-                                      .getData![i]
-                                      .maTrangThai ==
-                                  35 &&
-                              i != position) {
-                            newListDataForGiveEmpty[firstIndex]
-                                .getData![i]
-                                .maTrangThai = 48;
-                          }
-                        }
-                        var listIdStatus = [];
-                        var listIdSameStatus = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatus.add(items);
-                        }
-                        listIdSameStatus = listIdStatus.toSet().toList();
-                        if (listIdSameStatus.length == 1 &&
-                                listIdSameStatus.contains(48) == true ||
-                            listIdSameStatus.length == 2 &&
-                                listIdSameStatus.contains(48) == true &&
-                                listIdSameStatus.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 48;
-                        }
-                        break;
-                      case "FCL":
-                        newListDataForGiveEmpty[firstIndex]
-                            .getData![secondIndex]
-                            .maTrangThai = 48;
-                        var listIdStatusItems = [];
-                        var listIdSameStatusItems = [];
-                        for (var i = 0;
-                            i < listOrder.value.getDataHandlingMobiles!.length;
-                            i++) {
-                          var items = listOrder
-                              .value.getDataHandlingMobiles![i].maTrangThai;
-                          listIdStatusItems.add(items);
-                        }
-                        listIdSameStatusItems =
-                            listIdStatusItems.toSet().toList();
-                        if (listIdSameStatusItems.length == 1 &&
-                                listIdSameStatusItems.contains(48) == true ||
-                            listIdSameStatusItems.length == 2 &&
-                                listIdSameStatusItems.contains(48) == true &&
-                                listIdSameStatusItems.contains(46) == true) {
-                          listOrder
-                              .value
-                              .getDataHandlingMobiles![listOrder
-                                      .value.getDataHandlingMobiles!.length -
-                                  1]
-                              .maTrangThai = 48;
-                        }
-                        break;
-                    }
-                  }
-
-                  break;
-              }
-              break;
-          }
+          cont20Special(
+              firstIndex: firstIndex,
+              secondIndex: secondIndex,
+              idList: idList,
+              position: position);
         } else {
           stateProcessing(
               firstIndex: firstIndex, secondIndex: secondIndex, idList: idList);
@@ -1253,6 +767,471 @@ class StartDetailPendingController extends GetxController {
             },
           ),
         ));
+  }
+
+  void cont20Special(
+      {required int firstIndex,
+      required int secondIndex,
+      required String idList,
+      required int position}) {
+    switch (listOrder.value.getDataHandlingMobiles![0].loaiVanDon) {
+      case "xuat":
+        switch (idList) {
+          case "lr":
+            switch (newListDataForReceiveEmpty[firstIndex]
+                .getData![secondIndex]
+                .maPTVC) {
+              case "LCL":
+                for (var i = 0;
+                    i < newListDataForReceiveEmpty[firstIndex].getData!.length;
+                    i++) {
+                  if (newListDataForReceiveEmpty[firstIndex]
+                              .getData![i]
+                              .maTrangThai ==
+                          17 &&
+                      i != position) {
+                    newListDataForReceiveEmpty[firstIndex]
+                        .getData![i]
+                        .maTrangThai = 37;
+                  }
+                }
+
+                break;
+              case "FCL":
+                newListDataForReceiveEmpty[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai = 37;
+                break;
+            }
+            break;
+          case "lh":
+            switch (newListDataForReceive[firstIndex]
+                .getData![secondIndex]
+                .maPTVC) {
+              case "LCL":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                  case 40:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                }
+                break;
+              case "FCL":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                  case 40:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                }
+                break;
+            }
+            break;
+          case "th":
+            var listIdPlaceItems = [];
+            var listSameIdPlaceItems = [];
+            for (var i = 0;
+                i < listOrder.value.getDataHandlingMobiles!.length;
+                i++) {
+              var itemsSamePlace =
+                  listOrder.value.getDataHandlingMobiles![i].diemTraHang;
+              listIdPlaceItems.add(itemsSamePlace);
+            }
+            listSameIdPlaceItems = listIdPlaceItems.toSet().toList();
+            if (listSameIdPlaceItems.length == 2) {
+              switch (
+                  newListDataForGive[firstIndex].getData![secondIndex].maPTVC) {
+                case "LCL":
+                  for (var i = 0;
+                      i < newListDataForGive[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            18 &&
+                        newListDataForGive[firstIndex].getData![i].maPTVC ==
+                            "LCL") {
+                      newListDataForGive[firstIndex].getData![i].maTrangThai =
+                          36;
+                    }
+                  }
+                  var listIdStatus = [];
+                  var listIdSameStatus = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatus.add(items);
+                  }
+                  listIdSameStatus = listIdStatus.toSet().toList();
+                  if (listIdSameStatus.length == 1 &&
+                          listIdSameStatus.contains(36) == true ||
+                      listIdSameStatus.length == 2 &&
+                          listIdSameStatus.contains(36) == true &&
+                          listIdSameStatus.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 36;
+                  }
+                  break;
+                case "FCL":
+                  newListDataForGive[firstIndex]
+                      .getData![secondIndex]
+                      .maTrangThai = 36;
+                  var listIdStatusItems = [];
+                  var listIdSameStatusItems = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatusItems.add(items);
+                  }
+                  listIdSameStatusItems = listIdStatusItems.toSet().toList();
+                  if (listIdSameStatusItems.length == 1 &&
+                          listIdSameStatusItems.contains(36) == true ||
+                      listIdSameStatusItems.length == 2 &&
+                          listIdSameStatusItems.contains(36) == true &&
+                          listIdSameStatusItems.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 36;
+                  }
+                  break;
+              }
+            } else {
+              switch (
+                  newListDataForGive[firstIndex].getData![secondIndex].maPTVC) {
+                case "LCL":
+                  for (var i = 0;
+                      i < newListDataForGive[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGive[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            18 &&
+                        i != position) {
+                      newListDataForGive[firstIndex].getData![i].maTrangThai =
+                          36;
+                    }
+                  }
+                  var listIdStatus = [];
+                  var listIdSameStatus = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatus.add(items);
+                  }
+                  listIdSameStatus = listIdStatus.toSet().toList();
+                  if (listIdSameStatus.length == 1 &&
+                          listIdSameStatus.contains(36) == true ||
+                      listIdSameStatus.length == 2 &&
+                          listIdSameStatus.contains(36) == true &&
+                          listIdSameStatus.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 36;
+                  }
+                  break;
+                case "FCL":
+                  newListDataForGive[firstIndex]
+                      .getData![secondIndex]
+                      .maTrangThai = 36;
+                  var listIdStatusItems = [];
+                  var listIdSameStatusItems = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatusItems.add(items);
+                  }
+                  listIdSameStatusItems = listIdStatusItems.toSet().toList();
+                  if (listIdSameStatusItems.length == 1 &&
+                          listIdSameStatusItems.contains(36) == true ||
+                      listIdSameStatusItems.length == 2 &&
+                          listIdSameStatusItems.contains(36) == true &&
+                          listIdSameStatusItems.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 36;
+                  }
+                  break;
+              }
+            }
+
+            break;
+        }
+        break;
+      case "nhap":
+        switch (idList) {
+          case "lh":
+            switch (newListDataForReceive[firstIndex]
+                .getData![secondIndex]
+                .maPTVC) {
+              case "LCL":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              37 &&
+                          newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maPTVC ==
+                              "LCL") {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+
+                    break;
+                  case 40:
+                    for (var i = 0;
+                        i < newListDataForReceive[firstIndex].getData!.length;
+                        i++) {
+                      if (newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maTrangThai ==
+                              40 &&
+                          newListDataForReceive[firstIndex]
+                                  .getData![i]
+                                  .maPTVC ==
+                              "LCL") {
+                        newListDataForReceive[firstIndex]
+                            .getData![i]
+                            .maTrangThai = 18;
+                      }
+                    }
+                    break;
+                }
+                break;
+              case "FCL":
+                switch (newListDataForReceive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai) {
+                  case 37:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                  case 40:
+                    newListDataForReceive[firstIndex]
+                        .getData![secondIndex]
+                        .maTrangThai = 18;
+                    break;
+                }
+                break;
+            }
+            break;
+          case "th":
+            switch (
+                newListDataForGive[firstIndex].getData![secondIndex].maPTVC) {
+              case "LCL":
+                newListDataForGive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai = 35;
+                break;
+              case "FCL":
+                newListDataForGive[firstIndex]
+                    .getData![secondIndex]
+                    .maTrangThai = 35;
+                break;
+            }
+
+            break;
+          case "tr":
+            var listIdPlaceItems = [];
+            var listSameIdPlaceItems = [];
+            for (var i = 0;
+                i < listOrder.value.getDataHandlingMobiles!.length;
+                i++) {
+              var itemsSamePlace =
+                  listOrder.value.getDataHandlingMobiles![i].diemTraRong;
+              listIdPlaceItems.add(itemsSamePlace);
+            }
+            listSameIdPlaceItems = listIdPlaceItems.toSet().toList();
+            if (listSameIdPlaceItems.length == 2) {
+              switch (newListDataForGiveEmpty[firstIndex]
+                  .getData![secondIndex]
+                  .maPTVC) {
+                case "LCL":
+                  for (var i = 0;
+                      i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            18 &&
+                        newListDataForGiveEmpty[firstIndex]
+                                .getData![i]
+                                .maPTVC ==
+                            "LCL") {
+                      newListDataForGiveEmpty[firstIndex]
+                          .getData![i]
+                          .maTrangThai = 48;
+                    }
+                  }
+                  var listIdStatus = [];
+                  var listIdSameStatus = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatus.add(items);
+                  }
+                  listIdSameStatus = listIdStatus.toSet().toList();
+                  if (listIdSameStatus.length == 1 &&
+                          listIdSameStatus.contains(36) == true ||
+                      listIdSameStatus.length == 2 &&
+                          listIdSameStatus.contains(36) == true &&
+                          listIdSameStatus.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 48;
+                  }
+                  break;
+                case "FCL":
+                  newListDataForGiveEmpty[firstIndex]
+                      .getData![secondIndex]
+                      .maTrangThai = 48;
+                  var listIdStatusItems = [];
+                  var listIdSameStatusItems = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatusItems.add(items);
+                  }
+                  listIdSameStatusItems = listIdStatusItems.toSet().toList();
+                  if (listIdSameStatusItems.length == 1 &&
+                          listIdSameStatusItems.contains(48) == true ||
+                      listIdSameStatusItems.length == 2 &&
+                          listIdSameStatusItems.contains(48) == true &&
+                          listIdSameStatusItems.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 48;
+                  }
+                  break;
+              }
+            } else {
+              print([
+                newListDataForGiveEmpty[firstIndex]
+                    .getData![secondIndex]
+                    .maPTVC,
+                position
+              ]);
+              switch (newListDataForGiveEmpty[firstIndex]
+                  .getData![secondIndex]
+                  .maPTVC) {
+                case "LCL":
+                  for (var i = 0;
+                      i < newListDataForGiveEmpty[firstIndex].getData!.length;
+                      i++) {
+                    if (newListDataForGiveEmpty[firstIndex]
+                                .getData![i]
+                                .maTrangThai ==
+                            35 &&
+                        i != position) {
+                      newListDataForGiveEmpty[firstIndex]
+                          .getData![i]
+                          .maTrangThai = 48;
+                    }
+                  }
+                  var listIdStatus = [];
+                  var listIdSameStatus = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatus.add(items);
+                  }
+                  listIdSameStatus = listIdStatus.toSet().toList();
+                  if (listIdSameStatus.length == 1 &&
+                          listIdSameStatus.contains(48) == true ||
+                      listIdSameStatus.length == 2 &&
+                          listIdSameStatus.contains(48) == true &&
+                          listIdSameStatus.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 48;
+                  }
+                  break;
+                case "FCL":
+                  newListDataForGiveEmpty[firstIndex]
+                      .getData![secondIndex]
+                      .maTrangThai = 48;
+                  var listIdStatusItems = [];
+                  var listIdSameStatusItems = [];
+                  for (var i = 0;
+                      i < listOrder.value.getDataHandlingMobiles!.length;
+                      i++) {
+                    var items =
+                        listOrder.value.getDataHandlingMobiles![i].maTrangThai;
+                    listIdStatusItems.add(items);
+                  }
+                  listIdSameStatusItems = listIdStatusItems.toSet().toList();
+                  if (listIdSameStatusItems.length == 1 &&
+                          listIdSameStatusItems.contains(48) == true ||
+                      listIdSameStatusItems.length == 2 &&
+                          listIdSameStatusItems.contains(48) == true &&
+                          listIdSameStatusItems.contains(46) == true) {
+                    listOrder
+                        .value
+                        .getDataHandlingMobiles![
+                            listOrder.value.getDataHandlingMobiles!.length - 1]
+                        .maTrangThai = 48;
+                  }
+                  break;
+              }
+            }
+
+            break;
+        }
+        break;
+    }
   }
 
   void stateProcessing(
