@@ -246,7 +246,7 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                             },
                                           ),
                                           ButtonFinal(
-                                            text: "Hủy hoàn thành",
+                                            text: "Hủy lấy rỗng",
                                             onPressed: () {},
                                           ),
                                           ButtonFinal(
@@ -430,7 +430,7 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                   );
                                                 }),
                                             ButtonFinal(
-                                              text: "Hủy hoàn thành",
+                                              text: "Hủy lấy hàng",
                                               onPressed: () {},
                                             ),
                                             ButtonFinal(
@@ -599,7 +599,7 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                       ]);
                                                 }),
                                             ButtonFinal(
-                                                text: "Hủy hoàn thành",
+                                                text: "Hủy giao hàng",
                                                 onPressed: () {}),
                                             ButtonFinal(
                                                 text: "Hoàn thành",
@@ -766,7 +766,7 @@ class FinishedDetailTms extends GetView<StartDetailFinishedController> {
                                                   ]);
                                             }),
                                         ButtonFinal(
-                                            text: "Hủy hoàn thành",
+                                            text: "Hủy trả rỗng",
                                             onPressed: () {}),
                                         ButtonFinal(
                                             text: "Hoàn thành",

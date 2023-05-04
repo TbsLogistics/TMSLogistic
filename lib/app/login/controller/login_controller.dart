@@ -15,10 +15,6 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   RxBool isLoadLogin = false.obs;
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
 
   RxBool obcureText = true.obs;
   void updateObcureText() {

@@ -32,6 +32,7 @@ class StartDetailTmsController extends GetxController {
     items.insert(newIndex, item);
   }
 
+  //Bắt đầu chuyến
   void postSetRuning({required int id}) async {
     var dio = Dio();
     Response response;

@@ -226,49 +226,20 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                               )
                                             : ButtonComment(
                                                 text: "Đến",
-                                                onPressed: () async {
-                                                  LocationPermission
-                                                      permission =
-                                                      await Geolocator
-                                                          .checkPermission();
-                                                  if (permission ==
-                                                      LocationPermission
-                                                          .denied) {
-                                                    diaLogMessage(
-                                                        size: size,
-                                                        onPressed: () {
-                                                          Get.back();
-                                                          controller
-                                                              .updateReceiveEmpty(
-                                                            index: i,
-                                                            placeId: int.parse(
-                                                              controller
-                                                                  .listOrder
-                                                                  .value
-                                                                  .getDataHandlingMobiles![
-                                                                      0]
-                                                                  .maDiemLayRong
-                                                                  .toString(),
-                                                            ),
-                                                          );
-                                                        });
-                                                  } else {
-                                                    controller
-                                                        .updateReceiveEmpty(
-                                                      index: i,
-                                                      placeId: int.parse(
-                                                        controller
-                                                            .listOrder
-                                                            .value
-                                                            .getDataHandlingMobiles![
-                                                                0]
-                                                            .maDiemLayRong
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              );
+                                                onPressed: () {
+                                                  controller.updateReceiveEmpty(
+                                                    index: i,
+                                                    placeId: int.parse(
+                                                      controller
+                                                          .listOrder
+                                                          .value
+                                                          .getDataHandlingMobiles![
+                                                              0]
+                                                          .maDiemLayRong
+                                                          .toString(),
+                                                    ),
+                                                  );
+                                                });
                                       }),
                                       ButtonComment(
                                           text: "Phụ phí",
@@ -606,44 +577,19 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                               text: "Đã đến", onPressed: () {})
                                           : ButtonComment(
                                               text: "Đến",
-                                              onPressed: () async {
-                                                LocationPermission permission =
-                                                    await Geolocator
-                                                        .checkPermission();
-                                                if (permission ==
-                                                    LocationPermission.denied) {
-                                                  diaLogMessage(
-                                                      size: size,
-                                                      onPressed: () {
-                                                        Get.back();
-                                                        controller
-                                                            .updateReceive(
-                                                          index: i,
-                                                          placeId: int.parse(
-                                                            controller
-                                                                .listOrder
-                                                                .value
-                                                                .getDataHandlingMobiles![
-                                                                    0]
-                                                                .maDiemLayHang
-                                                                .toString(),
-                                                          ),
-                                                        );
-                                                      });
-                                                } else {
-                                                  controller.updateReceive(
-                                                    index: i,
-                                                    placeId: int.parse(
-                                                      controller
-                                                          .listOrder
-                                                          .value
-                                                          .getDataHandlingMobiles![
-                                                              0]
-                                                          .maDiemLayHang
-                                                          .toString(),
-                                                    ),
-                                                  );
-                                                }
+                                              onPressed: () {
+                                                controller.updateReceive(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemLayHang
+                                                        .toString(),
+                                                  ),
+                                                );
                                               })),
                                       ButtonComment(
                                           text: "Phụ phí",
@@ -1010,45 +956,19 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                                 onPressed: () {})
                                             : ButtonComment(
                                                 text: "Đến",
-                                                onPressed: () async {
-                                                  LocationPermission
-                                                      permission =
-                                                      await Geolocator
-                                                          .checkPermission();
-                                                  if (permission ==
-                                                      LocationPermission
-                                                          .denied) {
-                                                    diaLogMessage(
-                                                        size: size,
-                                                        onPressed: () {
-                                                          Get.back();
-                                                          controller.updateGive(
-                                                            index: i,
-                                                            placeId: int.parse(
-                                                              controller
-                                                                  .listOrder
-                                                                  .value
-                                                                  .getDataHandlingMobiles![
-                                                                      0]
-                                                                  .maDiemTraHang
-                                                                  .toString(),
-                                                            ),
-                                                          );
-                                                        });
-                                                  } else {
-                                                    controller.updateGive(
-                                                      index: i,
-                                                      placeId: int.parse(
-                                                        controller
-                                                            .listOrder
-                                                            .value
-                                                            .getDataHandlingMobiles![
-                                                                0]
-                                                            .maDiemTraHang
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                  }
+                                                onPressed: () {
+                                                  controller.updateGive(
+                                                    index: i,
+                                                    placeId: int.parse(
+                                                      controller
+                                                          .listOrder
+                                                          .value
+                                                          .getDataHandlingMobiles![
+                                                              0]
+                                                          .maDiemTraHang
+                                                          .toString(),
+                                                    ),
+                                                  );
                                                 },
                                               ),
                                       ),
@@ -1350,44 +1270,19 @@ class PendingDetailTms extends GetView<StartDetailPendingController> {
                                               text: "Đã đến", onPressed: () {})
                                           : ButtonComment(
                                               text: "Đến",
-                                              onPressed: () async {
-                                                LocationPermission permission =
-                                                    await Geolocator
-                                                        .checkPermission();
-                                                if (permission ==
-                                                    LocationPermission.denied) {
-                                                  diaLogMessage(
-                                                      size: size,
-                                                      onPressed: () {
-                                                        Get.back();
-                                                        controller
-                                                            .updateGiveEmpty(
-                                                          index: i,
-                                                          placeId: int.parse(
-                                                            controller
-                                                                .listOrder
-                                                                .value
-                                                                .getDataHandlingMobiles![
-                                                                    0]
-                                                                .maDiemTraRong
-                                                                .toString(),
-                                                          ),
-                                                        );
-                                                      });
-                                                } else {
-                                                  controller.updateGiveEmpty(
-                                                    index: i,
-                                                    placeId: int.parse(
-                                                      controller
-                                                          .listOrder
-                                                          .value
-                                                          .getDataHandlingMobiles![
-                                                              0]
-                                                          .maDiemTraRong
-                                                          .toString(),
-                                                    ),
-                                                  );
-                                                }
+                                              onPressed: () {
+                                                controller.updateGiveEmpty(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemTraRong
+                                                        .toString(),
+                                                  ),
+                                                );
                                               });
                                     }),
                                     ButtonComment(

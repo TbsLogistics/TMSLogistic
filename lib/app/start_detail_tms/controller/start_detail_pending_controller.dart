@@ -356,7 +356,7 @@ class StartDetailPendingController extends GetxController {
     // Store the updated boolean list in get_storage
     storage.write(
         'ReceiveEmpty$index${listOrder.value.maChuyen}', isPlacedReceiveEmpty);
-    getCurrentLocation();
+    // getCurrentLocation();
     postGeolorcation(placeId: placeId);
     isLoadStatus(true);
   }
@@ -366,7 +366,7 @@ class StartDetailPendingController extends GetxController {
     isPlacedReceive[index] = !isPlacedReceive[index];
     // Store the updated boolean list in get_storage
     storage.write('Receive$index${listOrder.value.maChuyen}', isPlacedReceive);
-    getCurrentLocation();
+    // getCurrentLocation();
     postGeolorcation(placeId: placeId);
     isLoadStatus(true);
   }
@@ -376,7 +376,7 @@ class StartDetailPendingController extends GetxController {
     isPlacedGive[index] = !isPlacedGive[index];
     // Store the updated boolean list in get_storage
     storage.write('Give$index${listOrder.value.maChuyen}', isPlacedGive);
-    getCurrentLocation();
+    // getCurrentLocation();
     postGeolorcation(placeId: placeId);
     isLoadStatus(true);
   }
@@ -387,7 +387,7 @@ class StartDetailPendingController extends GetxController {
     // Store the updated boolean list in get_storage
     storage.write(
         'GiveEmpty$index${listOrder.value.maChuyen}', isPlacedGiveEmpty);
-    getCurrentLocation();
+    // getCurrentLocation();
     postGeolorcation(placeId: placeId);
     isLoadStatus(true);
   }

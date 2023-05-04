@@ -50,87 +50,146 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  validator: (value) => Validate().password(value),
-                  controller: controller.passwordOld,
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orangeAccent, width: 2.0),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.teal)),
-                      hintText: 'Nhập mật khẩu cũ',
-                      labelText: 'Mật khẩu cũ',
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.lock,
-                        color: Colors.orangeAccent,
-                      ),
-                      prefixText: ' ',
-                      suffixStyle: const TextStyle(color: Colors.green)),
+                Obx(
+                  () => TextFormField(
+                    validator: (value) => Validate().password(value),
+                    controller: controller.passwordOld,
+                    obscureText: controller.obcureText.value,
+                    decoration: InputDecoration(
+                        suffixIcon: Obx(
+                          () => IconButton(
+                            onPressed: () {
+                              // print("oke");
+                              controller.updateObcureText();
+                            },
+                            icon: controller.obcureText.value == true
+                                ? Icon(
+                                    Icons.visibility,
+                                    color: Colors.black.withOpacity(0.4),
+                                  )
+                                : Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.black.withOpacity(0.4),
+                                  ),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.orangeAccent, width: 2.0),
+                        ),
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal)),
+                        hintText: 'Nhập mật khẩu cũ',
+                        labelText: 'Mật khẩu cũ',
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Colors.orangeAccent,
+                        ),
+                        prefixText: ' ',
+                        suffixStyle: const TextStyle(color: Colors.green)),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  validator: (value) => Validate().newPassword(value),
-                  controller: controller.passwordNew,
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orangeAccent, width: 2.0),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.teal)),
-                      hintText: 'Nhập mật khẩu mơi',
-                      labelText: 'Mật khẩu mới',
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.lock,
-                        color: Colors.orangeAccent,
-                      ),
-                      prefixText: ' ',
-                      suffixStyle: const TextStyle(color: Colors.green)),
+                Obx(
+                  () => TextFormField(
+                    validator: (value) => Validate().newPassword(value),
+                    controller: controller.passwordNew,
+                    obscureText: controller.obcureText.value,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            // print("oke");
+                            controller.updateObcureText();
+                          },
+                          icon: controller.obcureText.value == true
+                              ? Icon(
+                                  Icons.visibility,
+                                  color: Colors.black.withOpacity(0.4),
+                                )
+                              : Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.orangeAccent, width: 2.0),
+                        ),
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal)),
+                        hintText: 'Nhập mật khẩu mơi',
+                        labelText: 'Mật khẩu mới',
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Colors.orangeAccent,
+                        ),
+                        prefixText: ' ',
+                        suffixStyle: const TextStyle(color: Colors.green)),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  validator: (value) => Validate()
-                      .reNewPassword(controller.passwordNew.text, value!),
-                  controller: controller.rePasswordNew,
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orangeAccent, width: 2.0),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.teal)),
-                      hintText: 'Nhập lại mật khẩu mới',
-                      labelText: 'Nhập lại mật khẩu mới',
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.lock,
-                        color: Colors.orangeAccent,
-                      ),
-                      prefixText: ' ',
-                      suffixStyle: const TextStyle(color: Colors.green)),
+                Obx(
+                  () => TextFormField(
+                    validator: (value) => Validate()
+                        .reNewPassword(controller.passwordNew.text, value!),
+                    controller: controller.rePasswordNew,
+                    obscureText: controller.obcureText.value,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            // print("oke");
+                            controller.updateObcureText();
+                          },
+                          icon: controller.obcureText.value == true
+                              ? Icon(
+                                  Icons.visibility,
+                                  color: Colors.black.withOpacity(0.4),
+                                )
+                              : Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.orangeAccent, width: 2.0),
+                        ),
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal)),
+                        hintText: 'Nhập lại mật khẩu mới',
+                        labelText: 'Nhập lại mật khẩu mới',
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Colors.orangeAccent,
+                        ),
+                        prefixText: ' ',
+                        suffixStyle: const TextStyle(color: Colors.green)),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
