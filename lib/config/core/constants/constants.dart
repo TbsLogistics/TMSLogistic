@@ -7,7 +7,9 @@ class AppConstants {
   static const int RESPONSE_CODE_SUCCESS = 200;
   static const int RESPONSE_CODE_ERROR = 400;
   static const int RESPONSE_CODE_SERVER_ERROR = 500;
-  static const String KEY_ACCESS_TOKEN = "access_token";
+  static const String KEY_ACCESS_TOKEN_TMS = "access_token_tms";
+  static const String KEY_ACCESS_TOKEN_NPT = "access_token_npt";
+  static const String KEY_ACCESS_TOKEN_HRM = "access_token_hrm";
 
   //Role
   static const String KEY_ROLE = "role";
@@ -16,10 +18,13 @@ class AppConstants {
   static const String KEY_ID_KH = "id_kh";
   static const String KEY_ID_MABOPHAN = "id_bophan";
   static const String KEY_ID_MANV = "id_NV";
+  static const String KEY_ID_KH_OF_DRIVER = "id_KH_OF_DRIVER";
 
   static const String KEY_ID_TX = "id_TX";
 
   // Url
-  // static const String urlBaseTMs = "https://api.tbslogistics.com.vn";
-  static const String urlBase = "https://apitest.tbslogistics.com.vn";
+  // static const String urlBaseTmsTMs = "https://api.tbslogistics.com.vn";
+  static const String urlBaseTms = "https://api.tbslogistics.com.vn";
+  static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
+  static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
 }

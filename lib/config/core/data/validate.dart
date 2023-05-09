@@ -40,4 +40,46 @@ class Validate {
       }
     }
   }
+
+  String timeOfDay({String? value}) {
+    if (value!.isEmpty) {
+      return "Chọn ngày tháng";
+    }
+    return "";
+  }
+
+  String numberCar({String? value}) {
+    if (value!.isEmpty) {
+      return "Nhập số xe";
+    }
+    return "";
+  }
+
+  String selectCustomer({String? value}) {
+    if (value == null) {
+      return "Chọn khách hàng";
+    }
+    return "";
+  }
+
+  String selectWareHome({String? value}) {
+    if (value == null) {
+      return "Chọn khách hàng";
+    }
+    return "";
+  }
+
+  String selectTypeProduct({String? value}) {
+    if (value == null) {
+      return "Chọn loại hàng";
+    }
+    return "";
+  }
+
+  String selectTypeCar({String? value}) {
+    if (value == null) {
+      return "Chọn loại xe";
+    }
+    return "";
+  }
 }

@@ -11,9 +11,11 @@ class SplashController extends GetxController {
   }
 
   checkUserStatus() async {
-    var token = await SharePerApi().getToken();
-    if (token != null) {
-      Get.toNamed(Routes.TMS_PAGE);
+    var tokenTMS = await SharePerApi().getTokenTMS();
+    var tokenNPT = await SharePerApi().getTokenNPT();
+    var tokenHRM = await SharePerApi().getTokenHRM();
+    if (tokenTMS != null || tokenNPT != null || tokenHRM != null) {
+      Get.toNamed(Routes.HOME_PAGE);
     } else {
       Get.toNamed(Routes.LOGIN_PAGE);
     }

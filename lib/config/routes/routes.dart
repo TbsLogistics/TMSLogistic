@@ -7,6 +7,10 @@ abstract class Routes {
   static const LOGIN_PAGE = "/LOGIN_PAGE";
   //Splash
   static const SPLASH = "/SPLASH";
+  //Trang chủ
+  static const HOME_PAGE = "/HOME_PAGE";
+
+  //---------------------- Tính năng TMS ----------------------------
 
   //TMS_PAGE
   static const TMS_PAGE = "/TMS_PAGE";
@@ -25,4 +29,32 @@ abstract class Routes {
   static const SUR_CHANGE_SCREEN = "/SUR_CHANGE_SCREEN";
   //CHANGE_PASSWORD__FULL_SCREEN
   static const CHANGE_PASSWORD__FULL_SCREEN = "/CHANGE_PASSWORD__FULL_SCREEN";
+  //---------------------- Tính năng NPT ----------------------------
+  //++++++++++++++++++++++++++DRIVER+++++++++++++++++++++++++++++++++
+  static const DRIVER_PAGE = "/DRIVER_PAGE";
+  static const LIST_STATUS_INFINISHED_SCREEN = "/LIST_STATUS_INFINISHED_SCREEN";
+  static const STATUS_TICKER_DETAIL_SCREEN = "/STATUS_TICKER_DETAIL_SCREEN";
+  static const QR_CODE_SCREEN = "/QR_CODE_SCREEN";
+  static const LIST_STATUS_UNFINISHED_DETAIL_SCREEN =
+      "/LIST_STATUS_UNFINISHED_DETAIL_SCREEN";
+  static const DETAILS_FORM_REGISTER_DRIVER = "/DETAILS_FORM_REGISTER_DRIVER";
+  static const CREATE_REGISTER_DRIVER = "/CREATE_REGISTER_DRIVER";
+  //++++++++++++++++++++++++++CUSTOMER+++++++++++++++++++++++++++++++++
+
+  static const CUSTOMER_PAGE = "/CUSTOMER_PAGE";
+
+  static const REGISTER_CUSTOMER = "/REGISTER_CUSTOMER";
+  static const LIST_DRIVER_BY_CUSTOMER = "/LIST_DRIVER_BY_CUSTOMER";
+  static const LIST_TICKER_CUSTOMER = "/LIST_TICKER_CUSTOMER";
+  static const DETAILS_LIST_TICKER_OF_CUSTOMER =
+      "/DETAILS_LIST_TICKER_OF_CUSTOMER";
+  static const DETAILS_REGISTER_CUSTOMER = "/DETAILS_REGISTER_CUSTOMER";
+  static const CUSTOMER_DETAILS_INFO_DRIVER = "/CUSTOMER_DETAILS_INFO_DRIVER";
+
+  //---------------------- Tính năng HRM ----------------------------
+  static const CHANGE_PASSWORD_FULL_SCREEN = "/CHANGE_PASSWORD_FULL_SCREEN";
+  static const DETAIL_SINGLE_VIEW = "/DETAIL_SINGLE_VIEW";
+  static const CREATE_LEAVE_FORM_PAGE = "/CREATE_LEAVE_FORM_PAGE";
+  static const DETAIL_ACCESS_SINGLE_SCREEN = "/DETAIL_ACCESS_SINGLE_SCREEN";
+  static const MANAGER_LEAVE_FORM_SCREEN = "/MANAGER_LEAVE_FORM_SCREEN";
 }

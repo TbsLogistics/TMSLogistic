@@ -164,12 +164,10 @@ class LoginScreen extends GetView<LoginController> {
                         height: 60,
                         child: TextButton(
                           onPressed: () {
-                            // print(md5
-                            //     .convert(utf8
-                            //         .encode(controller.passwordController.text))
-                            //     .toString());
-
-                            _signUpProcess(context, controller);
+                            controller.fetchData(
+                              account: controller.accountController.text,
+                              password: controller.passwordController.text,
+                            );
                           },
                           child: const Text(
                             "Đăng nhập",
@@ -197,7 +195,7 @@ class LoginScreen extends GetView<LoginController> {
     var validate = formKey.currentState!.validate();
 
     if (!validate) {
-      controller.postLogin(
+      controller.postLoginTms(
         account: controller.accountController.text,
         password: md5
             .convert(utf8.encode(controller.passwordController.text))
