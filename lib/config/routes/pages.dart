@@ -104,7 +104,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.DETAILS_FORM_REGISTER_DRIVER,
-      page: () => const DetailsFormRegisterDriver(),
+      page: () => DetailsFormRegisterDriver(),
     ),
     GetPage(
       name: Routes.CREATE_REGISTER_DRIVER,

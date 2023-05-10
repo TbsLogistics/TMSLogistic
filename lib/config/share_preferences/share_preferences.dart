@@ -65,6 +65,12 @@ class SharePerApi {
     return maNv.toString();
   }
 
+  Future<String> getUserNpt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userNpt = prefs.getString(AppConstants.KEY_USER_NPT);
+    return userNpt.toString();
+  }
+
   //HRM
 
   Future<void> postLogout() async {

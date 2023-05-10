@@ -187,7 +187,6 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                     icon: Icons.abc,
                     color: Theme.of(context).primaryColorLight,
                   ),
-
                   //Danh sách khách hàng
                   _listCustomer(controller),
                   //danh sách kho
@@ -886,12 +885,37 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
         controller.selectTypeCar.value == "") {
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     } else {
-      if (controller.selectTypeCar.value.maLoaiXe == "con" &&
-          numberSelectCont != 0) {
+      if (controller.selectTypeCar.value.maLoaiXe == "con") {
+        if (numberSelectCont != 0) {
+          controller.postRegisterDriver(
+            maKhachHang: controller.selectCustomer.value.maKhachHang!,
+            time: dateinput.text,
+            typeWarehome: controller.selectWareHome.value.maKho,
+            typeCar: controller.selectTypeCar.value.maLoaiXe,
+            numberCar: controller.numberCar.text,
+            numberCont1: controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text,
+            numberKhoi: double.parse(controller.numberKhoi.text),
+            numberKien: double.parse(controller.numberKien.text),
+            numberBook: controller.numberBook.text,
+            numberCont2Seal1: controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text,
+            numberKhoi1: double.parse(controller.numberKhoi1.text),
+            numberKien1: double.parse(controller.numberKien1.text),
+            numberBook1: controller.numberBook1.text,
+            typeProduct: controller.selectTypeProduct.value.maloaiHang,
+          );
+        } else {
+          getSnack(messageText: "Chọn số lượng cont * !");
+        }
+      } else {
         controller.postRegisterDriver(
+          maKhachHang: controller.selectCustomer.value.maKhachHang!,
           time: dateinput.text,
-          idWarehome: controller.selectWareHome.value.maKho,
-          idCar: controller.selectTypeCar.value.maLoaiXe,
+          typeWarehome: controller.selectWareHome.value.maKho,
+          typeCar: controller.selectTypeCar.value.maLoaiXe,
           numberCar: controller.numberCar.text,
           numberCont1: controller.numberCont1.text,
           numberCont2: controller.numberCont2.text,
@@ -905,11 +929,8 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
           numberKhoi1: double.parse(controller.numberKhoi1.text),
           numberKien1: double.parse(controller.numberKien1.text),
           numberBook1: controller.numberBook1.text,
-          idProduct: controller.selectTypeProduct.value.maloaiHang,
-          maKhachHang: controller.selectCustomer.value.maKhachHang!,
+          typeProduct: controller.selectTypeProduct.value.maloaiHang,
         );
-      } else {
-        getSnack(messageText: "Nhập số cont *");
       }
     }
   }

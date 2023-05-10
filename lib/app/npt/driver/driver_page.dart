@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/npt/driver/controller/driver_controller.dart';
 import 'package:tbs_logistics_tms/app/npt/driver/view/driver_screen.dart';
 import 'package:tbs_logistics_tms/config/core/data/color.dart';
+import 'package:tbs_logistics_tms/config/routes/pages.dart';
 
 class DriverPage extends GetView<DriverController> {
   DriverPage({super.key});
@@ -17,7 +18,7 @@ class DriverPage extends GetView<DriverController> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Get.back();
+            Get.toNamed(Routes.HOME_PAGE);
           },
           icon: const Icon(
             Icons.arrow_back_ios_new_outlined,

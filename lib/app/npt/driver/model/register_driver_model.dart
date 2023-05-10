@@ -1,9 +1,13 @@
 class RegisterForDriverModel {
+  int? maTaixe;
   String? maKhachHang;
+  String? maDoixe;
   String? giodukien;
   String? kho;
+  String? note;
   String? loaixe;
   String? soxe;
+  String? soReMooc;
   String? socont1;
   String? socont2;
   String? cont1seal1;
@@ -21,13 +25,19 @@ class RegisterForDriverModel {
   bool? trangthaihang1;
   bool? trangthaikhoa1;
   String? maloaiHang;
+  int? taiXeRa;
+  String? soXera;
 
   RegisterForDriverModel(
-      {this.maKhachHang,
+      {this.maTaixe,
+      this.maKhachHang,
+      this.maDoixe,
       this.giodukien,
       this.kho,
+      this.note,
       this.loaixe,
       this.soxe,
+      this.soReMooc,
       this.socont1,
       this.socont2,
       this.cont1seal1,
@@ -44,14 +54,20 @@ class RegisterForDriverModel {
       this.soBook1,
       this.trangthaihang1,
       this.trangthaikhoa1,
-      this.maloaiHang});
+      this.maloaiHang,
+      this.taiXeRa,
+      this.soXera});
 
   RegisterForDriverModel.fromJson(Map<String, dynamic> json) {
+    maTaixe = json['maTaixe'];
     maKhachHang = json['maKhachHang'];
+    maDoixe = json['maDoixe'];
     giodukien = json['giodukien'];
     kho = json['kho'];
+    note = json['note'];
     loaixe = json['loaixe'];
     soxe = json['soxe'];
+    soReMooc = json['soReMooc'];
     socont1 = json['socont1'];
     socont2 = json['socont2'];
     cont1seal1 = json['cont1seal1'];
@@ -69,15 +85,21 @@ class RegisterForDriverModel {
     trangthaihang1 = json['trangthaihang1'];
     trangthaikhoa1 = json['trangthaikhoa1'];
     maloaiHang = json['maloaiHang'];
+    taiXeRa = json['taiXeRa'];
+    soXera = json['soXera'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['maTaixe'] = maTaixe;
     data['maKhachHang'] = maKhachHang;
+    data['maDoixe'] = maDoixe;
     data['giodukien'] = giodukien;
     data['kho'] = kho;
+    data['note'] = note;
     data['loaixe'] = loaixe;
     data['soxe'] = soxe;
+    data['soReMooc'] = soReMooc;
     data['socont1'] = socont1;
     data['socont2'] = socont2;
     data['cont1seal1'] = cont1seal1;
@@ -95,6 +117,8 @@ class RegisterForDriverModel {
     data['trangthaihang1'] = trangthaihang1;
     data['trangthaikhoa1'] = trangthaikhoa1;
     data['maloaiHang'] = maloaiHang;
+    data['taiXeRa'] = taiXeRa;
+    data['soXera'] = soXera;
     return data;
   }
 }

@@ -8,6 +8,7 @@ import 'package:tbs_logistics_tms/app/npt/driver/model/list_customer_for_driver_
 import 'package:tbs_logistics_tms/app/npt/driver/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/npt/driver/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/npt/driver/model/list_warehome_model.dart';
+import 'package:tbs_logistics_tms/app/npt/driver/model/user_npt_model.dart';
 import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
 import 'package:tbs_logistics_tms/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/config/share_preferences/share_preferences.dart';
@@ -63,7 +64,7 @@ class RegisterDriverController extends GetxController {
   String? selectItems;
 
   @override
-  void onInit() {
+  void onInit() async {
     formKey;
     super.onInit();
   }
@@ -71,9 +72,10 @@ class RegisterDriverController extends GetxController {
   var selectedKhachhang = "";
 
   Future<void> postRegisterDriver({
+    required String? maKhachHang,
     required String? time,
-    required String? idWarehome,
-    required String? idCar,
+    required String? typeWarehome,
+    required String? typeCar,
     required String? numberCar,
     required String? numberCont1,
     required String? numberCont2,
@@ -87,21 +89,27 @@ class RegisterDriverController extends GetxController {
     required double? numberKien1,
     required double? numberKhoi1,
     required String? numberBook1,
-    required String? idProduct,
-    required String maKhachHang,
+    required String? typeProduct,
   }) async {
     var dio = Dio();
     Response response;
     var token = await SharePerApi().getTokenNPT();
+    var idDriver = await SharePerApi().getUserNpt();
+    var idTeamCar = await SharePerApi().getIdKHforTX();
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
     const url = "${AppConstants.urlBaseNpt}/createphieuvaocong";
     var create = RegisterForDriverModel(
+      maTaixe: int.parse(idDriver),
+      maKhachHang: maKhachHang,
+      maDoixe: idTeamCar,
       giodukien: time,
-      kho: idWarehome,
-      loaixe: idCar,
+      kho: typeWarehome,
+      note: "",
+      loaixe: typeCar,
       soxe: numberCar,
+      soReMooc: "",
       socont1: numberCont1,
       socont2: numberCont2,
       cont1seal1: numberCont1Seal1,
@@ -118,10 +126,12 @@ class RegisterDriverController extends GetxController {
       soBook1: numberBook1,
       trangthaihang1: false,
       trangthaikhoa1: false,
-      maloaiHang: idProduct,
-      maKhachHang: maKhachHang,
+      maloaiHang: typeProduct,
+      soXera: "",
     );
+
     var jsonData = create.toJson();
+
     try {
       response = await dio.post(
         url,
@@ -157,9 +167,11 @@ class RegisterDriverController extends GetxController {
           Get.toNamed(
             Routes.DETAILS_FORM_REGISTER_DRIVER,
             arguments: RegisterForDriverModel(
+              maKhachHang: maKhachHang,
+              maDoixe: idTeamCar,
               giodukien: time,
-              kho: idWarehome,
-              loaixe: idCar,
+              kho: typeWarehome,
+              loaixe: typeCar,
               soxe: numberCar,
               socont1: numberCont1,
               socont2: numberCont2,
@@ -177,8 +189,7 @@ class RegisterDriverController extends GetxController {
               soBook1: numberBook1,
               trangthaihang1: false,
               trangthaikhoa1: false,
-              maloaiHang: idProduct,
-              maKhachHang: maKhachHang,
+              maloaiHang: typeProduct,
             ),
           );
         }

@@ -76,29 +76,32 @@ class LoginController extends GetxController {
           ),
           snackPosition: SnackPosition.TOP,
         );
-        Get.toNamed(Routes.HOME_PAGE);
+        getDialog();
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.toNamed(Routes.HOME_PAGE);
+        });
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        // print(e.response!.statusCode);
+        print(e.response!.data);
 
-        Get.snackbar(
-          "Thông báo",
-          "Nhập thiếu tài khoản hoặc mật khẩu !",
-          backgroundColor: Colors.white,
-          titleText: const Text(
-            "Thông báo",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          messageText: Text(
-            "${e.response!.data} !",
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
-        );
+        // Get.snackbar(
+        //   "Thông báo",
+        //   "Nhập thiếu tài khoản hoặc mật khẩu !",
+        //   backgroundColor: Colors.white,
+        //   titleText: const Text(
+        //     "Thông báo",
+        //     style: TextStyle(
+        //       color: Colors.red,
+        //     ),
+        //   ),
+        //   messageText: Text(
+        //     "${e.response!.data} !",
+        //     style: const TextStyle(
+        //       color: Colors.green,
+        //     ),
+        //   ),
+        // );
       } else if (e.response!.statusCode == 500) {
         Get.snackbar(
           "Thông báo",
@@ -194,6 +197,7 @@ class LoginController extends GetxController {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Map<String, dynamic> decodedTokenNpt =
               JwtDecoder.decode(tokens.accessToken!);
+          print(decodedTokenNpt);
           // ignore: unused_local_variable
           var accessToken = await prefs.setString(
               AppConstants.KEY_ACCESS_TOKEN_NPT, "${tokens.accessToken}");
@@ -205,6 +209,7 @@ class LoginController extends GetxController {
           switch (roles) {
             case "TX":
               // ignore: unused_local_variable
+
               var idUser = await prefs.setString(
                   AppConstants.KEY_ID_USER, "${tokens.data!.taixe!.maTaixe}");
               var idKHforTX = await prefs.setString(
@@ -324,16 +329,17 @@ class LoginController extends GetxController {
         } else if (response.data["rCode"] == 2) {
           passwordController.text = response.data["rData"]["password"];
         } else if (response.data["rCode"] == 0) {
-          Get.defaultDialog(
-            barrierDismissible: false,
-            title: "Thông báo",
-            middleText: "Tài khoản hoặc mật khẩu không đúng !",
-            confirmTextColor: Colors.orangeAccent,
-            backgroundColor: Colors.white,
-            onConfirm: () {
-              Get.back();
-            },
-          );
+          print("Tài khoản hoặc mật khẩu không đúng !");
+          // Get.defaultDialog(
+          //   barrierDismissible: false,
+          //   title: "Thông báo",
+          //   middleText: "Tài khoản hoặc mật khẩu không đúng !",
+          //   confirmTextColor: Colors.orangeAccent,
+          //   backgroundColor: Colors.white,
+          //   onConfirm: () {
+          //     Get.back();
+          //   },
+          // );
         } else if (response.data["rCode"] == 3) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           // ignore: unused_local_variable
@@ -342,8 +348,11 @@ class LoginController extends GetxController {
               "${response.data["rData"]["token"]}");
           Map<String, dynamic> decodedTokenHrm =
               JwtDecoder.decode(response.data["rData"]["token"]);
-          print(decodedTokenHrm);
-          Get.toNamed(Routes.HOME_PAGE);
+          // print(decodedTokenHrm);
+          getDialog();
+          Future.delayed(const Duration(seconds: 1), () {
+            Get.toNamed(Routes.HOME_PAGE);
+          });
           accountController.text = "";
           passwordController.text = "";
         }
@@ -379,7 +388,7 @@ class LoginController extends GetxController {
             "${response.data["rData"]["token"]}");
         Map<String, dynamic> decodedTokenHrm =
             JwtDecoder.decode(response.data["rData"]["token"]);
-        print(decodedTokenHrm);
+        // print(decodedTokenHrm);
         Get.defaultDialog(
           barrierDismissible: false,
           title: "Thông báo",
@@ -436,7 +445,10 @@ class LoginController extends GetxController {
                     child: TextButton(
                       onPressed: () {
                         // print(response.data["rData"]["token"]);
-                        Get.toNamed(Routes.HOME_PAGE);
+                        getDialog();
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Get.toNamed(Routes.HOME_PAGE);
+                        });
                       },
                       child: const Text(
                         "Không",
