@@ -57,190 +57,71 @@ class ListStatusUnfinishedDetailsScreen
           ],
         ),
         body: Container(
-          height: size.height,
-          child: Stack(
-            children: [
-              Obx(
-                () {
-                  return controller.isStatusDriver.value
-                      ? controller.getStatusDriver.value.trackingtime != null
-                          ? Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 10),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _buildNameKH(controller, size, context,
-                                        controller.getStatusDriver.value),
-                                    SizedBox(
-                                      height: size.width * 0.05,
-                                    ),
-                                    _buildNameCar(controller, size, context,
-                                        controller.getStatusDriver.value),
-                                    SizedBox(
-                                      height: size.width * 0.05,
-                                    ),
-                                    _buildStatus(size, controller, context,
-                                        controller.getStatusDriver.value),
-                                    SizedBox(
-                                      height: size.width * 0.05,
-                                    ),
-                                    controller.showForm.value
-                                        ? _buildFormStatus(controller, size,
-                                            controller.getStatusDriver.value)
-                                        : Container(),
-                                    SizedBox(
-                                      height: size.width * 0.05,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : const Center(
-                              child: Text(
-                                "Tài xế chưa hoạt động ! ",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 22,
-                                ),
-                              ),
-                            )
-                      : const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.orangeAccent,
-                          ),
-                        );
-                },
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    controller.getStatusDriver.value.trackingtime != null
-                        ? InkWell(
-                            onTap: () {
-                              Get.defaultDialog(
-                                barrierDismissible: false,
-                                title: "Chia sẻ phiếu",
-                                content: Column(
-                                  children: [
-                                    // Theme(
-                                    //   data: ThemeData(
-                                    //     inputDecorationTheme:
-                                    //         const InputDecorationTheme(
-                                    //             border: InputBorder.none),
-                                    //   ),
-                                    //   child: DropdownSearch<
-                                    //       ListDriverByCustomerModel>(
-                                    //     asyncItems: (String? query) {
-                                    //       return controller.getData(query);
-                                    //     },
-                                    //     popupProps: PopupProps.dialog(
-                                    //       showSelectedItems: true,
-                                    //       itemBuilder:
-                                    //           _customPopupItemBuilderExample2,
-                                    //       showSearchBox: true,
-                                    //     ),
-                                    //     compareFn: (item, sItem) {
-                                    //       return item.maTaixe == sItem.maTaixe;
-                                    //     },
-                                    //     onChanged: (ListDriverByCustomerModel?
-                                    //         newValue) {
-                                    //       controller.selectedTaixe =
-                                    //           newValue!.maTaixe.toString();
-                                    //     },
-                                    //     dropdownDecoratorProps:
-                                    //         DropDownDecoratorProps(
-                                    //       dropdownSearchDecoration:
-                                    //           InputDecoration(
-                                    //         hintText: "Chọn tài xế ",
-                                    //         hintStyle: TextStyle(
-                                    //           color: Theme.of(context)
-                                    //               .primaryColorLight,
-                                    //         ),
-                                    //         filled: true,
-                                    //         iconColor: const Color(0xFFF3BD60),
-                                    //         focusColor: const Color(0xFFF3BD60),
-                                    //         // fillColor: Colors.white,
-                                    //         focusedBorder:
-                                    //             const OutlineInputBorder(
-                                    //           borderSide: BorderSide(
-                                    //               color: Color(0xFFF3BD60),
-                                    //               width: 1.0),
-                                    //         ),
-                                    //         enabledBorder:
-                                    //             const OutlineInputBorder(
-                                    //           borderSide: BorderSide(
-                                    //               color: Color(0xFFF3BD60),
-                                    //               width: 1.0),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                      height: 40,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        color: Colors.orangeAccent,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: TextButton(
-                                        onPressed: () {
-                                          print([
-                                            controller.selectedTaixe,
-                                            controller.getStatusDriver.value
-                                                .maPhieuvao
-                                          ]);
-                                          controller.shareDriver(
-                                              maTaiXe: int.parse(
-                                                  controller.selectedTaixe),
-                                              maPhieuVao: int.parse(controller
-                                                  .getStatusDriver
-                                                  .value
-                                                  .maPhieuvao
-                                                  .toString()));
-                                        },
-                                        child: const Text(
-                                          "Gửi",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
+            height: size.height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Obx(
+                    () {
+                      return controller.isStatusDriver.value
+                          ? controller.getStatusDriver.value.trackingtime !=
+                                  null
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 10),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        _buildNameKH(controller, size, context,
+                                            controller.getStatusDriver.value),
+                                        SizedBox(
+                                          height: size.width * 0.05,
                                         ),
-                                      ),
+                                        _buildNameCar(controller, size, context,
+                                            controller.getStatusDriver.value),
+                                        SizedBox(
+                                          height: size.width * 0.05,
+                                        ),
+                                        _buildStatus(size, controller, context,
+                                            controller.getStatusDriver.value),
+                                        SizedBox(
+                                          height: size.width * 0.05,
+                                        ),
+                                        controller.showForm.value
+                                            ? _buildFormStatus(
+                                                controller,
+                                                size,
+                                                controller
+                                                    .getStatusDriver.value)
+                                            : Container(),
+                                        SizedBox(
+                                          height: size.width * 0.05,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "assets/images/share.png",
                                   ),
-                                  fit: BoxFit.cover,
-                                ),
+                                )
+                              : const Center(
+                                  child: Text(
+                                    "Tài xế chưa hoạt động ! ",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                )
+                          : const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.orangeAccent,
                               ),
-                            ),
-                          )
-                        : Container(),
-                  ],
-                ),
+                            );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }

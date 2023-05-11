@@ -359,7 +359,8 @@ class LoginController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        getSnack(messageText: e.response!.statusMessage.toString());
+        // getSnack(messageText: e.response!.statusMessage.toString());
+        print(e.response!.statusMessage);
       }
     }
   }

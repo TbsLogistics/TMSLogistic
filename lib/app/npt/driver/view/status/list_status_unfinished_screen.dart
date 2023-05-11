@@ -46,6 +46,8 @@ class ListStatusUnfinishedScreen
                       itemCount: controller.listStatusDriver.length,
                       itemBuilder: (context, index) {
                         return Card(
+                          shadowColor: Colors.grey,
+                          elevation: 10,
                           shape: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.orangeAccent,

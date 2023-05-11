@@ -21,42 +21,42 @@ class StatusDriverScreen extends GetView<StatusDriverController> {
     return GetBuilder<StatusDriverController>(
       init: StatusDriverController(),
       builder: (controller) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: Text(
-              "Chi tiết trạng thái",
-              style: TextStyle(
-                color: Theme.of(context).primaryColorLight,
-              ),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: Text(
+            "Chi tiết trạng thái",
+            style: TextStyle(
+              color: Theme.of(context).primaryColorLight,
             ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new,
-                color: Theme.of(context).primaryColorLight,
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Get.toNamed(Routes.QR_CODE_SCREEN,
-                      arguments: controller.getStatusDriver.value.maPhieuvao);
-                },
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                  color: Theme.of(context).primaryColorLight,
-                  size: 25,
-                ),
-              ),
-              const SizedBox(width: 15),
-            ],
           ),
-          body: Container(
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Theme.of(context).primaryColorLight,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.QR_CODE_SCREEN,
+                    arguments: controller.getStatusDriver.value.maPhieuvao);
+              },
+              icon: Icon(
+                Icons.qr_code_rounded,
+                color: Theme.of(context).primaryColorLight,
+                size: 25,
+              ),
+            ),
+            const SizedBox(width: 15),
+          ],
+        ),
+        body: Container(
             height: size.height,
-            child: Stack(
+            child: Column(
               children: [
                 Obx(
                   () {
@@ -111,137 +111,9 @@ class StatusDriverScreen extends GetView<StatusDriverController> {
                           );
                   },
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      controller.getStatusDriver.value.trackingtime != null
-                          ? InkWell(
-                              onTap: () {
-                                Get.defaultDialog(
-                                  barrierDismissible: false,
-                                  title: "Chia sẻ phiếu",
-                                  content: Column(
-                                    children: [
-                                      // Theme(
-                                      //   data: ThemeData(
-                                      //     inputDecorationTheme:
-                                      //         const InputDecorationTheme(
-                                      //             border: InputBorder.none),
-                                      //   ),
-                                      //   child: DropdownSearch<
-                                      //       ListDriverByCustomerModel>(
-                                      //     asyncItems: (String? query) {
-                                      //       return controller.getData(query);
-                                      //     },
-                                      //     popupProps: PopupProps.dialog(
-                                      //       showSelectedItems: true,
-                                      //       itemBuilder:
-                                      //           _customPopupItemBuilderExample2,
-                                      //       showSearchBox: true,
-                                      //     ),
-                                      //     compareFn: (item, sItem) {
-                                      //       return item.maTaixe ==
-                                      //           sItem.maTaixe;
-                                      //     },
-                                      //     onChanged: (ListDriverByCustomerModel?
-                                      //         newValue) {
-                                      //       controller.selectedTaixe =
-                                      //           newValue!.maTaixe.toString();
-                                      //     },
-                                      //     dropdownDecoratorProps:
-                                      //         DropDownDecoratorProps(
-                                      //       dropdownSearchDecoration:
-                                      //           InputDecoration(
-                                      //         hintText: "Chọn tài xế ",
-                                      //         hintStyle: TextStyle(
-                                      //           color: Theme.of(context)
-                                      //               .primaryColorLight,
-                                      //         ),
-                                      //         filled: true,
-                                      //         iconColor:
-                                      //             const Color(0xFFF3BD60),
-                                      //         focusColor:
-                                      //             const Color(0xFFF3BD60),
-                                      //         // fillColor: Colors.white,
-                                      //         focusedBorder:
-                                      //             const OutlineInputBorder(
-                                      //           borderSide: BorderSide(
-                                      //               color: Color(0xFFF3BD60),
-                                      //               width: 1.0),
-                                      //         ),
-                                      //         enabledBorder:
-                                      //             const OutlineInputBorder(
-                                      //           borderSide: BorderSide(
-                                      //               color: Color(0xFFF3BD60),
-                                      //               width: 1.0),
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                          color: Colors.orangeAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: TextButton(
-                                          onPressed: () {
-                                            print([
-                                              controller.selectedTaixe,
-                                              controller.getStatusDriver.value
-                                                  .maPhieuvao
-                                            ]);
-                                            controller.shareDriver(
-                                                maTaiXe: int.parse(
-                                                    controller.selectedTaixe),
-                                                maPhieuVao: int.parse(controller
-                                                    .getStatusDriver
-                                                    .value
-                                                    .maPhieuvao
-                                                    .toString()));
-                                          },
-                                          child: const Text(
-                                            "Gửi",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: 60,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/images/share.png",
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                    ],
-                  ),
-                ),
               ],
-            ),
-          )),
+            )),
+      ),
     );
   }
 
