@@ -5,11 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tbs_logistics_tms/config/core/constants/constants.dart';
-import 'package:tbs_logistics_tms/config/core/theme/theme_provider.dart';
-import 'package:tbs_logistics_tms/config/routes/pages.dart';
-import 'package:tbs_logistics_tms/app/splash/controller/splash_bindings.dart';
-import 'package:tbs_logistics_tms/app/splash/splash_screen.dart';
+import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
+import 'package:tbs_logistics_tms/app/config/core/theme/theme_provider.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
+import 'package:tbs_logistics_tms/app/page/splash/controller/splash_bindings.dart';
+import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
