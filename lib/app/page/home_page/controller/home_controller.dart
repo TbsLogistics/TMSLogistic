@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/model/user_npt_model.dart';
+import 'package:tbs_logistics_tms/app/page/login/model/user_npt_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/model/user_model.dart';
 
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';

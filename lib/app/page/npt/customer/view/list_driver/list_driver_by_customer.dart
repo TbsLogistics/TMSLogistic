@@ -4,7 +4,7 @@ import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_list_title.dart';
 
 import 'package:tbs_logistics_tms/app/page/npt/customer/controller/customer_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_driver_by_customer_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class ListDriverByCustomer extends StatefulWidget {
   const ListDriverByCustomer({Key? key}) : super(key: key);

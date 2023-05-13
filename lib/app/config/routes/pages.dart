@@ -13,25 +13,26 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_registed_of_cu
 import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_registed_of_customer/list_ticker_customer.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/view/register_for_driver/create_register_driver_by_customer.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/view/register_for_driver/customer_details_register.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/driver_page.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/create_register_view/create_register_screen.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/create_register_view/details_form_register_driver.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/settings/qr_code_screen.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/status/list_status_unfinished_screen.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/status/modules/list_status_unfinished_details_screen.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/view/status_tiker_finished/status_ticker_details_view.dart';
-import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
-import 'package:tbs_logistics_tms/app/page/tms/change_password/change_password.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/modules/camera_screen.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/modules/cancel_pending_sceen.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/modules/details_pending_working.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/modules/note_pending.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/start_detail_finished.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/start_detail_pending.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/start_detail_tms.dart';
-import 'package:tbs_logistics_tms/app/page/tms/surcharges/surcharges_screen.dart';
 
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/view/driver_create_register_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register_details/view/driver_create_register_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished_details/view/driver_finished_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_home/driver_home_page.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/view/driver_status_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/view/driver_status_details_screen.dart';
+
+import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/camera/view/camera_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/cancel/view/cancel_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/change_password/change_password.dart';
+import 'package:tbs_logistics_tms/app/page/tms/finished_details/view/finished_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/note/view/note_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/pending_details/view/pending_details_screen.dart';
+
+import 'package:tbs_logistics_tms/app/page/tms/surcharges/surcharges_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/tms_page.dart';
+import 'package:tbs_logistics_tms/app/page/tms/wait_details/view/wait_details_screen.dart';
 
 part './routes.dart';
 
@@ -57,7 +58,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.START_DETAIL_TMS,
-      page: () => const StartDetailTms(),
+      page: () => const AwaitDetails(),
     ),
     GetPage(
       name: Routes.PENDING_DETAIL_TMS,
@@ -65,13 +66,13 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.FINISHED_DETAIL_TMS,
-      page: () => const FinishedDetailTms(),
+      page: () => const FinishedDetailsScreen(),
     ),
     //PENDING
-    GetPage(
-      name: Routes.DETAILS_PENDING_WORKING_SCREEN,
-      page: () => const DetailsPendingWorkingScreen(),
-    ),
+    // GetPage(
+    //   name: Routes.DETAILS_PENDING_WORKING_SCREEN,
+    //   page: () => const DetailsPendingWorkingScreen(),
+    // ),
     GetPage(
       name: Routes.NOTE_PENDING_SCREEN,
       page: () => const NotePendingScreen(),
@@ -104,15 +105,15 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.DETAILS_FORM_REGISTER_DRIVER,
-      page: () => DetailsFormRegisterDriver(),
+      page: () => DriverCreateRegisterDetailsScreen(),
     ),
     GetPage(
       name: Routes.CREATE_REGISTER_DRIVER,
-      page: () => const RegisterFormScreen(),
+      page: () => const DriverCreateRegisterScreen(),
     ),
     GetPage(
       name: Routes.LIST_STATUS_INFINISHED_SCREEN,
-      page: () => ListStatusUnfinishedScreen(),
+      page: () => DriverStatusScreen(),
     ),
     GetPage(
       name: Routes.LIST_STATUS_UNFINISHED_DETAIL_SCREEN,

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/tms/start_detail_tms/model/list_data_for_place_model.dart';
+import 'package:tbs_logistics_tms/app/page/tms/pending_details/model/list_data_for_place_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/surcharges/model/list_sub_fee_curred_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/surcharges/model/list_subfee_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/surcharges/model/sur_changes_model.dart';

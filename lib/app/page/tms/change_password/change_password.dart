@@ -62,7 +62,7 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                               // print("oke");
                               controller.updateObcureText();
                             },
-                            icon: controller.obcureText.value == true
+                            icon: controller.obcureText.value
                                 ? Icon(
                                     Icons.visibility,
                                     color: Colors.black.withOpacity(0.4),
@@ -110,7 +110,7 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                             // print("oke");
                             controller.updateObcureText();
                           },
-                          icon: controller.obcureText.value == true
+                          icon: controller.obcureText.value
                               ? Icon(
                                   Icons.visibility,
                                   color: Colors.black.withOpacity(0.4),
@@ -158,7 +158,7 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
                             // print("oke");
                             controller.updateObcureText();
                           },
-                          icon: controller.obcureText.value == true
+                          icon: controller.obcureText.value
                               ? Icon(
                                   Icons.visibility,
                                   color: Colors.black.withOpacity(0.4),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tbs_logistics_tms/app/page/tms/finished/view/finished_screen.dart';
+import 'package:tbs_logistics_tms/app/page/tms/pending/view/pending_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/controller/tms_controller.dart';
-import 'package:tbs_logistics_tms/app/page/tms/tms_page/view/tms_finished.dart';
-import 'package:tbs_logistics_tms/app/page/tms/tms_page/view/tms_pending.dart';
-import 'package:tbs_logistics_tms/app/page/tms/tms_page/view/tms_working.dart';
+import 'package:tbs_logistics_tms/app/page/tms/wait/view/wait_screen.dart';
 
 import '../../../config/data/color.dart';
 
@@ -50,7 +50,7 @@ class TmsPage extends GetView<TmsController> {
                     child: TabBarView(
                       controller: controller.controller,
                       children: const [
-                        TmsWorking(),
+                        TmsAwait(),
                         TmsPending(),
                         TmsFinished(),
                       ],

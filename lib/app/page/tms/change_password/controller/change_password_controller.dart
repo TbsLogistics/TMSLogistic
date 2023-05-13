@@ -17,7 +17,7 @@ class ChangePassController extends GetxController {
 
   RxBool isLoadLogin = false.obs;
   final changePassKey = GlobalKey<FormState>();
-  RxBool obcureText = false.obs;
+  RxBool obcureText = true.obs;
 
   @override
   void onInit() {

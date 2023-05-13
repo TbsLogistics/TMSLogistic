@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
-import 'package:tbs_logistics_tms/app/config/model/tms_orders_model.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
+import 'package:tbs_logistics_tms/app/page/tms/wait/model/tms_order_model.dart';
 
 class TmsController extends GetxController
     with GetSingleTickerProviderStateMixin {

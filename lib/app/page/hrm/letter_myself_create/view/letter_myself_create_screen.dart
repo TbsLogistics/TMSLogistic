@@ -4,7 +4,7 @@ import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create/controller/letter_myself_create_controller.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_access/view/letter_myself_create_access_screen.dart';
-import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/view/letter_myself_create_send_screen.dart';
+import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/view/letter_myself_create_sent_screen.dart';
 
 class LetterMyselfCreateScreen extends GetView<LetterMyselfCreateController> {
   const LetterMyselfCreateScreen({super.key});

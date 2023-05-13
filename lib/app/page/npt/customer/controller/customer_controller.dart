@@ -7,11 +7,11 @@ import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/model/customer_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_driver_by_customer_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/model/register_customer_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/model/id_driver_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/model/id_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 
 class CustomerController extends GetxController {
   var dio = Dio();
