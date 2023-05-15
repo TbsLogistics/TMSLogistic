@@ -4,16 +4,14 @@ import 'package:tbs_logistics_tms/app/page/hrm/home/home_hrm_page.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_manager_details/view/letter_manager_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create/view/letter_myself_create_screen.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_details/view/letter_myself_details_screen.dart';
-
 import 'package:tbs_logistics_tms/app/page/login/login_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/view/customer_create_register_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register_details/view/customer_create_register_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/view/customer_list_driver_of_customer_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer_details/view/customer_list_driver_of_customer_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/view/customer_list_ticker_registed_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/view/customer_list_ticker_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_page.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_driver/customer_details_info_driver.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_driver/list_driver_by_customer.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_registed_of_customer/details_list_ticker_customer.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/list_registed_of_customer/list_ticker_customer.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/register_for_driver/create_register_driver_by_customer.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/register_for_driver/customer_details_register.dart';
-
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/view/driver_create_register_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register_details/view/driver_create_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished_details/view/driver_finished_details_screen.dart';
@@ -21,7 +19,6 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_home/driver_ho
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/view/driver_status_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/view/driver_status_details_screen.dart';
-
 import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/camera/view/camera_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/cancel/view/cancel_screen.dart';
@@ -29,7 +26,6 @@ import 'package:tbs_logistics_tms/app/page/tms/change_password/change_password.d
 import 'package:tbs_logistics_tms/app/page/tms/finished_details/view/finished_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/note/view/note_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/pending_details/view/pending_details_screen.dart';
-
 import 'package:tbs_logistics_tms/app/page/tms/surcharges/surcharges_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/tms_page.dart';
 import 'package:tbs_logistics_tms/app/page/tms/wait_details/view/wait_details_screen.dart';
@@ -126,7 +122,7 @@ abstract class AppPages {
     //Khách hàng
     GetPage(
       name: Routes.LIST_DRIVER_BY_CUSTOMER,
-      page: () => const ListDriverByCustomer(),
+      page: () => const CustomerListDriverOfCustomerScreen(),
     ),
     GetPage(
       name: Routes.QR_CODE_SCREEN,
@@ -138,31 +134,31 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.REGISTER_CUSTOMER,
-      page: () => const RegisterCustomer(),
+      page: () => const CustomerRegisterScreen(),
     ),
     GetPage(
       name: Routes.DETAILS_REGISTER_CUSTOMER,
-      page: () => const DetailsRegisterCustomer(),
+      page: () => const CustomerRegisterDetailScreen(),
     ),
     GetPage(
       name: Routes.CUSTOMER_DETAILS_INFO_DRIVER,
-      page: () => const CustomerDetailsInfoDriver(),
+      page: () => const CustomerListDriverDetailsOfCustomerScreen(),
     ),
     GetPage(
       name: Routes.LIST_TICKER_CUSTOMER,
-      page: () => const ListTickerCustomer(),
+      page: () => const CustomerListTickerRegisted(),
     ),
     GetPage(
       name: Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
-      page: () => const DetailsListTickerOfCustomer(),
+      page: () => const CustomerListTickerRegisterDetailsScreen(),
     ),
 
     //------------------Tính năng HRM-------------------------------
 
-    GetPage(
-      name: Routes.CHANGE_PASSWORD_FULL_SCREEN,
-      page: () => const RegisterCustomer(),
-    ),
+    // GetPage(
+    //   name: Routes.CHANGE_PASSWORD_FULL_SCREEN,
+    //   page: () => const RegisterCustomer(),
+    // ),
     GetPage(
       name: Routes.DETAIL_SINGLE_VIEW,
       page: () => const LetterMyselfDetailsScreen(),

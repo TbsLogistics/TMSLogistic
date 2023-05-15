@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import 'package:tbs_logistics_tms/app/page/npt/customer/controller/customer_controller.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/controller/customer_list_ticker_register_details_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
 
-class DetailsListTickerOfCustomer extends GetView<CustomerController> {
-  const DetailsListTickerOfCustomer({super.key});
+class CustomerListTickerRegisterDetailsScreen
+    extends GetView<CustomerListTickerRegisterDetailsController> {
+  const CustomerListTickerRegisterDetailsScreen({super.key});
   final String routes = "/DETAILS_LIST_TICKER_OF_CUSTOMER";
 
   @override
   Widget build(BuildContext context) {
-    var items = Get.arguments as ListTrackingModel;
-    var lengthTracking = items.trackingtime!.length;
-
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<CustomerController>(
-        init: CustomerController(),
+    return GetBuilder<CustomerListTickerRegisterDetailsController>(
+        init: CustomerListTickerRegisterDetailsController(),
         builder: (controller) => Scaffold(
               appBar: AppBar(
                 title: Text(
@@ -41,59 +37,66 @@ class DetailsListTickerOfCustomer extends GetView<CustomerController> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: size.width * 0.1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.album_outlined,
-                                    color: Colors.greenAccent,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "${items.trackingtime![lengthTracking - 1].statustracking!.name}",
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                  child: Obx(() {
+                    var lengthTracking =
+                        controller.listTracking.value.trackingtime!.length;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: size.width * 0.1,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.album_outlined,
+                                      color: Colors.greenAccent,
                                     ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${controller.listTracking.value.trackingtime![lengthTracking - 1].statustracking!.name}",
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _buildNameDriver(items, size, context),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _buildNumberCar(items, size, context),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        _buildNameDriver(
+                            controller.listTracking.value, size, context),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        _buildNumberCar(
+                            controller.listTracking.value, size, context),
+                        const SizedBox(
+                          height: 15,
+                        ),
 
-                      //number cont
-                      _buildNumberCont(items, size, context),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
+                        //number cont
+                        _buildNumberCont(
+                            controller.listTracking.value, size, context),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    );
+                  }),
                 ),
               ),
             ));

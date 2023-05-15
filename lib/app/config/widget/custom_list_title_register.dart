@@ -26,11 +26,14 @@ class CustomListTitleRegisted extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-          shape: const RoundedRectangleBorder(
-              // borderRadius: BorderRadius.circular(80),
-              side: BorderSide(color: CustomColor.backgroundAppbar)
+          margin: const EdgeInsets.only(bottom: 10),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: CustomColor.backgroundAppbar)
               //set border radius more than 50% of height and width to make circle
               ),
+          shadowColor: Colors.grey,
+          elevation: 10,
           child: SizedBox(
             width: size.width,
             height: 70,
