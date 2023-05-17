@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer_details/controller/customer_list_driver_of_customer_details_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 
 class CustomerListDriverDetailsOfCustomerScreen
     extends GetView<CustomerListDriverDetailsOfCustomerController> {
@@ -90,154 +90,192 @@ class CustomerListDriverDetailsOfCustomerScreen
               ),
             ),
             child: SizedBox(
-                height: 80 * 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CustomTimeLines(
-                      contentLeft: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            "Đã đăng tài",
-                            style: TextStyle(
-                              color: Colors.orangeAccent,
-                              fontSize: 16,
-                            ),
+              height: 85 * 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CustomTimeLines(
+                    contentLeft: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Đã đăng tài",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
                           ),
-                        ],
-                      ),
-                      contentRight: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Ngày : ${day.format(
-                            DateTime.parse(
-                              item.trackingtime![0].thoigian.toString(),
-                            ),
-                          )}"),
-                          Text("Giờ : ${hour.format(
-                            DateTime.parse(
-                              item.trackingtime![0].thoigian.toString(),
-                            ),
-                          )}"),
-                        ],
-                      ),
-                      image: const AssetImage("assets/timelines/result.png"),
-                      height: 80,
-                      colorLine: Colors.orangeAccent,
+                        ),
+                      ],
                     ),
-                    CustomTimeLines(
-                      contentLeft: item.trackingtime![1].thoigian != null
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: const [
-                                Text(
-                                  "Đã vào cổng",
-                                  style: TextStyle(
-                                    color: Colors.orangeAccent,
-                                    fontSize: 16,
-                                  ),
+                    contentRight: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Ngày : ${day.format(
+                          DateTime.parse(
+                            item.trackingtime![0].thoigian.toString(),
+                          ),
+                        )}"),
+                        Text("Giờ : ${hour.format(
+                          DateTime.parse(
+                            item.trackingtime![0].thoigian.toString(),
+                          ),
+                        )}"),
+                      ],
+                    ),
+                    image: const AssetImage("assets/timelines/result.png"),
+                    height: 80,
+                    colorLine: Colors.orangeAccent,
+                  ),
+                  CustomTimeLines(
+                    contentLeft: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Đã vào cổng",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    contentRight: item.trackingtime!.length == 2
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text("Ngày : ${day.format(
+                                DateTime.parse(
+                                  item.trackingtime![1].thoigian.toString(),
                                 ),
-                              ],
-                            )
-                          : Container(),
-                      contentRight: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Ngày : ${day.format(
-                            DateTime.parse(
-                              item.trackingtime![1].thoigian.toString(),
-                            ),
-                          )}"),
-                          Text("Giờ : ${hour.format(
-                            DateTime.parse(
-                              item.trackingtime![1].thoigian.toString(),
-                            ),
-                          )}"),
-                        ],
-                      ),
-                      image: item.trackingtime![1].thoigian == null
-                          ? const AssetImage("assets/timelines/in_car.png")
-                          : const AssetImage("assets/timelines/in_cared.png"),
-                      height: 80,
-                      colorLine: Colors.orangeAccent,
-                    ),
-                    CustomTimeLines(
-                      contentLeft: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            "Bắt đầu làm hàng",
-                            style: TextStyle(
-                              color: Colors.orangeAccent,
-                              fontSize: 16,
-                            ),
+                              )}"),
+                              Text("Giờ : ${hour.format(
+                                DateTime.parse(
+                                  item.trackingtime![1].thoigian.toString(),
+                                ),
+                              )}"),
+                            ],
+                          )
+                        : Container(),
+                    image: item.trackingtime![1].thoigian == null
+                        ? const AssetImage("assets/timelines/in_car.png")
+                        : const AssetImage("assets/timelines/in_cared.png"),
+                    height: 80,
+                    colorLine: Colors.orangeAccent,
+                  ),
+                  CustomTimeLines(
+                    contentLeft: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Đã vào dock",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
                           ),
-                        ],
-                      ),
-                      contentRight: item.trackingtime!.length == 3
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Ngày : ${day.format(
-                                  DateTime.parse(
-                                    item.trackingtime![0].thoigian.toString(),
-                                  ),
-                                )}"),
-                                Text("Giờ : ${hour.format(
-                                  DateTime.parse(
-                                    item.trackingtime![0].thoigian.toString(),
-                                  ),
-                                )}"),
-                              ],
-                            )
-                          : Container(),
-                      image: item.trackingtime!.length == 3
-                          ? const AssetImage(
-                              "assets/timelines/start_working.png")
-                          : const AssetImage(
-                              "assets/timelines/start_worked.png"),
-                      height: 80,
-                      colorLine: Colors.orangeAccent,
+                        ),
+                      ],
                     ),
-                    CustomTimeLines(
-                      contentLeft: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            "Làm hàng xong",
-                            style: TextStyle(
-                              color: Colors.orangeAccent,
-                              fontSize: 16,
-                            ),
+                    contentRight: item.trackingtime!.length == 3
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text("Ngày : ${day.format(
+                                DateTime.parse(
+                                  item.trackingtime![0].thoigian.toString(),
+                                ),
+                              )}"),
+                              Text("Giờ : ${hour.format(
+                                DateTime.parse(
+                                  item.trackingtime![0].thoigian.toString(),
+                                ),
+                              )}"),
+                            ],
+                          )
+                        : Container(),
+                    image: item.trackingtime!.length == 3
+                        ? const AssetImage("assets/timelines/start_working.png")
+                        : const AssetImage("assets/timelines/start_worked.png"),
+                    height: 80,
+                    colorLine: Colors.orangeAccent,
+                  ),
+                  CustomTimeLines(
+                    contentLeft: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Bắt đầu làm hàng",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
                           ),
-                        ],
-                      ),
-                      contentRight: item.trackingtime!.length == 4
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Ngày : ${day.format(
-                                  DateTime.parse(
-                                    item.trackingtime![0].thoigian.toString(),
-                                  ),
-                                )}"),
-                                Text("Giờ : ${hour.format(
-                                  DateTime.parse(
-                                    item.trackingtime![0].thoigian.toString(),
-                                  ),
-                                )}"),
-                              ],
-                            )
-                          : Container(),
-                      image: item.trackingtime!.length == 4
-                          ? const AssetImage("assets/timelines/finish.png")
-                          : const AssetImage("assets/timelines/finished.png"),
-                      height: 80,
-                      colorLine: Colors.orangeAccent,
+                        ),
+                      ],
                     ),
-                  ],
-                )),
+                    contentRight: item.trackingtime!.length == 4
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text("Ngày : ${day.format(
+                                DateTime.parse(
+                                  item.trackingtime![3].thoigian.toString(),
+                                ),
+                              )}"),
+                              Text("Giờ : ${hour.format(
+                                DateTime.parse(
+                                  item.trackingtime![3].thoigian.toString(),
+                                ),
+                              )}"),
+                            ],
+                          )
+                        : Container(),
+                    image: item.trackingtime!.length == 4
+                        ? const AssetImage("assets/timelines/finish.png")
+                        : const AssetImage("assets/timelines/finished.png"),
+                    height: 80,
+                    colorLine: Colors.orangeAccent,
+                  ),
+                  CustomTimeLines(
+                    contentLeft: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Làm hàng xong",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    contentRight: item.trackingtime!.length >= 5
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text("Ngày : ${day.format(
+                                DateTime.parse(
+                                  item.trackingtime![4].thoigian.toString(),
+                                ),
+                              )}"),
+                              Text("Giờ : ${hour.format(
+                                DateTime.parse(
+                                  item.trackingtime![4].thoigian.toString(),
+                                ),
+                              )}"),
+                            ],
+                          )
+                        : Container(),
+                    image: item.trackingtime!.length >= 5
+                        ? const AssetImage("assets/timelines/finished.png")
+                        : const AssetImage("assets/timelines/finish.png"),
+                    height: 80,
+                    colorLine: Colors.orangeAccent,
+                  ),
+                  Container(
+                    height: 20,
+                  )
+                ],
+              ),
+            ),
           )
         : Container();
   }

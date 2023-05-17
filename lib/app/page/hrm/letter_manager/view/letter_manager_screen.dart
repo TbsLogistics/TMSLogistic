@@ -62,11 +62,15 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
                               var item = controller.listDayOffManager[index];
 
                               return _buildCustomListtile(
-                                onTap: () {
-                                  Get.toNamed(
+                                onTap: () async {
+                                  var result = await Get.toNamed(
                                     Routes.DETAIL_ACCESS_SINGLE_SCREEN,
                                     arguments: item.regID,
                                   );
+                                  if (result is bool && result == true) {
+                                    controller.getDayOffLetterManager(
+                                        needAppr: 1, astatus: "");
+                                  }
                                 },
                                 stt: "${index + 1}",
                                 fromDay: day.format(
@@ -107,7 +111,7 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
                                         },
                                         child: Container(
                                           height: 60,
-                                          width: 60,
+                                          width: 40,
                                           // color: Colors.green,
                                           decoration: BoxDecoration(
                                             // color: Colors.green,
@@ -115,7 +119,7 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
                                                 BorderRadius.circular(10),
                                             image: const DecorationImage(
                                               image: AssetImage(
-                                                  "assets/images/check.png"),
+                                                  "assets/images/check.jpg"),
                                               fit: BoxFit.fill,
                                             ),
                                           ),
@@ -212,102 +216,6 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
                       ),
               );
             }),
-            // Obx(() {
-            //   var number = controller.selectedDepartmentsId.value;
-
-            //   return Expanded(
-            //     child: FutureBuilder(
-            //         future: controller.getDayOffLetterSingler(
-            //             needAppr: 1, astatus: number),
-            //         builder: (context, snapshot) {
-            //           if (snapshot.hasData) {
-            //             var dayoffletters =
-            //                 snapshot.data as List<DayOffLettersSingleModel>;
-            //             return dayoffletters.isNotEmpty
-            //                 ? ListView.builder(
-            //                     padding: const EdgeInsets.only(bottom: 50),
-            //                     itemCount: dayoffletters.length,
-            //                     itemBuilder: (context, index) {
-            //                       var item = dayoffletters[index];
-
-            //                       return _buildCustomListtile(
-            //                         onTap: () {
-            //                           Get.toNamed(
-            //                             Routes.DETAIL_ACCESS_SINGLE_SCREEN,
-            //                             arguments: item.regID,
-            //                           );
-            //                         },
-            //                         stt: "${index + 1}",
-            //                         fromDay: day.format(
-            //                           DateTime.parse(
-            //                             item.startDate.toString(),
-            //                           ),
-            //                         ),
-            //                         endDay: item.comeDate != null
-            //                             ? day.format(
-            //                                 DateTime.parse(
-            //                                   item.comeDate.toString(),
-            //                                 ),
-            //                               )
-            //                             : "",
-            //                         type: '${item.reason}',
-            //                         totalDay: '${item.period} ngày',
-            //                         color: Colors.green,
-            //                         child: item.aStatus != 1
-            //                             ? Center(
-            //                                 child: Text(
-            //                                   item.aStatus == 2
-            //                                       ? "Đã duyệt"
-            //                                       : "Từ chối",
-            //                                   style: TextStyle(
-            //                                     color: item.aStatus == 2
-            //                                         ? Colors.green
-            //                                         : Colors.red,
-            //                                   ),
-            //                                 ),
-            //                               )
-            //                             : InkWell(
-            //                                 onTap: () {
-            //                                   controller.postApprove(
-            //                                     regID: item.regID!,
-            //                                     comment: "",
-            //                                     state: 1,
-            //                                   );
-            //                                 },
-            //                                 child: Container(
-            //                                   height: 60,
-            //                                   width: 60,
-            //                                   // color: Colors.green,
-            //                                   decoration: BoxDecoration(
-            //                                     // color: Colors.green,
-            //                                     borderRadius:
-            //                                         BorderRadius.circular(10),
-            //                                     image: const DecorationImage(
-            //                                       image: AssetImage(
-            //                                           "assets/images/check.png"),
-            //                                       fit: BoxFit.fill,
-            //                                     ),
-            //                                   ),
-            //                                 ),
-            //                               ),
-            //                         msnv: item.empID.toString(),
-            //                         name: "${item.lastName} ${item.firstName}",
-            //                       );
-            //                     })
-            //                 : const Center(
-            //                     child: Text(
-            //                       "Không có đơn !",
-            //                       style: TextStyle(
-            //                         color: Colors.red,
-            //                         fontSize: 20,
-            //                       ),
-            //                     ),
-            //                   );
-            //           }
-            //           return
-            //         }),
-            //   );
-            // }),
           ],
         ),
       ),

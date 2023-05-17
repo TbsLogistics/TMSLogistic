@@ -6,9 +6,9 @@ import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/customer_register_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_register_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_for_customer_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_driver_for_customer_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_driver_for_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -233,7 +233,6 @@ class CustomerRegisterController extends GetxController {
         return [];
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
       return [];
     }
   }

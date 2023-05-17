@@ -4,11 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 
 class CustomerListTickerRegistedController extends GetxController {
   var dio = Dio();
   late Response response;
+
+  RxList<ListTrackingModel> listTickerRegisted = <ListTrackingModel>[].obs;
 
   @override
   void onInit() {
@@ -17,7 +19,7 @@ class CustomerListTickerRegistedController extends GetxController {
   }
 
   //Danh sách phiếu vào của khách hàng
-  Future<List<ListTrackingModel>> getListRegistedCustomer() async {
+  void getListRegistedCustomer() async {
     var tokens = await SharePerApi().getTokenNPT();
 
     const url = "${AppConstants.urlBaseNpt}/danhSachPhieuVaoDaHoanThanh";
@@ -32,12 +34,11 @@ class CustomerListTickerRegistedController extends GetxController {
       );
       if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
         List<dynamic> data = response.data;
-        return data.map((e) => ListTrackingModel.fromJson(e)).toList();
+        listTickerRegisted.value =
+            data.map((e) => ListTrackingModel.fromJson(e)).toList();
       }
-      return [];
     } on DioError catch (e) {
       print(e.response!.statusMessage);
-      return [];
     }
   }
 }

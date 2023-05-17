@@ -21,7 +21,7 @@ class TmsFinished extends GetView<FinishedController> {
                       itemCount: controller.listOrder.length,
                       itemBuilder: (ctx, i) {
                         return ExpansionTile(
-                          initiallyExpanded: true,
+                          initiallyExpanded: false,
                           title: Text(
                             '${controller.listOrder[i].maChuyen}',
                             style: const TextStyle(color: Colors.green),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/controller/customer_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/view/customer_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/controller/customer_controller.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/view/customer_screen.dart';
 
 class CustomerPage extends StatefulWidget {
   const CustomerPage({Key? key}) : super(key: key);

@@ -5,8 +5,8 @@ import 'package:tbs_logistics_tms/app/page/home_page/controller/home_controller.
 import 'package:tbs_logistics_tms/app/page/home_page/modules/drawer.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 
-class HomePage extends GetView<HomeController> {
-  HomePage({super.key});
+class HomeScreen extends GetView<HomeController> {
+  HomeScreen({super.key});
 
   String routes = "/HOME_PAGE";
 
@@ -56,6 +56,13 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   SizedBox(height: size.width * 0.1),
+                  // Center(
+                  //   child: Text('Update info: ${controller.updateInfo}'),
+                  // ),
+                  // ElevatedButton(
+                  //   child: Text('Check for Update'),
+                  //   onPressed: () => controller.checkForUpdate(),
+                  // ),
                   Obx(
                     () => controller.tokenTms.value != ""
                         ? _buildForm(

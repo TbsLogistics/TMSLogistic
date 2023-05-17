@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
-import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_manager/model/letter_manager_approve_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself/model/user_hrm_model.dart';
@@ -99,7 +98,7 @@ class LetterManagerDetailsAccessController extends GetxController {
             ),
           );
         } else if (data["rCode"] == 1) {
-          Get.toNamed(Routes.MANAGER_LEAVE_FORM_SCREEN);
+          Get.back(result: true);
           Get.snackbar(
             "Thông báo",
             "${data["rMsg"]} !",

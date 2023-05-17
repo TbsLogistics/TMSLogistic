@@ -11,7 +11,7 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer_details/view/customer_list_driver_of_customer_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/view/customer_list_ticker_registed_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/view/customer_list_ticker_register_details_screen.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_page.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/customer_page.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/view/driver_create_register_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register_details/view/driver_create_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished_details/view/driver_finished_details_screen.dart';
@@ -44,7 +44,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.HOME_PAGE,
-      page: () => HomePage(),
+      page: () => HomeScreen(),
     ),
     //------------------Tính năng TMS-------------------------------
     //TMS_PAGE
@@ -101,7 +101,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.DETAILS_FORM_REGISTER_DRIVER,
-      page: () => DriverCreateRegisterDetailsScreen(),
+      page: () => const DriverCreateRegisterDetailsScreen(),
     ),
     GetPage(
       name: Routes.CREATE_REGISTER_DRIVER,
@@ -109,11 +109,11 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.LIST_STATUS_INFINISHED_SCREEN,
-      page: () => DriverStatusScreen(),
+      page: () => const DriverStatusScreen(),
     ),
     GetPage(
       name: Routes.LIST_STATUS_UNFINISHED_DETAIL_SCREEN,
-      page: () => ListStatusUnfinishedDetailsScreen(),
+      page: () => const ListStatusUnfinishedDetailsScreen(),
     ),
     GetPage(
       name: Routes.STATUS_TICKER_DETAIL_SCREEN,

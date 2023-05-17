@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/customer_register_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_register_for_driver_model.dart';
 
 class CustomerRegisterDetailsController extends GetxController {
   Rx<CustomerRegisterForDriverModel> detailsTicker =
@@ -8,7 +8,6 @@ class CustomerRegisterDetailsController extends GetxController {
   @override
   void onInit() {
     var items = Get.arguments as CustomerRegisterForDriverModel;
-    print(items);
     detailsTicker.value = items;
     super.onInit();
   }

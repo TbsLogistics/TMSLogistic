@@ -29,7 +29,7 @@ class TmsPending extends GetView<PendingController> {
                                         .maTrangThai !=
                                     20
                             ? ExpansionTile(
-                                initiallyExpanded: true,
+                                initiallyExpanded: false,
                                 title: Text(
                                   '${controller.listOrder[i].maChuyen}',
                                   style: const TextStyle(color: Colors.green),

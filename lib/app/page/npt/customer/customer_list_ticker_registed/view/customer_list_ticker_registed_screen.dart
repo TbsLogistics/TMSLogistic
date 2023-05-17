@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_list_title_register.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/controller/customer_list_ticker_registed_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 
 class CustomerListTickerRegisted
     extends GetView<CustomerListTickerRegistedController> {
@@ -35,36 +35,32 @@ class CustomerListTickerRegisted
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: FutureBuilder(
-              future: controller.getListRegistedCustomer(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var items = snapshot.data as List<ListTrackingModel>;
-                  return ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context, index) => CustomListTitleRegisted(
-                      stt: "${index + 1}",
-                      name: "${items[index].taixeRe!.tenTaixe}",
-                      phone: "${items[index].taixeRe!.phone}",
-                      warehome: "${items[index].phieuvao!.kho!.tenKho}",
-                      itemstype: "${items[index].loaihang!.tenLoaiHang}",
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
-                          arguments: items[index],
-                        );
-                      },
-                    ),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.orangeAccent,
-                  ),
-                );
-              }),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Obx(() {
+                    var items = controller.listTickerRegisted;
+                    return ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (context, index) => CustomListTitleRegisted(
+                        stt: "${index + 1}",
+                        name: "${items[index].taixeRe!.tenTaixe}",
+                        phone: "${items[index].taixeRe!.phone}",
+                        warehome: "${items[index].phieuvao!.kho!.tenKho}",
+                        itemstype: "${items[index].loaihang!.tenLoaiHang}",
+                        onTap: () {
+                          Get.toNamed(
+                            Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
+                            arguments: items[index],
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            )),
       ),
     );
   }

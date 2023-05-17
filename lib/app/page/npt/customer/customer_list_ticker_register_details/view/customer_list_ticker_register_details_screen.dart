@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/controller/customer_list_ticker_register_details_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 
 class CustomerListTickerRegisterDetailsScreen
     extends GetView<CustomerListTickerRegisterDetailsController> {

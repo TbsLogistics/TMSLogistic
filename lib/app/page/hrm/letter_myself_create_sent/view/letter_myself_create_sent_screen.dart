@@ -239,7 +239,6 @@ class LetterMyselfCreateSentScreen
                                           .formKeyCreateLetter.currentState!
                                           .validate();
                                       if (!validate) {
-                                        print(controller.selectedValue.value);
                                         // If the form is valid, display a snackbar. In the real world,
                                         // you'd often call a server or save the information in a database.
                                         controller.postRegister(
@@ -593,24 +592,6 @@ class LetterMyselfCreateSentScreen
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _customPopupItemBuilderExample2(
-    BuildContext context,
-    ListOffTypeModel? item,
-    bool isSelected,
-  ) {
-    return Card(
-      child: ListTile(
-        style: ListTileStyle.drawer,
-        focusColor: Colors.white,
-        leading: Text("${item?.offTypeID}"),
-        title: Text(
-          "${item?.note} (${item?.name})",
-          style: const TextStyle(color: Colors.blueGrey),
         ),
       ),
     );

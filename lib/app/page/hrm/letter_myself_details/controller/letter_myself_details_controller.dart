@@ -218,7 +218,6 @@ class LetterMyselfDetailsController extends GetxController {
           );
         } else if (data["rCode"] == 1) {
           Get.back(result: true);
-          print(data["rMsg"]);
           Get.snackbar(
             "Thông báo",
             "${data["rMsg"]} !",

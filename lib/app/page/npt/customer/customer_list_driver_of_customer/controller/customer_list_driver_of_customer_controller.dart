@@ -6,8 +6,8 @@ import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/id_driver_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/id_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class CustomerListDriverOfCustomerController extends GetxController {

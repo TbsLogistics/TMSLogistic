@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, duplicate_ignore, non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -83,8 +85,6 @@ class LoginController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        print(e.response!.data);
-
         // Get.snackbar(
         //   "Thông báo",
         //   "Nhập thiếu tài khoản hoặc mật khẩu !",
@@ -154,42 +154,42 @@ class LoginController extends GetxController {
         getSnack(messageText: "Lỗi máy chủ, vui lòng thử lại sau 1 phút!");
       } else if (response.statusCode == AppConstants.RESPONSE_CODE_ERROR) {
         // getSnack(messageText: "Tên đăng nhập hoặc mật khẩu không đúng");
-        print("Tên đăng nhập hoặc mật khẩu không đúng");
+        // print("Tên đăng nhập hoặc mật khẩu không đúng");
       } else if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
         jsonRespone = response.data;
 
         if (response.data["status_code"] == 204) {
-          Get.defaultDialog(
-            title: "Thông báo",
-            titleStyle: const TextStyle(
-                color: Colors.redAccent,
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
-            middleText: response.data["detail"],
-            confirmTextColor: Colors.white,
-            backgroundColor: Colors.orangeAccent,
-            confirm: TextButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  side: MaterialStateProperty.all(
-                    const BorderSide(width: 1, color: Colors.white),
-                  ),
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text(
-                  "Xác nhận",
-                  style: TextStyle(
-                    color: Colors.orangeAccent,
-                    fontSize: 16,
-                  ),
-                )),
-            onConfirm: () {
-              Get.back();
-            },
-          );
+          // Get.defaultDialog(
+          //   title: "Thông báo",
+          //   titleStyle: const TextStyle(
+          //       color: Colors.redAccent,
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold),
+          //   middleText: response.data["detail"],
+          //   confirmTextColor: Colors.white,
+          //   backgroundColor: Colors.orangeAccent,
+          //   confirm: TextButton(
+          //       style: ButtonStyle(
+          //         backgroundColor:
+          //             MaterialStateProperty.all<Color>(Colors.white),
+          //         side: MaterialStateProperty.all(
+          //           const BorderSide(width: 1, color: Colors.white),
+          //         ),
+          //       ),
+          //       onPressed: () {
+          //         Get.back();
+          //       },
+          //       child: const Text(
+          //         "Xác nhận",
+          //         style: TextStyle(
+          //           color: Colors.orangeAccent,
+          //           fontSize: 16,
+          //         ),
+          //       )),
+          //   onConfirm: () {
+          //     Get.back();
+          //   },
+          // );
         } else {
           var tokens = LoginUserNptModel.fromJson(jsonRespone);
           // tokens_KH = LoginCustomerModel.fromJson(jsonData);
@@ -197,7 +197,7 @@ class LoginController extends GetxController {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Map<String, dynamic> decodedTokenNpt =
               JwtDecoder.decode(tokens.accessToken!);
-          print(decodedTokenNpt);
+          // print(decodedTokenNpt);
           // ignore: unused_local_variable
           var accessToken = await prefs.setString(
               AppConstants.KEY_ACCESS_TOKEN_NPT, "${tokens.accessToken}");
@@ -259,6 +259,8 @@ class LoginController extends GetxController {
     );
     var jsonData = user.toJson();
     String url = "${AppConstants.urlBaseHrm}/Login";
+    // String url = "${AppConstants.urlBaseHrm}/user/login";
+
     try {
       response = await dio.post(
         url,
@@ -329,7 +331,7 @@ class LoginController extends GetxController {
         } else if (response.data["rCode"] == 2) {
           passwordController.text = response.data["rData"]["password"];
         } else if (response.data["rCode"] == 0) {
-          print("Tài khoản hoặc mật khẩu không đúng !");
+          // print("Tài khoản hoặc mật khẩu không đúng !");
           // Get.defaultDialog(
           //   barrierDismissible: false,
           //   title: "Thông báo",
@@ -360,7 +362,7 @@ class LoginController extends GetxController {
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
         // getSnack(messageText: e.response!.statusMessage.toString());
-        print(e.response!.statusMessage);
+        // print(e.response!.statusMessage);
       }
     }
   }
@@ -516,7 +518,7 @@ class LoginController extends GetxController {
         postLoginHrm(username: account, password: password),
       ]);
     } on DioError catch (e) {
-      print(e);
+      getSnack(messageText: "${e.response!.statusMessage}");
     }
     // Do something with the data
   }

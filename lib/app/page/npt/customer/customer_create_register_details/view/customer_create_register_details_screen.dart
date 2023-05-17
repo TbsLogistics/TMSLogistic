@@ -5,7 +5,7 @@ import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register_details/controller/customer_create_register_details_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/model/customer_register_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_register_for_driver_model.dart';
 
 class CustomerRegisterDetailScreen
     extends GetView<CustomerRegisterDetailsController> {
@@ -115,7 +115,7 @@ class CustomerRegisterDetailScreen
           borderSide: const BorderSide(color: Colors.orangeAccent)),
       shadowColor: Colors.grey,
       elevation: 10,
-      child: Container(
+      child: SizedBox(
         height: size.width * 0.7,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

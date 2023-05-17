@@ -504,24 +504,6 @@ class LetterMyselfDetailsScreen extends GetView<LetterMyselfDetailsController> {
     );
   }
 
-  Widget _customPopupItemBuilderExample2(
-    BuildContext context,
-    ListOffTypeModel? item,
-    bool isSelected,
-  ) {
-    return Card(
-      child: ListTile(
-        style: ListTileStyle.drawer,
-        focusColor: Colors.white,
-        leading: Text("${item?.offTypeID}"),
-        title: Text(
-          "${item?.note} (${item?.name})",
-          style: const TextStyle(color: Colors.blueGrey),
-        ),
-      ),
-    );
-  }
-
   Widget _buildFormText(
       {required String title,
       required String content,
