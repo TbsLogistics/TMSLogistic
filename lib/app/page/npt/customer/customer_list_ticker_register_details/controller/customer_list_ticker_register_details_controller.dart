@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/model/list_registed_of_customer_model.dart';
 
 class CustomerListTickerRegisterDetailsController extends GetxController {
-  Rx<ListTrackingModel> listTracking = ListTrackingModel().obs;
+  Rx<ListRegisterDriverOfCustomerModel> listTracking =
+      ListRegisterDriverOfCustomerModel().obs;
 
   @override
   void onInit() {
-    var items = Get.arguments as ListTrackingModel;
+    var items = Get.arguments as ListRegisterDriverOfCustomerModel;
     listTracking.value = items;
     super.onInit();
   }

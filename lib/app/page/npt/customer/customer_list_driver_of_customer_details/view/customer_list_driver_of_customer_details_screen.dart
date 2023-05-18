@@ -156,7 +156,7 @@ class CustomerListDriverDetailsOfCustomerScreen
                             ],
                           )
                         : Container(),
-                    image: item.trackingtime![1].thoigian == null
+                    image: item.trackingtime!.length == 2
                         ? const AssetImage("assets/timelines/in_car.png")
                         : const AssetImage("assets/timelines/in_cared.png"),
                     height: 80,

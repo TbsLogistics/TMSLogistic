@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/model/list_registed_of_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/controller/customer_list_ticker_register_details_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer/model/list_tracking_model.dart';
 
 class CustomerListTickerRegisterDetailsScreen
     extends GetView<CustomerListTickerRegisterDetailsController> {
@@ -102,8 +102,8 @@ class CustomerListTickerRegisterDetailsScreen
             ));
   }
 
-  Widget _buildNameDriver(
-      ListTrackingModel items, Size size, BuildContext context) {
+  Widget _buildNameDriver(ListRegisterDriverOfCustomerModel items, Size size,
+      BuildContext context) {
     return Container(
       height: size.width * 0.2,
       decoration: BoxDecoration(
@@ -187,8 +187,8 @@ class CustomerListTickerRegisterDetailsScreen
     );
   }
 
-  Widget _buildNumberCar(
-      ListTrackingModel items, Size size, BuildContext context) {
+  Widget _buildNumberCar(ListRegisterDriverOfCustomerModel items, Size size,
+      BuildContext context) {
     return Container(
       height: size.width * 0.2,
       decoration: BoxDecoration(
@@ -272,8 +272,8 @@ class CustomerListTickerRegisterDetailsScreen
     );
   }
 
-  Widget _buildNumberCont(
-      ListTrackingModel items, Size size, BuildContext context) {
+  Widget _buildNumberCont(ListRegisterDriverOfCustomerModel items, Size size,
+      BuildContext context) {
     return Container(
       height: size.width * 0.7,
       decoration: BoxDecoration(

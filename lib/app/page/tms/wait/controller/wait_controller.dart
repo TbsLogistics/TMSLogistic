@@ -14,6 +14,12 @@ class AwaitController extends GetxController {
   RxList<TmsOrdersModel> listOrder = <TmsOrdersModel>[].obs;
   RxBool isLoad = true.obs;
 
+  @override
+  void onInit() {
+    getData();
+    super.onInit();
+  }
+
   void getData() async {
     var token = await SharePerApi().getTokenTMS();
     var idTX = await SharePerApi().getIdTX();

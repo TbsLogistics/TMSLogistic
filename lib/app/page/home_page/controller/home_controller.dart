@@ -26,15 +26,17 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    _scaffoldKey;
+    // _scaffoldKey;
     getUser();
+    // checkForUpdate();
     super.onInit();
   }
 
   Future<void> checkForUpdate() async {
     InAppUpdate.checkForUpdate().then((info) {
       updateInfo!.value = info;
-      print("info : $info");
+      print(["updateInfo : ${updateInfo!.value}"]);
+      // print("info : $info");
     }).catchError((e) {
       showSnack(e.toString());
     });

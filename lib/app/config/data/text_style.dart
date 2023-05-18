@@ -18,6 +18,17 @@ class CustomTextStyle {
     color: Color(0xFF3498DB),
     fontWeight: FontWeight.normal,
   );
+  static const TextStyle titleDetails = TextStyle(
+    fontSize: 16,
+    color: Colors.green,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle contentDetails = TextStyle(
+    fontSize: 16,
+    color: Colors.orangeAccent,
+    fontWeight: FontWeight.normal,
+  );
+
   static textFormFieldStyle(String label, String hint) {
     return InputDecoration(
       labelText: label,

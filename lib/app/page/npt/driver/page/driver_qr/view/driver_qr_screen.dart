@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/controller/driver_qr_controller.dart';
 
-class QrCodeScreen extends StatelessWidget {
+class QrCodeScreen extends GetView<QRCodeController> {
   const QrCodeScreen({super.key});
   final String routes = "/QR_CODE_SCREEN";
 

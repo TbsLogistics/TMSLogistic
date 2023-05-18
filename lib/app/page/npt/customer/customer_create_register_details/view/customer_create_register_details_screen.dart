@@ -131,13 +131,11 @@ class CustomerRegisterDetailScreen
                       children: [
                         const Text(
                           "Số công 1",
-                          style: CustomTextStyle.titlePrimary,
+                          style: CustomTextStyle.titleDetails,
                         ),
                         Text(
                           "${items.socont1}",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
-                          ),
+                          style: CustomTextStyle.contentDetails,
                         ),
                       ],
                     ),
@@ -152,7 +150,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số seal 1",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -162,9 +160,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.cont1seal1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -182,7 +178,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số seal 2",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -192,9 +188,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.cont1seal2}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -212,7 +206,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Kiện",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -222,9 +216,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.soKien}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -242,7 +234,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Book",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -252,9 +244,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.soBook}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -272,7 +262,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Khối",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -282,9 +272,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.sokhoi}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -313,13 +301,11 @@ class CustomerRegisterDetailScreen
                       children: [
                         const Text(
                           "Số công 2",
-                          style: CustomTextStyle.titlePrimary,
+                          style: CustomTextStyle.titleDetails,
                         ),
                         Text(
                           "${items.socont1}",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
-                          ),
+                          style: CustomTextStyle.contentDetails,
                         ),
                       ],
                     ),
@@ -334,7 +320,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số seal 1",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -344,9 +330,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.cont2seal1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -364,7 +348,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số seal 2",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -374,9 +358,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.cont2seal2}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -394,7 +376,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Kiện",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -404,9 +386,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.sokien1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -424,7 +404,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Book",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -434,9 +414,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.soBook1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -454,7 +432,7 @@ class CustomerRegisterDetailScreen
                             children: const [
                               Text(
                                 "Số Khối",
-                                style: CustomTextStyle.titlePrimary,
+                                style: CustomTextStyle.titleDetails,
                               ),
                             ],
                           ),
@@ -464,9 +442,7 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.sokhoi1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
+                                style: CustomTextStyle.contentDetails,
                               ),
                             ],
                           ),
@@ -510,7 +486,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         title,
-                        style: CustomTextStyle.titlePrimary,
+                        style: CustomTextStyle.titleDetails,
                       ),
                     ),
                   ),
@@ -519,10 +495,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         content,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
+                        style: CustomTextStyle.contentDetails,
                       ),
                     ),
                   )
@@ -544,7 +517,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         title2,
-                        style: CustomTextStyle.titlePrimary,
+                        style: CustomTextStyle.titleDetails,
                       ),
                     ),
                   ),
@@ -553,10 +526,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         content2,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
+                        style: CustomTextStyle.contentDetails,
                       ),
                     ),
                   )
@@ -590,7 +560,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         "Ngày dự kiến",
-                        style: CustomTextStyle.titlePrimary,
+                        style: CustomTextStyle.titleDetails,
                       ),
                     ),
                   ),
@@ -599,10 +569,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         day.format(DateTime.parse(items.giodukien!)),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
+                        style: CustomTextStyle.contentDetails,
                       ),
                     ),
                   )
@@ -624,7 +591,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         "Giờ dự kiến",
-                        style: CustomTextStyle.titlePrimary,
+                        style: CustomTextStyle.titleDetails,
                       ),
                     ),
                   ),
@@ -633,10 +600,7 @@ class CustomerRegisterDetailScreen
                     child: Center(
                       child: Text(
                         hour.format(DateTime.parse(items.giodukien!)),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
+                        style: CustomTextStyle.contentDetails,
                       ),
                     ),
                   )
