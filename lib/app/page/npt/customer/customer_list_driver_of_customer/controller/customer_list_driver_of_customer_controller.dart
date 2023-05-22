@@ -16,6 +16,8 @@ class CustomerListDriverOfCustomerController extends GetxController {
   RxList<ListDriverByCustomerModel> listDriver =
       <ListDriverByCustomerModel>[].obs;
 
+  RxBool isLoad = false.obs;
+
   @override
   void onInit() {
     getListCustomer();
@@ -28,6 +30,7 @@ class CustomerListDriverOfCustomerController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
+    isLoad(false);
     try {
       response = await dio.get(
         url,
@@ -40,6 +43,8 @@ class CustomerListDriverOfCustomerController extends GetxController {
       }
     } on DioError catch (e) {
       print(e.response!.statusMessage);
+    } finally {
+      isLoad(true);
     }
   }
 

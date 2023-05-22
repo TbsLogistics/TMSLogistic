@@ -4,6 +4,6 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/controller/
 class DriverQrBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<QRCodeController>(() => QRCodeController());
+    Get.lazyPut<QRCodeDriverController>(() => QRCodeDriverController());
   }
 }

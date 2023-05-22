@@ -10,8 +10,6 @@ class CustomerListDriverDetailsOfCustomerController extends GetxController {
   void onInit() {
     var items = Get.arguments;
     statusDriver.value = items;
-    print(statusDriver.value);
-
     super.onInit();
   }
 

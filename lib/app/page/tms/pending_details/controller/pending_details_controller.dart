@@ -210,6 +210,7 @@ class PendingDetailController extends GetxController {
       }
     }
     //Lọc địa điểm
+
     var groupedReceive =
         listDataForReceive.groupListsBy((element) => element.place);
     // Lọc khóa

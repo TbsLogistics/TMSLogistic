@@ -53,7 +53,7 @@ class DriverFinishedController extends GetxController {
       if (response.statusCode == 200) {
         var data = response.data;
         // print(data);
-        Get.toNamed(Routes.QR_CODE_SCREEN, arguments: data);
+        Get.toNamed(Routes.QR_CODE_DRIVER_SCREEN, arguments: data);
       }
     } catch (e) {
       rethrow;

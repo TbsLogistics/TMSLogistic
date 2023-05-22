@@ -7,7 +7,9 @@ import 'package:tbs_logistics_tms/app/config/data/validate.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/controller/customer_create_register_controller.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_for_customer_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
@@ -227,9 +229,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                   ],
                 ),
                 _listDriver(controller),
-                _listCustomer(controller),
-                _numberCar(controller),
                 _listWareHome(controller),
+                Obx(
+                  () => controller.selectWareHome.value.maKho != null
+                      ? _listCustomer(controller)
+                      : Container(),
+                ),
+                _numberCar(controller),
                 _listTypeProduct(controller),
                 _listTypeCar(controller),
                 Obx(
@@ -472,15 +478,19 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          FindDropdown<ListCustomerForCustomerModel>(
+          FindDropdown<CustomerOfWareHomeModel>(
             showSearchBox: false,
-            onFind: (String filter) => controller.getDataCustomer(filter),
+            onFind: (String filter) => controller
+                .getCusomter("${controller.selectWareHome.value.maKho}"),
             onChanged: (value) {
-              controller.selectCustomer.value.maKhachHang = value!.maKhachHang;
-              print(controller.selectCustomer.value.maKhachHang);
+              setState(() {
+                controller.selectCustomer.value.maKhachHang =
+                    value!.maKhachHang;
+                print(controller.selectCustomer.value.maKhachHang);
+              });
             },
             dropdownBuilder:
-                (BuildContext context, ListCustomerForCustomerModel? item) {
+                (BuildContext context, CustomerOfWareHomeModel? item) {
               return Card(
                 shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -512,7 +522,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
               );
             },
             dropdownItemBuilder: (BuildContext context,
-                ListCustomerForCustomerModel item, bool isSelected) {
+                CustomerOfWareHomeModel item, bool isSelected) {
               return Container(
                 // height: 100,
                 decoration: !isSelected
@@ -665,7 +675,9 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             showSearchBox: false,
             onFind: (String filter) => controller.getDataWareHome(filter),
             onChanged: (ListWareHomeModel? data) {
-              controller.selectWareHome.value.maKho = data!.maKho;
+              setState(() {
+                controller.selectWareHome.value.maKho = data!.maKho;
+              });
             },
             dropdownBuilder: (BuildContext context, ListWareHomeModel? item) {
               return Card(

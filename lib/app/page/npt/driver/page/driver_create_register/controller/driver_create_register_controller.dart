@@ -6,6 +6,8 @@ import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -61,13 +63,27 @@ class DriverCreateRegisterController extends GetxController {
 
   String? selectItems;
 
+  var selectedKhachhang = "";
+
   @override
   void onInit() async {
     formKey;
     super.onInit();
+    getKhachhang();
   }
 
-  var selectedKhachhang = "";
+  Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
+    for (var i = 0; i < listKhachhang.length; i++) {
+      if (listKhachhang[i].maKho == maKho) {
+        var items = listKhachhang[i];
+        listClient.add(items);
+      } else {
+        listClient.value = [];
+      }
+    }
+
+    return listClient;
+  }
 
   Future<void> postRegisterDriver({
     required String? maKhachHang,
@@ -236,6 +252,35 @@ class DriverCreateRegisterController extends GetxController {
       }
     } catch (error) {
       rethrow;
+    }
+  }
+
+  RxList<CustomerOfWareHomeModel> listKhachhang =
+      <CustomerOfWareHomeModel>[].obs;
+
+  RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
+
+  // Danh sách khách hàng
+  void getKhachhang() async {
+    var dio = Dio();
+    Response response;
+
+    const url = '${AppConstants.urlBaseNpt}/counter-part-has-warehouses';
+
+    try {
+      response = await dio.get(
+        url,
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        List<dynamic> customer = response.data["data"];
+        listKhachhang.value =
+            customer.map((e) => CustomerOfWareHomeModel.fromJson(e)).toList();
+
+        var data = ListCustomerOfWareHomeModel.fromJsonList(customer);
+      }
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     }
   }
 

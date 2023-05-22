@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -7,31 +6,33 @@ import 'dart:ui' as ui;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
+
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/model/details_driver_model.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
-class QRCodeDriverController extends GetxController {
+class QRCodeCustomerController extends GetxController {
   var idPhieuvao = 0.obs;
+  var idDriver = 0.obs;
   Rx<DetailsDriverModel> user = DetailsDriverModel().obs;
 
-  GlobalKey qrDriverKey = new GlobalKey();
+  GlobalKey qrKey = new GlobalKey();
+
   @override
   void onInit() {
-    var maPhieuvao = Get.arguments;
+    var maPhieuvao = Get.arguments[0];
     idPhieuvao.value = maPhieuvao;
-    qrDriverKey;
-    getInfor();
-
+    var maTaixe = Get.arguments[1];
+    idDriver.value = maTaixe;
+    qrKey;
     super.onInit();
   }
 
   Future<Uint8List> capturePng() async {
-    RenderRepaintBoundary? boundary = qrDriverKey.currentContext!
-        .findRenderObject() as RenderRepaintBoundary?;
+    RenderRepaintBoundary? boundary =
+        qrKey.currentContext!.findRenderObject() as RenderRepaintBoundary?;
 
     ui.Image image = await boundary!.toImage(pixelRatio: 3.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
@@ -48,13 +49,6 @@ class QRCodeDriverController extends GetxController {
         fileName: 'share.png',
         mimeType: 'image/png',
         bytesOfFile: imageUint8List);
-  }
-
-  Future<ui.Image> loadOverlayImage() async {
-    final completer = Completer<ui.Image>();
-    final byteData = await rootBundle.load('assets/images/asd.jpg');
-    ui.decodeImageFromList(byteData.buffer.asUint8List(), completer.complete);
-    return completer.future;
   }
 
   //lấy thông tin user

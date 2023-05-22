@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer_details/controller/customer_list_driver_of_customer_details_controller.dart';
@@ -38,6 +39,25 @@ class CustomerListDriverDetailsOfCustomerScreen
               color: Theme.of(context).primaryColorLight,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(
+                  Routes.QR_CODE_CUSTOMER_SCREEN,
+                  arguments: [
+                    controller.statusDriver.value.maPhieuvao,
+                    controller.statusDriver.value.taixeRe!.maTaixe,
+                  ],
+                );
+              },
+              icon: Icon(
+                Icons.qr_code_rounded,
+                color: Theme.of(context).primaryColorLight,
+                size: 25,
+              ),
+            ),
+            const SizedBox(width: 15),
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -468,7 +488,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${item.taixeRe!.khachhangRe!.tenKhachhang}",
+                        item.taixeRe!.khachhangRe != null
+                            ? "${item.taixeRe!.khachhangRe!.tenKhachhang}"
+                            : "",
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -504,7 +526,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${item.taixeRe!.khachhangRe!.tenKhachhang}",
+                        item.taixeRe!.khachhangRe != null
+                            ? "${item.taixeRe!.khachhangRe!.tenKhachhang}"
+                            : "",
                         style: const TextStyle(
                           fontSize: 16,
                         ),

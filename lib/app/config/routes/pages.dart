@@ -12,6 +12,7 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/view/customer_list_ticker_registed_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/view/customer_list_ticker_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/customer_page.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/view/customer_qr_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/view/driver_create_register_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register_details/view/driver_create_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished_details/view/driver_finished_details_screen.dart';
@@ -119,14 +120,18 @@ abstract class AppPages {
       name: Routes.STATUS_TICKER_DETAIL_SCREEN,
       page: () => const StatusTikerDetailScreen(),
     ),
+    GetPage(
+      name: Routes.QR_CODE_DRIVER_SCREEN,
+      page: () => const QrCodeDriverScreen(),
+    ),
     //Khách hàng
     GetPage(
       name: Routes.LIST_DRIVER_BY_CUSTOMER,
       page: () => const CustomerListDriverOfCustomerScreen(),
     ),
     GetPage(
-      name: Routes.QR_CODE_SCREEN,
-      page: () => const QrCodeScreen(),
+      name: Routes.QR_CODE_CUSTOMER_SCREEN,
+      page: () => QrCodeCustomerScreen(),
     ),
     GetPage(
       name: Routes.CUSTOMER_PAGE,

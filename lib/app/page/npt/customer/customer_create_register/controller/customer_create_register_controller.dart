@@ -6,8 +6,10 @@ import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_register_for_driver_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_for_customer_model.dart';
+
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_driver_for_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
@@ -50,6 +52,25 @@ class CustomerRegisterController extends GetxController {
   TextEditingController numberKhoi1 = TextEditingController(text: "0");
   TextEditingController numberBook = TextEditingController();
   TextEditingController numberBook1 = TextEditingController();
+
+  @override
+  void onInit() {
+    getKhachhang();
+    super.onInit();
+  }
+
+  Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
+    for (var i = 0; i < listKhachhang.length; i++) {
+      if (listKhachhang[i].maKho == maKho) {
+        var items = listKhachhang[i];
+        listClient.add(items);
+      } else {
+        listClient.value = [];
+      }
+    }
+
+    return listClient;
+  }
 
   Future<void> postRegisterCustomer({
     required int? idTaixe,
@@ -178,33 +199,52 @@ class CustomerRegisterController extends GetxController {
     }
   }
 
-  Future<List<ListCustomerForCustomerModel>> getDataCustomer(query) async {
+  Future<List<ListCustomerOfWareHomeModel>> getDataCustomer(query) async {
     var dio = Dio();
     Response response;
-    var token = await SharePerApi().getTokenNPT();
-
-    const url = '${AppConstants.urlBaseNpt}/admin/danh-sach-chu-hang1';
-    Map<String, dynamic> headers = {
-      HttpHeaders.authorizationHeader: "Bearer $token"
-    };
+    const url = '${AppConstants.urlBaseNpt}/counter-part-has-warehouses';
     try {
-      response = await dio.get(
-        url,
-        options: Options(headers: headers),
-        queryParameters: {"query": query},
-      );
-
+      response = await dio.get(url);
       if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
-        var customer = response.data;
+        var customer = response.data["data"];
         if (customer != null) {
-          return ListCustomerForCustomerModel.fromJsonList(customer);
+          return ListCustomerOfWareHomeModel.fromJsonList(customer);
         }
         return [];
       } else {
         return [];
       }
-    } catch (error) {
-      rethrow;
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
+      return [];
+    }
+  }
+
+  RxList<CustomerOfWareHomeModel> listKhachhang =
+      <CustomerOfWareHomeModel>[].obs;
+
+  RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
+
+  void getKhachhang() async {
+    var dio = Dio();
+    Response response;
+
+    const url = '${AppConstants.urlBaseNpt}/counter-part-has-warehouses';
+
+    try {
+      response = await dio.get(
+        url,
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        List<dynamic> customer = response.data["data"];
+        listKhachhang.value =
+            customer.map((e) => CustomerOfWareHomeModel.fromJson(e)).toList();
+
+        var data = ListCustomerOfWareHomeModel.fromJsonList(customer);
+      }
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     }
   }
 

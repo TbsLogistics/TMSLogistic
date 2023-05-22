@@ -40,22 +40,30 @@ class CustomerListTickerRegisted
                 Expanded(
                   child: Obx(() {
                     var items = controller.listTickerRegisted;
-                    return ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => CustomListTitleRegisted(
-                        stt: "${index + 1}",
-                        name: "${items[index].taixeRe!.tenTaixe}",
-                        phone: "${items[index].taixeRe!.phone}",
-                        warehome: "${items[index].phieuvao!.kho!.tenKho}",
-                        itemstype: "${items[index].loaihang!.tenLoaiHang}",
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
-                            arguments: items[index],
+                    return controller.isLoad.value
+                        ? ListView.builder(
+                            itemCount: items.length,
+                            itemBuilder: (context, index) =>
+                                CustomListTitleRegisted(
+                              stt: "${index + 1}",
+                              name: "${items[index].taixeRe!.tenTaixe}",
+                              phone: "${items[index].taixeRe!.phone}",
+                              warehome: "${items[index].phieuvao!.kho!.tenKho}",
+                              itemstype:
+                                  "${items[index].loaihang!.tenLoaiHang}",
+                              onTap: () {
+                                Get.toNamed(
+                                  Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
+                                  arguments: items[index],
+                                );
+                              },
+                            ),
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.orangeAccent,
+                            ),
                           );
-                        },
-                      ),
-                    );
                   }),
                 ),
               ],

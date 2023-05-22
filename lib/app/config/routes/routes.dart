@@ -34,7 +34,7 @@ abstract class Routes {
   static const DRIVER_PAGE = "/DRIVER_PAGE";
   static const LIST_STATUS_INFINISHED_SCREEN = "/LIST_STATUS_INFINISHED_SCREEN";
   static const STATUS_TICKER_DETAIL_SCREEN = "/STATUS_TICKER_DETAIL_SCREEN";
-  static const QR_CODE_SCREEN = "/QR_CODE_SCREEN";
+  static const QR_CODE_DRIVER_SCREEN = "/QR_CODE_DRIVER_SCREEN";
   static const LIST_STATUS_UNFINISHED_DETAIL_SCREEN =
       "/LIST_STATUS_UNFINISHED_DETAIL_SCREEN";
   static const DETAILS_FORM_REGISTER_DRIVER = "/DETAILS_FORM_REGISTER_DRIVER";
@@ -42,7 +42,7 @@ abstract class Routes {
   //++++++++++++++++++++++++++CUSTOMER+++++++++++++++++++++++++++++++++
 
   static const CUSTOMER_PAGE = "/CUSTOMER_PAGE";
-
+  static const QR_CODE_CUSTOMER_SCREEN = "/QR_CODE_CUSTOMER_SCREEN";
   static const REGISTER_CUSTOMER = "/REGISTER_CUSTOMER";
   static const LIST_DRIVER_BY_CUSTOMER = "/LIST_DRIVER_BY_CUSTOMER";
   static const LIST_TICKER_CUSTOMER = "/LIST_TICKER_CUSTOMER";

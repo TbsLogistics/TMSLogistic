@@ -42,7 +42,7 @@ class ListStatusUnfinishedDetailsScreen
               onPressed: () {
                 print(controller.getDriverFinishedScreen.value.maPhieuvao);
                 Get.toNamed(
-                  Routes.QR_CODE_SCREEN,
+                  Routes.QR_CODE_DRIVER_SCREEN,
                   arguments:
                       controller.getDriverFinishedScreen.value.maPhieuvao,
                 );

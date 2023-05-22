@@ -1,17 +1,26 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/controller/driver_qr_controller.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/controller/customer_qr_controller.dart';
+import 'package:wc_flutter_share/wc_flutter_share.dart';
 
-class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
-  const QrCodeDriverScreen({super.key});
-  final String routes = "/QR_CODE_DRIVER_SCREEN";
+class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
+  QrCodeCustomerScreen({super.key});
+  final String routes = "/QR_CODE_CUSTOMER_SCREEN";
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<QRCodeDriverController>(
-      init: QRCodeDriverController(),
+    return GetBuilder<QRCodeCustomerController>(
+      init: QRCodeCustomerController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -39,9 +48,9 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
             children: [
               Center(
                 child: RepaintBoundary(
-                  key: controller.qrDriverKey,
+                  key: controller.qrKey,
                   child: FutureBuilder(
-                    future: controller.loadOverlayImage(),
+                    future: _loadOverlayImage(),
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
                         return const SizedBox(width: 280, height: 280);
@@ -49,7 +58,7 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
                       return QrImage(
                         backgroundColor: Colors.white,
                         data:
-                            "${controller.idPhieuvao.value},${controller.user.value.maTaixe}",
+                            "${controller.idPhieuvao.value},${controller.idDriver.value}",
                         version: QrVersions.auto,
                         size: size.width * 0.6,
                       );
@@ -86,5 +95,12 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
         ),
       ),
     );
+  }
+
+  Future<ui.Image> _loadOverlayImage() async {
+    final completer = Completer<ui.Image>();
+    final byteData = await rootBundle.load('assets/images/asd.jpg');
+    ui.decodeImageFromList(byteData.buffer.asUint8List(), completer.complete);
+    return completer.future;
   }
 }

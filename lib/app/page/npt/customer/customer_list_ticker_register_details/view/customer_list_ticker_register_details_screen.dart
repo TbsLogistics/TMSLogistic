@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/model/list_registed_of_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/controller/customer_list_ticker_register_details_controller.dart';
 
@@ -64,9 +65,7 @@ class CustomerListTickerRegisterDetailsScreen
                                     ),
                                     Text(
                                       "${controller.listTracking.value.trackingtime![lengthTracking - 1].statustracking!.name}",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                      ),
+                                      style: CustomTextStyle.contentDetails,
                                     )
                                   ],
                                 ),
@@ -120,15 +119,12 @@ class CustomerListTickerRegisterDetailsScreen
           Expanded(
             child: Column(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Center(
                     child: Text(
                       "Tên tài xế",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorLight,
-                        fontSize: 16,
-                      ),
+                      style: CustomTextStyle.titleDetails,
                     ),
                   ),
                 ),
@@ -156,15 +152,12 @@ class CustomerListTickerRegisterDetailsScreen
           Expanded(
             child: Column(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Center(
                     child: Text(
                       "Số điện thoại",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorLight,
-                        fontSize: 16,
-                      ),
+                      style: CustomTextStyle.titleDetails,
                     ),
                   ),
                 ),
@@ -205,15 +198,12 @@ class CustomerListTickerRegisterDetailsScreen
           Expanded(
             child: Column(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Center(
                     child: Text(
                       "Loại xe",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorLight,
-                        fontSize: 16,
-                      ),
+                      style: CustomTextStyle.titleDetails,
                     ),
                   ),
                 ),
@@ -241,15 +231,12 @@ class CustomerListTickerRegisterDetailsScreen
           Expanded(
             child: Column(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Center(
                     child: Text(
                       "Số xe",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorLight,
-                        fontSize: 16,
-                      ),
+                      style: CustomTextStyle.titleDetails,
                     ),
                   ),
                 ),
@@ -296,13 +283,11 @@ class CustomerListTickerRegisterDetailsScreen
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Số công 1",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                          fontSize: 16,
-                        ),
+                        style: CustomTextStyle.titleDetails,
                       ),
+                      const SizedBox(height: 5),
                       Text("${items.phieuvao!.socont1}"),
                     ],
                   ),
@@ -466,13 +451,11 @@ class CustomerListTickerRegisterDetailsScreen
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Số công 2",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                          fontSize: 16,
-                        ),
+                        style: CustomTextStyle.titleDetails,
                       ),
+                      const SizedBox(height: 5),
                       Text("${items.phieuvao!.socont1}"),
                     ],
                   ),

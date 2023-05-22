@@ -37,28 +37,34 @@ class CustomerListDriverOfCustomerScreen
           child: Column(
             children: [
               Expanded(
-                child: Obx(
-                  () => ListView.builder(
-                    itemCount: controller.listDriver.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          controller.postInforDriver(
-                              idTaixe: controller.listDriver[index].maTaixe);
+                child: Obx(() => controller.isLoad.value
+                    ? ListView.builder(
+                        itemCount: controller.listDriver.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              controller.postInforDriver(
+                                  idTaixe:
+                                      controller.listDriver[index].maTaixe);
+                            },
+                            child: CustomListTitle(
+                              Stt: "${index + 1}",
+                              nameDriver:
+                                  "${controller.listDriver[index].tenTaixe}",
+                              numberPhone:
+                                  "${controller.listDriver[index].phone}",
+                              // customer: "${controller.listDriver[index].diaChi}",
+                              customer: "",
+                              status: controller.listDriver[index].status!,
+                            ),
+                          );
                         },
-                        child: CustomListTitle(
-                          Stt: "${index + 1}",
-                          nameDriver:
-                              "${controller.listDriver[index].tenTaixe}",
-                          numberPhone: "${controller.listDriver[index].phone}",
-                          // customer: "${controller.listDriver[index].diaChi}",
-                          customer: "",
-                          status: controller.listDriver[index].status!,
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.orangeAccent,
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      )),
               ),
             ],
           ),

@@ -136,25 +136,25 @@ class DrawerScreen extends StatelessWidget {
                       Icons.logout_outlined,
                     ),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Get.toNamed(
-                        Routes.CHANGE_PASSWORD__FULL_SCREEN,
-                        arguments: controller.user.value.userName,
-                      );
-                    },
-                    title: const Text(
-                      "Đổi mật khẩu",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    leading: const Icon(
-                      Icons.lock_outlined,
-                    ),
-                  ),
+                  // ListTile(
+                  //   onTap: () {
+                  //     Get.toNamed(
+                  //       Routes.CHANGE_PASSWORD__FULL_SCREEN,
+                  //       arguments: controller.user.value.userName,
+                  //     );
+                  //   },
+                  //   title: const Text(
+                  //     "Đổi mật khẩu",
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontSize: 14,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  //   leading: const Icon(
+                  //     Icons.lock_outlined,
+                  //   ),
+                  // ),
                 ],
               ),
             ],
