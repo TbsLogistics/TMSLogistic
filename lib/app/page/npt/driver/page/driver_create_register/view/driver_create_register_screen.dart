@@ -914,6 +914,7 @@ class _DriverCreateRegisterScreenState
             numberKien1: double.parse(controller.numberKien1.text),
             numberBook1: controller.numberBook1.text,
             typeProduct: controller.selectTypeProduct.value.maloaiHang,
+            numberCont: numberSelectCont,
           );
         } else {
           getSnack(messageText: "Chọn số lượng cont * !");
@@ -938,6 +939,7 @@ class _DriverCreateRegisterScreenState
           numberKien1: double.parse(controller.numberKien1.text),
           numberBook1: controller.numberBook1.text,
           typeProduct: controller.selectTypeProduct.value.maloaiHang,
+          numberCont: numberSelectCont,
         );
       }
     }

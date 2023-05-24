@@ -21,12 +21,14 @@ class AppConstants {
   static const String KEY_ID_KH_OF_DRIVER = "id_KH_OF_DRIVER";
 
   static const String KEY_USER_NPT = "id_User_Npt";
+  static const String KEY_USER_HRM = "id_User_Hrm";
+  static const String KEY_USER_TMS = "id_User_Tms";
 
   static const String KEY_ID_TX = "id_TX";
 
   // Url
-  // static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
-  static const String urlBaseTms = "https://api.tbslogistics.com.vn";
+  static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
+  // static const String urlBaseTms = "https://api.tbslogistics.com.vn";
   static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
   static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
 

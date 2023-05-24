@@ -40,7 +40,6 @@ class ListStatusUnfinishedDetailsScreen
           actions: [
             IconButton(
               onPressed: () {
-                print(controller.getDriverFinishedScreen.value.maPhieuvao);
                 Get.toNamed(
                   Routes.QR_CODE_DRIVER_SCREEN,
                   arguments:

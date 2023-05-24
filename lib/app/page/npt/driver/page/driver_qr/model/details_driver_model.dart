@@ -9,6 +9,7 @@ class DetailsDriverModel {
   String? usernameAccount;
   String? email;
   bool? status;
+  bool? isdelete;
 
   DetailsDriverModel(
       {this.maTaixe,
@@ -20,7 +21,8 @@ class DetailsDriverModel {
       this.madoixe,
       this.usernameAccount,
       this.email,
-      this.status});
+      this.status,
+      this.isdelete});
 
   DetailsDriverModel.fromJson(Map<String, dynamic> json) {
     maTaixe = json['maTaixe'];
@@ -33,6 +35,7 @@ class DetailsDriverModel {
     usernameAccount = json['usernameAccount'];
     email = json['email'];
     status = json['status'];
+    isdelete = json['isdelete'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +50,7 @@ class DetailsDriverModel {
     data['usernameAccount'] = usernameAccount;
     data['email'] = email;
     data['status'] = status;
+    data['isdelete'] = isdelete;
     return data;
   }
 }

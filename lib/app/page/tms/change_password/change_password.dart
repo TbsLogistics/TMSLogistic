@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/data/validate.dart';
+import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/tms/change_password/controller/change_password_controller.dart';
 
 // ignore: must_be_immutable
@@ -226,18 +229,39 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
     );
   }
 
-  void _changePassWord(BuildContext context, ChangePassController controller) {
+  void _changePassWord(
+      BuildContext context, ChangePassController controller) async {
     var validate = controller.changePassKey.currentState!.validate();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var tokenHRM = await SharePerApi().getTokenHRM();
+    var tokenNPT = await SharePerApi().getTokenNPT();
+    var tokenTMS = await SharePerApi().getTokenTMS();
 
     if (!validate) {
-      controller.changePassword(
-        oldPassword:
-            md5.convert(utf8.encode(controller.passwordOld.text)).toString(),
-        newPassword:
-            md5.convert(utf8.encode(controller.passwordNew.text)).toString(),
-        reNewPassword:
-            md5.convert(utf8.encode(controller.rePasswordNew.text)).toString(),
-      );
+      if (tokenTMS != null) {
+        controller.changePassTms(
+          oldPassword:
+              md5.convert(utf8.encode(controller.passwordOld.text)).toString(),
+          newPassword:
+              md5.convert(utf8.encode(controller.passwordNew.text)).toString(),
+          reNewPassword: md5
+              .convert(utf8.encode(controller.rePasswordNew.text))
+              .toString(),
+        );
+      } else if (tokenNPT != null) {
+        controller.changePassNpt(
+          oldPassword: controller.passwordOld.text,
+          newPassword: controller.passwordNew.text,
+          confirmPassword: controller.rePasswordNew.text,
+        );
+      } else {
+        controller.changePassHrm(
+          oldPassword: controller.passwordOld.text,
+          newPassword: controller.passwordNew.text,
+          confirmPass: controller.rePasswordNew.text,
+        );
+      }
     }
   }
 }

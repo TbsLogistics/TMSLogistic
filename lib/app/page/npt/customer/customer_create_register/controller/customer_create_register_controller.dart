@@ -75,7 +75,6 @@ class CustomerRegisterController extends GetxController {
   Future<void> postRegisterCustomer({
     required int? idTaixe,
     required String maKhachHang,
-    required String maDoixe,
     required String? time,
     required String? idKho,
     required String? idCar,
@@ -93,6 +92,7 @@ class CustomerRegisterController extends GetxController {
     required String? numberBook,
     required String? numberBook1,
     required String? idProduct,
+    required int? numberCont,
   }) async {
     var token = await SharePerApi().getTokenNPT();
     var idTeamCar = await SharePerApi().getIdKH();
@@ -138,6 +138,7 @@ class CustomerRegisterController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data;
+
         if (data["status_code"] == 204) {
           Get.defaultDialog(
             title: "Thông báo",
@@ -162,12 +163,11 @@ class CustomerRegisterController extends GetxController {
             ),
           );
         } else {
-          Get.toNamed(
-            Routes.DETAILS_REGISTER_CUSTOMER,
-            arguments: CustomerRegisterForDriverModel(
+          Get.toNamed(Routes.DETAILS_REGISTER_CUSTOMER, arguments: [
+            CustomerRegisterForDriverModel(
               maTaixe: idTaixe,
               maKhachHang: maKhachHang,
-              maDoixe: maDoixe,
+              maDoixe: idTeamCar,
               giodukien: time,
               kho: idKho,
               loaixe: idCar,
@@ -190,7 +190,8 @@ class CustomerRegisterController extends GetxController {
               trangthaikhoa1: false,
               maloaiHang: idProduct,
             ),
-          );
+            data["data1"],
+          ]);
         }
       }
     } catch (e) {

@@ -1,18 +1,28 @@
 // ignore_for_file: unused_local_variable, non_constant_identifier_names
 
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:in_app_update/in_app_update.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
+import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_hrm_model.dart';
+import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_npt_model.dart';
+import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_tms_model.dart';
+import 'package:tbs_logistics_tms/app/page/home_page/model/user_hrm_model.dart';
 import 'package:tbs_logistics_tms/app/page/login/model/user_npt_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/model/user_model.dart';
 
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 
 class HomeController extends GetxController {
+  var dio = Dio();
   Rx<UserModel> user = UserModel().obs;
   Rx<UserNptModel> user_npt = UserNptModel().obs;
+  Rx<UserHrmModel> user_hrm = UserHrmModel().obs;
 
   Rx<AppUpdateInfo>? updateInfo;
 
@@ -56,6 +66,9 @@ class HomeController extends GetxController {
       tokenTms.value = tokenTMS;
       Map<String, dynamic> decodedToken = JwtDecoder.decode(tokenTMS);
       user.value = UserModel.fromJson(decodedToken);
+      print(decodedToken);
+      var userid_hrm =
+          prefs.setString(AppConstants.KEY_USER_TMS, "${user.value.userName}");
       getDialogMessage("Bạn có thể sử dụng tính năng TMS");
     }
     var tokenNPT = await SharePerApi().getTokenNPT();
@@ -70,7 +83,10 @@ class HomeController extends GetxController {
     if (tokenHRM != null) {
       tokenHrm.value = tokenHRM;
       Map<String, dynamic> decodedToken = JwtDecoder.decode(tokenHRM);
-      user.value = UserModel.fromJson(decodedToken);
+      user_hrm.value = UserHrmModel.fromJson(decodedToken);
+      var userid_hrm = prefs.setString(
+          AppConstants.KEY_USER_HRM, "${user_hrm.value.username}");
+
       getDialogMessage("Bạn có thể sử dụng tính năng Đăng kí nghỉ phép");
     }
   }

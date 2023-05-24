@@ -324,13 +324,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  mime:
-    dependency: transitive
-    description:
-      name: mime
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   multi_select_flutter:
     dependency: "direct main"
     description:
@@ -429,20 +422,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  share_plus:
-    dependency: "direct main"
-    description:
-      name: share_plus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.0.1"
-  share_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: share_plus_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -602,13 +581,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.6"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.7"
   vector_math:
     dependency: transitive
     description:

@@ -23,8 +23,8 @@ class QRCodeDriverController extends GetxController {
   void onInit() {
     var maPhieuvao = Get.arguments;
     idPhieuvao.value = maPhieuvao;
-    qrDriverKey;
     getInfor();
+    qrDriverKey;
 
     super.onInit();
   }

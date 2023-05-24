@@ -1,28 +1,23 @@
+// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/controller/driver_qr_controller.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/controller/customer_qr_controller.dart';
 
-class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
-  const QrCodeDriverScreen({super.key});
-  final String routes = "/QR_CODE_DRIVER_SCREEN";
+class QrCodeFromDetailsCustomerScreen
+    extends GetView<QRCodeCustomerController> {
+  const QrCodeFromDetailsCustomerScreen({super.key});
+  final String routes = "/QR_CODE_FROM_DETALS_CUSTOMER_SCREEN";
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<QRCodeDriverController>(
-      init: QRCodeDriverController(),
+    return GetBuilder<QRCodeCustomerController>(
+      init: QRCodeCustomerController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             "QR Code",
@@ -31,6 +26,17 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
             ),
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.offAllNamed(Routes.CUSTOMER_PAGE);
+              },
+              icon: Icon(
+                Icons.home,
+                color: Theme.of(context).primaryColorLight,
+              ),
+            ),
+          ],
         ),
         body: Container(
           color: Colors.white,
@@ -39,17 +45,22 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
             children: [
               Center(
                 child: RepaintBoundary(
-                  key: controller.qrDriverKey,
-                  child: Obx(() {
-                    print(controller.user.value.maTaixe);
-                    return QrImage(
-                      backgroundColor: Colors.white,
-                      data:
-                          "${controller.idPhieuvao.value},${controller.user.value.maTaixe}",
-                      version: QrVersions.auto,
-                      size: size.width * 0.6,
-                    );
-                  }),
+                  key: controller.qrKey,
+                  child: FutureBuilder(
+                    future: controller.loadOverlayImage(),
+                    builder: (ctx, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const SizedBox(width: 280, height: 280);
+                      }
+                      return QrImage(
+                        backgroundColor: Colors.white,
+                        data:
+                            "${controller.idPhieuvao.value},${controller.idDriver.value}",
+                        version: QrVersions.auto,
+                        size: size.width * 0.6,
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 30),

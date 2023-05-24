@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/controller/driver_qr_controller.dart';
 
-class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
-  const QrCodeDriverScreen({super.key});
-  final String routes = "/QR_CODE_DRIVER_SCREEN";
+class QrCodeDetailsRegistedDriverScreen
+    extends GetView<QRCodeDriverController> {
+  const QrCodeDetailsRegistedDriverScreen({super.key});
+  final String routes = "/QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN";
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +16,7 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
       init: QRCodeDriverController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
+          automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             "QR Code",
@@ -31,6 +25,17 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
             ),
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.offAllNamed(Routes.DRIVER_PAGE);
+              },
+              icon: Icon(
+                Icons.home,
+                color: Theme.of(context).primaryColorLight,
+              ),
+            ),
+          ],
         ),
         body: Container(
           color: Colors.white,
@@ -40,16 +45,15 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
               Center(
                 child: RepaintBoundary(
                   key: controller.qrDriverKey,
-                  child: Obx(() {
-                    print(controller.user.value.maTaixe);
-                    return QrImage(
+                  child: Obx(
+                    () => QrImage(
                       backgroundColor: Colors.white,
                       data:
                           "${controller.idPhieuvao.value},${controller.user.value.maTaixe}",
                       version: QrVersions.auto,
                       size: size.width * 0.6,
-                    );
-                  }),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 30),

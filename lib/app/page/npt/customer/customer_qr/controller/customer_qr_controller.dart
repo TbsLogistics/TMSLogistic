@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -6,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
@@ -25,6 +27,7 @@ class QRCodeCustomerController extends GetxController {
     var maPhieuvao = Get.arguments[0];
     idPhieuvao.value = maPhieuvao;
     var maTaixe = Get.arguments[1];
+    print("maTaixe : $maTaixe");
     idDriver.value = maTaixe;
     qrKey;
     super.onInit();
@@ -49,6 +52,13 @@ class QRCodeCustomerController extends GetxController {
         fileName: 'share.png',
         mimeType: 'image/png',
         bytesOfFile: imageUint8List);
+  }
+
+  Future<ui.Image> loadOverlayImage() async {
+    final completer = Completer<ui.Image>();
+    final byteData = await rootBundle.load('assets/images/asd.jpg');
+    ui.decodeImageFromList(byteData.buffer.asUint8List(), completer.complete);
+    return completer.future;
   }
 
   //lấy thông tin user

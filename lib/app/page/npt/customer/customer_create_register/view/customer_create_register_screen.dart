@@ -1,4 +1,6 @@
 // import 'package:dropdown_search/dropdown_search.dart';
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -289,53 +291,77 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                           controller.selectWareHome.value == "" ||
                           controller.selectTypeProduct.value == "" ||
                           controller.selectTypeCar.value == "") {
-                        Get.snackbar(
-                          "",
-                          "",
-                          titleText: const Text(
-                            "Thông báo",
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                          messageText: const Text(
-                            "Bạn nhập thiếu thông tin *",
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          ),
-                        );
+                        getSnack(messageText: "Nhập đầy đủ thông tin *");
                       }
                       // print(dateinput.text);
                       else {
-                        controller.postRegisterCustomer(
-                          idTaixe: int.parse(
-                              controller.selectDriver.value.maTaixe.toString()),
-                          maKhachHang: controller
-                              .selectCustomer.value.maKhachHang
-                              .toString(),
-                          maDoixe: "CUS0001",
-                          time: dateinput.text,
-                          idKho: controller.selectWareHome.value.maKho,
-                          idCar: controller.selectTypeCar.value.maLoaiXe,
-                          numberCar: controller.numberCar.text,
-                          numberCont1: controller.numberCont1.text,
-                          numberCont1Seal1: controller.numberCont1Seal1.text,
-                          numberCont1Seal2: controller.numberCont1Seal2.text,
-                          numberCont2: controller.numberCont2.text,
-                          numberCont2Seal1: controller.numberCont2Seal1.text,
-                          numberCont2Seal2: controller.numberCont2Seal2.text,
-                          numberKhoi: double.parse(controller.numberKhoi.text),
-                          numberKhoi1:
-                              double.parse(controller.numberKhoi1.text),
-                          numberKien: double.parse(controller.numberKien.text),
-                          numberKien1:
-                              double.parse(controller.numberKien1.text),
-                          numberBook: controller.numberBook.text,
-                          numberBook1: controller.numberBook1.text,
-                          idProduct:
-                              controller.selectTypeProduct.value.maloaiHang,
-                        );
+                        if (controller.selectTypeCar.value.maLoaiXe == "con") {
+                          if (numberSelectCont != 0) {
+                            controller.postRegisterCustomer(
+                              idTaixe: controller.selectDriver.value.maTaixe,
+                              maKhachHang:
+                                  controller.selectCustomer.value.maKhachHang!,
+                              time: dateinput.text,
+                              idKho: controller.selectWareHome.value.maKho,
+                              idCar: controller.selectTypeCar.value.maLoaiXe,
+                              numberCar: controller.numberCar.text,
+                              numberCont1: controller.numberCont1.text,
+                              numberCont2: controller.numberCont2.text,
+                              numberCont1Seal1:
+                                  controller.numberCont1Seal1.text,
+                              numberCont1Seal2:
+                                  controller.numberCont1Seal2.text,
+                              numberKhoi:
+                                  double.parse(controller.numberKhoi.text),
+                              numberKien:
+                                  double.parse(controller.numberKien.text),
+                              numberBook: controller.numberBook.text,
+                              numberCont2Seal1:
+                                  controller.numberCont2Seal1.text,
+                              numberCont2Seal2:
+                                  controller.numberCont2Seal2.text,
+                              numberKhoi1:
+                                  double.parse(controller.numberKhoi1.text),
+                              numberKien1:
+                                  double.parse(controller.numberKien1.text),
+                              numberBook1: controller.numberBook1.text,
+                              idProduct:
+                                  controller.selectTypeProduct.value.maloaiHang,
+                              numberCont: numberSelectCont,
+                            );
+                          } else {
+                            getSnack(messageText: "Chọn số lượng cont * !");
+                          }
+                        } else {
+                          controller.postRegisterCustomer(
+                            idTaixe: controller.selectDriver.value.maTaixe,
+                            maKhachHang:
+                                controller.selectCustomer.value.maKhachHang!,
+                            time: dateinput.text,
+                            idKho: controller.selectWareHome.value.maKho,
+                            idCar: controller.selectTypeCar.value.maLoaiXe,
+                            numberCar: controller.numberCar.text,
+                            numberCont1: controller.numberCont1.text,
+                            numberCont2: controller.numberCont2.text,
+                            numberCont1Seal1: controller.numberCont1Seal1.text,
+                            numberCont1Seal2: controller.numberCont1Seal2.text,
+                            numberKhoi:
+                                double.parse(controller.numberKhoi.text),
+                            numberKien:
+                                double.parse(controller.numberKien.text),
+                            numberBook: controller.numberBook.text,
+                            numberCont2Seal1: controller.numberCont2Seal1.text,
+                            numberCont2Seal2: controller.numberCont2Seal2.text,
+                            numberKhoi1:
+                                double.parse(controller.numberKhoi1.text),
+                            numberKien1:
+                                double.parse(controller.numberKien1.text),
+                            numberBook1: controller.numberBook1.text,
+                            idProduct:
+                                controller.selectTypeProduct.value.maloaiHang,
+                            numberCont: numberSelectCont,
+                          );
+                        }
                       }
                     },
                     text: "Đăng ký")
@@ -1020,4 +1046,23 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   }
 
   final List<String> numberCont = ["1", "2"];
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
+  }
 }

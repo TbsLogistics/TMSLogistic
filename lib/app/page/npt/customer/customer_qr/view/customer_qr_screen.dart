@@ -49,20 +49,14 @@ class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
               Center(
                 child: RepaintBoundary(
                   key: controller.qrKey,
-                  child: FutureBuilder(
-                    future: _loadOverlayImage(),
-                    builder: (ctx, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const SizedBox(width: 280, height: 280);
-                      }
-                      return QrImage(
-                        backgroundColor: Colors.white,
-                        data:
-                            "${controller.idPhieuvao.value},${controller.idDriver.value}",
-                        version: QrVersions.auto,
-                        size: size.width * 0.6,
-                      );
-                    },
+                  child: Obx(
+                    () => QrImage(
+                      backgroundColor: Colors.white,
+                      data:
+                          "${controller.idPhieuvao.value},${controller.idDriver.value}",
+                      version: QrVersions.auto,
+                      size: size.width * 0.6,
+                    ),
                   ),
                 ),
               ),
@@ -95,12 +89,5 @@ class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
         ),
       ),
     );
-  }
-
-  Future<ui.Image> _loadOverlayImage() async {
-    final completer = Completer<ui.Image>();
-    final byteData = await rootBundle.load('assets/images/asd.jpg');
-    ui.decodeImageFromList(byteData.buffer.asUint8List(), completer.complete);
-    return completer.future;
   }
 }

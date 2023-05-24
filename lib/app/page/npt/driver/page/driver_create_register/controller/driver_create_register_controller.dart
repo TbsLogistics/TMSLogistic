@@ -85,26 +85,26 @@ class DriverCreateRegisterController extends GetxController {
     return listClient;
   }
 
-  Future<void> postRegisterDriver({
-    required String? maKhachHang,
-    required String? time,
-    required String? typeWarehome,
-    required String? typeCar,
-    required String? numberCar,
-    required String? numberCont1,
-    required String? numberCont2,
-    required String? numberCont1Seal1,
-    required String? numberCont1Seal2,
-    required double? numberKien,
-    required double? numberKhoi,
-    required String? numberBook,
-    required String? numberCont2Seal1,
-    required String? numberCont2Seal2,
-    required double? numberKien1,
-    required double? numberKhoi1,
-    required String? numberBook1,
-    required String? typeProduct,
-  }) async {
+  Future<void> postRegisterDriver(
+      {required String? maKhachHang,
+      required String? time,
+      required String? typeWarehome,
+      required String? typeCar,
+      required String? numberCar,
+      required String? numberCont1,
+      required String? numberCont2,
+      required String? numberCont1Seal1,
+      required String? numberCont1Seal2,
+      required double? numberKien,
+      required double? numberKhoi,
+      required String? numberBook,
+      required String? numberCont2Seal1,
+      required String? numberCont2Seal2,
+      required double? numberKien1,
+      required double? numberKhoi1,
+      required String? numberBook1,
+      required String? typeProduct,
+      required int? numberCont}) async {
     var dio = Dio();
     Response response;
     var token = await SharePerApi().getTokenNPT();
@@ -155,6 +155,7 @@ class DriverCreateRegisterController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = response.data;
+
         if (data["status"] == 204) {
           Get.snackbar(
             "Thông báo",
@@ -179,9 +180,8 @@ class DriverCreateRegisterController extends GetxController {
         } else {
           getSnack(messageText: "${data["detail"]}");
 
-          Get.toNamed(
-            Routes.DETAILS_FORM_REGISTER_DRIVER,
-            arguments: RegisterForDriverModel(
+          Get.toNamed(Routes.DETAILS_FORM_REGISTER_DRIVER, arguments: [
+            RegisterForDriverModel(
               maKhachHang: maKhachHang,
               maDoixe: idTeamCar,
               giodukien: time,
@@ -206,11 +206,12 @@ class DriverCreateRegisterController extends GetxController {
               trangthaikhoa1: false,
               maloaiHang: typeProduct,
             ),
-          );
+            data["data1"],
+            numberCont,
+          ]);
         }
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
       } else {
         if (e.response!.statusCode == 422) {

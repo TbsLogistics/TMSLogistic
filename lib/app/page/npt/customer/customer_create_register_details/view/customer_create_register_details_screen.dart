@@ -28,6 +28,22 @@ class CustomerRegisterDetailScreen
         actions: [
           IconButton(
             onPressed: () {
+              Get.toNamed(
+                Routes.QR_CODE_FROM_DETALS_CUSTOMER_SCREEN,
+                arguments: [
+                  controller.id.value,
+                  controller.detailsTicker.value.maTaixe,
+                ],
+              );
+            },
+            icon: const Icon(
+              Icons.qr_code,
+              size: 25,
+              color: Colors.white,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
               Get.toNamed(Routes.CUSTOMER_PAGE);
             },
             icon: const Icon(

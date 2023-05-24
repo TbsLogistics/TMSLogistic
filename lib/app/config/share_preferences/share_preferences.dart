@@ -41,6 +41,18 @@ class SharePerApi {
     return idUser.toString();
   }
 
+  Future<String> getIdUserHRM() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var idUser = prefs.getString(AppConstants.KEY_USER_HRM);
+    return idUser.toString();
+  }
+
+  Future<String> getIdUserTMS() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var idUser = prefs.getString(AppConstants.KEY_USER_TMS);
+    return idUser.toString();
+  }
+
   Future<String> getIdKH() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var idKH = prefs.getString(AppConstants.KEY_ID_KH);

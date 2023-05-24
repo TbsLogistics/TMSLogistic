@@ -12,12 +12,14 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/view/customer_list_ticker_registed_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/view/customer_list_ticker_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/customer_page.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/view/customer_qr_from_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/view/customer_qr_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/view/driver_create_register_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register_details/view/driver_create_register_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished_details/view/driver_finished_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_home/driver_home_page.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen_from_details_registed.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/view/driver_status_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/view/driver_status_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
@@ -124,6 +126,10 @@ abstract class AppPages {
       name: Routes.QR_CODE_DRIVER_SCREEN,
       page: () => const QrCodeDriverScreen(),
     ),
+    GetPage(
+      name: Routes.QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN,
+      page: () => const QrCodeDetailsRegistedDriverScreen(),
+    ),
     //Khách hàng
     GetPage(
       name: Routes.LIST_DRIVER_BY_CUSTOMER,
@@ -132,6 +138,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.QR_CODE_CUSTOMER_SCREEN,
       page: () => QrCodeCustomerScreen(),
+    ),
+    GetPage(
+      name: Routes.QR_CODE_FROM_DETALS_CUSTOMER_SCREEN,
+      page: () => const QrCodeFromDetailsCustomerScreen(),
     ),
     GetPage(
       name: Routes.CUSTOMER_PAGE,
