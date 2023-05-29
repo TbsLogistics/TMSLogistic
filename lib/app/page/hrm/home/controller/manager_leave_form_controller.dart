@@ -45,12 +45,13 @@ class ManagerLeaveFormController extends GetxController
         url,
         options: Options(headers: headers),
       );
+
       if (response.statusCode == 200) {
         var data = UserHrmModel.fromJson(response.data["rData"]);
         userName.value = data;
       }
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     } finally {
       isUserInfo(true);
     }

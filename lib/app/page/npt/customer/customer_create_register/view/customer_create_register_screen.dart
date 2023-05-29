@@ -273,6 +273,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                               icon: Icons.abc,
                               color: Theme.of(context).primaryColorLight,
                             ),
+                            CustomFormFiels(
+                              title: "Số Tấn",
+                              controller: controller.numberTan,
+                              hintText: "Nhập Số Tấn",
+                              icon: Icons.abc,
+                              color: Theme.of(context).primaryColorLight,
+                            ),
                           ],
                         )
                       : controller.selectTypeCar.value != "" &&
@@ -316,6 +323,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                               numberKien:
                                   double.parse(controller.numberKien.text),
                               numberBook: controller.numberBook.text,
+                              numberTan:
+                                  double.parse(controller.numberTan.text),
                               numberCont2Seal1:
                                   controller.numberCont2Seal1.text,
                               numberCont2Seal2:
@@ -328,6 +337,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                               idProduct:
                                   controller.selectTypeProduct.value.maloaiHang,
                               numberCont: numberSelectCont,
+                              numberTan1:
+                                  double.parse(controller.numberTan1.text),
                             );
                           } else {
                             getSnack(messageText: "Chọn số lượng cont * !");
@@ -350,6 +361,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                             numberKien:
                                 double.parse(controller.numberKien.text),
                             numberBook: controller.numberBook.text,
+                            numberTan: double.parse(controller.numberTan.text),
                             numberCont2Seal1: controller.numberCont2Seal1.text,
                             numberCont2Seal2: controller.numberCont2Seal2.text,
                             numberKhoi1:
@@ -357,6 +369,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                             numberKien1:
                                 double.parse(controller.numberKien1.text),
                             numberBook1: controller.numberBook1.text,
+                            numberTan1:
+                                double.parse(controller.numberTan1.text),
                             idProduct:
                                 controller.selectTypeProduct.value.maloaiHang,
                             numberCont: numberSelectCont,
@@ -419,6 +433,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           icon: Icons.abc,
           color: Theme.of(context).primaryColorLight,
         ),
+        CustomFormFiels(
+          title: "Số tấn",
+          controller: controller.numberTan,
+          hintText: "Nhập số tấn",
+          icon: Icons.abc,
+          color: Theme.of(context).primaryColorLight,
+        ),
       ],
     );
   }
@@ -466,6 +487,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           title: "Số khối",
           controller: controller.numberKhoi1,
           hintText: "Nhập số khối",
+          icon: Icons.abc,
+          color: Theme.of(context).primaryColorLight,
+        ),
+        CustomFormFiels(
+          title: "Số tấn",
+          controller: controller.numberTan1,
+          hintText: "Nhập số tấn",
           icon: Icons.abc,
           color: Theme.of(context).primaryColorLight,
         ),

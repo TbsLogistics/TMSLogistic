@@ -180,6 +180,7 @@ class _DriverCreateRegisterScreenState
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   buildDateTime(size, controller),
+                  //Nhập số xe
                   CustomFormFiels(
                     title: "Số xe *",
                     controller: controller.numberCar,
@@ -216,6 +217,13 @@ class _DriverCreateRegisterScreenState
                                 title: "Số Khối",
                                 controller: controller.numberKhoi,
                                 hintText: "",
+                                icon: Icons.abc,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              CustomFormFiels(
+                                title: "Số tấn",
+                                controller: controller.numberTan,
+                                hintText: "Nhập số tấn",
                                 icon: Icons.abc,
                                 color: Theme.of(context).primaryColorLight,
                               ),
@@ -821,6 +829,13 @@ class _DriverCreateRegisterScreenState
           color: Theme.of(context).primaryColorLight,
         ),
         CustomFormFiels(
+          title: "Số tấn",
+          controller: controller.numberTan,
+          hintText: "Nhập số tấn",
+          icon: Icons.abc,
+          color: Theme.of(context).primaryColorLight,
+        ),
+        CustomFormFiels(
           title: "Số khối",
           controller: controller.numberKhoi,
           hintText: "Nhập số khối",
@@ -871,6 +886,13 @@ class _DriverCreateRegisterScreenState
           color: Theme.of(context).primaryColorLight,
         ),
         CustomFormFiels(
+          title: "Số tấn",
+          controller: controller.numberTan1,
+          hintText: "Nhập số tấn",
+          icon: Icons.abc,
+          color: Theme.of(context).primaryColorLight,
+        ),
+        CustomFormFiels(
           title: "Số khối",
           controller: controller.numberKhoi1,
           hintText: "Nhập số khối",
@@ -908,11 +930,13 @@ class _DriverCreateRegisterScreenState
             numberKhoi: double.parse(controller.numberKhoi.text),
             numberKien: double.parse(controller.numberKien.text),
             numberBook: controller.numberBook.text,
+            numberTan: double.parse(controller.numberTan.text),
             numberCont2Seal1: controller.numberCont2Seal1.text,
             numberCont2Seal2: controller.numberCont2Seal2.text,
             numberKhoi1: double.parse(controller.numberKhoi1.text),
             numberKien1: double.parse(controller.numberKien1.text),
             numberBook1: controller.numberBook1.text,
+            numberTan1: double.parse(controller.numberTan1.text),
             typeProduct: controller.selectTypeProduct.value.maloaiHang,
             numberCont: numberSelectCont,
           );
@@ -933,11 +957,13 @@ class _DriverCreateRegisterScreenState
           numberKhoi: double.parse(controller.numberKhoi.text),
           numberKien: double.parse(controller.numberKien.text),
           numberBook: controller.numberBook.text,
+          numberTan: double.parse(controller.numberTan.text),
           numberCont2Seal1: controller.numberCont2Seal1.text,
           numberCont2Seal2: controller.numberCont2Seal2.text,
           numberKhoi1: double.parse(controller.numberKhoi1.text),
           numberKien1: double.parse(controller.numberKien1.text),
           numberBook1: controller.numberBook1.text,
+          numberTan1: double.parse(controller.numberTan1.text),
           typeProduct: controller.selectTypeProduct.value.maloaiHang,
           numberCont: numberSelectCont,
         );

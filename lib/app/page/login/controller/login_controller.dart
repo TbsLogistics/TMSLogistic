@@ -127,17 +127,17 @@ class LoginController extends GetxController {
   }
 
   //Login with NPT
-  Future<void> postLoginNpt(
-    String? username,
-    String? password,
-  ) async {
+  Future<void> postLoginNpt({
+    required String account,
+    required String password,
+  }) async {
     // ignore: prefer_typing_uninitialized_variables
     var jsonRespone;
     Response response;
 
     var dio = Dio();
     var user = LoginModel(
-      username: username,
+      username: account,
       password: password,
     );
     var jsonData = user.toJson();
@@ -378,8 +378,11 @@ class LoginController extends GetxController {
     var jsonData = users.toJson();
     String url = "${AppConstants.urlBaseHrm}/Login";
     try {
-      response = await dio.post(url,
-          data: jsonData, options: Options(validateStatus: (_) => true));
+      response = await dio.post(
+        url,
+        data: jsonData,
+        options: Options(validateStatus: (_) => true),
+      );
       if (response.statusCode == 200) {
         // ignore: unused_local_variable
         var jsonRespone = response.data;
@@ -514,11 +517,11 @@ class LoginController extends GetxController {
     try {
       var result = await Future.wait([
         postLoginTms(account: account, password: password),
-        postLoginNpt(account, password),
+        postLoginNpt(account: account, password: password),
         postLoginHrm(username: account, password: password),
-      ]);
-    } on DioError catch (e) {
-      getSnack(messageText: "${e.response!.statusMessage}");
+      ]).timeout(const Duration(seconds: 10));
+    } catch (e) {
+      rethrow;
     }
     // Do something with the data
   }

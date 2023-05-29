@@ -59,8 +59,8 @@ class LetterManagerController extends GetxController {
         listDayOffManager.value =
             data.map((e) => DayOffLettersManagerModel.fromJson(e)).toList();
       }
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     } finally {
       Future.delayed(Duration(seconds: 1), () {
         isLoadDayOffManganer(true);

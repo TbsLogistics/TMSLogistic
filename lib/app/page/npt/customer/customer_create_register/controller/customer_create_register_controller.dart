@@ -38,18 +38,24 @@ class CustomerRegisterController extends GetxController {
   TextEditingController numberCar = TextEditingController();
   TextEditingController numberCont1 = TextEditingController();
   TextEditingController numberCont2 = TextEditingController();
+
   TextEditingController numberCont1Seal1 = TextEditingController();
   TextEditingController numberCont1Seal2 = TextEditingController();
-
   TextEditingController numberCont1Seal3 = TextEditingController();
+
   TextEditingController numberCont2Seal1 = TextEditingController();
   TextEditingController numberCont2Seal2 = TextEditingController();
   TextEditingController numberCont2Seal3 = TextEditingController();
-  TextEditingController numberKien = TextEditingController(text: "0");
 
+  TextEditingController numberKien = TextEditingController(text: "0");
   TextEditingController numberKien1 = TextEditingController(text: "0");
+
   TextEditingController numberKhoi = TextEditingController(text: "0");
   TextEditingController numberKhoi1 = TextEditingController(text: "0");
+
+  TextEditingController numberTan = TextEditingController(text: "0");
+  TextEditingController numberTan1 = TextEditingController(text: "0");
+
   TextEditingController numberBook = TextEditingController();
   TextEditingController numberBook1 = TextEditingController();
 
@@ -91,6 +97,8 @@ class CustomerRegisterController extends GetxController {
     required double? numberKhoi1,
     required String? numberBook,
     required String? numberBook1,
+    required double? numberTan,
+    required double? numberTan1,
     required String? idProduct,
     required int? numberCont,
   }) async {
@@ -116,12 +124,14 @@ class CustomerRegisterController extends GetxController {
       soKien: numberKien ?? 0,
       sokhoi: numberKhoi ?? 0,
       soBook: numberBook,
+      soTan: numberTan ?? 0,
       trangthaihang: false,
       trangthaikhoa: false,
       cont2seal1: numberCont2Seal1,
       cont2seal2: numberCont2Seal2,
       sokien1: numberKien1 ?? 0,
       sokhoi1: numberKhoi1 ?? 0,
+      soTan1: numberTan1 ?? 0,
       soBook1: numberBook1,
       trangthaihang1: false,
       trangthaikhoa1: false,
@@ -179,6 +189,7 @@ class CustomerRegisterController extends GetxController {
               soKien: numberKien ?? 0,
               sokhoi: numberKhoi ?? 0,
               soBook: numberBook,
+              soTan: numberTan ?? 0,
               trangthaihang: false,
               trangthaikhoa: false,
               cont2seal1: numberCont2Seal1,
@@ -186,6 +197,7 @@ class CustomerRegisterController extends GetxController {
               sokien1: numberKien1 ?? 0,
               sokhoi1: numberKhoi1 ?? 0,
               soBook1: numberBook1,
+              soTan1: numberTan1 ?? 0,
               trangthaihang1: false,
               trangthaikhoa1: false,
               maloaiHang: idProduct,

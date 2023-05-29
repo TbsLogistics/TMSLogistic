@@ -171,7 +171,7 @@ class LetterMyselfDetailsController extends GetxController {
       required int regID,
       required String reason,
       required String startdate,
-      required int period,
+      required double period,
       required String address,
       required int command,
       required BuildContext context}) async {

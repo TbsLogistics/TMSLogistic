@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/controller/letter_myself_create_sent_controller.dart';
+import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_subordinates_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_type_model.dart';
+import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/of_subordinates_model.dart';
 
 class LetterMyselfCreateSentScreen
     extends GetView<LetterMyselfCreateSentController> {
@@ -55,7 +57,7 @@ class LetterMyselfCreateSentScreen
                                                 height: size.height * 0.6,
                                                 width: size.width * 0.9,
                                                 child: Image.asset(
-                                                    "assets/images/QuyDinh.png"),
+                                                    "assets/images/QuyDinh.jpg"),
                                               ),
                                               confirm: TextButton(
                                                 onPressed: () {
@@ -82,8 +84,7 @@ class LetterMyselfCreateSentScreen
                                   ),
                                   _buildFormText(
                                     title: "MSNV",
-                                    content:
-                                        "${controller.userName.value.empID}",
+                                    content: controller.idUser.value,
                                     size: size,
                                   ),
                                   _buildFormText(
@@ -94,12 +95,16 @@ class LetterMyselfCreateSentScreen
                                   ),
                                   _buildFormText(
                                     title: "Ngày vào",
-                                    content: day.format(
-                                      DateTime.parse(
-                                        controller.userName.value.comeDate
-                                            .toString(),
-                                      ),
-                                    ),
+                                    content: controller
+                                                .userName.value.comeDate !=
+                                            null
+                                        ? day.format(
+                                            DateTime.parse(
+                                              controller.userName.value.comeDate
+                                                  .toString(),
+                                            ),
+                                          )
+                                        : "",
                                     size: size,
                                   ),
                                   _buildFormText(
@@ -136,6 +141,7 @@ class LetterMyselfCreateSentScreen
                       Column(
                         children: [
                           _buildLoaiPhep(size),
+                          _listCustomer(size),
                           _buildDateTime(
                             title: "Bắt đầu nghỉ từ *",
                             content: day.format(timeNow),
@@ -194,11 +200,22 @@ class LetterMyselfCreateSentScreen
                                       ),
                                     ),
                                     onPressed: () {
+                                      print([
+                                        controller.selectMember.value,
+                                        controller.selectedValue.value,
+                                        controller.reasonController.text,
+                                        controller.timeController.text,
+                                        controller.dayController.text,
+                                        controller.addressController.text,
+                                      ]);
                                       var validate = controller
                                           .formKeyCreateLetter.currentState!
                                           .validate();
                                       if (!validate) {
                                         controller.postRegister(
+                                          emplid: int.parse(controller
+                                              .selectMember.value
+                                              .toString()),
                                           type: int.parse(controller
                                               .selectedValue.value
                                               .toString()),
@@ -206,7 +223,7 @@ class LetterMyselfCreateSentScreen
                                               controller.reasonController.text,
                                           startdate:
                                               controller.timeController.text,
-                                          period: int.parse(
+                                          period: double.parse(
                                               controller.dayController.text),
                                           address:
                                               controller.addressController.text,
@@ -234,7 +251,14 @@ class LetterMyselfCreateSentScreen
                                       ),
                                     ),
                                     onPressed: () {
-                                      // print(controller.selectedValue.value);
+                                      print([
+                                        controller.selectMember.value,
+                                        controller.selectedValue.value,
+                                        controller.reasonController.text,
+                                        controller.timeController.text,
+                                        controller.dayController.text,
+                                        controller.addressController.text,
+                                      ]);
                                       var validate = controller
                                           .formKeyCreateLetter.currentState!
                                           .validate();
@@ -242,6 +266,9 @@ class LetterMyselfCreateSentScreen
                                         // If the form is valid, display a snackbar. In the real world,
                                         // you'd often call a server or save the information in a database.
                                         controller.postRegister(
+                                          emplid: int.parse(controller
+                                              .selectMember.value
+                                              .toString()),
                                           type: int.parse(controller
                                               .selectedValue.value
                                               .toString()),
@@ -249,7 +276,7 @@ class LetterMyselfCreateSentScreen
                                               controller.reasonController.text,
                                           startdate:
                                               controller.timeController.text,
-                                          period: int.parse(
+                                          period: double.parse(
                                               controller.dayController.text),
                                           address:
                                               controller.addressController.text,
@@ -489,7 +516,7 @@ class LetterMyselfCreateSentScreen
   Widget _buildLoaiPhep(Size size) {
     return Card(
       child: SizedBox(
-        height: 70,
+        height: 80,
         child: Row(
           children: [
             Expanded(
@@ -502,93 +529,205 @@ class LetterMyselfCreateSentScreen
             ),
             Expanded(
               flex: 5,
-              child: FindDropdown<ListOffTypeModel>(
-                validate: (value) {
-                  // ignore: unrelated_type_equality_checks
-                  if (value == "" || value == 0 || value == null) {
-                    return 'Chọn loại phép !';
-                  }
-                  return null;
-                },
-                onFind: (String filter) => controller.getTypeOff(filter),
-                onChanged: (ListOffTypeModel? data) {
-                  controller.selectedValue.value = int.parse(data!.offTypeID!);
-                  controller.nameType.value = data.note!;
-                },
-                dropdownBuilder:
-                    (BuildContext context, ListOffTypeModel? item) {
-                  return Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).dividerColor),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                    ),
-                    child: (item?.note == null)
-                        ? Row(
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "Chọn loại phép",
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_outlined,
-                                color: Colors.black,
-                              )
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  item!.note!,
-                                  style: const TextStyle(fontSize: 15),
-                                ),
-                              ),
-                              const Icon(
-                                Icons.arrow_drop_down_outlined,
-                                color: Colors.black,
-                              )
-                            ],
-                          ),
-                  );
-                },
-                dropdownItemBuilder: (BuildContext context,
-                    ListOffTypeModel item, bool isSelected) {
-                  return Container(
-                    decoration: !isSelected
-                        ? null
-                        : BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor),
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
-                          ),
-                    child: Card(
-                      shape: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.orangeAccent,
-                        ),
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                child: FindDropdown<ListOffTypeModel>(
+                  validate: (value) {
+                    // ignore: unrelated_type_equality_checks
+                    if (value == "" || value == 0 || value == null) {
+                      return 'Chọn loại phép !';
+                    }
+                    return null;
+                  },
+                  onFind: (String filter) => controller.getTypeOff(filter),
+                  onChanged: (ListOffTypeModel? data) {
+                    controller.selectedValue.value =
+                        int.parse(data!.offTypeID!);
+                    controller.nameType.value = data.note!;
+                  },
+                  dropdownBuilder:
+                      (BuildContext context, ListOffTypeModel? item) {
+                    return Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).dividerColor),
                         borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
                       ),
-                      child: ListTile(
-                        selected: isSelected,
-                        title: Text(
-                          item.note!,
-                          style: const TextStyle(fontSize: 15),
+                      child: (item?.note == null)
+                          ? Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    "Chọn loại phép",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: Colors.black,
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    item!.note!,
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: Colors.black,
+                                )
+                              ],
+                            ),
+                    );
+                  },
+                  dropdownItemBuilder: (BuildContext context,
+                      ListOffTypeModel item, bool isSelected) {
+                    return Container(
+                      decoration: !isSelected
+                          ? null
+                          : BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                      child: Card(
+                        shape: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.orangeAccent,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        subtitle: Text(
-                          item.name!,
-                          style: const TextStyle(fontSize: 15),
+                        child: ListTile(
+                          selected: isSelected,
+                          title: Text(
+                            item.note!,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          subtitle: Text(
+                            item.name!,
+                            style: const TextStyle(fontSize: 15),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _listCustomer(Size size) {
+    return Card(
+      child: SizedBox(
+        height: 60,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Padding(
+                  padding: EdgeInsets.only(
+                    left: size.width * 0.05,
+                  ),
+                  child: const Text("MSNV")),
+            ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                // margin: const EdgeInsets.only(top: 10),
+                child: FindDropdown<OfSubordinatesModel>(
+                  onFind: (String filter) => controller.getDataCustomer(filter),
+                  onChanged: (OfSubordinatesModel? data) {
+                    controller.selectMember.value = data!.empID!;
+                  },
+                  dropdownBuilder:
+                      (BuildContext context, OfSubordinatesModel? item) {
+                    return Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).dividerColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                      child: (item == null)
+                          ? Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    "Chọn nhân viên",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: Colors.black,
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    "${item.lastName!} ${item.firstName}",
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: Colors.black,
+                                )
+                              ],
+                            ),
+                    );
+                  },
+                  dropdownItemBuilder: (BuildContext context,
+                      OfSubordinatesModel item, bool isSelected) {
+                    return Container(
+                      decoration: !isSelected
+                          ? null
+                          : BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                      child: Card(
+                        shape: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.orangeAccent,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: ListTile(
+                          selected: isSelected,
+                          title: Text(
+                            "${item.lastName!} ${item.firstName}",
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          subtitle: Text(
+                            "${item.empID!}",
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],

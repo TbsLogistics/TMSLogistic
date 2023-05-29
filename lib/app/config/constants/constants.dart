@@ -27,10 +27,10 @@ class AppConstants {
   static const String KEY_ID_TX = "id_TX";
 
   // Url
-  static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
-  // static const String urlBaseTms = "https://api.tbslogistics.com.vn";
+  // static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
+  static const String urlBaseTms = "https://api.tbslogistics.com.vn";
   static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
-  static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
+  // static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
 
-  // static const String urlBaseHrm = "http://192.168.0.42:300";
+  static const String urlBaseHrm = "http://192.168.0.42:300";
 }

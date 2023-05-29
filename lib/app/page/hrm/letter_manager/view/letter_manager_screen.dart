@@ -75,13 +75,13 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
                                 stt: "${index + 1}",
                                 fromDay: day.format(
                                   DateTime.parse(
-                                    item.regDate.toString(),
+                                    item.startDate.toString(),
                                   ),
                                 ),
-                                endDay: item.comeDate != null
+                                endDay: item.endDate != null
                                     ? day.format(
                                         DateTime.parse(
-                                          item.startDate.toString(),
+                                          item.endDate.toString(),
                                         ),
                                       )
                                     : "",

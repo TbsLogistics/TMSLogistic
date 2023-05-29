@@ -16,7 +16,15 @@ class QrCodeDetailsRegistedDriverScreen
       init: QRCodeDriverController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             "QR Code",
@@ -25,17 +33,6 @@ class QrCodeDetailsRegistedDriverScreen
             ),
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.offAllNamed(Routes.DRIVER_PAGE);
-              },
-              icon: Icon(
-                Icons.home,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            ),
-          ],
         ),
         body: Container(
           color: Colors.white,

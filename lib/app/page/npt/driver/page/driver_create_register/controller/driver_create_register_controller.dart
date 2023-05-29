@@ -34,6 +34,9 @@ class DriverCreateRegisterController extends GetxController {
 
   TextEditingController numberBook = TextEditingController();
   TextEditingController numberBook1 = TextEditingController();
+
+  TextEditingController numberTan = TextEditingController(text: "0");
+  TextEditingController numberTan1 = TextEditingController(text: "0");
   // tickerout
   TextEditingController contRa1 = TextEditingController();
   TextEditingController contRa2 = TextEditingController();
@@ -92,17 +95,19 @@ class DriverCreateRegisterController extends GetxController {
       required String? typeCar,
       required String? numberCar,
       required String? numberCont1,
-      required String? numberCont2,
       required String? numberCont1Seal1,
       required String? numberCont1Seal2,
       required double? numberKien,
       required double? numberKhoi,
       required String? numberBook,
+      required double? numberTan,
+      required String? numberCont2,
       required String? numberCont2Seal1,
       required String? numberCont2Seal2,
       required double? numberKien1,
       required double? numberKhoi1,
       required String? numberBook1,
+      required double? numberTan1,
       required String? typeProduct,
       required int? numberCont}) async {
     var dio = Dio();
@@ -132,6 +137,7 @@ class DriverCreateRegisterController extends GetxController {
       soKien: numberKien ?? 0,
       sokhoi: numberKhoi ?? 0,
       soBook: numberBook,
+      soTan: numberTan ?? 0,
       trangthaihang: false,
       trangthaikhoa: false,
       cont2seal1: numberCont2Seal1,
@@ -139,6 +145,7 @@ class DriverCreateRegisterController extends GetxController {
       sokien1: numberKien1 ?? 0,
       sokhoi1: numberKhoi1 ?? 0,
       soBook1: numberBook1,
+      soTan1: numberTan1 ?? 0,
       trangthaihang1: false,
       trangthaikhoa1: false,
       maloaiHang: typeProduct,
@@ -205,6 +212,8 @@ class DriverCreateRegisterController extends GetxController {
               trangthaihang1: false,
               trangthaikhoa1: false,
               maloaiHang: typeProduct,
+              soTan: numberTan,
+              soTan1: numberTan1,
             ),
             data["data1"],
             numberCont,

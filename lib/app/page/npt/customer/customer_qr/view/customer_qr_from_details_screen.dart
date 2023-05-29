@@ -18,6 +18,15 @@ class QrCodeFromDetailsCustomerScreen
       init: QRCodeCustomerController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             "QR Code",
@@ -26,17 +35,6 @@ class QrCodeFromDetailsCustomerScreen
             ),
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.offAllNamed(Routes.CUSTOMER_PAGE);
-              },
-              icon: Icon(
-                Icons.home,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            ),
-          ],
         ),
         body: Container(
           color: Colors.white,

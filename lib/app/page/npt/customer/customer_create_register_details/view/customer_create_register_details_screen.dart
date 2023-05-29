@@ -44,7 +44,7 @@ class CustomerRegisterDetailScreen
           ),
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.CUSTOMER_PAGE);
+              Get.offAllNamed(Routes.CUSTOMER_PAGE);
             },
             icon: const Icon(
               Icons.home,
@@ -55,71 +55,115 @@ class CustomerRegisterDetailScreen
         ],
       ),
       body: GetBuilder(
-          init: CustomerRegisterDetailsController(),
-          builder: (controller) => Container(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                    child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: Column(
-                    children: [
-                      _buildDayTime(controller.detailsTicker.value, size, day,
-                          hour, context),
-                      const SizedBox(height: 10),
-                      _buildNumberCar(
-                        items: controller.detailsTicker.value,
-                        size: size,
-                        context: context,
-                        content: controller.detailsTicker.value.loaixe == "tai"
-                            ? "Xe tải"
-                            : "Xe container",
-                        title: 'Loại xe',
-                        title2: 'Số xe',
-                        content2:
-                            controller.detailsTicker.value.soxe.toString(),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _buildNumberCar(
-                        items: controller.detailsTicker.value,
-                        size: size,
-                        context: context,
-                        content:
-                            controller.detailsTicker.value.maloaiHang == "HN"
-                                ? "Hàng nhập"
-                                : "Hàng xuất",
-                        title: 'Loại Hàng',
-                        title2: 'Kho',
-                        content2: controller.detailsTicker.value.kho.toString(),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     Expanded(
-                      //       child: CustomTextField(
-                      //         title: 'Loại hàng',
-                      //         content: '${items.maloaiHang}',
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      const SizedBox(height: 10),
-                      Divider(
-                        indent: size.width * 0.15,
-                        endIndent: size.width * 0.15,
-                        height: 2,
-                        thickness: 2,
-                        color: Colors.black.withOpacity(0.2),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildNumberCont(
-                          controller.detailsTicker.value, size, context),
-                    ],
+        init: CustomerRegisterDetailsController(),
+        builder: (controller) => Container(
+          padding: const EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Column(
+                children: [
+                  _buildDayTime(
+                      controller.detailsTicker.value, size, day, hour, context),
+                  const SizedBox(height: 10),
+                  _buildNumberCar(
+                    items: controller.detailsTicker.value,
+                    size: size,
+                    context: context,
+                    content: controller.detailsTicker.value.loaixe == "tai"
+                        ? "Xe tải"
+                        : "Xe container",
+                    title: 'Loại xe',
+                    title2: 'Số xe',
+                    content2: controller.detailsTicker.value.soxe.toString(),
                   ),
-                )),
-              )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  _buildNumberCar(
+                    items: controller.detailsTicker.value,
+                    size: size,
+                    context: context,
+                    content: controller.detailsTicker.value.maloaiHang == "HN"
+                        ? "Hàng nhập"
+                        : "Hàng xuất",
+                    title: 'Loại Hàng',
+                    title2: 'Kho',
+                    content2: controller.detailsTicker.value.kho.toString(),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildCustomer(controller.detailsTicker.value, size, context),
+                  const SizedBox(height: 10),
+                  Divider(
+                    indent: size.width * 0.15,
+                    endIndent: size.width * 0.15,
+                    height: 2,
+                    thickness: 2,
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildNumberCont(
+                      controller.detailsTicker.value, size, context),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCustomer(
+      CustomerRegisterForDriverModel items, Size size, BuildContext context) {
+    return Card(
+      shadowColor: Colors.grey,
+      elevation: 10,
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(
+          color: Colors.orangeAccent,
+          width: 1,
+        ),
+      ),
+      child: Container(
+        height: size.width * 0.1,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.orangeAccent,
+          ),
+          borderRadius: BorderRadius.circular(15),
+          // color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  "Khách hàng",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  "${items.maKhachHang}",
+                  style: TextStyle(
+                      fontSize: 16, color: Theme.of(context).primaryColorLight),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -132,7 +176,7 @@ class CustomerRegisterDetailScreen
       shadowColor: Colors.grey,
       elevation: 10,
       child: SizedBox(
-        height: size.width * 0.7,
+        height: size.width * 0.9,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -296,6 +340,34 @@ class CustomerRegisterDetailScreen
                       ),
                     ),
                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Text(
+                                "Số Tấn",
+                                style: CustomTextStyle.titleDetails,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${items.soTan}",
+                                style: CustomTextStyle.contentDetails,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -320,7 +392,7 @@ class CustomerRegisterDetailScreen
                           style: CustomTextStyle.titleDetails,
                         ),
                         Text(
-                          "${items.socont1}",
+                          "${items.socont2}",
                           style: CustomTextStyle.contentDetails,
                         ),
                       ],
@@ -458,6 +530,34 @@ class CustomerRegisterDetailScreen
                             children: [
                               Text(
                                 "${items.sokhoi1}",
+                                style: CustomTextStyle.contentDetails,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Text(
+                                "Số Tấn",
+                                style: CustomTextStyle.titleDetails,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${items.soTan1}",
                                 style: CustomTextStyle.contentDetails,
                               ),
                             ],

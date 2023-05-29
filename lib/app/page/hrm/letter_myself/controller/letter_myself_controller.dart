@@ -58,8 +58,8 @@ class LetterMyselfController extends GetxController {
 
         userInfo.value = data;
       }
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoadUser(true);
@@ -129,8 +129,8 @@ class LetterMyselfController extends GetxController {
         listDayOff.value =
             data.map((e) => DayOffLettersSingleModel.fromJson(e)).toList();
       }
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoadDayOff(true);

@@ -1,9 +1,4 @@
 class UserHrmModel {
-  String? userName;
-  String? email;
-  int? empID;
-  int? status;
-  String? lastModify;
   String? firstName;
   String? lastName;
   String? comeDate;
@@ -17,34 +12,25 @@ class UserHrmModel {
   String? jPName;
   String? jPLevelName;
   String? departmentName;
+  int? empID;
 
-  UserHrmModel({
-    this.userName,
-    this.email,
-    this.empID,
-    this.status,
-    this.lastModify,
-    this.firstName,
-    this.lastName,
-    this.comeDate,
-    this.zoneID,
-    this.zoneName,
-    this.jobPosID,
-    this.jPLevelID,
-    this.deptID,
-    this.annualLeave,
-    this.jobpositionName,
-    this.jPName,
-    this.jPLevelName,
-    this.departmentName,
-  });
+  UserHrmModel(
+      {this.firstName,
+      this.lastName,
+      this.comeDate,
+      this.zoneID,
+      this.zoneName,
+      this.jobPosID,
+      this.jPLevelID,
+      this.deptID,
+      this.annualLeave,
+      this.jobpositionName,
+      this.jPName,
+      this.jPLevelName,
+      this.departmentName,
+      this.empID});
 
   UserHrmModel.fromJson(Map<String, dynamic> json) {
-    userName = json['UserName'];
-    email = json['Email'];
-    empID = json['EmpID'];
-    status = json['Status'];
-    lastModify = json['LastModify'];
     firstName = json['FirstName'];
     lastName = json['LastName'];
     comeDate = json['ComeDate'];
@@ -58,15 +44,11 @@ class UserHrmModel {
     jPName = json['JPName'];
     jPLevelName = json['JPLevelName'];
     departmentName = json['DepartmentName'];
+    empID = json['EmpID'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['UserName'] = userName;
-    data['Email'] = email;
-    data['EmpID'] = empID;
-    data['Status'] = status;
-    data['LastModify'] = lastModify;
     data['FirstName'] = firstName;
     data['LastName'] = lastName;
     data['ComeDate'] = comeDate;
@@ -80,6 +62,7 @@ class UserHrmModel {
     data['JPName'] = jPName;
     data['JPLevelName'] = jPLevelName;
     data['DepartmentName'] = departmentName;
+    data['EmpID'] = empID;
     return data;
   }
 }

@@ -42,10 +42,15 @@ class ChangePassController extends GetxController {
   }) async {
     Response response;
 
+    var token = await SharePerApi().getTokenHRM();
+
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+
     var user_hrm = await SharePerApi().getIdUserHRM();
 
     var passWord = ChangePassHrmModel(
-      username: user_hrm,
       currentPassword: oldPassword,
       newPassword: newPassword,
       confirmPass: confirmPass,
@@ -57,6 +62,9 @@ class ChangePassController extends GetxController {
       response = await dio.post(
         url,
         data: jsonData,
+        options: Options(
+          headers: headers,
+        ),
       );
       if (response.statusCode == 200) {
         var data = response.data;

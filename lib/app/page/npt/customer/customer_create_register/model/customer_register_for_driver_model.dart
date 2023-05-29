@@ -25,6 +25,8 @@ class CustomerRegisterForDriverModel {
   bool? trangthaihang1;
   bool? trangthaikhoa1;
   String? maloaiHang;
+  double? soTan;
+  double? soTan1;
   int? taiXeRa;
   String? soXera;
   CapCong? capCong;
@@ -58,6 +60,8 @@ class CustomerRegisterForDriverModel {
       this.maloaiHang,
       this.taiXeRa,
       this.soXera,
+      this.soTan,
+      this.soTan1,
       this.capCong});
 
   CustomerRegisterForDriverModel.fromJson(Map<String, dynamic> json) {
@@ -86,11 +90,13 @@ class CustomerRegisterForDriverModel {
     soBook1 = json['soBook1'];
     trangthaihang1 = json['trangthaihang1'];
     trangthaikhoa1 = json['trangthaikhoa1'];
+    soTan = json['soTan'];
+    soTan1 = json['soTan1'];
     maloaiHang = json['maloaiHang'];
     taiXeRa = json['taiXeRa'];
     soXera = json['soXera'];
     capCong =
-        json['capCong'] != null ? new CapCong.fromJson(json['capCong']) : null;
+        json['capCong'] != null ? CapCong.fromJson(json['capCong']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -120,6 +126,8 @@ class CustomerRegisterForDriverModel {
     data['soBook1'] = soBook1;
     data['trangthaihang1'] = trangthaihang1;
     data['trangthaikhoa1'] = trangthaikhoa1;
+    data['soTan'] = soTan;
+    data['soTan1'] = soTan1;
     data['maloaiHang'] = maloaiHang;
     data['taiXeRa'] = taiXeRa;
     data['soXera'] = soXera;

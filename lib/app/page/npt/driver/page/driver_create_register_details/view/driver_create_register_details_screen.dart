@@ -33,7 +33,7 @@ class DriverCreateRegisterDetailsScreen
           actions: [
             IconButton(
               onPressed: () {
-                Get.offAllNamed(
+                Get.toNamed(
                   Routes.QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN,
                   arguments: controller.id.value,
                 );
@@ -64,9 +64,34 @@ class DriverCreateRegisterDetailsScreen
                 _buildDayTime(
                     controller.detailsTicker.value, size, day, hour, context),
                 const SizedBox(height: 10),
-                _buildNumberCar(controller.detailsTicker.value, size, context),
+                //Loại xe + Số xe
+                _buildNumberCar(
+                  items: controller.detailsTicker.value,
+                  size: size,
+                  context: context,
+                  content: controller.detailsTicker.value.loaixe == "tai"
+                      ? "Xe tải"
+                      : "Xe cont",
+                  title: 'Loại xe',
+                  title2: 'Số xe',
+                  content2: controller.detailsTicker.value.soxe.toString(),
+                ),
+                //Loại hàng + Kho
+                _buildNumberCar(
+                  items: controller.detailsTicker.value,
+                  size: size,
+                  context: context,
+                  content: controller.detailsTicker.value.maloaiHang == "HN"
+                      ? "Hàng nhập"
+                      : "Hàng xuất",
+                  title: 'Loại Hàng',
+                  title2: 'Kho',
+                  content2: controller.detailsTicker.value.kho.toString(),
+                ),
                 const SizedBox(height: 10),
                 _buildProduct(controller.detailsTicker.value, size, context),
+                const SizedBox(height: 10),
+                _buildCustomer(controller.detailsTicker.value, size, context),
                 const SizedBox(height: 10),
                 controller.detailsTicker.value.loaixe == "tai"
                     ? _buildProductCar(
@@ -80,6 +105,86 @@ class DriverCreateRegisterDetailsScreen
       ),
     );
   }
+}
+
+Widget _buildNumberCar(
+    {required RegisterForDriverModel items,
+    required Size size,
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String title2,
+    required String content2}) {
+  return Card(
+    shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Colors.orangeAccent)),
+    shadowColor: Colors.grey,
+    elevation: 10,
+    child: SizedBox(
+      height: size.width * 0.15,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      title,
+                      style: CustomTextStyle.titleDetails,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Center(
+                    child: Text(
+                      content,
+                      style: CustomTextStyle.contentDetails,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const VerticalDivider(
+            width: 1,
+            indent: 10,
+            endIndent: 10,
+            color: Colors.orangeAccent,
+            thickness: 1,
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      title2,
+                      style: CustomTextStyle.titleDetails,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Center(
+                    child: Text(
+                      content2,
+                      style: CustomTextStyle.contentDetails,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 Widget _buildProduct(
@@ -121,10 +226,64 @@ Widget _buildProduct(
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 1,
             child: Center(
               child: Text(
                 items.maloaiHang == "HN" ? "Hàng nhập" : "Hàng xuất",
+                style: TextStyle(
+                    fontSize: 16, color: Theme.of(context).primaryColorLight),
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildCustomer(
+    RegisterForDriverModel items, Size size, BuildContext context) {
+  return Card(
+    shadowColor: Colors.grey,
+    elevation: 10,
+    shape: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(
+        color: Colors.orangeAccent,
+        width: 1,
+      ),
+    ),
+    child: Container(
+      height: size.width * 0.1,
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: Colors.orangeAccent,
+        ),
+        borderRadius: BorderRadius.circular(15),
+        // color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Expanded(
+            flex: 1,
+            child: Center(
+              child: Text(
+                "Khách hàng",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: Text(
+                "${items.maKhachHang}",
                 style: TextStyle(
                     fontSize: 16, color: Theme.of(context).primaryColorLight),
               ),
@@ -241,7 +400,7 @@ Widget _buildProductCar(
       ),
     ),
     child: Container(
-      height: size.width * 0.5,
+      height: size.width * 0.7,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -358,6 +517,31 @@ Widget _buildProductCar(
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Số Tấn : ",
+                              style: CustomTextStyle.titleDetails,
+                            ),
+                            Text(
+                              "${items.soTan}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -408,7 +592,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                             ),
                             Text(
                               "${items.socont1}",
-                              style: CustomTextStyle.titleDetails,
+                              style: CustomTextStyle.contentDetails,
                             ),
                           ],
                         ),
@@ -573,17 +757,49 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           ),
                         ),
                       ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Số Tấn",
+                                    style: CustomTextStyle.titleDetails,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${items.soTan}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
               : Container(),
-          // const VerticalDivider(
-          //   width: 1,
-          //   indent: 15,
-          //   endIndent: 15,
-          //   color: Colors.orangeAccent,
-          //   thickness: 1,
-          // ),
+          const VerticalDivider(
+            width: 1,
+            indent: 15,
+            endIndent: 15,
+            color: Colors.orangeAccent,
+            thickness: 1,
+          ),
           controller.numberCont.value == 2
               ? Expanded(
                   child: Column(
@@ -598,7 +814,10 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                               "Số cont 2",
                               style: CustomTextStyle.titleDetails,
                             ),
-                            Text("${items.socont2}"),
+                            Text(
+                              "${items.socont2}",
+                              style: CustomTextStyle.contentDetails,
+                            ),
                           ],
                         ),
                       ),
@@ -620,7 +839,10 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text("${items.cont2seal1}"),
+                                  Text(
+                                    "${items.cont2seal1}",
+                                    style: CustomTextStyle.contentDetails,
+                                  ),
                                 ],
                               ),
                             ],
@@ -755,6 +977,38 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           ),
                         ),
                       ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Số Tấn",
+                                    style: CustomTextStyle.titleDetails,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${items.soTan1}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -765,94 +1019,94 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
   );
 }
 
-Widget _buildNumberCar(
-    RegisterForDriverModel items, Size size, BuildContext context) {
-  return Card(
-    shadowColor: Colors.grey,
-    elevation: 10,
-    shape: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
-      borderSide: const BorderSide(
-        color: Colors.orangeAccent,
-        width: 1,
-      ),
-    ),
-    child: Container(
-      height: size.width * 0.15,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Colors.orangeAccent,
-        ),
-        borderRadius: BorderRadius.circular(15),
-        // color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                const Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Text(
-                      "Loại xe",
-                      style: CustomTextStyle.titleDetails,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Text(
-                      items.loaixe == "tai" ? "Xe tải" : "Xe cont",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          const VerticalDivider(
-            width: 1,
-            indent: 10,
-            endIndent: 10,
-            color: Colors.orangeAccent,
-            thickness: 1,
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                const Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Text(
-                      "Số xe",
-                      style: CustomTextStyle.titleDetails,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Text(
-                      "${items.soxe}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Widget _buildNumberCar(
+//     RegisterForDriverModel items, Size size, BuildContext context) {
+//   return Card(
+//     shadowColor: Colors.grey,
+//     elevation: 10,
+//     shape: OutlineInputBorder(
+//       borderRadius: BorderRadius.circular(15),
+//       borderSide: const BorderSide(
+//         color: Colors.orangeAccent,
+//         width: 1,
+//       ),
+//     ),
+//     child: Container(
+//       height: size.width * 0.15,
+//       decoration: BoxDecoration(
+//         border: Border.all(
+//           width: 1,
+//           color: Colors.orangeAccent,
+//         ),
+//         borderRadius: BorderRadius.circular(15),
+//         // color: Colors.white,
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         children: [
+//           Expanded(
+//             child: Column(
+//               children: [
+//                 const Expanded(
+//                   flex: 2,
+//                   child: Center(
+//                     child: Text(
+//                       "Loại xe",
+//                       style: CustomTextStyle.titleDetails,
+//                     ),
+//                   ),
+//                 ),
+//                 Expanded(
+//                   flex: 3,
+//                   child: Center(
+//                     child: Text(
+//                       items.loaixe == "tai" ? "Xe tải" : "Xe cont",
+//                       style: TextStyle(
+//                         fontSize: 16,
+//                         color: Theme.of(context).primaryColorLight,
+//                       ),
+//                     ),
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ),
+//           const VerticalDivider(
+//             width: 1,
+//             indent: 10,
+//             endIndent: 10,
+//             color: Colors.orangeAccent,
+//             thickness: 1,
+//           ),
+//           Expanded(
+//             child: Column(
+//               children: [
+//                 const Expanded(
+//                   flex: 2,
+//                   child: Center(
+//                     child: Text(
+//                       "Số xe",
+//                       style: CustomTextStyle.titleDetails,
+//                     ),
+//                   ),
+//                 ),
+//                 Expanded(
+//                   flex: 3,
+//                   child: Center(
+//                     child: Text(
+//                       "${items.soxe}",
+//                       style: TextStyle(
+//                         fontSize: 16,
+//                         color: Theme.of(context).primaryColorLight,
+//                       ),
+//                     ),
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
