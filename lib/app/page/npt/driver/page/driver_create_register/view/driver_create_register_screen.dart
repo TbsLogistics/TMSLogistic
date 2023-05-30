@@ -182,11 +182,12 @@ class _DriverCreateRegisterScreenState
                   buildDateTime(size, controller),
                   //Nhập số xe
                   CustomFormFiels(
+                    keyboardType: TextInputType.text,
                     title: "Số xe *",
                     controller: controller.numberCar,
                     hintText: "Nhập số xe",
                     icon: Icons.abc,
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                   ),
                   //danh sách kho
                   _listWareHome(controller),
@@ -207,39 +208,44 @@ class _DriverCreateRegisterScreenState
                         ? Column(
                             children: [
                               CustomFormFiels(
+                                keyboardType: TextInputType.text,
                                 title: "Số seal",
                                 controller: controller.numberCont1Seal1,
                                 hintText: "Nhập Số Seal",
                                 icon: Icons.abc,
-                                color: Theme.of(context).primaryColorLight,
+                                color: Colors.green,
                               ),
                               CustomFormFiels(
-                                title: "Số Khối",
-                                controller: controller.numberKhoi,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                              CustomFormFiels(
-                                title: "Số tấn",
-                                controller: controller.numberTan,
-                                hintText: "Nhập số tấn",
-                                icon: Icons.abc,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                              CustomFormFiels(
-                                title: "Số Kiện",
-                                controller: controller.numberKien,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                              CustomFormFiels(
+                                keyboardType: TextInputType.text,
                                 title: "Số Book",
                                 controller: controller.numberBook,
                                 hintText: "Nhập Số Book",
                                 icon: Icons.abc,
-                                color: Theme.of(context).primaryColorLight,
+                                color: Colors.green,
+                              ),
+                              CustomFormFiels(
+                                keyboardType: TextInputType.number,
+                                title: "Khối lượng (Kg)",
+                                controller: controller.numberTan,
+                                hintText: "Nhập Khối lượng (Kg)",
+                                icon: Icons.abc,
+                                color: Colors.green,
+                              ),
+                              CustomFormFiels(
+                                keyboardType: TextInputType.number,
+                                title: "Số Khối (CDM)",
+                                controller: controller.numberKhoi,
+                                hintText: "",
+                                icon: Icons.abc,
+                                color: Colors.green,
+                              ),
+                              CustomFormFiels(
+                                keyboardType: TextInputType.number,
+                                title: "Số Kiện",
+                                controller: controller.numberKien,
+                                hintText: "",
+                                icon: Icons.abc,
+                                color: Colors.green,
                               ),
                             ],
                           )
@@ -336,7 +342,7 @@ class _DriverCreateRegisterScreenState
                   "Khách hàng *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -350,7 +356,8 @@ class _DriverCreateRegisterScreenState
                 .getCusomter("${controller.selectWareHome.value.maKho}"),
             onChanged: (value) {
               controller.selectCustomer.value.maKhachHang = value!.maKhachHang;
-              print(controller.selectCustomer.value.maKhachHang);
+              controller.selectCustomer.value.tenKhachhang = value.tenKhachhang;
+              print(controller.selectCustomer.value.tenKhachhang);
             },
             dropdownBuilder:
                 (BuildContext context, CustomerOfWareHomeModel? item) {
@@ -432,7 +439,7 @@ class _DriverCreateRegisterScreenState
                   "Kho *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -536,7 +543,7 @@ class _DriverCreateRegisterScreenState
                   "Loại hàng *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -642,7 +649,7 @@ class _DriverCreateRegisterScreenState
                   "Loại xe *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -743,7 +750,7 @@ class _DriverCreateRegisterScreenState
                 "Thời gian dự kiến *",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
+                  color: Colors.green,
                   fontSize: 16,
                 ),
               )
@@ -776,10 +783,9 @@ class _DriverCreateRegisterScreenState
                 color: Theme.of(context).primaryColorLight,
               ),
               border: InputBorder.none,
-              icon: Icon(
+              icon: const Icon(
                 Icons.calendar_month,
                 size: 26,
-                color: Theme.of(context).primaryColorLight,
               ),
               isDense: true,
             ),
@@ -794,53 +800,60 @@ class _DriverCreateRegisterScreenState
       children: [
         const Divider(),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số cont 1",
           controller: controller.numberCont1,
           hintText: "Nhập số cont",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 1",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont1Seal1,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 2",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont1Seal2,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số book",
           controller: controller.numberBook,
           hintText: "Nhập số book",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.number,
           title: "Số kiện",
           controller: controller.numberKien,
           hintText: "Nhập số kiện",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số tấn",
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
           controller: controller.numberTan,
-          hintText: "Nhập số tấn",
+          hintText: "Nhập Khối lượng (Kg)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số khối",
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CDM)",
           controller: controller.numberKhoi,
-          hintText: "Nhập số khối",
+          hintText: "Nhập Số Khối (CDM)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
       ],
     );
@@ -851,59 +864,66 @@ class _DriverCreateRegisterScreenState
       children: [
         const Divider(),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số cont 2",
           controller: controller.numberCont2,
           hintText: "Nhập số cont",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 1",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont2Seal1,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 2",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont2Seal2,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số book",
           controller: controller.numberBook1,
           hintText: "Nhập số book",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.number,
           title: "Số kiện",
           controller: controller.numberKien1,
           hintText: "Nhập số kiện",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số tấn",
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
           controller: controller.numberTan1,
-          hintText: "Nhập số tấn",
+          hintText: "Nhập Khối lượng (Kg)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số khối",
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CDM)",
           controller: controller.numberKhoi1,
-          hintText: "Nhập số khối",
+          hintText: "Nhập Số Khối (CDM)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
       ],
     );
   }
 
-  final List<String> numberCont = ["1", "2"];
+  final List<String> numberCont = ["0", "1", "2"];
 
   void _signUpProcess(
       BuildContext context, DriverCreateRegisterController controller) {
@@ -916,7 +936,7 @@ class _DriverCreateRegisterScreenState
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     } else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
-        if (numberSelectCont != 0) {
+        if (controller.selectItems != null) {
           controller.postRegisterDriver(
             maKhachHang: controller.selectCustomer.value.maKhachHang!,
             time: dateinput.text,
@@ -939,6 +959,7 @@ class _DriverCreateRegisterScreenState
             numberTan1: double.parse(controller.numberTan1.text),
             typeProduct: controller.selectTypeProduct.value.maloaiHang,
             numberCont: numberSelectCont,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang,
           );
         } else {
           getSnack(messageText: "Chọn số lượng cont * !");
@@ -966,6 +987,7 @@ class _DriverCreateRegisterScreenState
           numberTan1: double.parse(controller.numberTan1.text),
           typeProduct: controller.selectTypeProduct.value.maloaiHang,
           numberCont: numberSelectCont,
+          nameCustomer: controller.selectCustomer.value.tenKhachhang,
         );
       }
     }

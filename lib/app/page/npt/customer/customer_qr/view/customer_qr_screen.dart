@@ -55,7 +55,7 @@ class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
                       data:
                           "${controller.idPhieuvao.value},${controller.idDriver.value}",
                       version: QrVersions.auto,
-                      size: size.width * 0.6,
+                      size: size.width * 0.4,
                     ),
                   ),
                 ),

@@ -5,6 +5,7 @@ import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/config/data/validate.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
@@ -181,12 +182,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                     Container(
                       padding: const EdgeInsets.only(left: 5),
                       child: Row(
-                        children: [
+                        children: const [
                           Text(
                             "Thời gian dự kiến *",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                              color: Theme.of(context).primaryColorLight,
+                              color: Colors.green,
                               fontSize: 16,
                             ),
                           )
@@ -209,6 +210,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       margin:
                           EdgeInsets.symmetric(vertical: size.height * 0.02),
                       child: TextFormField(
+                        style: CustomTextStyle.contentDetails,
                         onTap: () {
                           _selectDateTime(context);
                         },
@@ -230,6 +232,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                     ),
                   ],
                 ),
+                _numberCar(controller),
                 _listDriver(controller),
                 _listWareHome(controller),
                 Obx(
@@ -237,146 +240,22 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       ? _listCustomer(controller)
                       : Container(),
                 ),
-                _numberCar(controller),
                 _listTypeProduct(controller),
                 _listTypeCar(controller),
                 Obx(
                   () => controller.selectTypeCar.value != "" &&
                           controller.selectTypeCar.value.maLoaiXe == "tai"
-                      ? Column(
-                          children: [
-                            CustomFormFiels(
-                              title: "Số seal",
-                              controller: controller.numberCont1Seal1,
-                              hintText: "Nhập Số Seal",
-                              icon: Icons.abc,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            CustomFormFiels(
-                              title: "Số Khối",
-                              controller: controller.numberKhoi,
-                              hintText: "",
-                              icon: Icons.abc,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            CustomFormFiels(
-                              title: "Số Kiện",
-                              controller: controller.numberKien,
-                              hintText: "",
-                              icon: Icons.abc,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            CustomFormFiels(
-                              title: "Số Book",
-                              controller: controller.numberBook,
-                              hintText: "Nhập Số Book",
-                              icon: Icons.abc,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            CustomFormFiels(
-                              title: "Số Tấn",
-                              controller: controller.numberTan,
-                              hintText: "Nhập Số Tấn",
-                              icon: Icons.abc,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                          ],
-                        )
+                      ? _formCar(controller)
                       : controller.selectTypeCar.value != "" &&
                               controller.selectTypeCar.value.maLoaiXe == "con"
                           ? _listNumberCont(controller, size)
                           : Container(),
                 ),
                 numberSelectCont >= 1 ? _contFirt(controller) : Container(),
-                numberSelectCont >= 2 ? _contFirt(controller) : Container(),
+                numberSelectCont >= 2 ? _contSecond(controller) : Container(),
                 ButtonFormSubmit(
                     onPressed: () {
-                      if (dateinput.text == "" ||
-                          controller.numberCar.text == "" ||
-                          controller.selectCustomer.value == "" ||
-                          controller.selectDriver.value == "" ||
-                          controller.selectWareHome.value == "" ||
-                          controller.selectTypeProduct.value == "" ||
-                          controller.selectTypeCar.value == "") {
-                        getSnack(messageText: "Nhập đầy đủ thông tin *");
-                      }
-                      // print(dateinput.text);
-                      else {
-                        if (controller.selectTypeCar.value.maLoaiXe == "con") {
-                          if (numberSelectCont != 0) {
-                            controller.postRegisterCustomer(
-                              idTaixe: controller.selectDriver.value.maTaixe,
-                              maKhachHang:
-                                  controller.selectCustomer.value.maKhachHang!,
-                              time: dateinput.text,
-                              idKho: controller.selectWareHome.value.maKho,
-                              idCar: controller.selectTypeCar.value.maLoaiXe,
-                              numberCar: controller.numberCar.text,
-                              numberCont1: controller.numberCont1.text,
-                              numberCont2: controller.numberCont2.text,
-                              numberCont1Seal1:
-                                  controller.numberCont1Seal1.text,
-                              numberCont1Seal2:
-                                  controller.numberCont1Seal2.text,
-                              numberKhoi:
-                                  double.parse(controller.numberKhoi.text),
-                              numberKien:
-                                  double.parse(controller.numberKien.text),
-                              numberBook: controller.numberBook.text,
-                              numberTan:
-                                  double.parse(controller.numberTan.text),
-                              numberCont2Seal1:
-                                  controller.numberCont2Seal1.text,
-                              numberCont2Seal2:
-                                  controller.numberCont2Seal2.text,
-                              numberKhoi1:
-                                  double.parse(controller.numberKhoi1.text),
-                              numberKien1:
-                                  double.parse(controller.numberKien1.text),
-                              numberBook1: controller.numberBook1.text,
-                              idProduct:
-                                  controller.selectTypeProduct.value.maloaiHang,
-                              numberCont: numberSelectCont,
-                              numberTan1:
-                                  double.parse(controller.numberTan1.text),
-                            );
-                          } else {
-                            getSnack(messageText: "Chọn số lượng cont * !");
-                          }
-                        } else {
-                          controller.postRegisterCustomer(
-                            idTaixe: controller.selectDriver.value.maTaixe,
-                            maKhachHang:
-                                controller.selectCustomer.value.maKhachHang!,
-                            time: dateinput.text,
-                            idKho: controller.selectWareHome.value.maKho,
-                            idCar: controller.selectTypeCar.value.maLoaiXe,
-                            numberCar: controller.numberCar.text,
-                            numberCont1: controller.numberCont1.text,
-                            numberCont2: controller.numberCont2.text,
-                            numberCont1Seal1: controller.numberCont1Seal1.text,
-                            numberCont1Seal2: controller.numberCont1Seal2.text,
-                            numberKhoi:
-                                double.parse(controller.numberKhoi.text),
-                            numberKien:
-                                double.parse(controller.numberKien.text),
-                            numberBook: controller.numberBook.text,
-                            numberTan: double.parse(controller.numberTan.text),
-                            numberCont2Seal1: controller.numberCont2Seal1.text,
-                            numberCont2Seal2: controller.numberCont2Seal2.text,
-                            numberKhoi1:
-                                double.parse(controller.numberKhoi1.text),
-                            numberKien1:
-                                double.parse(controller.numberKien1.text),
-                            numberBook1: controller.numberBook1.text,
-                            numberTan1:
-                                double.parse(controller.numberTan1.text),
-                            idProduct:
-                                controller.selectTypeProduct.value.maloaiHang,
-                            numberCont: numberSelectCont,
-                          );
-                        }
-                      }
+                      onSignUp(controller);
                     },
                     text: "Đăng ký")
               ],
@@ -387,115 +266,176 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     );
   }
 
-  Widget _contFirt(CustomerRegisterController controller) {
+  Widget _formCar(CustomerRegisterController controller) {
     return Column(
       children: [
-        const Divider(),
         CustomFormFiels(
-          title: "Số cont 1",
-          controller: controller.numberCont1,
-          hintText: "Nhập số cont",
-          icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
-        ),
-        CustomFormFiels(
-          title: "Số seal 1",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont1Seal1,
-          hintText: "Nhập số seal",
+          hintText: "Nhập Số Seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 2",
-          controller: controller.numberCont1Seal2,
-          hintText: "Nhập số seal",
-          icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
-        ),
-        CustomFormFiels(
-          title: "Số book",
+          keyboardType: TextInputType.text,
+          title: "Số Book",
           controller: controller.numberBook,
-          hintText: "Nhập số book",
+          hintText: "Nhập Số Book",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số kiện",
-          controller: controller.numberKien,
-          hintText: "Nhập số kiện",
-          icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
-        ),
-        CustomFormFiels(
-          title: "Số khối",
-          controller: controller.numberKhoi,
-          hintText: "Nhập số khối",
-          icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
-        ),
-        CustomFormFiels(
-          title: "Số tấn",
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
           controller: controller.numberTan,
-          hintText: "Nhập số tấn",
+          hintText: "Nhập Khối lượng (Kg)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CDM)",
+          controller: controller.numberKhoi,
+          hintText: "",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Kiện",
+          controller: controller.numberKien,
+          hintText: "",
+          icon: Icons.abc,
+          color: Colors.green,
         ),
       ],
     );
   }
 
-  Widget contSecond(CustomerRegisterController controller) {
+  Widget _contFirt(CustomerRegisterController controller) {
     return Column(
       children: [
         const Divider(),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số cont 1",
+          controller: controller.numberCont1,
+          hintText: "Nhập số cont",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số seal",
+          controller: controller.numberCont1Seal1,
+          hintText: "Nhập số seal",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số seal",
+          controller: controller.numberCont1Seal2,
+          hintText: "Nhập số seal",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số book",
+          controller: controller.numberBook,
+          hintText: "Nhập số book",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số kiện",
+          controller: controller.numberKien,
+          hintText: "Nhập số kiện",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
+          controller: controller.numberTan,
+          hintText: "Nhập Khối lượng (Kg)",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CDM)",
+          controller: controller.numberKhoi,
+          hintText: "Nhập Số Khối (CDM)",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+      ],
+    );
+  }
+
+  Widget _contSecond(CustomerRegisterController controller) {
+    return Column(
+      children: [
+        const Divider(),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số cont 2",
           controller: controller.numberCont2,
           hintText: "Nhập số cont",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 1",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont2Seal1,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số seal 2",
+          keyboardType: TextInputType.text,
+          title: "Số seal",
           controller: controller.numberCont2Seal2,
           hintText: "Nhập số seal",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.text,
           title: "Số book",
           controller: controller.numberBook1,
           hintText: "Nhập số book",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
+          keyboardType: TextInputType.number,
           title: "Số kiện",
           controller: controller.numberKien1,
           hintText: "Nhập số kiện",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
         ),
         CustomFormFiels(
-          title: "Số khối",
-          controller: controller.numberKhoi1,
-          hintText: "Nhập số khối",
-          icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
-        ),
-        CustomFormFiels(
-          title: "Số tấn",
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
           controller: controller.numberTan1,
-          hintText: "Nhập số tấn",
+          hintText: "Nhập Khối lượng (Kg)",
           icon: Icons.abc,
-          color: Theme.of(context).primaryColorLight,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CDM)",
+          controller: controller.numberKhoi1,
+          hintText: "Nhập Số Khối (CDM)",
+          icon: Icons.abc,
+          color: Colors.green,
         ),
       ],
     );
@@ -503,11 +443,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
 
   Widget _numberCar(CustomerRegisterController controller) {
     return CustomFormFiels(
+      keyboardType: TextInputType.text,
       title: "Số xe *",
       controller: controller.numberCar,
       hintText: "Nhập số xe",
       icon: Icons.abc,
-      color: Theme.of(context).primaryColorLight,
+      color: Colors.green,
     );
   }
 
@@ -540,7 +481,9 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
               setState(() {
                 controller.selectCustomer.value.maKhachHang =
                     value!.maKhachHang;
-                print(controller.selectCustomer.value.maKhachHang);
+                controller.selectCustomer.value.tenKhachhang =
+                    value.tenKhachhang;
+                print(controller.selectCustomer.value.tenKhachhang);
               });
             },
             dropdownBuilder:
@@ -618,12 +561,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           Container(
             padding: const EdgeInsets.only(left: 5),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Tài xế *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -712,12 +655,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           Container(
             padding: const EdgeInsets.only(left: 5),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Kho *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -816,12 +759,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           Container(
             padding: const EdgeInsets.only(left: 5),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Loại hàng *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -920,12 +863,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         Container(
           padding: const EdgeInsets.only(left: 5),
           child: Row(
-            children: [
+            children: const [
               Text(
                 "Số lượng cont *",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
+                  color: Colors.green,
                   fontSize: 16,
                 ),
               )
@@ -954,6 +897,11 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       numberSelectCont = int.parse(value);
                     });
                   },
+                  alignment: Alignment.centerLeft,
+                  style: const TextStyle(
+                    color: Colors.orangeAccent,
+                    fontSize: 16,
+                  ),
                   underline: Container(color: Colors.transparent),
                   items: numberCont.map<DropdownMenuItem<String>>(
                     (String value) {
@@ -980,12 +928,12 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           Container(
             padding: const EdgeInsets.only(left: 5),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Loại xe *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -1073,7 +1021,79 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     );
   }
 
-  final List<String> numberCont = ["1", "2"];
+  onSignUp(CustomerRegisterController controller) {
+    if (dateinput.text == "" ||
+        controller.numberCar.text == "" ||
+        controller.selectCustomer.value == "" ||
+        controller.selectDriver.value == "" ||
+        controller.selectWareHome.value == "" ||
+        controller.selectTypeProduct.value == "" ||
+        controller.selectTypeCar.value == "") {
+      getSnack(messageText: "Nhập đầy đủ thông tin *");
+    }
+    // print(dateinput.text);
+    else {
+      if (controller.selectTypeCar.value.maLoaiXe == "con") {
+        if (controller.selectItems != null) {
+          controller.postRegisterCustomer(
+            idTaixe: controller.selectDriver.value.maTaixe,
+            maKhachHang: controller.selectCustomer.value.maKhachHang!,
+            time: dateinput.text,
+            idKho: controller.selectWareHome.value.maKho,
+            idCar: controller.selectTypeCar.value.maLoaiXe,
+            numberCar: controller.numberCar.text,
+            numberCont1: controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text,
+            numberKhoi: double.parse(controller.numberKhoi.text),
+            numberKien: double.parse(controller.numberKien.text),
+            numberBook: controller.numberBook.text,
+            numberTan: double.parse(controller.numberTan.text),
+            numberCont2Seal1: controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text,
+            numberKhoi1: double.parse(controller.numberKhoi1.text),
+            numberKien1: double.parse(controller.numberKien1.text),
+            numberBook1: controller.numberBook1.text,
+            idProduct: controller.selectTypeProduct.value.maloaiHang,
+            numberTan1: double.parse(controller.numberTan1.text),
+            numberCont: numberSelectCont,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang,
+          );
+        } else {
+          getSnack(messageText: "Chọn số lượng cont * !");
+        }
+      } else {
+        controller.postRegisterCustomer(
+          idTaixe: controller.selectDriver.value.maTaixe,
+          maKhachHang: controller.selectCustomer.value.maKhachHang!,
+          time: dateinput.text,
+          idKho: controller.selectWareHome.value.maKho,
+          idCar: controller.selectTypeCar.value.maLoaiXe,
+          numberCar: controller.numberCar.text,
+          numberCont1: controller.numberCont1.text,
+          numberCont2: controller.numberCont2.text,
+          numberCont1Seal1: controller.numberCont1Seal1.text,
+          numberCont1Seal2: controller.numberCont1Seal2.text,
+          numberKhoi: double.parse(controller.numberKhoi.text),
+          numberKien: double.parse(controller.numberKien.text),
+          numberBook: controller.numberBook.text,
+          numberTan: double.parse(controller.numberTan.text),
+          numberCont2Seal1: controller.numberCont2Seal1.text,
+          numberCont2Seal2: controller.numberCont2Seal2.text,
+          numberKhoi1: double.parse(controller.numberKhoi1.text),
+          numberKien1: double.parse(controller.numberKien1.text),
+          numberBook1: controller.numberBook1.text,
+          numberTan1: double.parse(controller.numberTan1.text),
+          idProduct: controller.selectTypeProduct.value.maloaiHang,
+          numberCont: numberSelectCont,
+          nameCustomer: controller.selectCustomer.value.tenKhachhang,
+        );
+      }
+    }
+  }
+
+  final List<String> numberCont = ["0", "1", "2"];
   void getSnack({required String messageText}) {
     Get.snackbar(
       "",

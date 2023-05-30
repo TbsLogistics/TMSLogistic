@@ -9,9 +9,7 @@ import 'package:in_app_update/in_app_update.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
-import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_hrm_model.dart';
-import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_npt_model.dart';
-import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_tms_model.dart';
+
 import 'package:tbs_logistics_tms/app/page/home_page/model/user_hrm_model.dart';
 import 'package:tbs_logistics_tms/app/page/login/model/user_npt_model.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/model/user_model.dart';
@@ -38,7 +36,7 @@ class HomeController extends GetxController {
   void onInit() {
     // _scaffoldKey;
     getUser();
-    // checkForUpdate();
+    checkForUpdate();
     super.onInit();
   }
 

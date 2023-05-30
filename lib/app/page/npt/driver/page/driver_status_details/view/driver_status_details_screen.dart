@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
@@ -37,23 +38,23 @@ class ListStatusUnfinishedDetailsScreen
               Get.back();
             },
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.QR_CODE_DRIVER_SCREEN,
-                  arguments:
-                      controller.getDriverFinishedScreen.value.maPhieuvao,
-                );
-              },
-              icon: Icon(
-                Icons.qr_code_rounded,
-                color: Theme.of(context).primaryColorLight,
-                size: 25,
-              ),
-            ),
-            const SizedBox(width: 15),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       Get.toNamed(
+          //         Routes.QR_CODE_DRIVER_SCREEN,
+          //         arguments:
+          //             controller.getDriverFinishedScreen.value.maPhieuvao,
+          //       );
+          //     },
+          //     icon: Icon(
+          //       Icons.qr_code_rounded,
+          //       color: Theme.of(context).primaryColorLight,
+          //       size: 25,
+          //     ),
+          //   ),
+          //   const SizedBox(width: 15),
+          // ],
         ),
         body: Container(
             height: size.height,
@@ -98,9 +99,7 @@ class ListStatusUnfinishedDetailsScreen
                                             context,
                                             controller
                                                 .getDriverFinishedScreen.value),
-                                        SizedBox(
-                                          height: size.width * 0.05,
-                                        ),
+                                        _qrImage(controller, size),
                                         controller.showForm.value
                                             ? _buildFormStatus(
                                                 controller,
@@ -135,6 +134,66 @@ class ListStatusUnfinishedDetailsScreen
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  Widget _qrImage(DriverStatusDetailsController controller, Size size) {
+    return Card(
+      shadowColor: Colors.grey,
+      elevation: 10,
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(
+          color: Colors.orangeAccent,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Center(
+              child: RepaintBoundary(
+                key: controller.qrDriverKey,
+                child: Obx(() {
+                  return QrImage(
+                    backgroundColor: Colors.white,
+                    data:
+                        "${controller.getDriverFinishedScreen.value.maPhieuvao},${controller.getDriverFinishedScreen.value.taixeRe!.maTaixe}",
+                    version: QrVersions.auto,
+                    size: size.width * 0.3,
+                  );
+                }),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.orangeAccent,
+              border: Border.all(width: 1, color: Colors.white),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: TextButton.icon(
+              onPressed: controller.onShare,
+              icon: const Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
+              label: const Text(
+                "Share",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -605,9 +664,9 @@ class ListStatusUnfinishedDetailsScreen
                         Expanded(
                           flex: 3,
                           child: Center(
-                            child: items.taixeRe!.khachhangRe != null
+                            child: items.khachhangRe != null
                                 ? Text(
-                                    "${items.taixeRe!.khachhangRe!.tenKhachhang}",
+                                    "${items.khachhangRe!.tenKhachhang}",
                                     style: const TextStyle(
                                         fontSize: 16,
                                         color: Colors.orangeAccent),

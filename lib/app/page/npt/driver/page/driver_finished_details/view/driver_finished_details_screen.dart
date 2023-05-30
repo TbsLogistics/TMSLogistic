@@ -452,7 +452,7 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: const [
                             Text(
-                              "Số Khối",
+                              "Số Khối (CDM)",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 16,
@@ -663,7 +663,7 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: const [
                             Text(
-                              "Số Khối",
+                              "Số Khối (CDM)",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 16,

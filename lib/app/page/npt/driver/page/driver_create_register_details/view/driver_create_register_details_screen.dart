@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/register_driver_model.dart';
@@ -31,19 +32,19 @@ class DriverCreateRegisterDetailsScreen
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN,
-                  arguments: controller.id.value,
-                );
-              },
-              icon: Icon(
-                Icons.qr_code_rounded,
-                size: 25,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     Get.toNamed(
+            //       Routes.QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN,
+            //       arguments: controller.id.value,
+            //     );
+            //   },
+            //   icon: Icon(
+            //     Icons.qr_code_rounded,
+            //     size: 25,
+            //     color: Theme.of(context).primaryColorLight,
+            //   ),
+            // ),
             IconButton(
               onPressed: () {
                 Get.offAllNamed(Routes.DRIVER_PAGE);
@@ -63,19 +64,19 @@ class DriverCreateRegisterDetailsScreen
               children: [
                 _buildDayTime(
                     controller.detailsTicker.value, size, day, hour, context),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 //Loại xe + Số xe
-                _buildNumberCar(
-                  items: controller.detailsTicker.value,
-                  size: size,
-                  context: context,
-                  content: controller.detailsTicker.value.loaixe == "tai"
-                      ? "Xe tải"
-                      : "Xe cont",
-                  title: 'Loại xe',
-                  title2: 'Số xe',
-                  content2: controller.detailsTicker.value.soxe.toString(),
-                ),
+                // _buildNumberCar(
+                //   items: controller.detailsTicker.value,
+                //   size: size,
+                //   context: context,
+                //   content: controller.detailsTicker.value.loaixe == "tai"
+                //       ? "Xe tải"
+                //       : "Xe cont",
+                //   title: 'Loại xe',
+                //   title2: 'Số xe',
+                //   content2: controller.detailsTicker.value.soxe.toString(),
+                // ),
                 //Loại hàng + Kho
                 _buildNumberCar(
                   items: controller.detailsTicker.value,
@@ -88,16 +89,20 @@ class DriverCreateRegisterDetailsScreen
                   title2: 'Kho',
                   content2: controller.detailsTicker.value.kho.toString(),
                 ),
-                const SizedBox(height: 10),
-                _buildProduct(controller.detailsTicker.value, size, context),
-                const SizedBox(height: 10),
-                _buildCustomer(controller.detailsTicker.value, size, context),
+                // const SizedBox(height: 10),
+
+                _buildCustomer(
+                    controller.detailsTicker.value, size, context, controller),
                 const SizedBox(height: 10),
                 controller.detailsTicker.value.loaixe == "tai"
                     ? _buildProductCar(
                         controller.detailsTicker.value, size, context)
-                    : _buildProductCont(controller.detailsTicker.value, size,
-                        context, controller),
+                    : controller.numberCont.value != 0
+                        ? _buildProductCont(controller.detailsTicker.value,
+                            size, context, controller)
+                        : Container(),
+                const SizedBox(height: 10),
+                _qrImage(controller, size),
               ],
             ),
           ),
@@ -105,6 +110,65 @@ class DriverCreateRegisterDetailsScreen
       ),
     );
   }
+}
+
+Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
+  return Column(
+    children: [
+      Card(
+        shadowColor: Colors.grey,
+        elevation: 10,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: Colors.orangeAccent,
+            width: 1,
+          ),
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Center(
+            child: RepaintBoundary(
+              key: controller.qrDriverKey,
+              child: Obx(() {
+                return QrImage(
+                  backgroundColor: Colors.white,
+                  data:
+                      "${controller.id.value},${controller.detailsTicker.value.maTaixe}",
+                  version: QrVersions.auto,
+                  size: size.width * 0.4,
+                );
+              }),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 30),
+      Container(
+        height: 40,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          border: Border.all(width: 1, color: Colors.white),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: TextButton.icon(
+          onPressed: controller.onShare,
+          icon: const Icon(
+            Icons.share,
+            color: Colors.white,
+          ),
+          label: const Text(
+            "Share Qr Code",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 Widget _buildNumberCar(
@@ -241,8 +305,8 @@ Widget _buildProduct(
   );
 }
 
-Widget _buildCustomer(
-    RegisterForDriverModel items, Size size, BuildContext context) {
+Widget _buildCustomer(RegisterForDriverModel items, Size size,
+    BuildContext context, DriverCreateRegisterDetailsController controller) {
   return Card(
     shadowColor: Colors.grey,
     elevation: 10,
@@ -283,7 +347,7 @@ Widget _buildCustomer(
             flex: 1,
             child: Center(
               child: Text(
-                "${items.maKhachHang}",
+                controller.nameCustomer.value,
                 style: TextStyle(
                     fontSize: 16, color: Theme.of(context).primaryColorLight),
               ),
@@ -400,7 +464,7 @@ Widget _buildProductCar(
       ),
     ),
     child: Container(
-      height: size.width * 0.7,
+      height: size.width * 0.4,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -426,7 +490,7 @@ Widget _buildProductCar(
                         style: CustomTextStyle.titleDetails,
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       Text(
                         "${items.cont1seal1}",
@@ -438,30 +502,8 @@ Widget _buildProductCar(
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Số Kiện : ",
-                              style: CustomTextStyle.titleDetails,
-                            ),
-                            Text(
-                              "${items.soKien}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Expanded(
                   child: Padding(
@@ -501,39 +543,16 @@ Widget _buildProductCar(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Text(
-                              "Số Khối : ",
+                              "Kg/ CDM/ Số Kiện :",
                               style: CustomTextStyle.titleDetails,
                             ),
-                            Text(
-                              "${items.sokhoi}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Số Tấn : ",
-                              style: CustomTextStyle.titleDetails,
-                            ),
-                            Text(
-                              "${items.soTan}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight,
+                            Expanded(
+                              child: Text(
+                                " ${items.soTan}/ ${items.sokhoi}/ ${items.soKien}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
                               ),
                             ),
                           ],
@@ -564,7 +583,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
       ),
     ),
     child: Container(
-      height: size.width * 0.9,
+      height: size.width * 0.6,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -670,38 +689,6 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: const [
                                   Text(
-                                    "Số Kiện",
-                                    style: CustomTextStyle.titleDetails,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${items.soKien}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
                                     "Số Book",
                                     style: CustomTextStyle.titleDetails,
                                   ),
@@ -734,7 +721,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: const [
                                   Text(
-                                    "Số Khối",
+                                    "Kg/ CDM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,
                                   ),
                                 ],
@@ -743,44 +730,14 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "${items.sokhoi}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    "Số Tấn",
-                                    style: CustomTextStyle.titleDetails,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${items.soTan}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
+                                  Expanded(
+                                    child: Text(
+                                      "${items.soTan}/${items.sokhoi}/${items.soKien}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color:
+                                            Theme.of(context).primaryColorLight,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -890,38 +847,6 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: const [
                                   Text(
-                                    "Số Kiện",
-                                    style: CustomTextStyle.titleDetails,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${items.sokien1}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
                                     "Số Book",
                                     style: CustomTextStyle.titleDetails,
                                   ),
@@ -954,7 +879,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: const [
                                   Text(
-                                    "Số Khối",
+                                    "Kg/ CDM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,
                                   ),
                                 ],
@@ -963,44 +888,14 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "${items.sokhoi1}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    "Số Tấn",
-                                    style: CustomTextStyle.titleDetails,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${items.soTan1}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
+                                  Expanded(
+                                    child: Text(
+                                      "${items.soTan1}/${items.sokhoi1}/${items.sokien1}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color:
+                                            Theme.of(context).primaryColorLight,
+                                      ),
                                     ),
                                   ),
                                 ],

@@ -54,6 +54,8 @@ class DriverCreateRegisterController extends GetxController {
 
   Rx<ListCustomerForDriverModel> selectCustomer =
       ListCustomerForDriverModel().obs;
+  Rx<ListCustomerForDriverModel> selectCustomerName =
+      ListCustomerForDriverModel().obs;
 
   Rx<ListWareHomeModel> selectWareHome = ListWareHomeModel().obs;
 
@@ -88,28 +90,30 @@ class DriverCreateRegisterController extends GetxController {
     return listClient;
   }
 
-  Future<void> postRegisterDriver(
-      {required String? maKhachHang,
-      required String? time,
-      required String? typeWarehome,
-      required String? typeCar,
-      required String? numberCar,
-      required String? numberCont1,
-      required String? numberCont1Seal1,
-      required String? numberCont1Seal2,
-      required double? numberKien,
-      required double? numberKhoi,
-      required String? numberBook,
-      required double? numberTan,
-      required String? numberCont2,
-      required String? numberCont2Seal1,
-      required String? numberCont2Seal2,
-      required double? numberKien1,
-      required double? numberKhoi1,
-      required String? numberBook1,
-      required double? numberTan1,
-      required String? typeProduct,
-      required int? numberCont}) async {
+  Future<void> postRegisterDriver({
+    required String? maKhachHang,
+    required String? time,
+    required String? typeWarehome,
+    required String? typeCar,
+    required String? numberCar,
+    required String? numberCont1,
+    required String? numberCont1Seal1,
+    required String? numberCont1Seal2,
+    required double? numberKien,
+    required double? numberKhoi,
+    required String? numberBook,
+    required double? numberTan,
+    required String? numberCont2,
+    required String? numberCont2Seal1,
+    required String? numberCont2Seal2,
+    required double? numberKien1,
+    required double? numberKhoi1,
+    required String? numberBook1,
+    required double? numberTan1,
+    required String? typeProduct,
+    required int? numberCont,
+    required String? nameCustomer,
+  }) async {
     var dio = Dio();
     Response response;
     var token = await SharePerApi().getTokenNPT();
@@ -217,6 +221,7 @@ class DriverCreateRegisterController extends GetxController {
             ),
             data["data1"],
             numberCont,
+            nameCustomer,
           ]);
         }
       }

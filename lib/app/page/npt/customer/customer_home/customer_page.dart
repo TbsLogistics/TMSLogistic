@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/controller/customer_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_home/view/customer_screen.dart';
 
@@ -23,7 +24,7 @@ class _CustomerPageState extends State<CustomerPage> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              Get.back();
+              Get.toNamed(Routes.HOME_PAGE);
             },
             icon: const Icon(
               Icons.arrow_back_ios_new_outlined,

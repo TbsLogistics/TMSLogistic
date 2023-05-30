@@ -85,23 +85,23 @@ class LoginController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        // Get.snackbar(
-        //   "Thông báo",
-        //   "Nhập thiếu tài khoản hoặc mật khẩu !",
-        //   backgroundColor: Colors.white,
-        //   titleText: const Text(
-        //     "Thông báo",
-        //     style: TextStyle(
-        //       color: Colors.red,
-        //     ),
-        //   ),
-        //   messageText: Text(
-        //     "${e.response!.data} !",
-        //     style: const TextStyle(
-        //       color: Colors.green,
-        //     ),
-        //   ),
-        // );
+        Get.snackbar(
+          "Thông báo",
+          "Nhập thiếu tài khoản hoặc mật khẩu !",
+          backgroundColor: Colors.white,
+          titleText: const Text(
+            "Thông báo",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+          messageText: Text(
+            "${e.response!.data} !",
+            style: const TextStyle(
+              color: Colors.green,
+            ),
+          ),
+        );
       } else if (e.response!.statusCode == 500) {
         Get.snackbar(
           "Thông báo",
@@ -153,43 +153,43 @@ class LoginController extends GetxController {
       if (response.statusCode == AppConstants.RESPONSE_CODE_SERVER_ERROR) {
         getSnack(messageText: "Lỗi máy chủ, vui lòng thử lại sau 1 phút!");
       } else if (response.statusCode == AppConstants.RESPONSE_CODE_ERROR) {
-        // getSnack(messageText: "Tên đăng nhập hoặc mật khẩu không đúng");
+        getSnack(messageText: "Tên đăng nhập hoặc mật khẩu không đúng");
         // print("Tên đăng nhập hoặc mật khẩu không đúng");
       } else if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
         jsonRespone = response.data;
 
         if (response.data["status_code"] == 204) {
-          // Get.defaultDialog(
-          //   title: "Thông báo",
-          //   titleStyle: const TextStyle(
-          //       color: Colors.redAccent,
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold),
-          //   middleText: response.data["detail"],
-          //   confirmTextColor: Colors.white,
-          //   backgroundColor: Colors.orangeAccent,
-          //   confirm: TextButton(
-          //       style: ButtonStyle(
-          //         backgroundColor:
-          //             MaterialStateProperty.all<Color>(Colors.white),
-          //         side: MaterialStateProperty.all(
-          //           const BorderSide(width: 1, color: Colors.white),
-          //         ),
-          //       ),
-          //       onPressed: () {
-          //         Get.back();
-          //       },
-          //       child: const Text(
-          //         "Xác nhận",
-          //         style: TextStyle(
-          //           color: Colors.orangeAccent,
-          //           fontSize: 16,
-          //         ),
-          //       )),
-          //   onConfirm: () {
-          //     Get.back();
-          //   },
-          // );
+          Get.defaultDialog(
+            title: "Thông báo",
+            titleStyle: const TextStyle(
+                color: Colors.redAccent,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+            middleText: response.data["detail"],
+            confirmTextColor: Colors.white,
+            backgroundColor: Colors.orangeAccent,
+            confirm: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  side: MaterialStateProperty.all(
+                    const BorderSide(width: 1, color: Colors.white),
+                  ),
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text(
+                  "Xác nhận",
+                  style: TextStyle(
+                    color: Colors.orangeAccent,
+                    fontSize: 16,
+                  ),
+                )),
+            onConfirm: () {
+              Get.back();
+            },
+          );
         } else {
           var tokens = LoginUserNptModel.fromJson(jsonRespone);
           // tokens_KH = LoginCustomerModel.fromJson(jsonData);
@@ -276,72 +276,21 @@ class LoginController extends GetxController {
         var tokens = LoginUserHrmModel.fromJson(jsonRespone);
 
         if (response.data["rCode"] == 1) {
-          Get.defaultDialog(
-            barrierDismissible: false,
-            title: "Thông báo",
-            middleText: "Chưa có tài khoản ! Bạn có muốn tạo tài khoản ?",
-            confirmTextColor: Colors.orangeAccent,
-            backgroundColor: Colors.white,
-            buttonColor: Colors.white,
-            cancel: Container(
-              height: 35,
-              width: 100,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Colors.orangeAccent,
-                ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextButton(
-                child: const Text(
-                  "Không",
-                  style: TextStyle(color: Colors.orangeAccent),
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-            ),
-            confirm: Container(
-              height: 35,
-              width: 100,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Colors.orangeAccent,
-                ),
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.orangeAccent,
-              ),
-              child: TextButton(
-                child: const Text(
-                  "Có",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  createAccount(
-                    username: username,
-                  );
-                  Get.back();
-                },
-              ),
-            ),
-          );
+          diaLogCreateAccout(username);
         } else if (response.data["rCode"] == 2) {
           passwordController.text = response.data["rData"]["password"];
         } else if (response.data["rCode"] == 0) {
           // print("Tài khoản hoặc mật khẩu không đúng !");
-          // Get.defaultDialog(
-          //   barrierDismissible: false,
-          //   title: "Thông báo",
-          //   middleText: "Tài khoản hoặc mật khẩu không đúng !",
-          //   confirmTextColor: Colors.orangeAccent,
-          //   backgroundColor: Colors.white,
-          //   onConfirm: () {
-          //     Get.back();
-          //   },
-          // );
+          Get.defaultDialog(
+            barrierDismissible: false,
+            title: "Thông báo",
+            middleText: "Tài khoản hoặc mật khẩu không đúng !",
+            confirmTextColor: Colors.orangeAccent,
+            backgroundColor: Colors.white,
+            onConfirm: () {
+              Get.back();
+            },
+          );
         } else if (response.data["rCode"] == 3) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           // ignore: unused_local_variable
@@ -361,7 +310,7 @@ class LoginController extends GetxController {
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
-        // getSnack(messageText: e.response!.statusMessage.toString());
+        getSnack(messageText: e.response!.statusMessage.toString());
         // print(e.response!.statusMessage);
       }
     }
@@ -511,19 +460,246 @@ class LoginController extends GetxController {
     }
   }
 
+  Future<void> fetchMedia(
+      {required String account, required String password}) async {
+    var dio = Dio();
+
+    RxList listLogin = [].obs;
+    Response responseNpt;
+    Response responseHrm;
+    Response responseTms;
+
+    var loginTms = LoginModel(
+      username: account,
+      password: md5.convert(utf8.encode(password)).toString(),
+    );
+    var jsonTms = loginTms.toJson();
+
+    var loginNpt = LoginModel(
+      username: account,
+      password: password,
+    );
+    var jsonNpt = loginNpt.toJson();
+
+    var loginHrm = LoginHrmModel(
+      username: account,
+      password: password,
+      autogen: 0,
+    );
+    var jsonHrm = loginHrm.toJson();
+
+    try {
+      responseNpt = await dio.post(
+        "${AppConstants.urlBaseNpt}/login",
+        data: jsonNpt,
+      );
+
+      if (responseNpt.statusCode == 200) {
+        if (responseNpt.data["status_code"] == 204) {
+          //++++++++++++++++++++++++++++Đăng nhập HRM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+          responseHrm = await dio.post(
+            "${AppConstants.urlBaseHrm}/Login",
+            data: jsonHrm,
+          );
+
+          if (responseHrm.statusCode == 200) {
+            if (responseHrm.data["rCode"] == 1) {
+              diaLogCreateAccout(account);
+            } else if (responseHrm.data["rCode"] == 2) {
+              passwordController.text = response.data["rData"]["password"];
+            } else if (responseHrm.data["rCode"] == 3) {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              // ignore: unused_local_variable
+              var accessToken = await prefs.setString(
+                  AppConstants.KEY_ACCESS_TOKEN_HRM,
+                  "${responseHrm.data["rData"]["token"]}");
+              Map<String, dynamic> decodedTokenHrm =
+                  JwtDecoder.decode(responseHrm.data["rData"]["token"]);
+              // print(decodedTokenHrm);
+              getDialog();
+              getSnack(messageText: "Đăng nhập thành công !");
+              Future.delayed(const Duration(seconds: 1), () {
+                Get.toNamed(Routes.HOME_PAGE);
+              });
+              accountController.text = "";
+              passwordController.text = "";
+            } else if (responseHrm.data["rCode"] == 0) {
+              //+++++++++++++++++++++++++++++++++++++++++++++++++Đăng nhập của TMS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              responseTms = await dio.post(
+                "${AppConstants.urlBaseTms}/api/User/Login",
+                data: jsonTms,
+              );
+              if (responseTms.statusCode == 200) {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                var data = responseTms.data;
+                var access_token_tms = await prefs.setString(
+                  AppConstants.KEY_ACCESS_TOKEN_TMS,
+                  data,
+                );
+                Map<String, dynamic> decodedToken = JwtDecoder.decode(data);
+                // ignore: unused_local_variable
+                var idTX = await prefs.setString(
+                  AppConstants.KEY_ID_TX,
+                  decodedToken["UserName"],
+                );
+                getDialog();
+                getSnack(messageText: "Đăng nhập thành công !");
+                Future.delayed(const Duration(seconds: 1), () {
+                  Get.toNamed(Routes.HOME_PAGE);
+                });
+              }
+            }
+          }
+        }
+        //+++++++++++++++++++++++++ Đăng nhập thành công của NPT +++++++++++++++++++++++++++++++++++++++++++++++++
+        else {
+          var tokens = LoginUserNptModel.fromJson(responseNpt.data);
+          // tokens_KH = LoginCustomerModel.fromJson(jsonData);
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          Map<String, dynamic> decodedTokenNpt =
+              JwtDecoder.decode(tokens.accessToken!);
+          // print(decodedTokenNpt);
+          // ignore: unused_local_variable
+          var accessToken = await prefs.setString(
+              AppConstants.KEY_ACCESS_TOKEN_NPT, "${tokens.accessToken}");
+          //ignore: unused_local_variable
+          var roleName = await prefs.setString(
+              AppConstants.KEY_ROLE, "${tokens.data!.role}");
+
+          var roles = tokens.data!.role;
+          switch (roles) {
+            case "TX":
+              // ignore: unused_local_variable
+
+              var idUser = await prefs.setString(
+                  AppConstants.KEY_ID_USER, "${tokens.data!.taixe!.maTaixe}");
+              var idKHforTX = await prefs.setString(
+                  AppConstants.KEY_ID_KH_OF_DRIVER,
+                  "${tokens.data!.taixe!.maKhachHang}");
+              getDialog();
+              getSnack(messageText: "Đăng nhập thành công !");
+              Future.delayed(const Duration(seconds: 1), () {
+                Get.toNamed(
+                  Routes.HOME_PAGE,
+                  arguments: tokens.data!.taixe as Taixe,
+                );
+              });
+              break;
+            case "KH":
+              // ignore: unused_local_variable
+              var idKH = await prefs.setString(AppConstants.KEY_ID_KH,
+                  "${tokens.data!.khachHang!.maKhachHang}");
+              getDialog();
+              Future.delayed(const Duration(seconds: 1), () {
+                Get.toNamed(Routes.HOME_PAGE);
+              });
+              break;
+
+            default:
+              if (kDebugMode) {
+                print("Lỗi sai account");
+              }
+          }
+        }
+      }
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Tài khoản hoặc mật khẩu không đúng !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi ! Khoảng 5 phút sau đăng nhập lại !");
+      }
+    }
+
+    // try {
+    //   // Make the first API call NPT
+    //   Response responseNpt = await dio.post(
+    //     "https://tlogapi.tbslogistics.com.vn:200/login",
+    //     data: jsonNpt,
+    //     options: Options(
+    //       validateStatus: (_) => true,
+    //     ),
+    //   );
+    //   // Make the second API call HRM
+    //   Response responseHrm = await dio
+    //       .post("http://tlogapi.tbslogistics.com.vn:202/Login", data: jsonHrm);
+    //   // Make the third API call TMS
+    //   Response responseTms = await dio.post(
+    //     "https://api.tbslogistics.com.vn/api/User/Login",
+    //     data: jsonTms,
+    //   );
+    // } on DioError catch (e) {
+    //   // Handle any errors that occur during the API calls
+    //   if (e.response!.statusCode == 400) {
+    //     print("Mật khẩu không đúng !");
+    //   }
+    // }
+  }
+
   Future<void> fetchData(
       {required String account, required String password}) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      var result = await Future.wait([
-        postLoginTms(account: account, password: password),
-        postLoginNpt(account: account, password: password),
-        postLoginHrm(username: account, password: password),
-      ]).timeout(const Duration(seconds: 10));
-    } catch (e) {
-      rethrow;
-    }
+    List result = await Future.wait([
+      postLoginTms(account: account, password: password),
+      postLoginNpt(account: account, password: password),
+      postLoginHrm(username: account, password: password),
+    ]);
     // Do something with the data
+  }
+
+  diaLogCreateAccout(String username) {
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: "Thông báo",
+      middleText: "Chưa có tài khoản ! Bạn có muốn tạo tài khoản ?",
+      confirmTextColor: Colors.orangeAccent,
+      backgroundColor: Colors.white,
+      buttonColor: Colors.white,
+      cancel: Container(
+        height: 35,
+        width: 100,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.orangeAccent,
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: TextButton(
+          child: const Text(
+            "Không",
+            style: TextStyle(color: Colors.orangeAccent),
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
+      confirm: Container(
+        height: 35,
+        width: 100,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.orangeAccent,
+          ),
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.orangeAccent,
+        ),
+        child: TextButton(
+          child: const Text(
+            "Có",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            createAccount(
+              username: username,
+            );
+            Get.back();
+          },
+        ),
+      ),
+    );
   }
 
   void getDialog() {

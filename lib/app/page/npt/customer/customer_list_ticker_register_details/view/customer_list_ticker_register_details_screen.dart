@@ -413,7 +413,7 @@ class CustomerListTickerRegisterDetailsScreen
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Số Khối",
+                              "Số Khối (CDM)",
                               style: TextStyle(
                                 color: Theme.of(context).primaryColorLight,
                                 fontSize: 16,
@@ -581,7 +581,7 @@ class CustomerListTickerRegisterDetailsScreen
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Số Khối",
+                              "Số Khối (CDM)",
                               style: TextStyle(
                                 color: Theme.of(context).primaryColorLight,
                                 fontSize: 16,

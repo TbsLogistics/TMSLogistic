@@ -101,6 +101,7 @@ class CustomerRegisterController extends GetxController {
     required double? numberTan1,
     required String? idProduct,
     required int? numberCont,
+    required String? nameCustomer,
   }) async {
     var token = await SharePerApi().getTokenNPT();
     var idTeamCar = await SharePerApi().getIdKH();
@@ -203,6 +204,8 @@ class CustomerRegisterController extends GetxController {
               maloaiHang: idProduct,
             ),
             data["data1"],
+            numberCont,
+            nameCustomer,
           ]);
         }
       }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 
@@ -39,25 +40,25 @@ class CustomerListDriverDetailsOfCustomerScreen
               color: Theme.of(context).primaryColorLight,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.QR_CODE_CUSTOMER_SCREEN,
-                  arguments: [
-                    controller.statusDriver.value.maPhieuvao,
-                    controller.statusDriver.value.taixeRe!.maTaixe,
-                  ],
-                );
-              },
-              icon: Icon(
-                Icons.qr_code_rounded,
-                color: Theme.of(context).primaryColorLight,
-                size: 25,
-              ),
-            ),
-            const SizedBox(width: 15),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       Get.toNamed(
+          //         Routes.QR_CODE_CUSTOMER_SCREEN,
+          //         arguments: [
+          //           controller.statusDriver.value.maPhieuvao,
+          //           controller.statusDriver.value.taixeRe!.maTaixe,
+          //         ],
+          //       );
+          //     },
+          //     icon: Icon(
+          //       Icons.qr_code_rounded,
+          //       color: Theme.of(context).primaryColorLight,
+          //       size: 25,
+          //     ),
+          //   ),
+          //   const SizedBox(width: 15),
+          // ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -75,9 +76,7 @@ class CustomerListDriverDetailsOfCustomerScreen
                 ),
                 _buildStatus(
                     size, controller.statusDriver.value, controller, context),
-                SizedBox(
-                  height: size.width * 0.05,
-                ),
+                _qrImage(controller, size),
                 controller.showForm.value
                     ? _buildFormStatus(controller.statusDriver.value, size)
                     : Container(),
@@ -88,6 +87,70 @@ class CustomerListDriverDetailsOfCustomerScreen
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _qrImage(
+      CustomerListDriverDetailsOfCustomerController controller, Size size) {
+    return Card(
+      shadowColor: Colors.grey,
+      elevation: 10,
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(
+          color: Colors.orangeAccent,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Center(
+              child: RepaintBoundary(
+                key: controller.qrKey,
+                child: Obx(
+                  () => QrImage(
+                    backgroundColor: Colors.white,
+                    data:
+                        "${controller.statusDriver.value.maPhieuvao},${controller.statusDriver.value.taixeRe!.maTaixe}",
+                    version: QrVersions.auto,
+                    size: size.width * 0.3,
+                    embeddedImage: const AssetImage('assets/images/asd.jpg'),
+                    embeddedImageStyle: QrEmbeddedImageStyle(
+                      size: const Size.square(20),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.orangeAccent,
+              border: Border.all(width: 1, color: Colors.white),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: TextButton.icon(
+              onPressed: controller.onShare,
+              icon: const Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
+              label: const Text(
+                "Share",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

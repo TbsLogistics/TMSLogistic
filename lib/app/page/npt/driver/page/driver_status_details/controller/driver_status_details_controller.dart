@@ -1,18 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/status_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
+import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class DriverStatusDetailsController extends GetxController {
   var dio = Dio();
 
   Rx<DriverFinishedScreenModel> getDriverFinishedScreen =
       DriverFinishedScreenModel().obs;
+  GlobalKey qrDriverKey = new GlobalKey();
 
   RxBool isDriverFinishedScreen = true.obs;
   RxBool showForm = true.obs;
@@ -93,5 +99,26 @@ class DriverStatusDetailsController extends GetxController {
     } catch (e) {
       rethrow;
     }
+  }
+
+  void onShare() async {
+    var imageUint8List = await capturePng();
+    await WcFlutterShare.share(
+        sharePopupTitle: 'share',
+        fileName: 'share.png',
+        mimeType: 'image/png',
+        bytesOfFile: imageUint8List);
+  }
+
+  Future<Uint8List> capturePng() async {
+    RenderRepaintBoundary? boundary = qrDriverKey.currentContext!
+        .findRenderObject() as RenderRepaintBoundary?;
+
+    ui.Image image = await boundary!.toImage(pixelRatio: 3.0);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    var pngBytes = byteData!.buffer.asUint8List();
+    var bs64 = base64Encode(pngBytes);
+
+    return pngBytes;
   }
 }

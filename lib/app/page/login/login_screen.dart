@@ -164,7 +164,11 @@ class LoginScreen extends GetView<LoginController> {
                         height: 60,
                         child: TextButton(
                           onPressed: () {
-                            controller.fetchData(
+                            // controller.fetchData(
+                            //   account: controller.accountController.text,
+                            //   password: controller.passwordController.text,
+                            // );
+                            controller.fetchMedia(
                               account: controller.accountController.text,
                               password: controller.passwordController.text,
                             );

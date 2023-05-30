@@ -9,6 +9,7 @@ class CustomFormFiels extends StatelessWidget {
     required this.icon,
     this.validator,
     required this.color,
+    required this.keyboardType,
   });
   final String title;
   final TextEditingController controller;
@@ -16,6 +17,7 @@ class CustomFormFiels extends StatelessWidget {
   final IconData icon;
   final String Function(String?)? validator;
   final Color color;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +54,13 @@ class CustomFormFiels extends StatelessWidget {
           width: size.width - 10,
           margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
           child: TextFormField(
+            keyboardType: keyboardType,
             textCapitalization: TextCapitalization.characters,
             validator: validator,
             controller: controller,
+            style: const TextStyle(
+              color: Colors.orangeAccent,
+            ),
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
@@ -64,7 +70,6 @@ class CustomFormFiels extends StatelessWidget {
               icon: Icon(
                 icon,
                 size: 26,
-                color: Theme.of(context).primaryColorLight,
               ),
               isDense: true,
             ),
