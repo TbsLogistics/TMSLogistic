@@ -551,8 +551,8 @@ class CustomerListDriverDetailsOfCustomerScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        item.taixeRe!.khachhangRe != null
-                            ? "${item.taixeRe!.khachhangRe!.tenKhachhang}"
+                        item.khachhangRe != null
+                            ? "${item.khachhangRe!.tenKhachhang}"
                             : "",
                         style: const TextStyle(
                           fontSize: 16,
@@ -577,7 +577,7 @@ class CustomerListDriverDetailsOfCustomerScreen
                     flex: 2,
                     child: Center(
                       child: Text(
-                        "Số điện thoại",
+                        "Kho",
                         style: TextStyle(
                           color: Theme.of(context).primaryColorLight,
                           fontSize: 16,
@@ -589,9 +589,7 @@ class CustomerListDriverDetailsOfCustomerScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        item.taixeRe!.khachhangRe != null
-                            ? "${item.taixeRe!.khachhangRe!.tenKhachhang}"
-                            : "",
+                        item.phieuvao!.kho!.tenKho!,
                         style: const TextStyle(
                           fontSize: 16,
                         ),

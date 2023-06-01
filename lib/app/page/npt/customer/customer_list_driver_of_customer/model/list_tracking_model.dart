@@ -1,5 +1,8 @@
 class ListTrackingModel {
+  KhuVuc? khuVuc;
+  List<Capcongs>? capcongs;
   int? maPhieuvao;
+  KhachhangRe? khachhangRe;
   TaixeRe? taixeRe;
   LoaixeRe? loaixeRe;
   String? giovao;
@@ -9,12 +12,13 @@ class ListTrackingModel {
   bool? status;
   String? hinhanhminhhoa;
   List<Trackingtime>? trackingtime;
-  DockRe? dockRe;
-  DockRe? dockRe1;
   Loaihang? loaihang;
 
   ListTrackingModel(
-      {this.maPhieuvao,
+      {this.khuVuc,
+      this.capcongs,
+      this.maPhieuvao,
+      this.khachhangRe,
       this.taixeRe,
       this.loaixeRe,
       this.giovao,
@@ -24,12 +28,20 @@ class ListTrackingModel {
       this.status,
       this.hinhanhminhhoa,
       this.trackingtime,
-      this.dockRe,
-      this.dockRe1,
       this.loaihang});
 
   ListTrackingModel.fromJson(Map<String, dynamic> json) {
+    khuVuc = json['khuVuc'] != null ? KhuVuc.fromJson(json['khuVuc']) : null;
+    if (json['capcongs'] != null) {
+      capcongs = <Capcongs>[];
+      json['capcongs'].forEach((v) {
+        capcongs!.add(Capcongs.fromJson(v));
+      });
+    }
     maPhieuvao = json['maPhieuvao'];
+    khachhangRe = json['khachhang_re'] != null
+        ? KhachhangRe.fromJson(json['khachhang_re'])
+        : null;
     taixeRe =
         json['taixe_re'] != null ? TaixeRe.fromJson(json['taixe_re']) : null;
     loaixeRe =
@@ -48,16 +60,22 @@ class ListTrackingModel {
         trackingtime!.add(Trackingtime.fromJson(v));
       });
     }
-    dockRe = json['dock_re'] != null ? DockRe.fromJson(json['dock_re']) : null;
-    dockRe1 =
-        json['dock_re1'] != null ? DockRe.fromJson(json['dock_re1']) : null;
     loaihang =
         json['loaihang'] != null ? Loaihang.fromJson(json['loaihang']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (khuVuc != null) {
+      data['khuVuc'] = khuVuc!.toJson();
+    }
+    if (capcongs != null) {
+      data['capcongs'] = capcongs!.map((v) => v.toJson()).toList();
+    }
     data['maPhieuvao'] = maPhieuvao;
+    if (khachhangRe != null) {
+      data['khachhang_re'] = khachhangRe!.toJson();
+    }
     if (taixeRe != null) {
       data['taixe_re'] = taixeRe!.toJson();
     }
@@ -77,15 +95,75 @@ class ListTrackingModel {
     if (trackingtime != null) {
       data['trackingtime'] = trackingtime!.map((v) => v.toJson()).toList();
     }
-    if (dockRe != null) {
-      data['dock_re'] = dockRe!.toJson();
-    }
-    if (dockRe1 != null) {
-      data['dock_re1'] = dockRe1!.toJson();
-    }
     if (loaihang != null) {
       data['loaihang'] = loaihang!.toJson();
     }
+    return data;
+  }
+}
+
+class KhuVuc {
+  String? maKhuVuc;
+  String? tenKhuVuc;
+
+  KhuVuc({this.maKhuVuc, this.tenKhuVuc});
+
+  KhuVuc.fromJson(Map<String, dynamic> json) {
+    maKhuVuc = json['maKhuVuc'];
+    tenKhuVuc = json['tenKhuVuc'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['maKhuVuc'] = maKhuVuc;
+    data['tenKhuVuc'] = tenKhuVuc;
+    return data;
+  }
+}
+
+class Capcongs {
+  String? tencongBV;
+  String? tenKhoTong;
+  int? zone;
+  int? maCong;
+
+  Capcongs({this.tencongBV, this.tenKhoTong, this.zone, this.maCong});
+
+  Capcongs.fromJson(Map<String, dynamic> json) {
+    tencongBV = json['tencongBV'];
+    tenKhoTong = json['TenKhoTong'];
+    zone = json['Zone'];
+    maCong = json['maCong'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tencongBV'] = tencongBV;
+    data['TenKhoTong'] = tenKhoTong;
+    data['Zone'] = zone;
+    data['maCong'] = maCong;
+    return data;
+  }
+}
+
+class KhachhangRe {
+  String? maKhachHang;
+  String? tenKhachhang;
+  String? type;
+
+  KhachhangRe({this.maKhachHang, this.tenKhachhang, this.type});
+
+  KhachhangRe.fromJson(Map<String, dynamic> json) {
+    maKhachHang = json['maKhachHang'];
+    tenKhachhang = json['tenKhachhang'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['maKhachHang'] = maKhachHang;
+    data['tenKhachhang'] = tenKhachhang;
+    data['type'] = type;
     return data;
   }
 }
@@ -98,7 +176,6 @@ class TaixeRe {
   String? cCCD;
   String? phone;
   bool? status;
-  KhachhangRe? khachhangRe;
 
   TaixeRe(
       {this.maTaixe,
@@ -107,8 +184,7 @@ class TaixeRe {
       this.email,
       this.cCCD,
       this.phone,
-      this.status,
-      this.khachhangRe});
+      this.status});
 
   TaixeRe.fromJson(Map<String, dynamic> json) {
     maTaixe = json['maTaixe'];
@@ -118,9 +194,6 @@ class TaixeRe {
     cCCD = json['CCCD'];
     phone = json['phone'];
     status = json['status'];
-    khachhangRe = json['khachhang_re'] != null
-        ? KhachhangRe.fromJson(json['khachhang_re'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -131,58 +204,6 @@ class TaixeRe {
     data['email'] = email;
     data['CCCD'] = cCCD;
     data['phone'] = phone;
-    data['status'] = status;
-    if (khachhangRe != null) {
-      data['khachhang_re'] = khachhangRe!.toJson();
-    }
-    return data;
-  }
-}
-
-class KhachhangRe {
-  String? maKhachHang;
-  String? tenKhachhang;
-  String? diaChi;
-  String? phone;
-  String? email;
-  String? website;
-  String? maSothue;
-  String? mota;
-  bool? status;
-
-  KhachhangRe(
-      {this.maKhachHang,
-      this.tenKhachhang,
-      this.diaChi,
-      this.phone,
-      this.email,
-      this.website,
-      this.maSothue,
-      this.mota,
-      this.status});
-
-  KhachhangRe.fromJson(Map<String, dynamic> json) {
-    maKhachHang = json['maKhachHang'];
-    tenKhachhang = json['tenKhachhang'];
-    diaChi = json['diaChi'];
-    phone = json['phone'];
-    email = json['email'];
-    website = json['website'];
-    maSothue = json['maSothue'];
-    mota = json['mota'];
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['maKhachHang'] = maKhachHang;
-    data['tenKhachhang'] = tenKhachhang;
-    data['diaChi'] = diaChi;
-    data['phone'] = phone;
-    data['email'] = email;
-    data['website'] = website;
-    data['maSothue'] = maSothue;
-    data['mota'] = mota;
     data['status'] = status;
     return data;
   }
@@ -211,12 +232,16 @@ class Phieuvao {
   String? giodukien;
   String? soxe;
   Kho? kho;
+  String? loaiCont;
+  String? loaiCont1;
+  String? maTrongTai;
   String? socont1;
   String? cont1seal1;
   String? cont1seal2;
   double? soKien;
   double? sokhoi;
   String? soBook;
+  String? soReMooc;
   bool? trangthaihang;
   bool? trangthaikhoa;
   String? socont2;
@@ -232,12 +257,16 @@ class Phieuvao {
       {this.giodukien,
       this.soxe,
       this.kho,
+      this.loaiCont,
+      this.loaiCont1,
+      this.maTrongTai,
       this.socont1,
       this.cont1seal1,
       this.cont1seal2,
       this.soKien,
       this.sokhoi,
       this.soBook,
+      this.soReMooc,
       this.trangthaihang,
       this.trangthaikhoa,
       this.socont2,
@@ -253,12 +282,16 @@ class Phieuvao {
     giodukien = json['giodukien'];
     soxe = json['soxe'];
     kho = json['kho'] != null ? Kho.fromJson(json['kho']) : null;
+    loaiCont = json['loaiCont'];
+    loaiCont1 = json['loaiCont1'];
+    maTrongTai = json['maTrongTai'];
     socont1 = json['socont1'];
     cont1seal1 = json['cont1seal1'];
     cont1seal2 = json['cont1seal2'];
     soKien = json['SoKien'];
     sokhoi = json['sokhoi'];
     soBook = json['soBook'];
+    soReMooc = json['soReMooc'];
     trangthaihang = json['trangthaihang'];
     trangthaikhoa = json['trangthaikhoa'];
     socont2 = json['socont2'];
@@ -278,12 +311,16 @@ class Phieuvao {
     if (kho != null) {
       data['kho'] = kho!.toJson();
     }
+    data['loaiCont'] = loaiCont;
+    data['loaiCont1'] = loaiCont1;
+    data['maTrongTai'] = maTrongTai;
     data['socont1'] = socont1;
     data['cont1seal1'] = cont1seal1;
     data['cont1seal2'] = cont1seal2;
     data['SoKien'] = soKien;
     data['sokhoi'] = sokhoi;
     data['soBook'] = soBook;
+    data['soReMooc'] = soReMooc;
     data['trangthaihang'] = trangthaihang;
     data['trangthaikhoa'] = trangthaikhoa;
     data['socont2'] = socont2;
@@ -318,6 +355,9 @@ class Kho {
 }
 
 class Phieura {
+  String? soXeRa;
+  String? taiXeRa;
+  String? soremoocra;
   String? contRa1;
   String? contRa1seal1;
   String? contRa1seal2;
@@ -330,7 +370,10 @@ class Phieura {
   bool? trangthaikhoara1;
 
   Phieura(
-      {this.contRa1,
+      {this.soXeRa,
+      this.taiXeRa,
+      this.soremoocra,
+      this.contRa1,
       this.contRa1seal1,
       this.contRa1seal2,
       this.trangthaihangra,
@@ -342,6 +385,9 @@ class Phieura {
       this.trangthaikhoara1});
 
   Phieura.fromJson(Map<String, dynamic> json) {
+    soXeRa = json['soXeRa'];
+    taiXeRa = json['taiXeRa'];
+    soremoocra = json['soremoocra'];
     contRa1 = json['contRa1'];
     contRa1seal1 = json['contRa1seal1'];
     contRa1seal2 = json['contRa1seal2'];
@@ -356,6 +402,9 @@ class Phieura {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['soXeRa'] = soXeRa;
+    data['taiXeRa'] = taiXeRa;
+    data['soremoocra'] = soremoocra;
     data['contRa1'] = contRa1;
     data['contRa1seal1'] = contRa1seal1;
     data['contRa1seal2'] = contRa1seal2;
@@ -394,48 +443,23 @@ class Trackingtime {
 }
 
 class Statustracking {
-  String? name;
   String? matrangthai;
   String? lv;
+  String? name;
 
-  Statustracking({this.name, this.matrangthai, this.lv});
+  Statustracking({this.matrangthai, this.lv, this.name});
 
   Statustracking.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
     matrangthai = json['matrangthai'];
     lv = json['lv'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
     data['matrangthai'] = matrangthai;
     data['lv'] = lv;
-    return data;
-  }
-}
-
-class DockRe {
-  int? maCua;
-  String? tenDock;
-  int? maDock;
-  bool? status;
-
-  DockRe({this.maCua, this.tenDock, this.maDock, this.status});
-
-  DockRe.fromJson(Map<String, dynamic> json) {
-    maCua = json['maCua'];
-    tenDock = json['tenDock'];
-    maDock = json['maDock'];
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['maCua'] = maCua;
-    data['tenDock'] = tenDock;
-    data['maDock'] = maDock;
-    data['status'] = status;
+    data['name'] = name;
     return data;
   }
 }
@@ -443,7 +467,6 @@ class DockRe {
 class Loaihang {
   String? maloaiHang;
   String? tenLoaiHang;
-  // ignore: prefer_void_to_null
   Null chiTiet;
 
   Loaihang({this.maloaiHang, this.tenLoaiHang, this.chiTiet});

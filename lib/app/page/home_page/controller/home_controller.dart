@@ -34,7 +34,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    // _scaffoldKey;
+    _scaffoldKey;
     getUser();
     checkForUpdate();
     super.onInit();
