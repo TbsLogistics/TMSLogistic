@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
@@ -164,14 +161,11 @@ class LoginScreen extends GetView<LoginController> {
                         height: 60,
                         child: TextButton(
                           onPressed: () {
-                            // controller.fetchData(
+                            // controller.fetchMedia(
                             //   account: controller.accountController.text,
                             //   password: controller.passwordController.text,
                             // );
-                            controller.fetchMedia(
-                              account: controller.accountController.text,
-                              password: controller.passwordController.text,
-                            );
+                            _signUpProcess(context, controller);
                           },
                           child: const Text(
                             "Đăng nhập",
@@ -199,12 +193,16 @@ class LoginScreen extends GetView<LoginController> {
     var validate = formKey.currentState!.validate();
 
     if (!validate) {
-      controller.postLoginTms(
+      controller.fetchMedia(
         account: controller.accountController.text,
-        password: md5
-            .convert(utf8.encode(controller.passwordController.text))
-            .toString(),
+        password: controller.passwordController.text,
       );
+      // controller.postLoginTms(
+      //   account: controller.accountController.text,
+      //   password: md5
+      //       .convert(utf8.encode(controller.passwordController.text))
+      //       .toString(),
+      // );
     }
   }
 }

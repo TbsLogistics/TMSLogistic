@@ -72,29 +72,29 @@ class DayOffLettersSingleModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['regID'] = this.regID;
-    data['EmpID'] = this.empID;
-    data['Type'] = this.type;
-    data['Reason'] = this.reason;
-    data['StartDate'] = this.startDate;
-    data['Period'] = this.period;
-    data['RegDate'] = this.regDate;
-    data['Address'] = this.address;
-    data['EndDate'] = this.endDate;
-    data['LastName'] = this.lastName;
-    data['FirstName'] = this.firstName;
-    data['DeptID'] = this.deptID;
-    data['PosID'] = this.posID;
-    data['ComeDate'] = this.comeDate;
-    data['JPLevel'] = this.jPLevel;
-    data['JobPositionName'] = this.jobPositionName;
-    data['departmentName'] = this.departmentName;
-    data['Position'] = this.position;
-    data['AnnualLeave'] = this.annualLeave;
-    data['apprOrder'] = this.apprOrder;
-    data['apprState'] = this.apprState;
-    data['aStatus'] = this.aStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['regID'] = regID;
+    data['EmpID'] = empID;
+    data['Type'] = type;
+    data['Reason'] = reason;
+    data['StartDate'] = startDate;
+    data['Period'] = period;
+    data['RegDate'] = regDate;
+    data['Address'] = address;
+    data['EndDate'] = endDate;
+    data['LastName'] = lastName;
+    data['FirstName'] = firstName;
+    data['DeptID'] = deptID;
+    data['PosID'] = posID;
+    data['ComeDate'] = comeDate;
+    data['JPLevel'] = jPLevel;
+    data['JobPositionName'] = jobPositionName;
+    data['departmentName'] = departmentName;
+    data['Position'] = position;
+    data['AnnualLeave'] = annualLeave;
+    data['apprOrder'] = apprOrder;
+    data['apprState'] = apprState;
+    data['aStatus'] = aStatus;
     return data;
   }
 }

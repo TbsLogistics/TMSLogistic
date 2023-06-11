@@ -8,7 +8,6 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself/model/user_hrm_model.dart';
-import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_subordinates_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_type_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/of_subordinates_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/register_model.dart';
@@ -155,7 +154,11 @@ class LetterMyselfCreateSentController extends GetxController {
         }
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi ! Vui lòng thử lại trong giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi ! Vui lòng thử lại trong giây lát !");
+      }
     }
   }
 
@@ -179,16 +182,13 @@ class LetterMyselfCreateSentController extends GetxController {
       name: items.jobpositionName,
       jPLevel: items.jPLevelID,
     );
-
+    //Thêm tên leader vào danh sách
     listMemberClient.add(userLeader);
-
+    //Thêm thành viên phụ thuộc vào danh sách
     for (var i = 0; i < listMember.length; i++) {
-      var items = listMember.value[i];
+      var items = listMember[i];
       listMemberClient.add(items);
     }
-
-    print("listMemberClient : ${listMemberClient.length}");
-
     return listMemberClient;
   }
 
@@ -324,36 +324,6 @@ class LetterMyselfCreateSentController extends GetxController {
     }
   }
 
-  // // Danh sách nhân viên phụ thuộc
-  // Future<List<ListOfSubordinatesModel>> getDataCustomer(query) async {
-  //   Response response;
-  //   var token = await SharePerApi().getTokenHRM();
-
-  //   const url = '${AppConstants.urlBaseHrm}/list-of-subordinates';
-  //   Map<String, dynamic> headers = {
-  //     HttpHeaders.authorizationHeader: "Bearer $token"
-  //   };
-  //   try {
-  //     response = await dio.get(
-  //       url,
-  //       options: Options(headers: headers),
-  //       queryParameters: {"query": query},
-  //     );
-
-  //     if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
-  //       var member = response.data["rData"];
-
-  //       if (member != null) {
-  //         return ListOfSubordinatesModel.fromJsonList(member);
-  //       }
-  //       return [];
-  //     } else {
-  //       return [];
-  //     }
-  //   } catch (error) {
-  //     rethrow;
-  //   }
-  // }
   void getSnack({required String messageText}) {
     Get.snackbar(
       "",

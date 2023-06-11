@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -19,7 +21,7 @@ class CustomerRegisterDetailsController extends GetxController {
 
   Rx<DetailsDriverModel> user = DetailsDriverModel().obs;
 
-  GlobalKey qrKey = new GlobalKey();
+  GlobalKey qrKey =  GlobalKey();
 
   @override
   void onInit() {

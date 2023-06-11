@@ -59,7 +59,11 @@ class LetterMyselfController extends GetxController {
         userInfo.value = data;
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi , vui lòng thử lại trong giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi , vui lòng thử lại trong giây lát !");
+      }
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoadUser(true);
@@ -130,11 +134,35 @@ class LetterMyselfController extends GetxController {
             data.map((e) => DayOffLettersSingleModel.fromJson(e)).toList();
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi , vui lòng thử lại trong giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi , vui lòng thử lại trong giây lát !");
+      }
     } finally {
       Future.delayed(const Duration(seconds: 1), () {
         isLoadDayOff(true);
       });
     }
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

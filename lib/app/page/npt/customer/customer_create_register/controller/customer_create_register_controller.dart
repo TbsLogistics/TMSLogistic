@@ -231,7 +231,7 @@ class CustomerRegisterController extends GetxController {
         return [];
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      
       return [];
     }
   }

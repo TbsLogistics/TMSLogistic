@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/controller/letter_myself_create_sent_controller.dart';
-import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_subordinates_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/list_of_type_model.dart';
 import 'package:tbs_logistics_tms/app/page/hrm/letter_myself_create_sent/model/of_subordinates_model.dart';
 
@@ -200,14 +199,14 @@ class LetterMyselfCreateSentScreen
                                       ),
                                     ),
                                     onPressed: () {
-                                      print([
-                                        controller.selectMember.value,
-                                        controller.selectedValue.value,
-                                        controller.reasonController.text,
-                                        controller.timeController.text,
-                                        controller.dayController.text,
-                                        controller.addressController.text,
-                                      ]);
+                                      // print([
+                                      //   controller.selectMember.value,
+                                      //   controller.selectedValue.value,
+                                      //   controller.reasonController.text,
+                                      //   controller.timeController.text,
+                                      //   controller.dayController.text,
+                                      //   controller.addressController.text,
+                                      // ]);
                                       var validate = controller
                                           .formKeyCreateLetter.currentState!
                                           .validate();
@@ -251,14 +250,14 @@ class LetterMyselfCreateSentScreen
                                       ),
                                     ),
                                     onPressed: () {
-                                      print([
-                                        controller.selectMember.value,
-                                        controller.selectedValue.value,
-                                        controller.reasonController.text,
-                                        controller.timeController.text,
-                                        controller.dayController.text,
-                                        controller.addressController.text,
-                                      ]);
+                                      // print([
+                                      //   controller.selectMember.value,
+                                      //   controller.selectedValue.value,
+                                      //   controller.reasonController.text,
+                                      //   controller.timeController.text,
+                                      //   controller.dayController.text,
+                                      //   controller.addressController.text,
+                                      // ]);
                                       var validate = controller
                                           .formKeyCreateLetter.currentState!
                                           .validate();
@@ -530,7 +529,7 @@ class LetterMyselfCreateSentScreen
             Expanded(
               flex: 5,
               child: Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 child: FindDropdown<ListOffTypeModel>(
                   validate: (value) {
                     // ignore: unrelated_type_equality_checks
@@ -645,89 +644,86 @@ class LetterMyselfCreateSentScreen
             ),
             Expanded(
               flex: 5,
-              child: Container(
-                // margin: const EdgeInsets.only(top: 10),
-                child: FindDropdown<OfSubordinatesModel>(
-                  onFind: (String filter) => controller.getDataCustomer(filter),
-                  onChanged: (OfSubordinatesModel? data) {
-                    controller.selectMember.value = data!.empID!;
-                  },
-                  dropdownBuilder:
-                      (BuildContext context, OfSubordinatesModel? item) {
-                    return Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Theme.of(context).dividerColor),
+              child: FindDropdown<OfSubordinatesModel>(
+                onFind: (String filter) => controller.getDataCustomer(filter),
+                onChanged: (OfSubordinatesModel? data) {
+                  controller.selectMember.value = data!.empID!;
+                },
+                dropdownBuilder:
+                    (BuildContext context, OfSubordinatesModel? item) {
+                  return Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Theme.of(context).dividerColor),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: (item == null)
+                        ? Row(
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Chọn nhân viên",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                color: Colors.black,
+                              )
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "${item.lastName!} ${item.firstName}",
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_drop_down_outlined,
+                                color: Colors.black,
+                              )
+                            ],
+                          ),
+                  );
+                },
+                dropdownItemBuilder: (BuildContext context,
+                    OfSubordinatesModel item, bool isSelected) {
+                  return Container(
+                    decoration: !isSelected
+                        ? null
+                        : BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                          ),
+                    child: Card(
+                      shape: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.orangeAccent,
+                        ),
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
                       ),
-                      child: (item == null)
-                          ? Row(
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    "Chọn nhân viên",
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down_outlined,
-                                  color: Colors.black,
-                                )
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    "${item.lastName!} ${item.firstName}",
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                ),
-                                const Icon(
-                                  Icons.arrow_drop_down_outlined,
-                                  color: Colors.black,
-                                )
-                              ],
-                            ),
-                    );
-                  },
-                  dropdownItemBuilder: (BuildContext context,
-                      OfSubordinatesModel item, bool isSelected) {
-                    return Container(
-                      decoration: !isSelected
-                          ? null
-                          : BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor),
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white,
-                            ),
-                      child: Card(
-                        shape: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.orangeAccent,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
+                      child: ListTile(
+                        selected: isSelected,
+                        title: Text(
+                          "${item.lastName!} ${item.firstName}",
+                          style: const TextStyle(fontSize: 15),
                         ),
-                        child: ListTile(
-                          selected: isSelected,
-                          title: Text(
-                            "${item.lastName!} ${item.firstName}",
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          subtitle: Text(
-                            "${item.empID!}",
-                            style: const TextStyle(fontSize: 15),
-                          ),
+                        subtitle: Text(
+                          "${item.empID!}",
+                          style: const TextStyle(fontSize: 15),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ],

@@ -1,12 +1,10 @@
 // ignore_for_file: unused_local_variable, non_constant_identifier_names
-
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:in_app_update/in_app_update.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 
@@ -22,40 +20,55 @@ class HomeController extends GetxController {
   Rx<UserNptModel> user_npt = UserNptModel().obs;
   Rx<UserHrmModel> user_hrm = UserHrmModel().obs;
 
+  String release = "";
+
   Rx<AppUpdateInfo>? updateInfo;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
-  bool _flexibleUpdateAvailable = false;
+  
 
   RxString tokenTms = "".obs;
   RxString tokenNpt = "".obs;
   RxString tokenHrm = "".obs;
 
   @override
-  void onInit() {
-    _scaffoldKey;
+  void onInit() async {
+
     getUser();
-    checkForUpdate();
+
     super.onInit();
-  }
+    final newVersion = NewVersionPlus(
+      // iOSId: 'your_ios_app_id',
+      androidId: 'com.tbslogistic.tms.name',
+    );
 
-  Future<void> checkForUpdate() async {
-    InAppUpdate.checkForUpdate().then((info) {
-      updateInfo!.value = info;
-      print(["updateInfo : ${updateInfo!.value}"]);
-      // print("info : $info");
-    }).catchError((e) {
-      showSnack(e.toString());
-    });
-  }
+    newVersion.showAlertIfNecessary(context: Get.context!);
 
-  void showSnack(String text) {
-    if (_scaffoldKey.currentContext != null) {
-      ScaffoldMessenger.of(_scaffoldKey.currentContext!)
-          .showSnackBar(SnackBar(content: Text(text)));
+    final status = await newVersion.getVersionStatus();
+
+    if (status != null) {
+      debugPrint(status.releaseNotes);
+      debugPrint(status.appStoreLink);
+      debugPrint(status.localVersion);
+      debugPrint(status.storeVersion);
+      debugPrint(status.canUpdate.toString());
+      // Xét Phiên Bản Trên Cửa Hàng Lớn Hơn Phiên Bản Ở Thiết Bị Thì Chạy Popup Cập Nhật
+      if (status.canUpdate) {
+        newVersion.showUpdateDialog(
+          context: Get.context!,
+          versionStatus: status,
+          dialogTitle: "Cập nhật",
+          dialogText: "Cập nhật ứng dụng để tiếp tục",
+          allowDismissal: false,
+          updateButtonText: "Cập nhật",
+          dismissAction: () {
+            Get.back();
+          },
+          dismissButtonText: "Hủy",
+        );
+      } 
     }
   }
+
 
   void getUser() async {
     var tokenTMS = await SharePerApi().getTokenTMS();
@@ -64,7 +77,6 @@ class HomeController extends GetxController {
       tokenTms.value = tokenTMS;
       Map<String, dynamic> decodedToken = JwtDecoder.decode(tokenTMS);
       user.value = UserModel.fromJson(decodedToken);
-      print(decodedToken);
       var userid_hrm =
           prefs.setString(AppConstants.KEY_USER_TMS, "${user.value.userName}");
       getDialogMessage("Bạn có thể sử dụng tính năng TMS");

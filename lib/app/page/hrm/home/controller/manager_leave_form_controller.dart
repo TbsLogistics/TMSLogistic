@@ -51,9 +51,35 @@ class ManagerLeaveFormController extends GetxController
         userName.value = data;
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        getSnack(
+            messageText: "Lỗi thông tin, vui lòng thử lại trong giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(
+            messageText: "Lỗi thông tin, vui lòng thử lại trong giây lát !");
+      }
     } finally {
       isUserInfo(true);
     }
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

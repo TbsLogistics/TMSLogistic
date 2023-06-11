@@ -60,9 +60,14 @@ class LetterManagerController extends GetxController {
             data.map((e) => DayOffLettersManagerModel.fromJson(e)).toList();
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      // print([e.response!.statusCode, e.response!.statusMessage]);
+      if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi mạng ! Vui lòng thử lại trong giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi mạng ! Vui lòng thử lại trong giây lát !");
+      }
     } finally {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         isLoadDayOffManganer(true);
       });
     }
@@ -145,5 +150,25 @@ class LetterManagerController extends GetxController {
     } catch (e) {
       rethrow;
     }
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

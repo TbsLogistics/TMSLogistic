@@ -124,7 +124,7 @@ class LetterMyselfScreen extends GetView<LetterMyselfController> {
                           itemCount: controller.listDayOff.length,
                           itemBuilder: (context, index) {
                             var item = controller.listDayOff[index];
-                            print(controller.listDayOff);
+                            // print(controller.listDayOff);
                             return controller.listDayOff != []
                                 ? _buildCustomListtile(
                                     onTap: () async {

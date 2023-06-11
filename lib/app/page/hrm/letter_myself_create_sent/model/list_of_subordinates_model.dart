@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class ListOfSubordinatesModel {
   int? empID;
   String? firstName;
@@ -80,6 +82,6 @@ class ListOfSubordinatesModel {
 
   @override
   String toString() {
-    return "${name} ${empID}";
+    return "$name $empID";
   }
 }
