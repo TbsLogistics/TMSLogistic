@@ -460,8 +460,7 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> fetchMedia(
-      {required String account, required String password}) async {
+  void fetchMedia({required String account, required String password}) async {
     var dio = Dio();
 
     RxList listLogin = [].obs;
@@ -487,13 +486,14 @@ class LoginController extends GetxController {
       autogen: 0,
     );
     var jsonHrm = loginHrm.toJson();
+    var urlNpt = "${AppConstants.urlBaseNpt}/login";
 
     try {
       responseNpt = await dio.post(
-        "${AppConstants.urlBaseNpt}/login",
+        urlNpt,
         data: jsonNpt,
       );
-
+      print(response);
       if (responseNpt.statusCode == 200) {
         if (responseNpt.data["status_code"] == 204) {
           //++++++++++++++++++++++++++++Đăng nhập HRM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -604,6 +604,7 @@ class LoginController extends GetxController {
         }
       }
     } on DioError catch (e) {
+      print("Status Code : ${e.response!.statusCode}");
       if (e.response!.statusCode == 400) {
         getSnack(messageText: "Tài khoản hoặc mật khẩu không đúng !");
       } else if (e.response!.statusCode == 500) {
