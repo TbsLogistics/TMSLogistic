@@ -1,8 +1,9 @@
+// ignore_for_file: unused_element
+
 import 'package:expandable/expandable.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_success.dart';
@@ -14,8 +15,8 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    var day = DateFormat("dd-MM-yyyy");
-    var hour = DateFormat("hh:mm a");
+    // var day = DateFormat("dd-MM-yyyy");
+    // var hour = DateFormat("hh:mm a");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -33,8 +34,8 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
       body: GetBuilder<FinishedDetailController>(
         init: FinishedDetailController(),
         builder: (controller) {
-          var length =
-              controller.listOrder.value.getDataHandlingMobiles!.length;
+          // var length =
+          //     controller.listOrder.value.getDataHandlingMobiles!.length;
           return SingleChildScrollView(
             child: Container(
                 // height: size.height,
@@ -113,63 +114,60 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "${controller.newListDataForReceiveEmpty[i].place}",
-                                        style: const TextStyle(
-                                            color: Colors.orangeAccent,
-                                            fontSize: 18),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForReceiveEmpty[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForReceiveEmpty[
-                                                        i]
-                                                    .getData![0]
-                                                    .maDiemLayRong
-                                              ],
-                                            );
-                                          }),
-                                    ],
-                                  )
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "${controller.newListDataForReceiveEmpty[i].place}",
+                                      style: const TextStyle(
+                                          color: Colors.orangeAccent,
+                                          fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForReceiveEmpty[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForReceiveEmpty[
+                                                      i]
+                                                  .getData![0]
+                                                  .maDiemLayRong
+                                            ],
+                                          );
+                                        }),
+                                  ],
+                                )
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
                         expanded: Container(
@@ -294,64 +292,61 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        controller
-                                            .newListDataForReceive[i].place!
-                                            .trim(),
-                                        style: const TextStyle(
-                                            color: Colors.orangeAccent,
-                                            fontSize: 18),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForReceive[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForReceive[i]
-                                                    .getData![0]
-                                                    .maDiemLayHang
-                                              ],
-                                            );
-                                          })
-                                    ],
-                                  ),
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      controller
+                                          .newListDataForReceive[i].place!
+                                          .trim(),
+                                      style: const TextStyle(
+                                          color: Colors.orangeAccent,
+                                          fontSize: 18),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForReceive[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForReceive[i]
+                                                  .getData![0]
+                                                  .maDiemLayHang
+                                            ],
+                                          );
+                                        })
+                                  ],
+                                ),
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
                         expanded: Container(
@@ -477,59 +472,56 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "${controller.newListDataForGive[i].place}",
-                                    style: const TextStyle(
-                                        color: Colors.orangeAccent,
-                                        fontSize: 18),
-                                  ),
-                                  Column(
-                                    children: [
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForGive[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller.newListDataForGive[i]
-                                                    .getData![0].maDiemTraHang
-                                              ],
-                                            );
-                                          })
-                                    ],
-                                  )
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${controller.newListDataForGive[i].place}",
+                                  style: const TextStyle(
+                                      color: Colors.orangeAccent,
+                                      fontSize: 18),
+                                ),
+                                Column(
+                                  children: [
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForGive[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller.newListDataForGive[i]
+                                                  .getData![0].maDiemTraHang
+                                            ],
+                                          );
+                                        })
+                                  ],
+                                )
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
-                        expanded: Container(
+                        expanded: SizedBox(
                           height: (120 *
                               double.parse(controller
                                   .newListDataForGive[i].getData!.length
@@ -641,60 +633,57 @@ class FinishedDetailsScreen extends GetView<FinishedDetailController> {
                       tapBodyToCollapse: true,
                       hasIcon: false,
                     ),
-                    header: Container(
-                      // color: Colors.indigoAccent,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(children: [
-                          ExpandableIcon(
-                            theme: const ExpandableThemeData(
-                              expandIcon: Icons.arrow_right,
-                              collapseIcon: Icons.arrow_drop_down,
-                              iconColor: Color(0xffE18229),
-                              iconSize: 35.0,
-                              iconRotationAngle: math.pi / 2,
-                              iconPadding: EdgeInsets.only(right: 5),
-                              hasIcon: false,
-                            ),
+                    header: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(children: [
+                        ExpandableIcon(
+                          theme: const ExpandableThemeData(
+                            expandIcon: Icons.arrow_right,
+                            collapseIcon: Icons.arrow_drop_down,
+                            iconColor: Color(0xffE18229),
+                            iconSize: 35.0,
+                            iconRotationAngle: math.pi / 2,
+                            iconPadding: EdgeInsets.only(right: 5),
+                            hasIcon: false,
                           ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${controller.newListDataForGiveEmpty[i].place}",
-                                  style: const TextStyle(
-                                      color: Colors.orangeAccent, fontSize: 18),
-                                ),
-                                Column(
-                                  children: [
-                                    ButtonComment(
-                                        text: "Phụ phí",
-                                        onPressed: () {
-                                          Get.toNamed(Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForGiveEmpty[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForGiveEmpty[i]
-                                                    .getData![0]
-                                                    .maDiemTraRong
-                                              ]);
-                                        })
-                                  ],
-                                )
-                              ],
-                            ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${controller.newListDataForGiveEmpty[i].place}",
+                                style: const TextStyle(
+                                    color: Colors.orangeAccent, fontSize: 18),
+                              ),
+                              Column(
+                                children: [
+                                  ButtonComment(
+                                      text: "Phụ phí",
+                                      onPressed: () {
+                                        Get.toNamed(Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForGiveEmpty[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForGiveEmpty[i]
+                                                  .getData![0]
+                                                  .maDiemTraRong
+                                            ]);
+                                      })
+                                ],
+                              )
+                            ],
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                     ),
                     collapsed: Container(
                       color: Colors.amberAccent,
                     ),
-                    expanded: Container(
+                    expanded: SizedBox(
                       height: (120 *
                           double.parse(controller
                               .newListDataForGiveEmpty[i].getData!.length

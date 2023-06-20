@@ -12,9 +12,9 @@ class ListAddScreen extends StatelessWidget {
       init: SurChangesController(),
       builder: (controller) => Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
@@ -27,7 +27,7 @@ class ListAddScreen extends StatelessWidget {
               ),
             ],
           ),
-          Obx(() => Container(
+          Obx(() => SizedBox(
                 height: 90 * double.parse(controller.listSur.length.toString()),
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),

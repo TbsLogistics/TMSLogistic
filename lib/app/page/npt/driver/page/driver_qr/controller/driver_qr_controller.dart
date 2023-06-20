@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -18,7 +20,7 @@ class QRCodeDriverController extends GetxController {
   var idPhieuvao = 0.obs;
   Rx<DetailsDriverModel> user = DetailsDriverModel().obs;
 
-  GlobalKey qrDriverKey = new GlobalKey();
+  GlobalKey qrDriverKey =  GlobalKey();
   @override
   void onInit() {
     var maPhieuvao = Get.arguments;

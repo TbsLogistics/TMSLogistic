@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_void_to_null, unnecessary_question_mark
+
 class UserNptModel {
   String? username;
   String? role;

@@ -137,7 +137,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.QR_CODE_CUSTOMER_SCREEN,
-      page: () => QrCodeCustomerScreen(),
+      page: () => const QrCodeCustomerScreen(),
     ),
     GetPage(
       name: Routes.QR_CODE_FROM_DETALS_CUSTOMER_SCREEN,

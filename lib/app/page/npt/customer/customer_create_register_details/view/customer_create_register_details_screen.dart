@@ -260,9 +260,9 @@ class CustomerRegisterDetailScreen
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [],
+                            children: [],
                           ),
                         ],
                       ),
@@ -355,9 +355,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số seal 1",
                                       style: CustomTextStyle.titleDetails,
@@ -387,9 +387,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số seal 2",
                                       style: CustomTextStyle.titleDetails,
@@ -419,9 +419,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số Book",
                                       style: CustomTextStyle.titleDetails,
@@ -451,9 +451,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Kg/ CDM/ Số Kiện",
                                       style: CustomTextStyle.titleDetails,
@@ -517,9 +517,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số seal 1",
                                       style: CustomTextStyle.titleDetails,
@@ -545,9 +545,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số seal 2",
                                       style: CustomTextStyle.titleDetails,
@@ -577,9 +577,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Số Book",
                                       style: CustomTextStyle.titleDetails,
@@ -609,9 +609,9 @@ class CustomerRegisterDetailScreen
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "Kg/ CDM/ Số Kiện",
                                       style: CustomTextStyle.titleDetails,

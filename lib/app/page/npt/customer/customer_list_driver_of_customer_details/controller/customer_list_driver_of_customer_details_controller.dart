@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/rendering.dart';
@@ -14,7 +16,7 @@ class CustomerListDriverDetailsOfCustomerController extends GetxController {
 
   Rx<ListTrackingModel> statusDriver = ListTrackingModel().obs;
 
-  GlobalKey qrKey = new GlobalKey();
+  GlobalKey qrKey =  GlobalKey();
 
   @override
   void onInit() {

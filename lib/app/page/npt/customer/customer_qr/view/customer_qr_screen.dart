@@ -1,19 +1,17 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:async';
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'dart:ui' as ui;
+
+
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/controller/customer_qr_controller.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
+
 
 class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
-  QrCodeCustomerScreen({super.key});
+  const QrCodeCustomerScreen({super.key});
   final String routes = "/QR_CODE_CUSTOMER_SCREEN";
 
   @override

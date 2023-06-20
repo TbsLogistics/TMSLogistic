@@ -1,7 +1,8 @@
+// ignore_for_file: unused_local_variable, unused_catch_clause
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:dio/dio.dart';
@@ -20,14 +21,14 @@ class QRCodeCustomerController extends GetxController {
   var idDriver = 0.obs;
   Rx<DetailsDriverModel> user = DetailsDriverModel().obs;
 
-  GlobalKey qrKey = new GlobalKey();
+  GlobalKey qrKey =  GlobalKey();
 
   @override
   void onInit() {
     var maPhieuvao = Get.arguments[0];
     idPhieuvao.value = maPhieuvao;
     var maTaixe = Get.arguments[1];
-    print("maTaixe : $maTaixe");
+    // print("maTaixe : $maTaixe");
     idDriver.value = maTaixe;
     qrKey;
     super.onInit();
@@ -80,7 +81,7 @@ class QRCodeCustomerController extends GetxController {
         user.value = data;
       }
     } on DioError catch (e) {
-      print(e.response!.statusCode);
+      // print(e.response!.statusCode);
     }
   }
 }

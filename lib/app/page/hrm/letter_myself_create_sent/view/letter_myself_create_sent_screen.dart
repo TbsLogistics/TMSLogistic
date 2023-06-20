@@ -135,7 +135,7 @@ class LetterMyselfCreateSentScreen
                                   ),
                                 ],
                               )
-                            : Column();
+                            : const Column();
                       }),
                       Column(
                         children: [
@@ -555,8 +555,8 @@ class LetterMyselfCreateSentScreen
                         color: Colors.white,
                       ),
                       child: (item?.note == null)
-                          ? Row(
-                              children: const [
+                          ? const Row(
+                              children: [
                                 Padding(
                                   padding: EdgeInsets.only(left: 10),
                                   child: Text(
@@ -660,8 +660,8 @@ class LetterMyselfCreateSentScreen
                       color: Colors.white,
                     ),
                     child: (item == null)
-                        ? Row(
-                            children: const [
+                        ? const Row(
+                            children: [
                               Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(

@@ -1,4 +1,5 @@
-import 'dart:convert';
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -9,7 +10,6 @@ import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences
 import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_hrm_model.dart';
 import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_npt_model.dart';
 import 'package:tbs_logistics_tms/app/page/home_page/model/change_password_tms_model.dart';
-import 'package:tbs_logistics_tms/app/page/tms/change_password/model/change_password_model.dart';
 
 class ChangePassController extends GetxController {
   var dio = Dio();
@@ -48,7 +48,7 @@ class ChangePassController extends GetxController {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
 
-    var user_hrm = await SharePerApi().getIdUserHRM();
+    // var user_hrm = await SharePerApi().getIdUserHRM();
 
     var passWord = ChangePassHrmModel(
       currentPassword: oldPassword,
@@ -153,7 +153,7 @@ class ChangePassController extends GetxController {
         getSnack(message: data["message"]);
       }
     } on DioError catch (e) {
-      print([e.response!.statusCode, e.response!.statusMessage]);
+      // print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
         getSnack(message: e.response!.data["message"]);
       } else if (e.response!.statusCode == 404) {

@@ -51,7 +51,7 @@ class SurChangesController extends GetxController
     var dataForPlace = Get.arguments[0] as ListDataForPlaceModel;
     var idChuyen = Get.arguments[1];
     var maPlace = Get.arguments[2];
-    print([maPlace, idChuyen]);
+    // print([maPlace, idChuyen]);
     maChuyen.value = idChuyen;
     listDataForPlace.value = dataForPlace;
     idPlaced.value = maPlace;
@@ -98,7 +98,7 @@ class SurChangesController extends GetxController
         note: note,
       ),
     );
-    print("listSurRegister : $listSurRegister");
+    // print("listSurRegister : $listSurRegister");
   }
 
   void postData(List<SurFeeModel> listSurRegister) async {
@@ -112,7 +112,7 @@ class SurChangesController extends GetxController
 
     var url =
         "${AppConstants.urlBaseTms}/api/Mobile/CreateSFeeByTCommand?maChuyen=${maChuyen.value}";
-    print("listSurRegister : ${listSurRegister[0].sfId}");
+    // print("listSurRegister : ${listSurRegister[0].sfId}");
     try {
       response = await dio.post(
         url,

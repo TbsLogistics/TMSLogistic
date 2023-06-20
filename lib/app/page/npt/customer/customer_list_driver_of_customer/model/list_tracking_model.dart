@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_void_to_null
+
 class ListTrackingModel {
   KhuVuc? khuVuc;
   List<Capcongs>? capcongs;

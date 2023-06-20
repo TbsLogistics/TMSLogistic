@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -18,15 +20,15 @@ class DriverStatusDetailsController extends GetxController {
 
   Rx<DriverFinishedScreenModel> getDriverFinishedScreen =
       DriverFinishedScreenModel().obs;
-  GlobalKey qrDriverKey = new GlobalKey();
+  GlobalKey qrDriverKey =  GlobalKey();
 
   RxBool isDriverFinishedScreen = true.obs;
   RxBool showForm = true.obs;
 
   @override
   void onInit() {
-    var DriverFinishedScreen = Get.arguments as DriverFinishedScreenModel;
-    getDriverFinishedScreen.value = DriverFinishedScreen;
+    var driverFinishedScreen = Get.arguments as DriverFinishedScreenModel;
+    getDriverFinishedScreen.value = driverFinishedScreen;
 
     super.onInit();
   }
@@ -42,7 +44,7 @@ class DriverStatusDetailsController extends GetxController {
     Response response;
     var token = await SharePerApi().getTokenNPT();
     var idHK = await SharePerApi().getIdKHforTX();
-    print(idHK);
+    // print(idHK);
 
     var url =
         '${AppConstants.urlBaseNpt}/listdriverbycustomerID?maKhachHang=$idHK';

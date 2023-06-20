@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class ListTypeProductModel {
   String? tenLoaiHang;
   String? chiTiet;
@@ -12,10 +14,10 @@ class ListTypeProductModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tenLoaiHang'] = this.tenLoaiHang;
-    data['chiTiet'] = this.chiTiet;
-    data['maloaiHang'] = this.maloaiHang;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['tenLoaiHang'] = tenLoaiHang;
+    data['chiTiet'] = chiTiet;
+    data['maloaiHang'] = maloaiHang;
     return data;
   }
 

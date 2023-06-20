@@ -1,7 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,7 @@ class DriverCreateRegisterDetailsController extends GetxController {
   RxInt numberCont = 0.obs;
   RxString nameCustomer = "".obs;
 
-  GlobalKey qrDriverKey = new GlobalKey();
+  GlobalKey qrDriverKey =  GlobalKey();
   @override
   void onInit() {
     var items = Get.arguments[0] as RegisterForDriverModel; // thong tin phieu

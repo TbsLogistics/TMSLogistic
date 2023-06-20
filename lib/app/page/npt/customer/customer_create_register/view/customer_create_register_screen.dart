@@ -11,8 +11,6 @@ import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/controller/customer_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_for_customer_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
@@ -181,8 +179,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(left: 5),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Text(
                             "Thời gian dự kiến *",
                             textAlign: TextAlign.left,
@@ -483,7 +481,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                     value!.maKhachHang;
                 controller.selectCustomer.value.tenKhachhang =
                     value.tenKhachhang;
-                print(controller.selectCustomer.value.tenKhachhang);
+                // print(controller.selectCustomer.value.tenKhachhang);
               });
             },
             dropdownBuilder:
@@ -560,8 +558,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Text(
                   "Tài xế *",
                   textAlign: TextAlign.left,
@@ -654,8 +652,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Text(
                   "Kho *",
                   textAlign: TextAlign.left,
@@ -758,8 +756,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Text(
                   "Loại hàng *",
                   textAlign: TextAlign.left,
@@ -862,8 +860,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
       children: [
         Container(
           padding: const EdgeInsets.only(left: 5),
-          child: Row(
-            children: const [
+          child: const Row(
+            children: [
               Text(
                 "Số lượng cont *",
                 textAlign: TextAlign.left,
@@ -876,7 +874,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           ),
         ),
         const SizedBox(height: 10),
-        Container(
+        SizedBox(
           width: size.width,
           child: Card(
             shape: const OutlineInputBorder(
@@ -927,8 +925,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Text(
                   "Loại xe *",
                   textAlign: TextAlign.left,
@@ -947,7 +945,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             onChanged: (ListTypeCarModel? data) {
               setState(() {
                 controller.selectTypeCar.value.maLoaiXe = data!.maLoaiXe;
-                print(controller.selectTypeCar.value.maLoaiXe);
+                // print(controller.selectTypeCar.value.maLoaiXe);
                 if (controller.selectTypeCar.value.maLoaiXe == "tai") {
                   numberSelectCont = 0;
                 }

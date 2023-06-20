@@ -180,9 +180,9 @@ class CustomerListTickerRegisterDetailsScreen
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [],
+                            children: [],
                           ),
                         ],
                       ),

@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/data/validate.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
@@ -232,9 +230,9 @@ class ChangePasswordScreen extends GetView<ChangePassController> {
   void _changePassWord(
       BuildContext context, ChangePassController controller) async {
     var validate = controller.changePassKey.currentState!.validate();
-    SharedPreferences pref = await SharedPreferences.getInstance();
+    // SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var tokenHRM = await SharePerApi().getTokenHRM();
+    // var tokenHRM = await SharePerApi().getTokenHRM();
     var tokenNPT = await SharePerApi().getTokenNPT();
     var tokenTMS = await SharePerApi().getTokenTMS();
 

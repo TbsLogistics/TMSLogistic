@@ -50,9 +50,9 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
             child: Column(
               children: [
                 _buildInputForm(controller),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
@@ -248,9 +248,9 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
                     color: Colors.white,
                   ),
                   child: (item?.subFeeName == null)
-                      ? Row(
+                      ? const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
@@ -315,12 +315,12 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
       height: 40,
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             flex: 3,
             child: SizedBox(
               height: 40,
               child: Row(
-                children: const [
+                children: [
                   Text(
                     "Giá phụ phí : ",
                     style: TextStyle(
@@ -373,12 +373,12 @@ class _SurChangesScreenState extends State<SurChangesScreen> {
       height: 40,
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             flex: 3,
             child: SizedBox(
               height: 40,
               child: Row(
-                children: const [
+                children: [
                   Text(
                     "Ghi chú : ",
                     style: TextStyle(

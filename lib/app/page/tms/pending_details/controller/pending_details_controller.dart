@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, unused_local_variable, unrelated_type_equality_checks
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable, unrelated_type_equality_checks, duplicate_ignore
 
 import 'dart:io';
 import "package:collection/collection.dart";
@@ -619,9 +619,9 @@ class PendingDetailController extends GetxController {
       barrierDismissible: false,
       backgroundColor: Colors.white,
       title: "Loading",
-      content: Column(
+      content: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Center(
             child: CircularProgressIndicator(
               color: Colors.orangeAccent,
@@ -1155,12 +1155,12 @@ class PendingDetailController extends GetxController {
                   break;
               }
             } else {
-              print([
-                newListDataForGiveEmpty[firstIndex]
-                    .getData![secondIndex]
-                    .maPTVC,
-                position
-              ]);
+              // print([
+              //   newListDataForGiveEmpty[firstIndex]
+              //       .getData![secondIndex]
+              //       .maPTVC,
+              //   position
+              // ]);
               switch (newListDataForGiveEmpty[firstIndex]
                   .getData![secondIndex]
                   .maPTVC) {

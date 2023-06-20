@@ -8,7 +8,7 @@ class ListAddedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     var day = DateFormat("dd/MM");
     var hour = DateFormat("hh-mm a");
     return GetBuilder<SurChangesController>(
@@ -18,9 +18,9 @@ class ListAddedScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(

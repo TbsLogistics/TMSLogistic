@@ -251,59 +251,59 @@ Widget _buildNumberCar(
   );
 }
 
-Widget _buildProduct(
-    RegisterForDriverModel items, Size size, BuildContext context) {
-  return Card(
-    shadowColor: Colors.grey,
-    elevation: 10,
-    shape: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
-      borderSide: const BorderSide(
-        color: Colors.orangeAccent,
-        width: 1,
-      ),
-    ),
-    child: Container(
-      height: size.width * 0.1,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Colors.orangeAccent,
-        ),
-        borderRadius: BorderRadius.circular(15),
-        // color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                "Loại hàng",
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                items.maloaiHang == "HN" ? "Hàng nhập" : "Hàng xuất",
-                style: TextStyle(
-                    fontSize: 16, color: Theme.of(context).primaryColorLight),
-              ),
-            ),
-          )
-        ],
-      ),
-    ),
-  );
-}
+// Widget _buildProduct(
+//     RegisterForDriverModel items, Size size, BuildContext context) {
+//   return Card(
+//     shadowColor: Colors.grey,
+//     elevation: 10,
+//     shape: OutlineInputBorder(
+//       borderRadius: BorderRadius.circular(15),
+//       borderSide: const BorderSide(
+//         color: Colors.orangeAccent,
+//         width: 1,
+//       ),
+//     ),
+//     child: Container(
+//       height: size.width * 0.1,
+//       decoration: BoxDecoration(
+//         border: Border.all(
+//           width: 1,
+//           color: Colors.orangeAccent,
+//         ),
+//         borderRadius: BorderRadius.circular(15),
+//         // color: Colors.white,
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         children: [
+//           const Expanded(
+//             flex: 1,
+//             child: Center(
+//               child: Text(
+//                 "Loại hàng",
+//                 style: TextStyle(
+//                   color: Colors.green,
+//                   fontSize: 16,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//           ),
+//           Expanded(
+//             flex: 1,
+//             child: Center(
+//               child: Text(
+//                 items.maloaiHang == "HN" ? "Hàng nhập" : "Hàng xuất",
+//                 style: TextStyle(
+//                     fontSize: 16, color: Theme.of(context).primaryColorLight),
+//               ),
+//             ),
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 Widget _buildCustomer(RegisterForDriverModel items, Size size,
     BuildContext context, DriverCreateRegisterDetailsController controller) {
@@ -526,9 +526,9 @@ Widget _buildProductCar(
                             ),
                           ],
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [],
+                          children: [],
                         ),
                       ],
                     ),
@@ -621,9 +621,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số seal 1",
                                     style: CustomTextStyle.titleDetails,
@@ -653,9 +653,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số seal 2",
                                     style: CustomTextStyle.titleDetails,
@@ -685,9 +685,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số Book",
                                     style: CustomTextStyle.titleDetails,
@@ -717,9 +717,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Kg/ CDM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,
@@ -783,9 +783,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số seal 1",
                                     style: CustomTextStyle.titleDetails,
@@ -811,9 +811,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số seal 2",
                                     style: CustomTextStyle.titleDetails,
@@ -843,9 +843,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Số Book",
                                     style: CustomTextStyle.titleDetails,
@@ -875,9 +875,9 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     "Kg/ CDM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,

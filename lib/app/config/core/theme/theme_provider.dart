@@ -18,7 +18,7 @@ class MyThemes {
   static final darkTheme = ThemeData(
       indicatorColor: const Color(0xffF9D205),
       scaffoldBackgroundColor: const Color.fromARGB(255, 78, 78, 78),
-      backgroundColor: Colors.white.withOpacity(0.8),
+      // backgroundColor: Colors.white.withOpacity(0.8),
       primaryColor: Colors.white,
       primaryColorDark: Colors.black,
       primaryColorLight: CustomColor.backgroundAppbar,
@@ -34,7 +34,7 @@ class MyThemes {
       //background appbar
       // scaffoldBackgroundColor: const Color.fromARGB(255, 248, 216, 161),
       scaffoldBackgroundColor: Colors.white,
-      backgroundColor: Colors.white.withOpacity(0.6),
+      // backgroundColor: Colors.white.withOpacity(0.6),
       //color text
       primaryColor: Colors.black,
       primaryColorDark: const Color(0xffEDF0F3),

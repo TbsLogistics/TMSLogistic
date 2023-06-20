@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class ListWareHomeModel {
   String? maKho;
   String? maKhuVuc;

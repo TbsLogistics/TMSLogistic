@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class GeoLocationModel {
   int? placeId;
   String? gps;

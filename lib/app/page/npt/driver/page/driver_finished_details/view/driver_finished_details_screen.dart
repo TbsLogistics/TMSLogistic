@@ -310,9 +310,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số seal 1",
                               style: TextStyle(
@@ -345,9 +345,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số seal 2",
                               style: TextStyle(
@@ -380,9 +380,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Kiện",
                               style: TextStyle(
@@ -413,9 +413,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Book",
                               style: TextStyle(
@@ -448,9 +448,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Khối (CDM)",
                               style: TextStyle(
@@ -521,9 +521,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số seal 1",
                               style: TextStyle(
@@ -556,9 +556,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số seal 2",
                               style: TextStyle(
@@ -591,9 +591,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Kiện",
                               style: TextStyle(
@@ -624,9 +624,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Book",
                               style: TextStyle(
@@ -659,9 +659,9 @@ class StatusTikerDetailScreen extends GetView<DriverFinishedDetailsController> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Số Khối (CDM)",
                               style: TextStyle(

@@ -296,7 +296,7 @@ class Phieuvao {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['giodukien'] = giodukien;
     data['soxe'] = soxe;
     if (kho != null) {

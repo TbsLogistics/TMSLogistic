@@ -1,9 +1,10 @@
 // import 'package:dropdown_search/dropdown_search.dart';
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/status_driver_model.dart';
@@ -56,7 +57,7 @@ class ListStatusUnfinishedDetailsScreen
           //   const SizedBox(width: 15),
           // ],
         ),
-        body: Container(
+        body: SizedBox(
             height: size.height,
             child: SingleChildScrollView(
               child: Column(
@@ -250,13 +251,13 @@ class ListStatusUnfinishedDetailsScreen
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomTimeLines(
-                      contentLeft: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      contentLeft: const Padding(
+                        padding: EdgeInsets.only(left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Text(
                                   "Đã đăng tài",
                                   style: TextStyle(
@@ -302,13 +303,13 @@ class ListStatusUnfinishedDetailsScreen
                       colorLine: Colors.orangeAccent,
                     ),
                     CustomTimeLines(
-                      contentLeft: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      contentLeft: const Padding(
+                        padding: EdgeInsets.only(left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Text(
                                   "Đã vào cổng",
                                   style: TextStyle(
@@ -360,13 +361,13 @@ class ListStatusUnfinishedDetailsScreen
                       colorLine: Colors.orangeAccent,
                     ),
                     CustomTimeLines(
-                      contentLeft: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      contentLeft: const Padding(
+                        padding: EdgeInsets.only(left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Text(
                                   "Đã vào dock",
                                   style: TextStyle(
@@ -418,13 +419,13 @@ class ListStatusUnfinishedDetailsScreen
                       colorLine: Colors.orangeAccent,
                     ),
                     CustomTimeLines(
-                      contentLeft: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      contentLeft: const Padding(
+                        padding: EdgeInsets.only(left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Text(
                                   "Bắt đầu làm hàng",
                                   style: TextStyle(
@@ -478,13 +479,13 @@ class ListStatusUnfinishedDetailsScreen
                       colorLine: Colors.orangeAccent,
                     ),
                     CustomTimeLines(
-                      contentLeft: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      contentLeft: const Padding(
+                        padding: EdgeInsets.only(left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Text(
                                   "Làm hàng xong",
                                   style: TextStyle(

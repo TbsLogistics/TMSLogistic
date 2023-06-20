@@ -72,7 +72,7 @@ class DriverFinishedScreenModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (khuVuc != null) {
       data['khuVuc'] = khuVuc!.toJson();
     }

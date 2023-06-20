@@ -311,12 +311,12 @@ class _CameraScreenState extends State<CameraScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 60,
             width: 75,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   "Chứng từ",
                   style: TextStyle(color: Colors.black, fontSize: 16),
@@ -331,8 +331,8 @@ class _CameraScreenState extends State<CameraScreen> {
                 controller.selectedValue.value =
                     int.parse(data!.maLoaiChungTu.toString());
                 controller.subFee.value = data.tenLoaiChungTu!;
-                print(
-                    [controller.selectedValue.value, controller.subFee.value]);
+                // print(
+                //     [controller.selectedValue.value, controller.subFee.value]);
               },
               dropdownBuilder: (BuildContext context, ListDocTypeModel? item) {
                 return Container(
@@ -343,8 +343,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     color: Colors.white,
                   ),
                   child: (item?.tenLoaiChungTu == null)
-                      ? Row(
-                          children: const [
+                      ? const Row(
+                          children: [
                             Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(

@@ -290,7 +290,7 @@ class _DriverCreateRegisterScreenState
           ),
         ),
         const SizedBox(height: 10),
-        Container(
+        SizedBox(
           width: size.width,
           child: Card(
             shape: const OutlineInputBorder(
@@ -336,7 +336,7 @@ class _DriverCreateRegisterScreenState
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "Khách hàng *",
@@ -357,7 +357,7 @@ class _DriverCreateRegisterScreenState
             onChanged: (value) {
               controller.selectCustomer.value.maKhachHang = value!.maKhachHang;
               controller.selectCustomer.value.tenKhachhang = value.tenKhachhang;
-              print(controller.selectCustomer.value.tenKhachhang);
+              // print(controller.selectCustomer.value.tenKhachhang);
             },
             dropdownBuilder:
                 (BuildContext context, CustomerOfWareHomeModel? item) {
@@ -433,7 +433,7 @@ class _DriverCreateRegisterScreenState
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "Kho *",
@@ -537,7 +537,7 @@ class _DriverCreateRegisterScreenState
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "Loại hàng *",
@@ -643,7 +643,7 @@ class _DriverCreateRegisterScreenState
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "Loại xe *",
@@ -744,7 +744,7 @@ class _DriverCreateRegisterScreenState
       children: [
         Container(
           padding: const EdgeInsets.only(left: 5),
-          child: Row(
+          child: const Row(
             children: [
               Text(
                 "Thời gian dự kiến *",

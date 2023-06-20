@@ -1,9 +1,9 @@
 import "dart:math" as math;
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_success.dart';
@@ -16,8 +16,8 @@ class PendingDetailTms extends GetView<PendingDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    var day = DateFormat("dd-MM-yyyy");
-    var hour = DateFormat("hh:mm a");
+    // var day = DateFormat("dd-MM-yyyy");
+    // var hour = DateFormat("hh:mm a");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -93,10 +93,10 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                           Get.defaultDialog(
                                               backgroundColor: Colors.white,
                                               title: "Thông báo",
-                                              content: Column(
+                                              content: const Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: const [
+                                                children: [
                                                   TextCustomComment(
                                                       text:
                                                           "Hãy chắc rằng hàng hóa đã được giao nhận")
@@ -137,16 +137,16 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                         ],
                       )
                     : listIdSameStatus.contains(20) == true
-                        ? Column(
+                        ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                   "Đang tải dữ liệu vui lòng đợi trong giây lát !")
                             ],
                           )
-                        : Column(
+                        : const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text("Hết đơn , vui lòng quay lại trang trước")
                             ],
                           ),
@@ -183,87 +183,84 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "${controller.newListDataForReceiveEmpty[i].place}",
-                                        style: const TextStyle(
-                                            color: Colors.orangeAccent,
-                                            fontSize: 18),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Obx(() {
-                                        return controller
-                                                .isPlacedReceiveEmpty[i]
-                                            ? ButtonComment(
-                                                text: "Đã đến",
-                                                onPressed: () {},
-                                              )
-                                            : ButtonComment(
-                                                text: "Đến",
-                                                onPressed: () {
-                                                  controller.updateReceiveEmpty(
-                                                    index: i,
-                                                    placeId: int.parse(
-                                                      controller
-                                                          .listOrder
-                                                          .value
-                                                          .getDataHandlingMobiles![
-                                                              0]
-                                                          .maDiemLayRong
-                                                          .toString(),
-                                                    ),
-                                                  );
-                                                });
-                                      }),
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForReceiveEmpty[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForReceiveEmpty[
-                                                        i]
-                                                    .getData![0]
-                                                    .maDiemLayRong
-                                              ],
-                                            );
-                                          }),
-                                    ],
-                                  )
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "${controller.newListDataForReceiveEmpty[i].place}",
+                                      style: const TextStyle(
+                                          color: Colors.orangeAccent,
+                                          fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Obx(() {
+                                      return controller
+                                              .isPlacedReceiveEmpty[i]
+                                          ? ButtonComment(
+                                              text: "Đã đến",
+                                              onPressed: () {},
+                                            )
+                                          : ButtonComment(
+                                              text: "Đến",
+                                              onPressed: () {
+                                                controller.updateReceiveEmpty(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemLayRong
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              });
+                                    }),
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForReceiveEmpty[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForReceiveEmpty[
+                                                      i]
+                                                  .getData![0]
+                                                  .maDiemLayRong
+                                            ],
+                                          );
+                                        }),
+                                  ],
+                                )
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
                         expanded: Container(
@@ -435,11 +432,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                         .white,
                                                                 title:
                                                                     "Thông báo",
-                                                                content: Column(
+                                                                content: const Column(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
-                                                                  children: const [
+                                                                  children: [
                                                                     Text(
                                                                       "Hãy chắc rằng hàng hóa đã được giao nhận",
                                                                       style:
@@ -536,83 +533,80 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        controller
-                                            .newListDataForReceive[i].place!
-                                            .trim(),
-                                        style: const TextStyle(
-                                            color: Colors.orangeAccent,
-                                            fontSize: 18),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Obx(() => controller.isPlacedReceive[i]
-                                          ? ButtonComment(
-                                              text: "Đã đến", onPressed: () {})
-                                          : ButtonComment(
-                                              text: "Đến",
-                                              onPressed: () {
-                                                controller.updateReceive(
-                                                  index: i,
-                                                  placeId: int.parse(
-                                                    controller
-                                                        .listOrder
-                                                        .value
-                                                        .getDataHandlingMobiles![
-                                                            0]
-                                                        .maDiemLayHang
-                                                        .toString(),
-                                                  ),
-                                                );
-                                              })),
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForReceive[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForReceive[i]
-                                                    .getData![0]
-                                                    .maDiemLayHang
-                                              ],
-                                            );
-                                          })
-                                    ],
-                                  ),
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      controller
+                                          .newListDataForReceive[i].place!
+                                          .trim(),
+                                      style: const TextStyle(
+                                          color: Colors.orangeAccent,
+                                          fontSize: 18),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Obx(() => controller.isPlacedReceive[i]
+                                        ? ButtonComment(
+                                            text: "Đã đến", onPressed: () {})
+                                        : ButtonComment(
+                                            text: "Đến",
+                                            onPressed: () {
+                                              controller.updateReceive(
+                                                index: i,
+                                                placeId: int.parse(
+                                                  controller
+                                                      .listOrder
+                                                      .value
+                                                      .getDataHandlingMobiles![
+                                                          0]
+                                                      .maDiemLayHang
+                                                      .toString(),
+                                                ),
+                                              );
+                                            })),
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForReceive[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForReceive[i]
+                                                  .getData![0]
+                                                  .maDiemLayHang
+                                            ],
+                                          );
+                                        })
+                                  ],
+                                ),
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
                         expanded: Container(
@@ -807,11 +801,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                   title:
                                                                       "Thông báo",
                                                                   content:
-                                                                      Column(
+                                                                      const Column(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
                                                                             .center,
-                                                                    children: const [
+                                                                    children: [
                                                                       Text(
                                                                         "Hãy chắc rằng hàng hóa đã được giao nhận",
                                                                         style:
@@ -919,82 +913,79 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                           tapBodyToCollapse: true,
                           hasIcon: false,
                         ),
-                        header: Container(
-                          // color: Colors.indigoAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              ExpandableIcon(
-                                theme: const ExpandableThemeData(
-                                  expandIcon: Icons.arrow_right,
-                                  collapseIcon: Icons.arrow_drop_down,
-                                  iconColor: Color(0xffE18229),
-                                  iconSize: 35.0,
-                                  iconRotationAngle: math.pi / 2,
-                                  iconPadding: EdgeInsets.only(right: 5),
-                                  hasIcon: false,
-                                ),
+                        header: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(children: [
+                            ExpandableIcon(
+                              theme: const ExpandableThemeData(
+                                expandIcon: Icons.arrow_right,
+                                collapseIcon: Icons.arrow_drop_down,
+                                iconColor: Color(0xffE18229),
+                                iconSize: 35.0,
+                                iconRotationAngle: math.pi / 2,
+                                iconPadding: EdgeInsets.only(right: 5),
+                                hasIcon: false,
                               ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "${controller.newListDataForGive[i].place}",
-                                    style: const TextStyle(
-                                        color: Colors.orangeAccent,
-                                        fontSize: 18),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Obx(
-                                        () => controller.isPlacedGive[i]
-                                            ? ButtonComment(
-                                                text: "Đã đến",
-                                                onPressed: () {})
-                                            : ButtonComment(
-                                                text: "Đến",
-                                                onPressed: () {
-                                                  controller.updateGive(
-                                                    index: i,
-                                                    placeId: int.parse(
-                                                      controller
-                                                          .listOrder
-                                                          .value
-                                                          .getDataHandlingMobiles![
-                                                              0]
-                                                          .maDiemTraHang
-                                                          .toString(),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                      ),
-                                      ButtonComment(
-                                          text: "Phụ phí",
-                                          onPressed: () {
-                                            Get.toNamed(
-                                              Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForGive[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller.newListDataForGive[i]
-                                                    .getData![0].maDiemTraHang
-                                              ],
-                                            );
-                                          })
-                                    ],
-                                  )
-                                ],
-                              )),
-                            ]),
-                          ),
+                            ),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${controller.newListDataForGive[i].place}",
+                                  style: const TextStyle(
+                                      color: Colors.orangeAccent,
+                                      fontSize: 18),
+                                ),
+                                Column(
+                                  children: [
+                                    Obx(
+                                      () => controller.isPlacedGive[i]
+                                          ? ButtonComment(
+                                              text: "Đã đến",
+                                              onPressed: () {})
+                                          : ButtonComment(
+                                              text: "Đến",
+                                              onPressed: () {
+                                                controller.updateGive(
+                                                  index: i,
+                                                  placeId: int.parse(
+                                                    controller
+                                                        .listOrder
+                                                        .value
+                                                        .getDataHandlingMobiles![
+                                                            0]
+                                                        .maDiemTraHang
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                    ),
+                                    ButtonComment(
+                                        text: "Phụ phí",
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForGive[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller.newListDataForGive[i]
+                                                  .getData![0].maDiemTraHang
+                                            ],
+                                          );
+                                        })
+                                  ],
+                                )
+                              ],
+                            )),
+                          ]),
                         ),
                         collapsed: Container(),
-                        expanded: Container(
+                        expanded: SizedBox(
                           height: (120 *
                               double.parse(controller
                                   .newListDataForGive[i].getData!.length
@@ -1099,11 +1090,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                         ? ButtonError(
                                                             text: "Hủy giao",
                                                             onPressed: () {
-                                                              print(controller
-                                                                  .newListDataForGive[
-                                                                      i]
-                                                                  .getData![k]
-                                                                  .maTrangThai);
+                                                              // print(controller
+                                                              //     .newListDataForGive[
+                                                              //         i]
+                                                              //     .getData![k]
+                                                              //     .maTrangThai);
                                                               _cancelButton(
                                                                 size: size,
                                                                 onPressed: () {
@@ -1138,10 +1129,10 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                     text: "Hủy giao",
                                                     onPressed: () {})),
                                             Obx(() {
-                                              print(controller
-                                                  .newListDataForGive[i]
-                                                  .getData![k]
-                                                  .maTrangThai);
+                                              // print(controller
+                                              //     .newListDataForGive[i]
+                                              //     .getData![k]
+                                              //     .maTrangThai);
                                               return controller.isPlacedGive[i]
                                                   ? controller
                                                           .isLoadStatus.value
@@ -1158,11 +1149,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                 Get.defaultDialog(
                                                                     backgroundColor: Colors.white,
                                                                     title: "Thông báo",
-                                                                    content: Column(
+                                                                    content: const Column(
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
                                                                               .center,
-                                                                      children: const [
+                                                                      children: [
                                                                         TextCustomComment(
                                                                             text:
                                                                                 "Hãy chắc rằng hàng hóa đã được giao nhận")
@@ -1176,7 +1167,7 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                         : ButtonComment(
                                                                             text: "Xác nhận",
                                                                             onPressed: () {
-                                                                              print(controller.newListDataForGive[i].getData![k].handlingId!);
+                                                                              // print(controller.newListDataForGive[i].getData![k].handlingId!);
                                                                               controller.postSetRuning(idList: "th", firstIndex: i, id: controller.newListDataForGive[i].getData![k].handlingId!, secondIndex: k);
                                                                             })),
                                                                     cancel: ButtonComment(
@@ -1236,81 +1227,78 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                       tapBodyToCollapse: true,
                       hasIcon: false,
                     ),
-                    header: Container(
-                      // color: Colors.indigoAccent,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(children: [
-                          ExpandableIcon(
-                            theme: const ExpandableThemeData(
-                              expandIcon: Icons.arrow_right,
-                              collapseIcon: Icons.arrow_drop_down,
-                              iconColor: Color(0xffE18229),
-                              iconSize: 35.0,
-                              iconRotationAngle: math.pi / 2,
-                              iconPadding: EdgeInsets.only(right: 5),
-                              hasIcon: false,
-                            ),
+                    header: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(children: [
+                        ExpandableIcon(
+                          theme: const ExpandableThemeData(
+                            expandIcon: Icons.arrow_right,
+                            collapseIcon: Icons.arrow_drop_down,
+                            iconColor: Color(0xffE18229),
+                            iconSize: 35.0,
+                            iconRotationAngle: math.pi / 2,
+                            iconPadding: EdgeInsets.only(right: 5),
+                            hasIcon: false,
                           ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${controller.newListDataForGiveEmpty[i].place}",
-                                  style: const TextStyle(
-                                      color: Colors.orangeAccent, fontSize: 18),
-                                ),
-                                Column(
-                                  children: [
-                                    Obx(() {
-                                      return controller.isPlacedGiveEmpty[i]
-                                          ? ButtonComment(
-                                              text: "Đã đến", onPressed: () {})
-                                          : ButtonComment(
-                                              text: "Đến",
-                                              onPressed: () {
-                                                controller.updateGiveEmpty(
-                                                  index: i,
-                                                  placeId: int.parse(
-                                                    controller
-                                                        .listOrder
-                                                        .value
-                                                        .getDataHandlingMobiles![
-                                                            0]
-                                                        .maDiemTraRong
-                                                        .toString(),
-                                                  ),
-                                                );
-                                              });
-                                    }),
-                                    ButtonComment(
-                                        text: "Phụ phí",
-                                        onPressed: () {
-                                          Get.toNamed(Routes.SUR_CHANGE_SCREEN,
-                                              arguments: [
-                                                controller
-                                                    .newListDataForGiveEmpty[i],
-                                                controller
-                                                    .listOrder.value.maChuyen,
-                                                controller
-                                                    .newListDataForGiveEmpty[i]
-                                                    .getData![0]
-                                                    .maDiemTraRong
-                                              ]);
-                                        })
-                                  ],
-                                )
-                              ],
-                            ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${controller.newListDataForGiveEmpty[i].place}",
+                                style: const TextStyle(
+                                    color: Colors.orangeAccent, fontSize: 18),
+                              ),
+                              Column(
+                                children: [
+                                  Obx(() {
+                                    return controller.isPlacedGiveEmpty[i]
+                                        ? ButtonComment(
+                                            text: "Đã đến", onPressed: () {})
+                                        : ButtonComment(
+                                            text: "Đến",
+                                            onPressed: () {
+                                              controller.updateGiveEmpty(
+                                                index: i,
+                                                placeId: int.parse(
+                                                  controller
+                                                      .listOrder
+                                                      .value
+                                                      .getDataHandlingMobiles![
+                                                          0]
+                                                      .maDiemTraRong
+                                                      .toString(),
+                                                ),
+                                              );
+                                            });
+                                  }),
+                                  ButtonComment(
+                                      text: "Phụ phí",
+                                      onPressed: () {
+                                        Get.toNamed(Routes.SUR_CHANGE_SCREEN,
+                                            arguments: [
+                                              controller
+                                                  .newListDataForGiveEmpty[i],
+                                              controller
+                                                  .listOrder.value.maChuyen,
+                                              controller
+                                                  .newListDataForGiveEmpty[i]
+                                                  .getData![0]
+                                                  .maDiemTraRong
+                                            ]);
+                                      })
+                                ],
+                              )
+                            ],
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                     ),
                     collapsed: Container(
                       color: Colors.amberAccent,
                     ),
-                    expanded: Container(
+                    expanded: SizedBox(
                       height: (120 *
                           double.parse(controller
                               .newListDataForGiveEmpty[i].getData!.length
@@ -1467,11 +1455,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                         .white,
                                                                 title:
                                                                     "Thông báo",
-                                                                content: Column(
+                                                                content: const Column(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
-                                                                  children: const [
+                                                                  children: [
                                                                     Text(
                                                                       "Hãy chắc rằng hàng hóa đã được giao nhận",
                                                                       style:
@@ -1657,11 +1645,11 @@ class PendingDetailTms extends GetView<PendingDetailController> {
       ),
       content: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 65,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Expanded(
                   child: Text(
                     "Ứng dụng này thu thập dữ liệu vị trí để để lấy vị trí của bạn, ngay cả khi đã đóng hoặc không sử dụng !",

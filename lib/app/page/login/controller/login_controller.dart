@@ -17,7 +17,7 @@ import 'package:tbs_logistics_tms/app/page/login/model/login_user_hrm_model.dart
 import 'package:tbs_logistics_tms/app/page/login/model/login_user_npt_model.dart';
 
 class LoginController extends GetxController {
-  late Response response;
+ 
   var dio = Dio();
 
   TextEditingController accountController = TextEditingController();
@@ -33,6 +33,7 @@ class LoginController extends GetxController {
 
   Future<void> postLoginTms(
       {required String account, required String password}) async {
+        Response response;
     var login = LoginModel(
       username: account,
       password: md5.convert(utf8.encode(password)).toString(),
@@ -252,6 +253,7 @@ class LoginController extends GetxController {
     required String username,
     required String password,
   }) async {
+    Response response;
     var user = LoginHrmModel(
       username: username,
       password: password,
@@ -319,6 +321,8 @@ class LoginController extends GetxController {
   void createAccount({
     required String username,
   }) async {
+    Response response;
+
     var users = LoginHrmModel(
       username: username,
       password: "",
@@ -493,7 +497,7 @@ class LoginController extends GetxController {
         urlNpt,
         data: jsonNpt,
       );
-      print(response);
+     
       if (responseNpt.statusCode == 200) {
         if (responseNpt.data["status_code"] == 204) {
           //++++++++++++++++++++++++++++Đăng nhập HRM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -506,7 +510,7 @@ class LoginController extends GetxController {
             if (responseHrm.data["rCode"] == 1) {
               diaLogCreateAccout(account);
             } else if (responseHrm.data["rCode"] == 2) {
-              passwordController.text = response.data["rData"]["password"];
+              passwordController.text = responseHrm.data["rData"]["password"];
             } else if (responseHrm.data["rCode"] == 3) {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               // ignore: unused_local_variable
@@ -604,7 +608,7 @@ class LoginController extends GetxController {
         }
       }
     } on DioError catch (e) {
-      print("Status Code : ${e.response!.statusCode}");
+      // print("Status Code : ${e.response!.statusCode}");
       if (e.response!.statusCode == 400) {
         getSnack(messageText: "Tài khoản hoặc mật khẩu không đúng !");
       } else if (e.response!.statusCode == 500) {

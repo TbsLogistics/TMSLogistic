@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_driver_of_customer_details/controller/customer_list_driver_of_customer_details_controller.dart';
@@ -156,7 +155,6 @@ class CustomerListDriverDetailsOfCustomerScreen
   }
 
   Widget _buildFormStatus(ListTrackingModel item, Size size) {
-    var length = item.trackingtime!.length;
 
     var day = DateFormat("dd-MM-yyyy");
     // ignore: unused_local_variable
@@ -178,9 +176,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CustomTimeLines(
-                    contentLeft: Column(
+                    contentLeft: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Đã đăng tài",
                           style: TextStyle(
@@ -210,9 +208,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     colorLine: Colors.orangeAccent,
                   ),
                   CustomTimeLines(
-                    contentLeft: Column(
+                    contentLeft: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Đã vào cổng",
                           style: TextStyle(
@@ -246,9 +244,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     colorLine: Colors.orangeAccent,
                   ),
                   CustomTimeLines(
-                    contentLeft: Column(
+                    contentLeft: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Đã vào dock",
                           style: TextStyle(
@@ -282,9 +280,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     colorLine: Colors.orangeAccent,
                   ),
                   CustomTimeLines(
-                    contentLeft: Column(
+                    contentLeft: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Bắt đầu làm hàng",
                           style: TextStyle(
@@ -318,9 +316,9 @@ class CustomerListDriverDetailsOfCustomerScreen
                     colorLine: Colors.orangeAccent,
                   ),
                   CustomTimeLines(
-                    contentLeft: Column(
+                    contentLeft: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Làm hàng xong",
                           style: TextStyle(

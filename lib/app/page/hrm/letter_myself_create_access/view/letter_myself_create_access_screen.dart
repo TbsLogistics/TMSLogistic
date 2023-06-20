@@ -16,9 +16,9 @@ class LetterMyselfCreateAccessScreen
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             "Không có dữ liệu !",
             style: TextStyle(

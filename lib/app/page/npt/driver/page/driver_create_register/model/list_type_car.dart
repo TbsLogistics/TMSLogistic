@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class ListTypeCarModel {
   String? maLoaiXe;
   String? tenLoaiXe;

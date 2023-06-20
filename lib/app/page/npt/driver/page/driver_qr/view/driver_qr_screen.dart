@@ -41,7 +41,7 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
                 child: RepaintBoundary(
                   key: controller.qrDriverKey,
                   child: Obx(() {
-                    print(controller.user.value.maTaixe);
+                    // print(controller.user.value.maTaixe);
                     return QrImage(
                       backgroundColor: Colors.white,
                       data:
