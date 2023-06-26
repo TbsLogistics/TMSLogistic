@@ -22,6 +22,11 @@ class ManagerLeaveFormController extends GetxController
     const Tab(text: 'Đơn cần duyệt'),
   ];
 
+  final List<Tab> myTabsManager = <Tab>[
+    const Tab(text: 'Đơn cần duyệt'),
+    const Tab(text: 'Đơn của tôi'),
+  ];
+
   late TabController controller;
 
   @override

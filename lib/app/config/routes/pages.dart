@@ -22,10 +22,12 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen_from_details_registed.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/view/driver_status_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/view/driver_status_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_page.dart';
 import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/camera/view/camera_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/cancel/view/cancel_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/change_password/change_password.dart';
+import 'package:tbs_logistics_tms/app/page/tms/dashboard/dashboard_page.dart';
 import 'package:tbs_logistics_tms/app/page/tms/finished_details/view/finished_details_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/note/view/note_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/pending_details/view/pending_details_screen.dart';
@@ -56,6 +58,10 @@ abstract class AppPages {
       page: () => const TmsPage(),
     ),
     GetPage(
+      name: Routes.DASH_BOARD_TMS_PAGE,
+      page: () => const DashBoardTmsPage(),
+    ),
+    GetPage(
       name: Routes.START_DETAIL_TMS,
       page: () => const AwaitDetails(),
     ),
@@ -66,6 +72,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.FINISHED_DETAIL_TMS,
       page: () => const FinishedDetailsScreen(),
+    ),
+    //DASH_BOARD_PAGE
+    GetPage(
+      name: Routes.DASH_BOARD_PAGE,
+      page: () => DashBoardTmsPage(),
     ),
     //PENDING
     // GetPage(
@@ -166,6 +177,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
       page: () => const CustomerListTickerRegisterDetailsScreen(),
+    ),
+    //Bao ve
+    GetPage(
+      name: Routes.SERCURITY_PAGE,
+      page: () => const SercurityPage(),
     ),
 
     //------------------Tính năng HRM-------------------------------

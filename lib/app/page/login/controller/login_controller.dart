@@ -17,7 +17,6 @@ import 'package:tbs_logistics_tms/app/page/login/model/login_user_hrm_model.dart
 import 'package:tbs_logistics_tms/app/page/login/model/login_user_npt_model.dart';
 
 class LoginController extends GetxController {
- 
   var dio = Dio();
 
   TextEditingController accountController = TextEditingController();
@@ -33,7 +32,7 @@ class LoginController extends GetxController {
 
   Future<void> postLoginTms(
       {required String account, required String password}) async {
-        Response response;
+    Response response;
     var login = LoginModel(
       username: account,
       password: md5.convert(utf8.encode(password)).toString(),
@@ -330,12 +329,15 @@ class LoginController extends GetxController {
     );
     var jsonData = users.toJson();
     String url = "${AppConstants.urlBaseHrm}/Login";
+    // String url = "${AppConstants.urlBaseHrm}/user/login";
+
     try {
       response = await dio.post(
         url,
         data: jsonData,
         options: Options(validateStatus: (_) => true),
       );
+
       if (response.statusCode == 200) {
         // ignore: unused_local_variable
         var jsonRespone = response.data;
@@ -347,7 +349,7 @@ class LoginController extends GetxController {
             "${response.data["rData"]["token"]}");
         Map<String, dynamic> decodedTokenHrm =
             JwtDecoder.decode(response.data["rData"]["token"]);
-        // print(decodedTokenHrm);
+        print(decodedTokenHrm);
         Get.defaultDialog(
           barrierDismissible: false,
           title: "Thông báo",
@@ -497,7 +499,7 @@ class LoginController extends GetxController {
         urlNpt,
         data: jsonNpt,
       );
-     
+
       if (responseNpt.statusCode == 200) {
         if (responseNpt.data["status_code"] == 204) {
           //++++++++++++++++++++++++++++Đăng nhập HRM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -505,6 +507,10 @@ class LoginController extends GetxController {
             "${AppConstants.urlBaseHrm}/Login",
             data: jsonHrm,
           );
+          // responseHrm = await dio.post(
+          //   "${AppConstants.urlBaseHrm}/user/login",
+          //   data: jsonHrm,
+          // );
 
           if (responseHrm.statusCode == 200) {
             if (responseHrm.data["rCode"] == 1) {
@@ -536,15 +542,22 @@ class LoginController extends GetxController {
               if (responseTms.statusCode == 200) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 var data = responseTms.data;
+                // print("tokens : $data");
                 var access_token_tms = await prefs.setString(
                   AppConstants.KEY_ACCESS_TOKEN_TMS,
                   data,
                 );
+
                 Map<String, dynamic> decodedToken = JwtDecoder.decode(data);
+                print(decodedToken);
                 // ignore: unused_local_variable
                 var idTX = await prefs.setString(
                   AppConstants.KEY_ID_TX,
                   decodedToken["UserName"],
+                );
+                var accType = await prefs.setString(
+                  AppConstants.KEY_ACCOUNT_TYPE,
+                  decodedToken["AccType"],
                 );
                 getDialog();
                 getSnack(messageText: "Đăng nhập thành công !");
@@ -563,7 +576,7 @@ class LoginController extends GetxController {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Map<String, dynamic> decodedTokenNpt =
               JwtDecoder.decode(tokens.accessToken!);
-          // print(decodedTokenNpt);
+
           // ignore: unused_local_variable
           var accessToken = await prefs.setString(
               AppConstants.KEY_ACCESS_TOKEN_NPT, "${tokens.accessToken}");
@@ -594,6 +607,14 @@ class LoginController extends GetxController {
               // ignore: unused_local_variable
               var idKH = await prefs.setString(AppConstants.KEY_ID_KH,
                   "${tokens.data!.khachHang!.maKhachHang}");
+              getDialog();
+              Future.delayed(const Duration(seconds: 1), () {
+                Get.toNamed(Routes.HOME_PAGE);
+              });
+              break;
+            case "NV":
+              // ignore: unused_local_variable
+
               getDialog();
               Future.delayed(const Duration(seconds: 1), () {
                 Get.toNamed(Routes.HOME_PAGE);

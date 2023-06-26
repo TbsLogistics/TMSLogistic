@@ -57,6 +57,7 @@ class ChangePassController extends GetxController {
     );
     var jsonData = passWord.toJson();
     var url = "${AppConstants.urlBaseHrm}/changePass";
+    // var url = "${AppConstants.urlBaseHrm}/user/changePass";
 
     try {
       response = await dio.post(

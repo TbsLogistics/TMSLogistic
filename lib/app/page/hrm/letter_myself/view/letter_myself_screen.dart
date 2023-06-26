@@ -291,7 +291,7 @@ Widget _buildCustomListtile({
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
-        height: 80,
+        height: 110,
         child: Column(
           children: [
             Expanded(

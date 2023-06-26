@@ -17,6 +17,9 @@ abstract class Routes {
   static const START_DETAIL_TMS = "/START_DETAIL_TMS";
   static const PENDING_DETAIL_TMS = "/PENDING_DETAIL_TMS";
   static const FINISHED_DETAIL_TMS = "/FINISHED_DETAIL_TMS";
+  static const DASH_BOARD_TMS_PAGE = "/DASH_BOARD_TMS_PAGE";
+  //DASHBoard
+  static const DASH_BOARD_PAGE = "/DASH_BOARD_PAGE";
   //TMS_PENDING
   static const DETAILS_PENDING_WORKING_SCREEN =
       "/DETAILS_PENDING_WORKING_SCREEN";
@@ -41,6 +44,7 @@ abstract class Routes {
       "/LIST_STATUS_UNFINISHED_DETAIL_SCREEN";
   static const DETAILS_FORM_REGISTER_DRIVER = "/DETAILS_FORM_REGISTER_DRIVER";
   static const CREATE_REGISTER_DRIVER = "/CREATE_REGISTER_DRIVER";
+  static const SERCURITY_PAGE = "/SERCURITY_PAGE";
   //++++++++++++++++++++++++++CUSTOMER+++++++++++++++++++++++++++++++++
 
   static const CUSTOMER_PAGE = "/CUSTOMER_PAGE";

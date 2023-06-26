@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/tms/finished/view/finished_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/pending/view/pending_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/controller/tms_controller.dart';
@@ -35,6 +36,18 @@ class TmsPage extends GetView<TmsController> {
                 Get.back();
               },
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.dashboard_customize,
+                  size: 24,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Get.toNamed(Routes.DASH_BOARD_PAGE);
+                },
+              ),
+            ],
             title: const Text("TMS PAGE"),
             centerTitle: true,
             backgroundColor: CustomColor.backgroundAppbar,

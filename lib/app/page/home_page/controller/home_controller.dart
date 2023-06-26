@@ -46,25 +46,14 @@ class HomeController extends GetxController {
     final status = await newVersion.getVersionStatus();
 
     if (status != null) {
-      debugPrint(status.releaseNotes);
-      debugPrint(status.appStoreLink);
-      debugPrint(status.localVersion);
-      debugPrint(status.storeVersion);
-      debugPrint(status.canUpdate.toString());
+      // debugPrint(status.releaseNotes);
+      // debugPrint(status.appStoreLink);
+      // debugPrint(status.localVersion);
+      // debugPrint(status.storeVersion);
+      // debugPrint(status.canUpdate.toString());
       // Xét Phiên Bản Trên Cửa Hàng Lớn Hơn Phiên Bản Ở Thiết Bị Thì Chạy Popup Cập Nhật
       if (status.canUpdate) {
-        newVersion.showUpdateDialog(
-          context: Get.context!,
-          versionStatus: status,
-          dialogTitle: "Cập nhật",
-          dialogText: "Cập nhật ứng dụng để tiếp tục",
-          allowDismissal: false,
-          updateButtonText: "Cập nhật",
-          dismissAction: () {
-            Get.back();
-          },
-          dismissButtonText: "Hủy",
-        );
+        getSnack(messageText: "Có phiên mới, vui lòng cập nhật phiên bản mới để hoàn thiện tính năng !");
       } 
     }
   }
@@ -153,6 +142,25 @@ class HomeController extends GetxController {
               fontSize: 14,
             ),
           ),
+        ),
+      ),
+    );
+  }
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
         ),
       ),
     );

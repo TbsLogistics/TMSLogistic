@@ -3,7 +3,7 @@
 class UserNptModel {
   String? username;
   String? role;
-  Null? nhanvien;
+  Nhanvien? nhanvien;
   Taixe? taixe;
   KhachHang? khachHang;
   Null? doixe;
@@ -21,7 +21,8 @@ class UserNptModel {
   UserNptModel.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     role = json['role'];
-    nhanvien = json['nhanvien'];
+    nhanvien =
+        json['nhanvien'] != null ? Nhanvien.fromJson(json['nhanvien']) : null;
     taixe = json['taixe'] != null ? Taixe.fromJson(json['taixe']) : null;
     khachHang = json['KhachHang'] != null
         ? KhachHang.fromJson(json['KhachHang'])
@@ -152,6 +153,47 @@ class KhachHang {
     data['mota'] = mota;
     data['type'] = type;
     data['re_type'] = reType;
+    data['status'] = status;
+    return data;
+  }
+}
+
+class Nhanvien {
+  String? maNv;
+  String? usernameAccount;
+  String? tenNV;
+  String? maBoPhan;
+  String? maKhuVuc;
+  String? maKho;
+  bool? status;
+
+  Nhanvien(
+      {this.maNv,
+      this.usernameAccount,
+      this.tenNV,
+      this.maBoPhan,
+      this.maKhuVuc,
+      this.maKho,
+      this.status});
+
+  Nhanvien.fromJson(Map<String, dynamic> json) {
+    maNv = json['maNv'];
+    usernameAccount = json['usernameAccount'];
+    tenNV = json['tenNV'];
+    maBoPhan = json['maBoPhan'];
+    maKhuVuc = json['maKhuVuc'];
+    maKho = json['maKho'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['maNv'] = maNv;
+    data['usernameAccount'] = usernameAccount;
+    data['tenNV'] = tenNV;
+    data['maBoPhan'] = maBoPhan;
+    data['maKhuVuc'] = maKhuVuc;
+    data['maKho'] = maKho;
     data['status'] = status;
     return data;
   }

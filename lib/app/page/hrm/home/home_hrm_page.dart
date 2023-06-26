@@ -69,27 +69,64 @@ class HomeHrmPage extends GetView<ManagerLeaveFormController> {
                               ),
                               labelColor: Colors.white,
                               unselectedLabelColor: Colors.black,
-                              tabs: controller.myTabs,
+                              tabs: controller.userName.value.jPLevelID == 70 ||
+                                      controller.userName.value.jPLevelID ==
+                                          71 ||
+                                      controller.userName.value.jPLevelID ==
+                                          72 ||
+                                      controller.userName.value.jPLevelID == 73
+                                  ? controller.myTabs
+                                  : controller.myTabsManager,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Obx(() {
                             return Expanded(
                               child: TabBarView(
-                                controller: controller.controller,
-                                children: [
-                                  const LetterMyselfScreen(),
-                                  controller.userName.value.jPLevelID == 70 ||
+                                  controller: controller.controller,
+                                  children: controller
+                                                  .userName.value.jPLevelID ==
+                                              70 ||
                                           controller.userName.value.jPLevelID ==
                                               71 ||
                                           controller.userName.value.jPLevelID ==
                                               72 ||
                                           controller.userName.value.jPLevelID ==
                                               73
-                                      ? const LetterManagerDenyScreen()
-                                      : const LetterManagerScreen()
-                                ],
-                              ),
+                                      ? [
+                                          const LetterMyselfScreen(),
+                                          controller.userName.value
+                                                          .jPLevelID ==
+                                                      70 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      71 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      72 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      73
+                                              ? const LetterManagerDenyScreen()
+                                              : const LetterManagerScreen()
+                                        ]
+                                      : [
+                                          controller.userName.value
+                                                          .jPLevelID ==
+                                                      70 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      71 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      72 ||
+                                                  controller.userName.value
+                                                          .jPLevelID ==
+                                                      73
+                                              ? const LetterManagerDenyScreen()
+                                              : const LetterManagerScreen(),
+                                          const LetterMyselfScreen(),
+                                        ]),
                             );
                           })
                         ],

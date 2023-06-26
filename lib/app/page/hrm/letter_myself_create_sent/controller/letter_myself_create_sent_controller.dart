@@ -105,6 +105,8 @@ class LetterMyselfCreateSentController extends GetxController {
       HttpHeaders.authorizationHeader: "Bearer $tokens",
     };
     const url = "${AppConstants.urlBaseHrm}/getEmpInfo";
+    // const url = "${AppConstants.urlBaseHrm}/hrm/employee/getEmpInfo";
+
     isUserInfo(false);
     try {
       response = await dio.get(

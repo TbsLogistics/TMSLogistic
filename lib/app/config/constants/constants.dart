@@ -25,6 +25,10 @@ class AppConstants {
   static const String KEY_USER_TMS = "id_User_Tms";
 
   static const String KEY_ID_TX = "id_TX";
+  static const String KEY_ACCOUNT_TYPE = "id_account_type";
+
+  //Id
+  static const String ID_DOOR = "idDoor";
 
   // Url
   // static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
@@ -32,5 +36,5 @@ class AppConstants {
   static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
   static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
 
-  // static const String urlBaseHrm = "http://192.168.0.42:300";
+  // static const String urlBaseHrm = "https://tlogapi.tbslogistics.com.vn:300";
 }
