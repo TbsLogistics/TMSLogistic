@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_void_to_null
 
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished/model/customer_list_registed_model.dart';
+
 class ListTrackingModel {
   KhuVuc? khuVuc;
   List<Capcongs>? capcongs;
@@ -236,7 +238,7 @@ class Phieuvao {
   Kho? kho;
   String? loaiCont;
   String? loaiCont1;
-  String? maTrongTai;
+  MaTrongTai? maTrongTai;
   String? socont1;
   String? cont1seal1;
   String? cont1seal2;
@@ -286,7 +288,9 @@ class Phieuvao {
     kho = json['kho'] != null ? Kho.fromJson(json['kho']) : null;
     loaiCont = json['loaiCont'];
     loaiCont1 = json['loaiCont1'];
-    maTrongTai = json['maTrongTai'];
+    maTrongTai = json['maTrongTai'] != null
+        ? MaTrongTai.fromJson(json["maTrongTai"])
+        : null;
     socont1 = json['socont1'];
     cont1seal1 = json['cont1seal1'];
     cont1seal2 = json['cont1seal2'];
@@ -315,7 +319,10 @@ class Phieuvao {
     }
     data['loaiCont'] = loaiCont;
     data['loaiCont1'] = loaiCont1;
-    data['maTrongTai'] = maTrongTai;
+    if (maTrongTai != null) {
+      data['maTrongTai'] = maTrongTai!.toJson();
+    }
+
     data['socont1'] = socont1;
     data['cont1seal1'] = cont1seal1;
     data['cont1seal2'] = cont1seal2;

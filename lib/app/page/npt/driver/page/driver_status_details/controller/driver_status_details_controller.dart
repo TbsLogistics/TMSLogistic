@@ -10,24 +10,25 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/status_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/driver_list_ticker_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class DriverStatusDetailsController extends GetxController {
   var dio = Dio();
 
-  Rx<DriverFinishedScreenModel> getDriverFinishedScreen =
-      DriverFinishedScreenModel().obs;
-  GlobalKey qrDriverKey =  GlobalKey();
+  Rx<DriverListTickerModel> getDriverFinishedScreen =
+      DriverListTickerModel().obs;
+  GlobalKey qrDriverKey = GlobalKey();
 
   RxBool isDriverFinishedScreen = true.obs;
-  RxBool showForm = true.obs;
+  RxBool showForm = false.obs;
 
   @override
   void onInit() {
-    var driverFinishedScreen = Get.arguments as DriverFinishedScreenModel;
+    var driverFinishedScreen = Get.arguments as DriverListTickerModel;
     getDriverFinishedScreen.value = driverFinishedScreen;
 
     super.onInit();
@@ -39,6 +40,31 @@ class DriverStatusDetailsController extends GetxController {
   }
 
   var selectedTaixe = "";
+
+  void deteleTicker({required String maPhieu}) async {
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+    var url = '${AppConstants.urlBaseNpt}/invote/delete/$maPhieu';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+      );
+      if (response.statusCode == 200) {
+        if (response.data["status_code"] == 204) {
+          getSnack(messageText: response.data["detail"]);
+        } else {
+          getSnack(messageText: response.data["detail"]);
+          Get.offAllNamed(Routes.HOME_PAGE);
+        }
+      }
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {}
+    }
+  }
 
   Future<List<ListDriverByCustomerModel>> getData(query) async {
     Response response;
@@ -122,5 +148,25 @@ class DriverStatusDetailsController extends GetxController {
     var bs64 = base64Encode(pngBytes);
 
     return pngBytes;
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

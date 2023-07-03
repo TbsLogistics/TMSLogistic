@@ -43,9 +43,9 @@ class CustomerListDriverOfCustomerScreen
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              controller.postInforDriver(
-                                  idTaixe:
-                                      controller.listDriver[index].maTaixe);
+                              // controller.postInforDriver(
+                              //     idTaixe:
+                              //         controller.listDriver[index].maTaixe);
                             },
                             child: CustomListTitle(
                               Stt: "${index + 1}",

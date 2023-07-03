@@ -60,7 +60,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                         width: size.width * 0.05,
                       ),
                       Text(
-                        "Đăng ký phiếu vào",
+                        "Đăng ký phiếu",
                         style: TextStyle(
                           color: Theme.of(context).primaryColorLight,
                           fontSize: 20,

@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
@@ -25,10 +23,12 @@ class SercurityController extends GetxController {
   RxString nameCustomer = "".obs;
   Rx<DetailEntryVoteModel> detailEntryVote = DetailEntryVoteModel().obs;
 
+  FocusNode khuvucFocus = FocusNode();
+
   RxBool isShowDetail = false.obs;
   @override
   void onInit() {
-    getIdDoor();
+    // getIdDoor();
     super.onInit();
   }
 
@@ -74,36 +74,6 @@ class SercurityController extends GetxController {
           if (data.cong![i].maCong == idDoor.value) {
             idZone.value = data.cong![i].zone!;
           }
-        }
-      }
-    } on DioError catch (e) {
-      if (e.response!.statusCode == 400) {
-      } else if (e.response!.statusCode == 500) {}
-    }
-  }
-
-  void getDetailEntryVote({required int maPhieuvao}) async {
-    var dio = Dio();
-    var token = await SharePerApi().getTokenNPT();
-    Response response;
-    Map<String, dynamic> headers = {
-      HttpHeaders.authorizationHeader: "Bearer $token"
-    };
-    var url =
-        "${AppConstants.urlBaseNpt}/detail-entry-vote-in?maPhieuVao=$maPhieuvao";
-    isShowDetail(false);
-    try {
-      response = await dio.get(
-        url,
-        options: Options(headers: headers),
-      );
-      if (response.statusCode == 200) {
-        if (response.data["status_code"] == 200) {
-          var data = DetailEntryVoteModel.fromJson(response.data);
-          detailEntryVote.value = data;
-          isShowDetail(true);
-        } else {
-          getSnack(messageText: response.data["detail"]);
         }
       }
     } on DioError catch (e) {
@@ -194,36 +164,6 @@ class SercurityController extends GetxController {
       } else if (e.response!.statusCode == 500) {}
     } finally {
       isShowDetail(false);
-    }
-  }
-
-  Future<void> scanQr({required String idCode}) async {
-    try {
-      scannerQrCode = await FlutterBarcodeScanner.scanBarcode(
-        "#FF6666",
-        "Cancel",
-        false,
-        ScanMode.BARCODE,
-      );
-      switch (idCode) {
-        case "Vao":
-          int maPhieuVao = int.parse(scannerQrCode);
-          idPhieuvao.value = maPhieuVao;
-          getDetailEntryVote(maPhieuvao: maPhieuVao);
-          // getBk(bk: bkController.text);
-
-          break;
-        case "lwhF":
-          // lwhFromController.text = scannerQrCode;
-          break;
-        case "lwhT":
-          // lwhToController.text = scannerQrCode;
-          break;
-
-        default:
-      }
-    } on PlatformException catch (e) {
-      print("Lỗi :  ${e.message}");
     }
   }
 

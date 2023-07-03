@@ -259,6 +259,7 @@ class Phieuvao {
   double? soKien;
   double? sokhoi;
   String? soBook;
+  double? soTan;
   bool? trangthaihang;
   bool? trangthaikhoa;
   String? socont2;
@@ -267,6 +268,7 @@ class Phieuvao {
   double? sokien1;
   double? sokhoi1;
   String? soBook1;
+  double? soTan1;
   bool? trangthaihang1;
   bool? trangthaikhoa1;
 
@@ -280,6 +282,7 @@ class Phieuvao {
       this.soKien,
       this.sokhoi,
       this.soBook,
+      this.soTan,
       this.trangthaihang,
       this.trangthaikhoa,
       this.socont2,
@@ -288,6 +291,7 @@ class Phieuvao {
       this.sokien1,
       this.sokhoi1,
       this.soBook1,
+      this.soTan1,
       this.trangthaihang1,
       this.trangthaikhoa1});
 
@@ -301,6 +305,7 @@ class Phieuvao {
     soKien = json['SoKien'];
     sokhoi = json['sokhoi'];
     soBook = json['soBook'];
+    soTan = json['soTan'];
     trangthaihang = json['trangthaihang'];
     trangthaikhoa = json['trangthaikhoa'];
     socont2 = json['socont2'];
@@ -309,6 +314,7 @@ class Phieuvao {
     sokien1 = json['Sokien1'];
     sokhoi1 = json['sokhoi1'];
     soBook1 = json['soBook1'];
+    soTan1 = json['soTan1'];
     trangthaihang1 = json['trangthaihang1'];
     trangthaikhoa1 = json['trangthaikhoa1'];
   }
@@ -326,6 +332,7 @@ class Phieuvao {
     data['SoKien'] = soKien;
     data['sokhoi'] = sokhoi;
     data['soBook'] = soBook;
+    data['soTan'] = soTan;
     data['trangthaihang'] = trangthaihang;
     data['trangthaikhoa'] = trangthaikhoa;
     data['socont2'] = socont2;
@@ -334,6 +341,7 @@ class Phieuvao {
     data['Sokien1'] = sokien1;
     data['sokhoi1'] = sokhoi1;
     data['soBook1'] = soBook1;
+    data['soTan1'] = soTan1;
     data['trangthaihang1'] = trangthaihang1;
     data['trangthaikhoa1'] = trangthaikhoa1;
     return data;

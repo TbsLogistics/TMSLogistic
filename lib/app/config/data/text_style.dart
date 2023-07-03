@@ -28,6 +28,11 @@ class CustomTextStyle {
     color: Colors.orangeAccent,
     fontWeight: FontWeight.normal,
   );
+  static const TextStyle contentDetailsCont = TextStyle(
+    fontSize: 20,
+    color: Colors.red,
+    fontWeight: FontWeight.bold,
+  );
 
   static textFormFieldStyle(String label, String hint) {
     return InputDecoration(

@@ -199,8 +199,7 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                             ),
                             Expanded(
                                 child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   children: [
@@ -215,8 +214,7 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                 Column(
                                   children: [
                                     Obx(() {
-                                      return controller
-                                              .isPlacedReceiveEmpty[i]
+                                      return controller.isPlacedReceiveEmpty[i]
                                           ? ButtonComment(
                                               text: "Đã đến",
                                               onPressed: () {},
@@ -249,8 +247,7 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                               controller
                                                   .listOrder.value.maChuyen,
                                               controller
-                                                  .newListDataForReceiveEmpty[
-                                                      i]
+                                                  .newListDataForReceiveEmpty[i]
                                                   .getData![0]
                                                   .maDiemLayRong
                                             ],
@@ -432,7 +429,8 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                         .white,
                                                                 title:
                                                                     "Thông báo",
-                                                                content: const Column(
+                                                                content:
+                                                                    const Column(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
@@ -549,14 +547,12 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                             ),
                             Expanded(
                                 child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   children: [
                                     Text(
-                                      controller
-                                          .newListDataForReceive[i].place!
+                                      controller.newListDataForReceive[i].place!
                                           .trim(),
                                       style: const TextStyle(
                                           color: Colors.orangeAccent,
@@ -929,22 +925,19 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                             ),
                             Expanded(
                                 child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   "${controller.newListDataForGive[i].place}",
                                   style: const TextStyle(
-                                      color: Colors.orangeAccent,
-                                      fontSize: 18),
+                                      color: Colors.orangeAccent, fontSize: 18),
                                 ),
                                 Column(
                                   children: [
                                     Obx(
                                       () => controller.isPlacedGive[i]
                                           ? ButtonComment(
-                                              text: "Đã đến",
-                                              onPressed: () {})
+                                              text: "Đã đến", onPressed: () {})
                                           : ButtonComment(
                                               text: "Đến",
                                               onPressed: () {
@@ -969,8 +962,7 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                           Get.toNamed(
                                             Routes.SUR_CHANGE_SCREEN,
                                             arguments: [
-                                              controller
-                                                  .newListDataForGive[i],
+                                              controller.newListDataForGive[i],
                                               controller
                                                   .listOrder.value.maChuyen,
                                               controller.newListDataForGive[i]
@@ -1455,7 +1447,8 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                                                                         .white,
                                                                 title:
                                                                     "Thông báo",
-                                                                content: const Column(
+                                                                content:
+                                                                    const Column(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,

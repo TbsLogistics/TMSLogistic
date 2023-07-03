@@ -53,26 +53,26 @@ class LetterManagerScreen extends GetView<LetterManagerController> {
               ],
             ),
             //Duyệt nhanh tất cả các đơn
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green),
-                  ),
-                  onPressed: () {
-                    // print(controller.listRegid);
-                    controller.postApproveAll(
-                      regID: controller.listRegid,
-                      comment: "",
-                      state: 1,
-                    );
-                  },
-                  child: const Text('Success all'),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     ElevatedButton(
+            //       style: ButtonStyle(
+            //         backgroundColor:
+            //             MaterialStateProperty.all<Color>(Colors.green),
+            //       ),
+            //       onPressed: () {
+            //         // print(controller.listRegid);
+            //         controller.postApproveAll(
+            //           regID: controller.listRegid,
+            //           comment: "",
+            //           state: 1,
+            //         );
+            //       },
+            //       child: const Text('Success all'),
+            //     ),
+            //   ],
+            // ),
             Obx(
               () {
                 return Expanded(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_list_title_register.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/controller/customer_list_ticker_registed_controller.dart';
@@ -11,6 +12,8 @@ class CustomerListTickerRegisted
   const CustomerListTickerRegisted({super.key});
   @override
   Widget build(BuildContext context) {
+    var day = DateFormat("dd-MM-yyyy");
+    var hour = DateFormat("hh-mm a");
     return GetBuilder<CustomerListTickerRegistedController>(
       init: CustomerListTickerRegistedController(),
       builder: (controller) => Scaffold(
@@ -23,7 +26,7 @@ class CustomerListTickerRegisted
           ),
           leading: IconButton(
             onPressed: () {
-              Get.back();
+              Get.toNamed(Routes.CUSTOMER_PAGE);
             },
             icon: Icon(
               Icons.arrow_back_ios_new,
@@ -43,20 +46,70 @@ class CustomerListTickerRegisted
                     return controller.isLoad.value
                         ? ListView.builder(
                             itemCount: items.length,
-                            itemBuilder: (context, index) =>
-                                CustomListTitleRegisted(
-                              stt: "${index + 1}",
-                              name: "${items[index].taixeRe!.tenTaixe}",
-                              phone: "${items[index].taixeRe!.phone}",
-                              warehome: "${items[index].phieuvao!.kho!.tenKho}",
-                              itemstype:
-                                  "${items[index].loaihang!.tenLoaiHang}",
-                              onTap: () {
-                                Get.toNamed(
-                                  Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
-                                  arguments: items[index],
-                                );
-                              },
+                            itemBuilder: (context, index) => Card(
+                              shadowColor: Colors.grey,
+                              elevation: 10,
+                              shape: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.orangeAccent,
+                                ),
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Get.toNamed(
+                                    Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
+                                    arguments: items[index],
+                                  );
+                                },
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      "${items[index].khoRe!.maKhuVuc}",
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${items[index].khoRe!.tenKho}",
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      "${items[index].loaixe!.tenLoaiXe}",
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      "${items[index].soxe}",
+                                    ),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    const Text(
+                                      "Giờ dự kiến",
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Text(day.format(
+                                      DateTime.parse(
+                                        items[index].giodukien.toString(),
+                                      ),
+                                    )),
+                                    Text(hour.format(
+                                      DateTime.parse(
+                                        items[index].giodukien.toString(),
+                                      ),
+                                    )),
+                                  ],
+                                ),
+                              ),
                             ),
                           )
                         : const Center(

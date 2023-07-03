@@ -39,25 +39,25 @@ class CustomerListDriverDetailsOfCustomerScreen
               color: Theme.of(context).primaryColorLight,
             ),
           ),
-          // actions: [
-          //   IconButton(
-          //     onPressed: () {
-          //       Get.toNamed(
-          //         Routes.QR_CODE_CUSTOMER_SCREEN,
-          //         arguments: [
-          //           controller.statusDriver.value.maPhieuvao,
-          //           controller.statusDriver.value.taixeRe!.maTaixe,
-          //         ],
-          //       );
-          //     },
-          //     icon: Icon(
-          //       Icons.qr_code_rounded,
-          //       color: Theme.of(context).primaryColorLight,
-          //       size: 25,
-          //     ),
-          //   ),
-          //   const SizedBox(width: 15),
-          // ],
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Get.toNamed(
+                //   Routes.QR_CODE_CUSTOMER_SCREEN,
+                //   arguments: [
+                //     controller.statusDriver.value.maPhieuvao,
+                //     controller.statusDriver.value.taixeRe!.maTaixe,
+                //   ],
+                // );
+              },
+              icon: Icon(
+                Icons.qr_code_rounded,
+                color: Theme.of(context).primaryColorLight,
+                size: 25,
+              ),
+            ),
+            const SizedBox(width: 15),
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -155,7 +155,6 @@ class CustomerListDriverDetailsOfCustomerScreen
   }
 
   Widget _buildFormStatus(ListTrackingModel item, Size size) {
-
     var day = DateFormat("dd-MM-yyyy");
     // ignore: unused_local_variable
     var hour = DateFormat("hh:mm a");

@@ -10,8 +10,11 @@ import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart'
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/controller/driver_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_vote_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
 
 class DriverCreateRegisterScreen extends StatefulWidget {
@@ -62,7 +65,7 @@ class _DriverCreateRegisterScreenState
       },
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2025),
     );
     if (selected != null && selected != selectedDate) {
@@ -179,6 +182,7 @@ class _DriverCreateRegisterScreenState
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  //THoi gian du kien
                   buildDateTime(size, controller),
                   //Nhập số xe
                   CustomFormFiels(
@@ -197,6 +201,7 @@ class _DriverCreateRegisterScreenState
                         ? _listCustomer(controller)
                         : Container(),
                   ),
+                  _listTrongTai(controller),
 
                   //danh sách loại hàng
                   _listTypeProduct(controller),
@@ -233,7 +238,7 @@ class _DriverCreateRegisterScreenState
                               ),
                               CustomFormFiels(
                                 keyboardType: TextInputType.number,
-                                title: "Số Khối (CDM)",
+                                title: "Số Khối (CBM)",
                                 controller: controller.numberKhoi,
                                 hintText: "",
                                 icon: Icons.abc,
@@ -276,13 +281,13 @@ class _DriverCreateRegisterScreenState
       children: [
         Container(
           padding: const EdgeInsets.only(left: 5),
-          child: Row(
+          child: const Row(
             children: [
               Text(
                 "Số lượng cont *",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
+                  color: Colors.green,
                   fontSize: 16,
                 ),
               )
@@ -311,6 +316,11 @@ class _DriverCreateRegisterScreenState
                       numberSelectCont = int.parse(value);
                     });
                   },
+                  alignment: Alignment.centerLeft,
+                  style: const TextStyle(
+                    color: Colors.orangeAccent,
+                    fontSize: 16,
+                  ),
                   underline: Container(color: Colors.transparent),
                   items: numberCont.map<DropdownMenuItem<String>>(
                     (String value) {
@@ -357,7 +367,7 @@ class _DriverCreateRegisterScreenState
             onChanged: (value) {
               controller.selectCustomer.value.maKhachHang = value!.maKhachHang;
               controller.selectCustomer.value.tenKhachhang = value.tenKhachhang;
-              // print(controller.selectCustomer.value.tenKhachhang);
+              print(controller.selectCustomer.value.maKhachHang);
             },
             dropdownBuilder:
                 (BuildContext context, CustomerOfWareHomeModel? item) {
@@ -515,6 +525,110 @@ class _DriverCreateRegisterScreenState
                     ),
                     subtitle: Text(
                       item.maKhuVuc!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listTrongTai(DriverCreateRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Trọng tải *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListMaTrongTai>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getTrongTai(filter),
+            onChanged: (ListMaTrongTai? data) {
+              setState(() {
+                controller.selectTrongTai.value.maTrongTai = data!.maTrongTai;
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListMaTrongTai? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.tenTrongTai == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trọng tải",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.tenTrongTai!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder:
+                (BuildContext context, ListMaTrongTai item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.tenTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: Text(
+                      item.maTrongTai!,
                       style: const TextStyle(
                         color: Colors.orangeAccent,
                         fontSize: 15,
@@ -738,6 +852,306 @@ class _DriverCreateRegisterScreenState
     );
   }
 
+  Widget _listTypeVote(DriverCreateRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Loại phiếu *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListTypeVoteModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataTypeVote(filter),
+            onChanged: (ListTypeVoteModel? data) {
+              setState(() {
+                controller.selectTypeVote.value.id = data!.id;
+                controller.update();
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListTypeVoteModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.name == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn loại phiếu",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.name!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context, ListTypeVoteModel item,
+                bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listTypeCont1(DriverCreateRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Loại cont *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListTypeContModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataTypeCont(filter),
+            onChanged: (ListTypeContModel? data) {
+              setState(() {
+                controller.selectTypeCont1.value.typeContCode =
+                    data!.typeContCode;
+                print([
+                  controller.selectTypeCont1.value.typeContCode,
+                  numberSelectCont,
+                ]);
+                controller.update();
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListTypeContModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.typeContname == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn loại cont",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.typeContname!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context, ListTypeContModel item,
+                bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.typeContname!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listTypeCont2(DriverCreateRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Loại cont *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListTypeContModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataTypeCont(filter),
+            onChanged: (ListTypeContModel? data) {
+              setState(() {
+                controller.selectTypeCont2.value.typeContCode =
+                    data!.typeContCode;
+                controller.update();
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListTypeContModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.typeContname == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn loại cont",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.typeContname!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context, ListTypeContModel item,
+                bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.typeContname!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildDateTime(Size size, DriverCreateRegisterController controller) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -799,6 +1213,7 @@ class _DriverCreateRegisterScreenState
     return Column(
       children: [
         const Divider(),
+        _listTypeCont1(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
           title: "Số cont 1",
@@ -849,9 +1264,9 @@ class _DriverCreateRegisterScreenState
         ),
         CustomFormFiels(
           keyboardType: TextInputType.number,
-          title: "Số Khối (CDM)",
+          title: "Số Khối (CBM)",
           controller: controller.numberKhoi,
-          hintText: "Nhập Số Khối (CDM)",
+          hintText: "Nhập Số Khối (CBM)",
           icon: Icons.abc,
           color: Colors.green,
         ),
@@ -863,6 +1278,7 @@ class _DriverCreateRegisterScreenState
     return Column(
       children: [
         const Divider(),
+        _listTypeCont2(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
           title: "Số cont 2",
@@ -913,9 +1329,9 @@ class _DriverCreateRegisterScreenState
         ),
         CustomFormFiels(
           keyboardType: TextInputType.number,
-          title: "Số Khối (CDM)",
+          title: "Số Khối (CBM)",
           controller: controller.numberKhoi1,
-          hintText: "Nhập Số Khối (CDM)",
+          hintText: "Nhập Số Khối (CBM)",
           icon: Icons.abc,
           color: Colors.green,
         ),
@@ -923,7 +1339,7 @@ class _DriverCreateRegisterScreenState
     );
   }
 
-  final List<String> numberCont = ["0", "1", "2"];
+  final List<String> numberCont = ["1", "2"];
 
   void _signUpProcess(
       BuildContext context, DriverCreateRegisterController controller) {
@@ -932,41 +1348,57 @@ class _DriverCreateRegisterScreenState
         controller.selectCustomer.value == "" ||
         controller.selectWareHome.value == "" ||
         controller.selectTypeProduct.value == "" ||
-        controller.selectTypeCar.value == "") {
+        controller.selectTypeCar.value == "" ||
+        controller.selectTypeVote.value == "") {
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     } else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
         if (controller.selectItems != null) {
-          controller.postRegisterDriver(
-            maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: dateinput.text,
-            typeWarehome: controller.selectWareHome.value.maKho,
-            typeCar: controller.selectTypeCar.value.maLoaiXe,
-            numberCar: controller.numberCar.text,
-            numberCont1: controller.numberCont1.text,
-            numberCont2: controller.numberCont2.text,
-            numberCont1Seal1: controller.numberCont1Seal1.text,
-            numberCont1Seal2: controller.numberCont1Seal2.text,
-            numberKhoi: double.parse(controller.numberKhoi.text),
-            numberKien: double.parse(controller.numberKien.text),
-            numberBook: controller.numberBook.text,
-            numberTan: double.parse(controller.numberTan.text),
-            numberCont2Seal1: controller.numberCont2Seal1.text,
-            numberCont2Seal2: controller.numberCont2Seal2.text,
-            numberKhoi1: double.parse(controller.numberKhoi1.text),
-            numberKien1: double.parse(controller.numberKien1.text),
-            numberBook1: controller.numberBook1.text,
-            numberTan1: double.parse(controller.numberTan1.text),
-            typeProduct: controller.selectTypeProduct.value.maloaiHang,
-            numberCont: numberSelectCont,
-            nameCustomer: controller.selectCustomer.value.tenKhachhang,
-          );
+          if (numberSelectCont == 1 &&
+                  controller.selectTypeCont1.value.typeContCode != null ||
+              numberSelectCont == 2 &&
+                  controller.selectTypeCont1.value.typeContCode != null &&
+                  controller.selectTypeCont2.value.typeContCode != null) {
+            controller.postRegisterDriver(
+              maKhachHang: controller.selectCustomer.value.maKhachHang!,
+              time: dateinput.text,
+              typeWarehome: controller.selectWareHome.value.maKho,
+              typeCar: controller.selectTypeCar.value.maLoaiXe,
+              numberCar: controller.numberCar.text,
+              numberCont1: controller.numberCont1.text,
+              numberCont2: controller.numberCont2.text,
+              numberCont1Seal1: controller.numberCont1Seal1.text,
+              numberCont1Seal2: controller.numberCont1Seal2.text,
+              numberKhoi: double.parse(controller.numberKhoi.text),
+              numberKien: double.parse(controller.numberKien.text),
+              numberBook: controller.numberBook.text,
+              numberTan: double.parse(controller.numberTan.text),
+              loaiCont: controller.selectTypeCont1.value.typeContCode,
+              maTrongTai: controller.selectTrongTai.value.maTrongTai,
+              numberCont2Seal1: controller.numberCont2Seal1.text == ""
+                  ? null
+                  : controller.numberCont2Seal1.text,
+              numberCont2Seal2: controller.numberCont2Seal2.text == ""
+                  ? null
+                  : controller.numberCont2Seal1.text,
+              numberKhoi1: double.parse(controller.numberKhoi1.text),
+              numberKien1: double.parse(controller.numberKien1.text),
+              numberBook1: controller.numberBook1.text,
+              numberTan1: double.parse(controller.numberTan1.text),
+              loaiCont1: controller.selectTypeCont2.value.typeContCode,
+              typeProduct: controller.selectTypeProduct.value.maloaiHang,
+              numberCont: numberSelectCont,
+              nameCustomer: controller.selectCustomer.value.tenKhachhang,
+            );
+          } else {
+            getSnack(messageText: "Chọn loại cont * !");
+          }
         } else {
           getSnack(messageText: "Chọn số lượng cont * !");
         }
       } else {
         controller.postRegisterDriver(
-          maKhachHang: controller.selectCustomer.value.maKhachHang!,
+          maKhachHang: controller.selectCustomer.value.maKhachHang,
           time: dateinput.text,
           typeWarehome: controller.selectWareHome.value.maKho,
           typeCar: controller.selectTypeCar.value.maLoaiXe,
@@ -979,12 +1411,15 @@ class _DriverCreateRegisterScreenState
           numberKien: double.parse(controller.numberKien.text),
           numberBook: controller.numberBook.text,
           numberTan: double.parse(controller.numberTan.text),
+          maTrongTai: controller.selectTrongTai.value.maTrongTai,
+          loaiCont: controller.selectTypeCont1.value.typeContCode,
           numberCont2Seal1: controller.numberCont2Seal1.text,
           numberCont2Seal2: controller.numberCont2Seal2.text,
           numberKhoi1: double.parse(controller.numberKhoi1.text),
           numberKien1: double.parse(controller.numberKien1.text),
           numberBook1: controller.numberBook1.text,
           numberTan1: double.parse(controller.numberTan1.text),
+          loaiCont1: controller.selectTypeCont2.value.typeContCode,
           typeProduct: controller.selectTypeProduct.value.maloaiHang,
           numberCont: numberSelectCont,
           nameCustomer: controller.selectCustomer.value.tenKhachhang,

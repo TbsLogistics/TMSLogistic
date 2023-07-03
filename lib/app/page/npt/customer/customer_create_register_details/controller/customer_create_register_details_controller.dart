@@ -13,19 +13,18 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/model/detai
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class CustomerRegisterDetailsController extends GetxController {
-  Rx<CustomerRegisterForDriverModel> detailsTicker =
-      CustomerRegisterForDriverModel().obs;
-  RxInt id = 0.obs;
+  Rx<RegisterModel> detailsTicker = RegisterModel().obs;
+  RxString id = "".obs;
   RxInt numberCont = 0.obs;
   RxString nameCustomer = "".obs;
 
   Rx<DetailsDriverModel> user = DetailsDriverModel().obs;
 
-  GlobalKey qrKey =  GlobalKey();
+  GlobalKey qrKey = GlobalKey();
 
   @override
   void onInit() {
-    var items = Get.arguments[0] as CustomerRegisterForDriverModel;
+    var items = Get.arguments[0] as RegisterModel;
     var items1 = Get.arguments[1];
     var items2 = Get.arguments[2]; // so luong cont
     var items3 = Get.arguments[3]; // tên khách hàng

@@ -11,8 +11,12 @@ import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_vote_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/register_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/select_list_model.dart';
@@ -58,19 +62,21 @@ class DriverCreateRegisterController extends GetxController {
       ListCustomerForDriverModel().obs;
   Rx<ListCustomerForDriverModel> selectCustomerName =
       ListCustomerForDriverModel().obs;
-
+  Rx<ListTypeVoteModel> selectTypeVote = ListTypeVoteModel().obs;
+  Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
+  Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
   Rx<ListWareHomeModel> selectWareHome = ListWareHomeModel().obs;
-
+  Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
   Rx<ListTypeProductModel> selectTypeProduct = ListTypeProductModel().obs;
-
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
-
+  Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
   var isClientSelect = true.obs;
   var selectListItem = <SelectedListItem>[].obs;
-
   String? selectItems;
-
   var selectedKhachhang = "";
+  RxList<CustomerOfWareHomeModel> listKhachhang =
+      <CustomerOfWareHomeModel>[].obs;
+  RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
 
   @override
   void onInit() async {
@@ -80,13 +86,16 @@ class DriverCreateRegisterController extends GetxController {
   }
 
   Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
+    listClient.value = [];
     for (var i = 0; i < listKhachhang.length; i++) {
       if (listKhachhang[i].maKho == maKho) {
         var items = listKhachhang[i];
+
         listClient.add(items);
-      } else {
-        listClient.value = [];
       }
+    }
+    if (listClient.isEmpty) {
+      listClient.value = [];
     }
 
     return listClient;
@@ -113,8 +122,11 @@ class DriverCreateRegisterController extends GetxController {
     required String? numberBook1,
     required double? numberTan1,
     required String? typeProduct,
+    required String? loaiCont,
+    required String? loaiCont1,
     required int? numberCont,
     required String? nameCustomer,
+    required String? maTrongTai,
   }) async {
     var dio = Dio();
     Response response;
@@ -125,8 +137,8 @@ class DriverCreateRegisterController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
-    const url = "${AppConstants.urlBaseNpt}/createphieuvaocong";
-    var create = RegisterForDriverModel(
+    const url = "${AppConstants.urlBaseNpt}/invote/create";
+    var create = RegisterModel(
       maTaixe: int.parse(idDriver),
       maKhachHang: maKhachHang,
       maDoixe: idTeamCar,
@@ -144,6 +156,7 @@ class DriverCreateRegisterController extends GetxController {
       sokhoi: numberKhoi ?? 0,
       soBook: numberBook,
       soTan: numberTan ?? 0,
+      loaiCont: loaiCont,
       trangthaihang: false,
       trangthaikhoa: false,
       cont2seal1: numberCont2Seal1,
@@ -152,10 +165,12 @@ class DriverCreateRegisterController extends GetxController {
       sokhoi1: numberKhoi1 ?? 0,
       soBook1: numberBook1,
       soTan1: numberTan1 ?? 0,
+      loaiCont1: loaiCont1,
+      maTrongTai: maTrongTai,
       trangthaihang1: false,
       trangthaikhoa1: false,
       maloaiHang: typeProduct,
-      soXera: "",
+      typeInvote: 0,
     );
 
     var jsonData = create.toJson();
@@ -192,9 +207,10 @@ class DriverCreateRegisterController extends GetxController {
           );
         } else {
           getSnack(messageText: "${data["detail"]}");
+          print(data["data"]["code"]);
 
           Get.toNamed(Routes.DETAILS_FORM_REGISTER_DRIVER, arguments: [
-            RegisterForDriverModel(
+            RegisterModel(
               maKhachHang: maKhachHang,
               maDoixe: idTeamCar,
               giodukien: time,
@@ -215,19 +231,21 @@ class DriverCreateRegisterController extends GetxController {
               sokien1: numberKien1,
               sokhoi1: numberKhoi1,
               soBook1: numberBook1,
+              maTrongTai: maTrongTai,
               trangthaihang1: false,
               trangthaikhoa1: false,
               maloaiHang: typeProduct,
               soTan: numberTan,
               soTan1: numberTan1,
             ),
-            data["data1"],
+            data["data"]["code"],
             numberCont,
             nameCustomer,
           ]);
         }
       }
     } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
       if (e.response!.statusCode == 400) {
       } else {
         if (e.response!.statusCode == 422) {
@@ -272,10 +290,15 @@ class DriverCreateRegisterController extends GetxController {
     }
   }
 
-  RxList<CustomerOfWareHomeModel> listKhachhang =
-      <CustomerOfWareHomeModel>[].obs;
+// Danh sách so luong cont
+  Future<List<ListNumberContModel>> getNumberCont(query) async {
+    List<Map<String, dynamic>> listNumberCont = [
+      {"id": 1, "name": "1 Cont"},
+      {"id": 2, "name": "2 Cont"},
+    ];
 
-  RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
+    return ListNumberContModel.fromJsonList(listNumberCont);
+  }
 
   // Danh sách khách hàng
   void getKhachhang() async {
@@ -322,6 +345,37 @@ class DriverCreateRegisterController extends GetxController {
         var warehome = response.data["kho"];
         if (warehome != null) {
           return ListWareHomeModel.fromJsonList(warehome);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  // Danh sách trong tai
+  Future<List<ListMaTrongTai>> getTrongTai(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/selectbox';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var warehome = response.data["trongTai"];
+        if (warehome != null) {
+          return ListMaTrongTai.fromJsonList(warehome);
         }
         return [];
       } else {
@@ -384,6 +438,51 @@ class DriverCreateRegisterController extends GetxController {
         var warehome = response.data["loaixe"];
         if (warehome != null) {
           return ListTypeCarModel.fromJsonList(warehome);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  // Danh sách loại phieu
+  Future<List<ListTypeVoteModel>> getDataTypeVote(query) async {
+    // List<ListTypeVoteModel> listVote = [
+    //   ListTypeVoteModel(id: 1, name: "Phiếu vào"),
+    //   ListTypeVoteModel(id: 2, name: "Phiếu ra"),
+    // ];
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Phiếu vào"},
+      {"id": 2, "name": "Phiếu ra"},
+    ];
+
+    return ListTypeVoteModel.fromJsonList(listVote);
+  }
+
+  // Danh sách loại cont
+  Future<List<ListTypeContModel>> getDataTypeCont(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/selectbox';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var loaiCont = response.data["loaiCont"];
+        if (loaiCont != null) {
+          return ListTypeContModel.fromJsonList(loaiCont);
         }
         return [];
       } else {

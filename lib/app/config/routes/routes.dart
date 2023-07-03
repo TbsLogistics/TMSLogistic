@@ -45,6 +45,7 @@ abstract class Routes {
   static const DETAILS_FORM_REGISTER_DRIVER = "/DETAILS_FORM_REGISTER_DRIVER";
   static const CREATE_REGISTER_DRIVER = "/CREATE_REGISTER_DRIVER";
   static const SERCURITY_PAGE = "/SERCURITY_PAGE";
+  static const CREATE_EDIT_REGISTER_DRIVER = "/CREATE_EDIT_REGISTER_DRIVER";
   //++++++++++++++++++++++++++CUSTOMER+++++++++++++++++++++++++++++++++
 
   static const CUSTOMER_PAGE = "/CUSTOMER_PAGE";
@@ -58,6 +59,13 @@ abstract class Routes {
       "/DETAILS_LIST_TICKER_OF_CUSTOMER";
   static const DETAILS_REGISTER_CUSTOMER = "/DETAILS_REGISTER_CUSTOMER";
   static const CUSTOMER_DETAILS_INFO_DRIVER = "/CUSTOMER_DETAILS_INFO_DRIVER";
+  //++++++++++++++++++++++++++SERCURITY++++++++++++++++++++++++++
+  static const SERCURITY_SCREEN = "/SERCURITY_SCREEN";
+  static const SERCURITY_LIST_DANGTAI = "/SERCURITY_LIST_DANGTAI";
+  static const SERCURITY_DETAILS_LIST_DANGTAI =
+      "/SERCURITY_DETAILS_LIST_DANGTAI";
+
+  static const CREATE_EDIT_REGISTER_CUSTOMER = "/CREATE_EDIT_REGISTER_CUSTOMER";
 
   //---------------------- Tính năng HRM ----------------------------
   static const CHANGE_PASSWORD_FULL_SCREEN = "/CHANGE_PASSWORD_FULL_SCREEN";

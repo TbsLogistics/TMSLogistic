@@ -58,16 +58,15 @@ class DriverScreen extends GetView<DriverHomeController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.create_outlined, size: 30),
-                      SizedBox(
-                        width: size.width * 0.05,
-                      ),
-                      Text(
-                        "Đăng ký phiếu vào",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          "Đăng ký phiếu",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       )
                     ],
@@ -92,16 +91,15 @@ class DriverScreen extends GetView<DriverHomeController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.create_outlined, size: 30),
-                      SizedBox(
-                        width: size.width * 0.05,
-                      ),
-                      Text(
-                        "Danh sách chưa hoàn thành",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          "Danh sách chưa hoàn thành",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       )
                     ],
@@ -126,16 +124,15 @@ class DriverScreen extends GetView<DriverHomeController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.create_outlined, size: 30),
-                      SizedBox(
-                        width: size.width * 0.05,
-                      ),
-                      Text(
-                        "Danh sách các phiếu đã đăng ký",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          "Danh sách các phiếu đã đăng ký",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       )
                     ],

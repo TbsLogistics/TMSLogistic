@@ -133,8 +133,7 @@ Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
               child: Obx(() {
                 return QrImage(
                   backgroundColor: Colors.white,
-                  data:
-                      "${controller.id.value},${controller.detailsTicker.value.maTaixe}",
+                  data: controller.id.value,
                   version: QrVersions.auto,
                   size: size.width * 0.4,
                 );
@@ -172,7 +171,7 @@ Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
 }
 
 Widget _buildNumberCar(
-    {required RegisterForDriverModel items,
+    {required RegisterModel items,
     required Size size,
     required BuildContext context,
     required String title,
@@ -252,7 +251,7 @@ Widget _buildNumberCar(
 }
 
 // Widget _buildProduct(
-//     RegisterForDriverModel items, Size size, BuildContext context) {
+//     RegisterModel items, Size size, BuildContext context) {
 //   return Card(
 //     shadowColor: Colors.grey,
 //     elevation: 10,
@@ -305,8 +304,8 @@ Widget _buildNumberCar(
 //   );
 // }
 
-Widget _buildCustomer(RegisterForDriverModel items, Size size,
-    BuildContext context, DriverCreateRegisterDetailsController controller) {
+Widget _buildCustomer(RegisterModel items, Size size, BuildContext context,
+    DriverCreateRegisterDetailsController controller) {
   return Card(
     shadowColor: Colors.grey,
     elevation: 10,
@@ -359,7 +358,7 @@ Widget _buildCustomer(RegisterForDriverModel items, Size size,
   );
 }
 
-Widget _buildDayTime(RegisterForDriverModel items, Size size, DateFormat day,
+Widget _buildDayTime(RegisterModel items, Size size, DateFormat day,
     DateFormat hour, BuildContext context) {
   return Card(
     shadowColor: Colors.grey,
@@ -451,8 +450,7 @@ Widget _buildDayTime(RegisterForDriverModel items, Size size, DateFormat day,
   );
 }
 
-Widget _buildProductCar(
-    RegisterForDriverModel items, Size size, BuildContext context) {
+Widget _buildProductCar(RegisterModel items, Size size, BuildContext context) {
   return Card(
     shadowColor: Colors.grey,
     elevation: 10,
@@ -543,7 +541,7 @@ Widget _buildProductCar(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Text(
-                              "Kg/ CDM/ Số Kiện :",
+                              "Kg/ CBM/ Số Kiện :",
                               style: CustomTextStyle.titleDetails,
                             ),
                             Expanded(
@@ -570,8 +568,8 @@ Widget _buildProductCar(
   );
 }
 
-Widget _buildProductCont(RegisterForDriverModel items, Size size,
-    BuildContext context, DriverCreateRegisterDetailsController controller) {
+Widget _buildProductCont(RegisterModel items, Size size, BuildContext context,
+    DriverCreateRegisterDetailsController controller) {
   return Card(
     shadowColor: Colors.grey,
     elevation: 10,
@@ -721,7 +719,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Kg/ CDM/ Số Kiện",
+                                    "Kg/ CBM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,
                                   ),
                                 ],
@@ -879,7 +877,7 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Kg/ CDM/ Số Kiện",
+                                    "Kg/ CBM/ Số Kiện",
                                     style: CustomTextStyle.titleDetails,
                                   ),
                                 ],
@@ -914,8 +912,438 @@ Widget _buildProductCont(RegisterForDriverModel items, Size size,
   );
 }
 
+Widget _buildNumberCont(DriverCreateRegisterDetailsController items, Size size,
+    BuildContext context) {
+  var itemsCont = items.detailsTicker.value;
+  return Container(
+    height: size.width * 0.7,
+    decoration: BoxDecoration(
+      border: Border.all(
+        width: 1,
+        color: Colors.orangeAccent,
+      ),
+      borderRadius: BorderRadius.circular(15),
+      // color: Colors.white,
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Số công 1",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 16,
+                      ),
+                    ),
+                    // const SizedBox(height: 10),
+                    Text(
+                      itemsCont.socont1 != null ? "${itemsCont.socont1}" : "",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).primaryColorLight),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số seal 1",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.cont1seal1 != null
+                                ? "${itemsCont.cont1seal1}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số seal 2",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.cont1seal2 != null
+                                ? "${itemsCont.cont1seal2}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Kiện",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${itemsCont.soKien}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Book",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.soBook != null
+                                ? "${itemsCont.soBook}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Khối (CBM)",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${itemsCont.sokhoi}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const VerticalDivider(
+          width: 1,
+          indent: 15,
+          endIndent: 15,
+          color: Colors.orangeAccent,
+          thickness: 1,
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Số công 2",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 16,
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    Text(
+                      itemsCont.socont2 != null ? "${itemsCont.socont2}" : "",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).primaryColorLight),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số seal 1",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.cont2seal1 != null
+                                ? "${itemsCont.cont2seal1}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số seal 2",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.cont2seal2 != null
+                                ? "${itemsCont.cont2seal2}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Kiện",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${itemsCont.sokien1}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Book",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemsCont.soBook1 != null
+                                ? "${itemsCont.soBook1}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Số Khối (CBM)",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${itemsCont.sokhoi1}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 // Widget _buildNumberCar(
-//     RegisterForDriverModel items, Size size, BuildContext context) {
+//     RegisterModel items, Size size, BuildContext context) {
 //   return Card(
 //     shadowColor: Colors.grey,
 //     elevation: 10,

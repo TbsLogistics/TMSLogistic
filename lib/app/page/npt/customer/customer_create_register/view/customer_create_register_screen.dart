@@ -12,6 +12,7 @@ import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart'
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/controller/customer_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
 
@@ -293,7 +294,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         ),
         CustomFormFiels(
           keyboardType: TextInputType.number,
-          title: "Số Khối (CDM)",
+          title: "Số Khối (CBM)",
           controller: controller.numberKhoi,
           hintText: "",
           icon: Icons.abc,
@@ -315,6 +316,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     return Column(
       children: [
         const Divider(),
+        _listTypeCont1(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
           title: "Số cont 1",
@@ -365,9 +367,9 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         ),
         CustomFormFiels(
           keyboardType: TextInputType.number,
-          title: "Số Khối (CDM)",
+          title: "Số Khối (CBM)",
           controller: controller.numberKhoi,
-          hintText: "Nhập Số Khối (CDM)",
+          hintText: "Nhập Số Khối (CBM)",
           icon: Icons.abc,
           color: Colors.green,
         ),
@@ -379,6 +381,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     return Column(
       children: [
         const Divider(),
+        _listTypeCont2(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
           title: "Số cont 2",
@@ -429,9 +432,9 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         ),
         CustomFormFiels(
           keyboardType: TextInputType.number,
-          title: "Số Khối (CDM)",
+          title: "Số Khối (CBM)",
           controller: controller.numberKhoi1,
-          hintText: "Nhập Số Khối (CDM)",
+          hintText: "Nhập Số Khối (CBM)",
           icon: Icons.abc,
           color: Colors.green,
         ),
@@ -1019,6 +1022,208 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     );
   }
 
+  Widget _listTypeCont1(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Loại cont *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListTypeContModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataTypeCont(filter),
+            onChanged: (ListTypeContModel? data) {
+              setState(() {
+                controller.selectTypeCont1.value.typeContCode =
+                    data!.typeContCode;
+                print([
+                  controller.selectTypeCont1.value.typeContCode,
+                  numberSelectCont,
+                ]);
+                controller.update();
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListTypeContModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.typeContname == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn loại cont",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.typeContname!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context, ListTypeContModel item,
+                bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.typeContname!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listTypeCont2(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Loại cont *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListTypeContModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataTypeCont(filter),
+            onChanged: (ListTypeContModel? data) {
+              setState(() {
+                controller.selectTypeCont2.value.typeContCode =
+                    data!.typeContCode;
+                controller.update();
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListTypeContModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.typeContname == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn loại cont",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.typeContname!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context, ListTypeContModel item,
+                bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.typeContname!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   onSignUp(CustomerRegisterController controller) {
     if (dateinput.text == "" ||
         controller.numberCar.text == "" ||
@@ -1033,31 +1238,41 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
         if (controller.selectItems != null) {
-          controller.postRegisterCustomer(
-            idTaixe: controller.selectDriver.value.maTaixe,
-            maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: dateinput.text,
-            idKho: controller.selectWareHome.value.maKho,
-            idCar: controller.selectTypeCar.value.maLoaiXe,
-            numberCar: controller.numberCar.text,
-            numberCont1: controller.numberCont1.text,
-            numberCont2: controller.numberCont2.text,
-            numberCont1Seal1: controller.numberCont1Seal1.text,
-            numberCont1Seal2: controller.numberCont1Seal2.text,
-            numberKhoi: double.parse(controller.numberKhoi.text),
-            numberKien: double.parse(controller.numberKien.text),
-            numberBook: controller.numberBook.text,
-            numberTan: double.parse(controller.numberTan.text),
-            numberCont2Seal1: controller.numberCont2Seal1.text,
-            numberCont2Seal2: controller.numberCont2Seal2.text,
-            numberKhoi1: double.parse(controller.numberKhoi1.text),
-            numberKien1: double.parse(controller.numberKien1.text),
-            numberBook1: controller.numberBook1.text,
-            idProduct: controller.selectTypeProduct.value.maloaiHang,
-            numberTan1: double.parse(controller.numberTan1.text),
-            numberCont: numberSelectCont,
-            nameCustomer: controller.selectCustomer.value.tenKhachhang,
-          );
+          if (numberSelectCont == 1 &&
+                  controller.selectTypeCont1.value.typeContCode != null ||
+              numberSelectCont == 2 &&
+                  controller.selectTypeCont1.value.typeContCode != null &&
+                  controller.selectTypeCont2.value.typeContCode != null) {
+            controller.postRegisterCustomer(
+              idTaixe: controller.selectDriver.value.maTaixe,
+              maKhachHang: controller.selectCustomer.value.maKhachHang!,
+              time: dateinput.text,
+              idKho: controller.selectWareHome.value.maKho,
+              idCar: controller.selectTypeCar.value.maLoaiXe,
+              numberCar: controller.numberCar.text,
+              numberCont1: controller.numberCont1.text,
+              numberCont2: controller.numberCont2.text,
+              numberCont1Seal1: controller.numberCont1Seal1.text,
+              numberCont1Seal2: controller.numberCont1Seal2.text,
+              numberKhoi: double.parse(controller.numberKhoi.text),
+              numberKien: double.parse(controller.numberKien.text),
+              typeCont: "${controller.selectTypeCont1.value.typeContCode}",
+              numberBook: controller.numberBook.text,
+              numberTan: double.parse(controller.numberTan.text),
+              numberCont2Seal1: controller.numberCont2Seal1.text,
+              numberCont2Seal2: controller.numberCont2Seal2.text,
+              numberKhoi1: double.parse(controller.numberKhoi1.text),
+              numberKien1: double.parse(controller.numberKien1.text),
+              numberBook1: controller.numberBook1.text,
+              typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
+              idProduct: controller.selectTypeProduct.value.maloaiHang,
+              numberTan1: double.parse(controller.numberTan1.text),
+              numberCont: numberSelectCont,
+              nameCustomer: controller.selectCustomer.value.tenKhachhang,
+            );
+          } else {
+            getSnack(messageText: "Chọn loại cont * !");
+          }
         } else {
           getSnack(messageText: "Chọn số lượng cont * !");
         }
@@ -1076,12 +1291,14 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           numberKhoi: double.parse(controller.numberKhoi.text),
           numberKien: double.parse(controller.numberKien.text),
           numberBook: controller.numberBook.text,
+          typeCont: controller.selectTypeCont1.value.typeContCode,
           numberTan: double.parse(controller.numberTan.text),
           numberCont2Seal1: controller.numberCont2Seal1.text,
           numberCont2Seal2: controller.numberCont2Seal2.text,
           numberKhoi1: double.parse(controller.numberKhoi1.text),
           numberKien1: double.parse(controller.numberKien1.text),
           numberBook1: controller.numberBook1.text,
+          typeCont1: controller.selectTypeCont2.value.typeContCode,
           numberTan1: double.parse(controller.numberTan1.text),
           idProduct: controller.selectTypeProduct.value.maloaiHang,
           numberCont: numberSelectCont,
@@ -1091,7 +1308,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     }
   }
 
-  final List<String> numberCont = ["0", "1", "2"];
+  final List<String> numberCont = ["1", "2"];
   void getSnack({required String messageText}) {
     Get.snackbar(
       "",

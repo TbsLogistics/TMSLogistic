@@ -186,7 +186,7 @@ class CustomerRegisterDetailScreen
   }
 
   Widget _buildProductCar(
-      CustomerRegisterForDriverModel items, Size size, BuildContext context) {
+      RegisterModel items, Size size, BuildContext context) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -277,7 +277,7 @@ class CustomerRegisterDetailScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Text(
-                                "Kg/ CDM/ Số Kiện :",
+                                "Kg/ CBM/ Số Kiện :",
                                 style: CustomTextStyle.titleDetails,
                               ),
                               Expanded(
@@ -304,8 +304,8 @@ class CustomerRegisterDetailScreen
     );
   }
 
-  Widget _buildProductCont(CustomerRegisterForDriverModel items, Size size,
-      BuildContext context, CustomerRegisterDetailsController controller) {
+  Widget _buildProductCont(RegisterModel items, Size size, BuildContext context,
+      CustomerRegisterDetailsController controller) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -455,7 +455,7 @@ class CustomerRegisterDetailScreen
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Kg/ CDM/ Số Kiện",
+                                      "Kg/ CBM/ Số Kiện",
                                       style: CustomTextStyle.titleDetails,
                                     ),
                                   ],
@@ -613,7 +613,7 @@ class CustomerRegisterDetailScreen
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Kg/ CDM/ Số Kiện",
+                                      "Kg/ CBM/ Số Kiện",
                                       style: CustomTextStyle.titleDetails,
                                     ),
                                   ],
@@ -648,8 +648,7 @@ class CustomerRegisterDetailScreen
     );
   }
 
-  Widget _buildCustomer(
-      CustomerRegisterForDriverModel items, Size size, BuildContext context) {
+  Widget _buildCustomer(RegisterModel items, Size size, BuildContext context) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -703,7 +702,7 @@ class CustomerRegisterDetailScreen
   }
 
   Widget _buildNumberCar(
-      {required CustomerRegisterForDriverModel items,
+      {required RegisterModel items,
       required Size size,
       required BuildContext context,
       required String title,
@@ -782,8 +781,8 @@ class CustomerRegisterDetailScreen
     );
   }
 
-  Widget _buildDayTime(CustomerRegisterForDriverModel items, Size size,
-      DateFormat day, DateFormat hour, BuildContext context) {
+  Widget _buildDayTime(RegisterModel items, Size size, DateFormat day,
+      DateFormat hour, BuildContext context) {
     return Card(
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),

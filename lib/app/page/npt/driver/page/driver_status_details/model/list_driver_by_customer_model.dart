@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this
+// ignore_for_file: unnecessary_this, unnecessary_question_mark, prefer_void_to_null
 
 class ListDriverByCustomerModel {
   int? maTaixe;
@@ -7,9 +7,8 @@ class ListDriverByCustomerModel {
   String? email;
   String? cCCD;
   String? phone;
+  Null? phieuvaoRe;
   bool? status;
-  String? maKhachHang;
-  String? madoixe;
 
   ListDriverByCustomerModel(
       {this.maTaixe,
@@ -18,9 +17,8 @@ class ListDriverByCustomerModel {
       this.email,
       this.cCCD,
       this.phone,
-      this.status,
-      this.maKhachHang,
-      this.madoixe});
+      this.phieuvaoRe,
+      this.status});
 
   ListDriverByCustomerModel.fromJson(Map<String, dynamic> json) {
     maTaixe = json['maTaixe'];
@@ -29,22 +27,20 @@ class ListDriverByCustomerModel {
     email = json['email'];
     cCCD = json['CCCD'];
     phone = json['phone'];
+    phieuvaoRe = json['phieuvao_re'];
     status = json['status'];
-    maKhachHang = json['maKhachHang'];
-    madoixe = json['madoixe'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['maTaixe'] = this.maTaixe;
-    data['tenTaixe'] = this.tenTaixe;
-    data['diaChi'] = this.diaChi;
-    data['email'] = this.email;
-    data['CCCD'] = this.cCCD;
-    data['phone'] = this.phone;
-    data['status'] = this.status;
-    data['maKhachHang'] = this.maKhachHang;
-    data['madoixe'] = this.madoixe;
+    data['maTaixe'] = maTaixe;
+    data['tenTaixe'] = tenTaixe;
+    data['diaChi'] = diaChi;
+    data['email'] = email;
+    data['CCCD'] = cCCD;
+    data['phone'] = phone;
+    data['phieuvao_re'] = phieuvaoRe;
+    data['status'] = status;
     return data;
   }
 

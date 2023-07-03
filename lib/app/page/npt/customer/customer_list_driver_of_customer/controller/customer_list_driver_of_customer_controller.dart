@@ -28,7 +28,7 @@ class CustomerListDriverOfCustomerController extends GetxController {
 
   void getListCustomer() async {
     var token = await SharePerApi().getTokenNPT();
-    const url = "${AppConstants.urlBaseNpt}/getdriverbycustomer";
+    const url = "${AppConstants.urlBaseNpt}/LayDanhSachCuaTaiXe";
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };

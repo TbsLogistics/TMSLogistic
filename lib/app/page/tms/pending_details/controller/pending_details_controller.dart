@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable, unrelated_type_equality_checks, duplicate_ignore
 
+import 'dart:async';
 import 'dart:io';
 import "package:collection/collection.dart";
 import 'package:dio/dio.dart';
@@ -23,6 +24,7 @@ class PendingDetailController extends GetxController {
   late String latitude;
   late String longitude;
   late LocationPermission permission;
+  Timer? timer;
 
   //status
 
@@ -1901,5 +1903,10 @@ class PendingDetailController extends GetxController {
         break;
       default:
     }
+  }
+
+  void cancelTimer() {
+    timer!.cancel();
+    timer = null;
   }
 }

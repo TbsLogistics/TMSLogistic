@@ -64,26 +64,26 @@ class DriverStatusScreen extends GetView<DriverStatusController> {
                             title: Row(
                               children: [
                                 Text(
-                                  "${controller.listDriverFinishedScreen.value[index].khuVuc!.maKhuVuc}",
+                                  "${controller.listDriverFinishedScreen.value[index].khoRe!.maKhuVuc}",
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "${controller.listDriverFinishedScreen.value[index].phieuvao!.kho!.tenKho}",
+                                  "${controller.listDriverFinishedScreen.value[index].khoRe!.tenKho}",
                                 ),
                               ],
                             ),
                             subtitle: Row(
                               children: [
                                 Text(
-                                  "${controller.listDriverFinishedScreen[index].loaixeRe!.tenLoaiXe}",
+                                  "${controller.listDriverFinishedScreen[index].loaixe!.tenLoaiXe}",
                                 ),
                                 const SizedBox(
                                   width: 15,
                                 ),
                                 Text(
-                                  "${controller.listDriverFinishedScreen[index].phieuvao!.soxe}",
+                                  "${controller.listDriverFinishedScreen[index].soxe}",
                                 ),
                               ],
                             ),
@@ -99,14 +99,14 @@ class DriverStatusScreen extends GetView<DriverStatusController> {
                                 Text(day.format(
                                   DateTime.parse(
                                     controller.listDriverFinishedScreen[index]
-                                        .phieuvao!.giodukien
+                                        .giodukien
                                         .toString(),
                                   ),
                                 )),
                                 Text(hour.format(
                                   DateTime.parse(
                                     controller.listDriverFinishedScreen[index]
-                                        .phieuvao!.giodukien
+                                        .giodukien
                                         .toString(),
                                   ),
                                 )),

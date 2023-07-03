@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/tms/finished/view/finished_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/pending/view/pending_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/controller/tms_controller.dart';
@@ -23,79 +22,90 @@ class TmsPage extends GetView<TmsController> {
         return false;
       },
       child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios_new_outlined,
-                size: 24,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.dashboard_customize,
-                  size: 24,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Get.toNamed(Routes.DASH_BOARD_PAGE);
-                },
-              ),
-            ],
-            title: const Text("TMS PAGE"),
-            centerTitle: true,
-            backgroundColor: CustomColor.backgroundAppbar,
-          ),
-          body: GetBuilder<TmsController>(
+          length: 3,
+          child: GetBuilder<TmsController>(
             init: TmsController(),
-            builder: (controller) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: TabBarView(
-                      controller: controller.controller,
-                      children: const [
-                        TmsAwait(),
-                        TmsPending(),
-                        TmsFinished(),
-                      ],
-                    ),
+            builder: (controller) => Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 24,
+                    color: Colors.white,
                   ),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(
-                        25.0,
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                // actions: [
+                //   Column(
+                //     children: [
+                //       Obx(() => Text(controller.count.value.toString())),
+                //       Obx(() =>
+                //           Text(controller.distances.value.round().toString())),
+                //       Obx(() =>
+                //           Text(controller.locationMessage.value.toString())),
+                //     ],
+                //   ),
+                //   IconButton(
+                //     onPressed: () {
+                //       controller.timerRealTime();
+                //     },
+                //     icon: const Icon(Icons.safety_check),
+                //   ),
+                //   IconButton(
+                //     onPressed: () {
+                //       controller.cancelTimer();
+                //     },
+                //     icon: const Icon(Icons.archive),
+                //   ),
+                // ],
+                title: const Text("TMS PAGE"),
+                centerTitle: true,
+                backgroundColor: CustomColor.backgroundAppbar,
+              ),
+              body: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: TabBarView(
+                        controller: controller.controller,
+                        children: const [
+                          TmsAwait(),
+                          TmsPending(),
+                          TmsFinished(),
+                        ],
                       ),
                     ),
-                    child: TabBar(
-                      controller: controller.controller,
-                      indicator: BoxDecoration(
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(
                           25.0,
                         ),
-                        color: Colors.orangeAccent.shade200,
                       ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: controller.myTabs,
+                      child: TabBar(
+                        controller: controller.controller,
+                        indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25.0,
+                          ),
+                          color: Colors.orangeAccent.shade200,
+                        ),
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.black,
+                        tabs: controller.myTabs,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

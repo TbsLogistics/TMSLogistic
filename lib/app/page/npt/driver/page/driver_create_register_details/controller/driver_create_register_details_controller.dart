@@ -12,15 +12,15 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class DriverCreateRegisterDetailsController extends GetxController {
-  Rx<RegisterForDriverModel> detailsTicker = RegisterForDriverModel().obs;
-  RxInt id = 0.obs;
+  Rx<RegisterModel> detailsTicker = RegisterModel().obs;
+  RxString id = "".obs;
   RxInt numberCont = 0.obs;
   RxString nameCustomer = "".obs;
 
-  GlobalKey qrDriverKey =  GlobalKey();
+  GlobalKey qrDriverKey = GlobalKey();
   @override
   void onInit() {
-    var items = Get.arguments[0] as RegisterForDriverModel; // thong tin phieu
+    var items = Get.arguments[0] as RegisterModel; // thong tin phieu
     var items1 = Get.arguments[1]; // id phieu
     var items2 = Get.arguments[2]; // so luong cont
     var items3 = Get.arguments[3]; // tên khách hàng

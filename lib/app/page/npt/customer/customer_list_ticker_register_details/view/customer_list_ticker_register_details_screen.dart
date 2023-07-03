@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
-import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_registed/model/list_registed_of_customer_model.dart';
+import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_list_ticker_register_details/controller/customer_list_ticker_register_details_controller.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished/model/customer_list_registed_model.dart';
 
 class CustomerListTickerRegisterDetailsScreen
     extends GetView<CustomerListTickerRegisterDetailsController> {
@@ -11,13 +14,16 @@ class CustomerListTickerRegisterDetailsScreen
 
   @override
   Widget build(BuildContext context) {
+    var day = DateFormat("dd-MM-yyyy");
+    var datetime = DateFormat("dd/MM/yyyy HH:mm");
+    var hour = DateFormat("hh-mm a");
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CustomerListTickerRegisterDetailsController>(
         init: CustomerListTickerRegisterDetailsController(),
         builder: (controller) => Scaffold(
               appBar: AppBar(
                 title: Text(
-                  'Chi tiết đơn hàng',
+                  'Chi tiết phiếu',
                   style: TextStyle(
                     color: Theme.of(context).primaryColorLight,
                   ),
@@ -33,14 +39,49 @@ class CustomerListTickerRegisterDetailsScreen
                     color: Theme.of(context).primaryColorLight,
                   ),
                 ),
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      var result = await Get.toNamed(
+                        Routes.CREATE_EDIT_REGISTER_CUSTOMER,
+                        arguments: controller.listTracking.value,
+                      );
+                      if (result == true && result is bool) {
+                        controller.listTracking.value;
+                      }
+                    },
+                    icon: Icon(
+                      Icons.edit_document,
+                      color: Theme.of(context).primaryColorLight,
+                      size: 25,
+                    ),
+                  ),
+                  controller.listTracking.value.giovao == null
+                      ? IconButton(
+                          onPressed: () {
+                            getDialogMessage(
+                              messageText: "Bạn có chắc chắn xóa phiếu !",
+                              onPressed: () {
+                                controller.deteleTicker();
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).primaryColorLight,
+                            size: 25,
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
               body: SingleChildScrollView(
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   child: Obx(() {
-                    var lengthTracking =
-                        controller.listTracking.value.trackingtime!.length;
+                    // var lengthTracking =
+                    //     controller.listTracking.value.trackingtime!.length;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +105,7 @@ class CustomerListTickerRegisterDetailsScreen
                                       width: 10,
                                     ),
                                     Text(
-                                      "${controller.listTracking.value.trackingtime![lengthTracking - 1].statustracking!.name}",
+                                      "Giờ dự kiến : ${datetime.format(DateTime.parse(controller.listTracking.value.giodukien.toString()))}",
                                       style: CustomTextStyle.contentDetails,
                                     )
                                   ],
@@ -77,17 +118,37 @@ class CustomerListTickerRegisterDetailsScreen
                           height: 15,
                         ),
                         _buildNameDriver(
-                            controller.listTracking.value, size, context),
+                          controller.listTracking.value,
+                          size,
+                          context,
+                          title1: "Tên tài xế",
+                          title2: "Số điện thoại",
+                          content1:
+                              "${controller.listTracking.value.maTaixe!.tenTaixe}",
+                          content2:
+                              "${controller.listTracking.value.maTaixe!.phone}",
+                        ),
                         const SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
                         _buildNumberCar(
                             controller.listTracking.value, size, context),
                         const SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
-                        controller.listTracking.value.loaixeRe!.maLoaiXe ==
-                                "tai"
+                        _buildNameDriver(
+                          controller.listTracking.value,
+                          size,
+                          context,
+                          title1: "Kho",
+                          title2: "Loại hàng",
+                          content1:
+                              "${controller.listTracking.value.khoRe!.tenKho}",
+                          content2:
+                              "${controller.listTracking.value.maloaiHang!.tenLoaiHang}",
+                        ),
+                        _qrImage(controller, size),
+                        controller.listTracking.value.loaixe!.maLoaiXe == "tai"
                             ? _buildProductCar(
                                 controller.listTracking.value, size, context)
                             :
@@ -105,8 +166,69 @@ class CustomerListTickerRegisterDetailsScreen
             ));
   }
 
-  Widget _buildProductCar(ListRegisterDriverOfCustomerModel items, Size size,
-      BuildContext context) {
+  Widget _qrImage(
+      CustomerListTickerRegisterDetailsController controller, Size size) {
+    return Card(
+      shadowColor: Colors.grey,
+      elevation: 10,
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(
+          color: Colors.orangeAccent,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Center(
+              child: RepaintBoundary(
+                key: controller.qrDriverKey,
+                child: Obx(() {
+                  return QrImage(
+                    backgroundColor: Colors.white,
+                    data:
+                        "${controller.listTracking.value.pdriverInOutWarehouseCode}",
+                    version: QrVersions.auto,
+                    size: size.width * 0.3,
+                  );
+                }),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.orangeAccent,
+              border: Border.all(width: 1, color: Colors.white),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: TextButton.icon(
+              onPressed: controller.onShare,
+              icon: const Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
+              label: const Text(
+                "Share",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductCar(
+      CustomerListRegistedModel items, Size size, BuildContext context) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -147,7 +269,7 @@ class CustomerListTickerRegisterDetailsScreen
                           height: 10,
                         ),
                         Text(
-                          "${items.phieuvao!.cont1seal1}",
+                          "${items.cont1seal1}",
                           style: TextStyle(
                             fontSize: 16,
                             color: Theme.of(context).primaryColorLight,
@@ -172,7 +294,7 @@ class CustomerListTickerRegisterDetailsScreen
                                 style: CustomTextStyle.titleDetails,
                               ),
                               Text(
-                                "${items.phieuvao!.soBook}",
+                                "${items.soBook}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Theme.of(context).primaryColorLight,
@@ -197,12 +319,12 @@ class CustomerListTickerRegisterDetailsScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Text(
-                                "CDM/ Số Kiện :",
+                                "CBM/ Số Kiện / Kg :",
                                 style: CustomTextStyle.titleDetails,
                               ),
                               Expanded(
                                 child: Text(
-                                  "${items.phieuvao!.sokhoi}/ ${items.phieuvao!.soKien}",
+                                  "${items.sokhoi}/ ${items.soKien}/ ${items.soTan}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Theme.of(context).primaryColorLight,
@@ -224,8 +346,15 @@ class CustomerListTickerRegisterDetailsScreen
     );
   }
 
-  Widget _buildNameDriver(ListRegisterDriverOfCustomerModel items, Size size,
-      BuildContext context) {
+  Widget _buildNameDriver(
+    CustomerListRegistedModel items,
+    Size size,
+    BuildContext context, {
+    required String title1,
+    required String title2,
+    required String content1,
+    required String content2,
+  }) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -252,11 +381,11 @@ class CustomerListTickerRegisterDetailsScreen
             Expanded(
               child: Column(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 2,
                     child: Center(
                       child: Text(
-                        "Tên tài xế",
+                        title1,
                         style: CustomTextStyle.titleDetails,
                       ),
                     ),
@@ -265,7 +394,7 @@ class CustomerListTickerRegisterDetailsScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${items.taixeRe!.tenTaixe}",
+                        content1,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -285,11 +414,11 @@ class CustomerListTickerRegisterDetailsScreen
             Expanded(
               child: Column(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 2,
                     child: Center(
                       child: Text(
-                        "Số điện thoại",
+                        title2,
                         style: CustomTextStyle.titleDetails,
                       ),
                     ),
@@ -298,7 +427,7 @@ class CustomerListTickerRegisterDetailsScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${items.taixeRe!.phone}",
+                        content2,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -314,8 +443,8 @@ class CustomerListTickerRegisterDetailsScreen
     );
   }
 
-  Widget _buildNumberCar(ListRegisterDriverOfCustomerModel items, Size size,
-      BuildContext context) {
+  Widget _buildNumberCar(
+      CustomerListRegistedModel items, Size size, BuildContext context) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -355,7 +484,7 @@ class CustomerListTickerRegisterDetailsScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${items.loaixeRe!.tenLoaiXe}",
+                        "${items.loaixe!.tenLoaiXe}",
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -388,7 +517,7 @@ class CustomerListTickerRegisterDetailsScreen
                     flex: 3,
                     child: Center(
                       child: Text(
-                        "${items.phieuvao!.soxe}",
+                        "${items.soxe}",
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -404,8 +533,8 @@ class CustomerListTickerRegisterDetailsScreen
     );
   }
 
-  Widget _buildNumberCont(ListRegisterDriverOfCustomerModel items, Size size,
-      BuildContext context) {
+  Widget _buildNumberCont(
+      CustomerListRegistedModel items, Size size, BuildContext context) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -443,7 +572,7 @@ class CustomerListTickerRegisterDetailsScreen
                           style: CustomTextStyle.titleDetails,
                         ),
                         const SizedBox(height: 5),
-                        Text("${items.phieuvao!.socont1}"),
+                        Text("${items.socont1}"),
                       ],
                     ),
                   ),
@@ -468,7 +597,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.cont1seal1}"),
+                              Text("${items.cont1seal1}"),
                             ],
                           ),
                         ],
@@ -496,7 +625,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.cont1seal2}"),
+                              Text("${items.cont1seal2}"),
                             ],
                           ),
                         ],
@@ -524,7 +653,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.soKien}"),
+                              Text("${items.soKien}"),
                             ],
                           ),
                         ],
@@ -552,7 +681,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.soBook}"),
+                              Text("${items.soBook}"),
                             ],
                           ),
                         ],
@@ -568,7 +697,7 @@ class CustomerListTickerRegisterDetailsScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Số Khối (CDM)",
+                                "Số Khối (CBM)",
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
                                   fontSize: 16,
@@ -580,7 +709,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.sokhoi}"),
+                              Text("${items.sokhoi}"),
                             ],
                           ),
                         ],
@@ -611,7 +740,7 @@ class CustomerListTickerRegisterDetailsScreen
                           style: CustomTextStyle.titleDetails,
                         ),
                         const SizedBox(height: 5),
-                        Text("${items.phieuvao!.socont1}"),
+                        Text("${items.socont2}"),
                       ],
                     ),
                   ),
@@ -636,7 +765,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.cont2seal1}"),
+                              Text("${items.cont2seal1}"),
                             ],
                           ),
                         ],
@@ -664,7 +793,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.cont2seal2}"),
+                              Text("${items.cont2seal2}"),
                             ],
                           ),
                         ],
@@ -692,7 +821,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.sokien1}"),
+                              Text("${items.sokien1}"),
                             ],
                           ),
                         ],
@@ -720,7 +849,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.soBook1}"),
+                              Text("${items.soBook1}"),
                             ],
                           ),
                         ],
@@ -736,7 +865,7 @@ class CustomerListTickerRegisterDetailsScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Số Khối (CDM)",
+                                "Số Khối (CBM)",
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
                                   fontSize: 16,
@@ -748,7 +877,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.phieuvao!.sokhoi1}"),
+                              Text("${items.sokhoi1}"),
                             ],
                           ),
                         ],
@@ -763,4 +892,84 @@ class CustomerListTickerRegisterDetailsScreen
       ),
     );
   }
+}
+
+void getDialogMessage(
+    {required String messageText, required VoidCallback onPressed}) {
+  Get.defaultDialog(
+    backgroundColor: Colors.white,
+    title: "Thông báo",
+    titleStyle: const TextStyle(
+        color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
+    content: SizedBox(
+      height: 60,
+      width: 220,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  messageText,
+                  style: const TextStyle(
+                    color: Colors.orangeAccent,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+    cancel: Container(
+      height: 40,
+      width: 120,
+      decoration: BoxDecoration(
+        color: Colors.orangeAccent,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.white,
+          width: 1,
+        ),
+      ),
+      child: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: const Text(
+          "Trở về",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+      ),
+    ),
+    confirm: Container(
+      height: 40,
+      width: 120,
+      decoration: BoxDecoration(
+        color: Colors.orangeAccent,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.white,
+          width: 1,
+        ),
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        child: const Text(
+          "Xác nhận",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+      ),
+    ),
+  );
 }
