@@ -10,6 +10,7 @@ import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart'
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 // import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/controller/driver_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
@@ -234,6 +235,7 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
                                 icon: Icons.abc,
                                 color: Colors.green,
                               ),
+                              _listTrongTai(controller),
                               CustomFormFiels(
                                 keyboardType: TextInputType.number,
                                 title: "Khối lượng (Kg)",
@@ -496,6 +498,113 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
                     title: Text(
                       item.tenKhachhang!,
                       style: const TextStyle(color: Colors.orangeAccent),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listTrongTai(DriverEditCreateRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Trọng tải *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListMaTrongTai>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getTrongTai(filter),
+            onChanged: (ListMaTrongTai? data) {
+              setState(() {
+                controller.selectTrongTai.value.maTrongTai = data!.maTrongTai;
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListMaTrongTai? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.tenTrongTai == null)
+                    ? ListTile(
+                        title: Text(
+                          controller.getDriverFinishedScreen.value.maTrongTai ==
+                                  null
+                              ? "Chọn trọng tải"
+                              : "${controller.getDriverFinishedScreen.value.maTrongTai!.maTrongTai}",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.tenTrongTai!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder:
+                (BuildContext context, ListMaTrongTai item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.tenTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: Text(
+                      item.maTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
@@ -1320,7 +1429,7 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
     );
   }
 
-  final List<String> numberCont = ["0", "1", "2"];
+  final List<String> numberCont = ["1", "2"];
 
   void _signUpProcess(
       BuildContext context, DriverEditCreateRegisterController controller) {
@@ -1363,6 +1472,7 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
             numberTan1: double.parse(controller.numberTan1.text),
             loaiCont1: controller.selectTypeCont2.value.typeContCode,
             typeProduct: controller.selectTypeProduct.value.maloaiHang,
+            maTrongTai: controller.selectTrongTai.value.maTrongTai,
             numberCont: numberSelectCont,
             nameCustomer: controller.selectCustomer.value.tenKhachhang,
           );
@@ -1402,6 +1512,7 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
         numberKien1: double.parse(controller.numberKien1.text),
         numberBook1: controller.numberBook1.text,
         numberTan1: double.parse(controller.numberTan1.text),
+        maTrongTai: controller.selectTrongTai.value.maTrongTai,
         loaiCont1: controller.selectTypeCont2.value.typeContCode,
         typeProduct: controller.selectTypeProduct.value.maloaiHang,
         numberCont: numberSelectCont,

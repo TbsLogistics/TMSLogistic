@@ -10,6 +10,7 @@ import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart'
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_edit_register/controller/customer_edit_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
@@ -33,13 +34,14 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
   ListCustomerForDriverModel? selectedKhachhang;
   String? idKhachhang;
 
+  CustomerEditRegisterController controller =
+      Get.put(CustomerEditRegisterController());
   String? selectedNumberCont;
   int numberSelectCont = 0;
   String? selectedProduct;
   bool isCheckProduct = false;
   bool isCheckNotProduct = true;
 
-  TextEditingController dateinput = TextEditingController(text: "");
   bool showDateTime = false;
   bool showDate = false;
   bool showTime = false;
@@ -121,8 +123,8 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
         time.minute,
       );
       // ignore: unnecessary_string_interpolations
-      dateinput.text = "${getDateTime()}";
-      // print(dateinput.text);
+      controller.dateinput.text = "${getDateTime()}";
+      // print(controller.dateinput.text);
     });
   }
 
@@ -215,6 +217,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                             controller.selectTypeCar.value.maLoaiXe == "tai"
                         ? Column(
                             children: [
+                              _listTrongTai(controller),
                               CustomFormFiels(
                                 keyboardType: TextInputType.text,
                                 title: "Số seal",
@@ -299,6 +302,111 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _listTrongTai(CustomerEditRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Trọng tải *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListMaTrongTai>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getTrongTai(filter),
+            onChanged: (ListMaTrongTai? data) {
+              setState(() {
+                controller.selectTrongTai.value.maTrongTai = data!.maTrongTai;
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListMaTrongTai? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.tenTrongTai == null)
+                    ? ListTile(
+                        title: Text(
+                          controller.getDriverFinishedScreen.value.maTrongTai!
+                              .tenTrongTai!,
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.tenTrongTai!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder:
+                (BuildContext context, ListMaTrongTai item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.tenTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: Text(
+                      item.maTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -1158,7 +1266,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
               _selectDateTime(context);
               showDateTime = true;
             },
-            controller: dateinput,
+            controller: controller.dateinput,
             decoration: InputDecoration(
               hintText: DateFormat('yyyy-MM-dd HH:mm').format(
                 DateTime.parse(
@@ -1313,7 +1421,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
 
   // void _signUpProcess(
   //     BuildContext context, CustomerEditRegisterController controller) {
-  //   if (dateinput.text == "" ||
+  //   if (controller.dateinput.text == "" ||
   //       controller.numberCar.text == "" ||
   //       controller.selectCustomer.value == "" ||
   //       controller.selectWareHome.value == "" ||
@@ -1331,7 +1439,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
   //                 controller.selectTypeCont2.value.typeContCode != null) {
   //           controller.puttRegisterDriver(
   //             maKhachHang: controller.selectCustomer.value.maKhachHang!,
-  //             time: dateinput.text,
+  //             time: controller.dateinput.text,
   //             typeWarehome: controller.selectWareHome.value.maKho,
   //             typeCar: controller.selectTypeCar.value.maLoaiXe,
   //             numberCar: controller.numberCar.text,
@@ -1369,7 +1477,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
   //     } else {
   //       controller.puttRegisterDriver(
   //         maKhachHang: controller.selectCustomer.value.maKhachHang!,
-  //         time: dateinput.text,
+  //         time: controller.dateinput.text,
   //         typeWarehome: controller.selectWareHome.value.maKho,
   //         typeCar: controller.selectTypeCar.value.maLoaiXe,
   //         numberCar: controller.numberCar.text,
@@ -1410,9 +1518,10 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
     controller.puttRegisterDriver(
       maKhachHang: controller.selectCustomer.value.maKhachHang ??
           controller.getDriverFinishedScreen.value.maKhachHang!.maKhachHang,
-      time: dateinput.text == ""
+      time: controller.dateinput.text == ""
           ? controller.getDriverFinishedScreen.value.giodukien
-          : dateinput.text,
+          : controller.dateinput.text,
+      maTrongTai: controller.selectTrongTai.value.maTrongTai,
       typeWarehome: controller.selectWareHome.value.maKho ??
           controller.getDriverFinishedScreen.value.khoRe!.maKho,
       typeCar: controller.selectTypeCar.value.maLoaiXe ??

@@ -32,19 +32,6 @@ class DriverCreateRegisterDetailsScreen
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
-            // IconButton(
-            //   onPressed: () {
-            //     Get.toNamed(
-            //       Routes.QR_CODE_DETAILS_REGISTED_DRIVER_SCREEN,
-            //       arguments: controller.id.value,
-            //     );
-            //   },
-            //   icon: Icon(
-            //     Icons.qr_code_rounded,
-            //     size: 25,
-            //     color: Theme.of(context).primaryColorLight,
-            //   ),
-            // ),
             IconButton(
               onPressed: () {
                 Get.offAllNamed(Routes.DRIVER_PAGE);
@@ -64,19 +51,7 @@ class DriverCreateRegisterDetailsScreen
               children: [
                 _buildDayTime(
                     controller.detailsTicker.value, size, day, hour, context),
-                // const SizedBox(height: 10),
-                //Loại xe + Số xe
-                // _buildNumberCar(
-                //   items: controller.detailsTicker.value,
-                //   size: size,
-                //   context: context,
-                //   content: controller.detailsTicker.value.loaixe == "tai"
-                //       ? "Xe tải"
-                //       : "Xe cont",
-                //   title: 'Loại xe',
-                //   title2: 'Số xe',
-                //   content2: controller.detailsTicker.value.soxe.toString(),
-                // ),
+
                 //Loại hàng + Kho
                 _buildNumberCar(
                   items: controller.detailsTicker.value,
@@ -113,19 +88,19 @@ class DriverCreateRegisterDetailsScreen
 }
 
 Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
-  return Column(
-    children: [
-      Card(
-        shadowColor: Colors.grey,
-        elevation: 10,
-        shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(
-            color: Colors.orangeAccent,
-            width: 1,
-          ),
-        ),
-        child: Container(
+  return Card(
+    shadowColor: Colors.grey,
+    elevation: 10,
+    shape: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(
+        color: Colors.orangeAccent,
+        width: 1,
+      ),
+    ),
+    child: Column(
+      children: [
+        Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Center(
             child: RepaintBoundary(
@@ -141,32 +116,44 @@ Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
             ),
           ),
         ),
-      ),
-      const SizedBox(height: 30),
-      Container(
-        height: 40,
-        width: 200,
-        decoration: BoxDecoration(
-          color: Colors.orangeAccent,
-          border: Border.all(width: 1, color: Colors.white),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextButton.icon(
-          onPressed: controller.onShare,
-          icon: const Icon(
-            Icons.share,
-            color: Colors.white,
-          ),
-          label: const Text(
-            "Share Qr Code",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Center(
+            child: Text(
+              controller.id.value,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 18,
+              ),
             ),
           ),
         ),
-      ),
-    ],
+        const SizedBox(height: 30),
+        Container(
+          height: 40,
+          width: 200,
+          decoration: BoxDecoration(
+            color: Colors.orangeAccent,
+            border: Border.all(width: 1, color: Colors.white),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextButton.icon(
+            onPressed: controller.onShare,
+            icon: const Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            label: const Text(
+              "Share Qr Code",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }
 
@@ -249,60 +236,6 @@ Widget _buildNumberCar(
     ),
   );
 }
-
-// Widget _buildProduct(
-//     RegisterModel items, Size size, BuildContext context) {
-//   return Card(
-//     shadowColor: Colors.grey,
-//     elevation: 10,
-//     shape: OutlineInputBorder(
-//       borderRadius: BorderRadius.circular(15),
-//       borderSide: const BorderSide(
-//         color: Colors.orangeAccent,
-//         width: 1,
-//       ),
-//     ),
-//     child: Container(
-//       height: size.width * 0.1,
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           width: 1,
-//           color: Colors.orangeAccent,
-//         ),
-//         borderRadius: BorderRadius.circular(15),
-//         // color: Colors.white,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           const Expanded(
-//             flex: 1,
-//             child: Center(
-//               child: Text(
-//                 "Loại hàng",
-//                 style: TextStyle(
-//                   color: Colors.green,
-//                   fontSize: 16,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//             ),
-//           ),
-//           Expanded(
-//             flex: 1,
-//             child: Center(
-//               child: Text(
-//                 items.maloaiHang == "HN" ? "Hàng nhập" : "Hàng xuất",
-//                 style: TextStyle(
-//                     fontSize: 16, color: Theme.of(context).primaryColorLight),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
 
 Widget _buildCustomer(RegisterModel items, Size size, BuildContext context,
     DriverCreateRegisterDetailsController controller) {
@@ -462,7 +395,7 @@ Widget _buildProductCar(RegisterModel items, Size size, BuildContext context) {
       ),
     ),
     child: Container(
-      height: size.width * 0.4,
+      height: size.width * 0.6,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -479,6 +412,7 @@ Widget _buildProductCar(RegisterModel items, Size size, BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -541,12 +475,66 @@ Widget _buildProductCar(RegisterModel items, Size size, BuildContext context) {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Text(
-                              "Kg/ CBM/ Số Kiện :",
+                              "Số Kiện :",
                               style: CustomTextStyle.titleDetails,
                             ),
                             Expanded(
                               child: Text(
-                                " ${items.soTan}/ ${items.sokhoi}/ ${items.soKien}",
+                                "${items.soKien}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Số khối (CBM):",
+                              style: CustomTextStyle.titleDetails,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "${items.sokhoi}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Kg :",
+                              style: CustomTextStyle.titleDetails,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "${items.soTan}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Theme.of(context).primaryColorLight,

@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
-import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
@@ -17,7 +17,6 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/register_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/select_list_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished/model/customer_list_registed_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/status_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class CustomerEditRegisterController extends GetxController {
@@ -49,7 +48,7 @@ class CustomerEditRegisterController extends GetxController {
   TextEditingController contRa1seal2 = TextEditingController();
   TextEditingController contRa2seal1 = TextEditingController();
   TextEditingController contRa2seal2 = TextEditingController();
-
+  TextEditingController dateinput = TextEditingController(text: "");
   TextEditingController searchTextEditingController = TextEditingController();
 
   RxList<ListCustomerForDriverModel> selectListCustomer =
@@ -59,6 +58,7 @@ class CustomerEditRegisterController extends GetxController {
       ListCustomerForDriverModel().obs;
   Rx<ListCustomerForDriverModel> selectCustomerName =
       ListCustomerForDriverModel().obs;
+  Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
   Rx<ListTypeVoteModel> selectTypeVote = ListTypeVoteModel().obs;
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
   Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
@@ -67,6 +67,7 @@ class CustomerEditRegisterController extends GetxController {
   Rx<ListTypeProductModel> selectTypeProduct = ListTypeProductModel().obs;
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
   var isClientSelect = true.obs;
+
   var selectListItem = <SelectedListItem>[].obs;
   String? selectItems;
   var selectedKhachhang = "";
@@ -75,6 +76,7 @@ class CustomerEditRegisterController extends GetxController {
   RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
   Rx<CustomerListRegistedModel> getDriverFinishedScreen =
       CustomerListRegistedModel().obs;
+
   RxBool isShowCont2 = false.obs;
   @override
   void onInit() async {
@@ -84,6 +86,48 @@ class CustomerEditRegisterController extends GetxController {
     var driverFinishedScreen = Get.arguments as CustomerListRegistedModel;
 
     getDriverFinishedScreen.value = driverFinishedScreen;
+    selectCustomer.value.maKhachHang =
+        getDriverFinishedScreen.value.maKhachHang!.maKhachHang!;
+    dateinput.text = getDriverFinishedScreen.value.giodukien!;
+    selectWareHome.value.maKho = getDriverFinishedScreen.value.khoRe!.maKho;
+    selectTypeCar.value.maLoaiXe =
+        getDriverFinishedScreen.value.loaixe!.maLoaiXe;
+    numberCar.text = getDriverFinishedScreen.value.soxe!;
+
+    //cont1
+    numberCont1.text = getDriverFinishedScreen.value.socont1 ?? "";
+    numberCont1Seal1.text = getDriverFinishedScreen.value.cont1seal1 ?? "";
+    numberCont1Seal2.text = getDriverFinishedScreen.value.cont1seal2 ?? "";
+    numberKien.text = getDriverFinishedScreen.value.soKien.toString();
+    numberTan.text = getDriverFinishedScreen.value.soTan.toString();
+    numberBook.text = getDriverFinishedScreen.value.soBook.toString();
+    numberKhoi.text = getDriverFinishedScreen.value.sokhoi.toString();
+    if (getDriverFinishedScreen.value.maTrongTai != null) {
+      selectTrongTai.value.maTrongTai =
+          getDriverFinishedScreen.value.maTrongTai!.maTrongTai;
+    } else {
+      selectTrongTai.value.maTrongTai = null;
+    }
+
+    //cont2
+    numberCont2.text = getDriverFinishedScreen.value.socont2 ?? "";
+
+    numberCont2Seal1.text = getDriverFinishedScreen.value.cont2seal1 ?? "";
+    numberCont2Seal2.text = getDriverFinishedScreen.value.cont2seal2 ?? "";
+    numberKien1.text = getDriverFinishedScreen.value.sokien1.toString();
+    numberTan1.text = getDriverFinishedScreen.value.soTan1.toString();
+    numberBook1.text = getDriverFinishedScreen.value.soBook1.toString();
+    numberKhoi1.text = getDriverFinishedScreen.value.sokhoi1.toString();
+
+    //loaicont
+    selectTypeCont1.value.typeContCode =
+        getDriverFinishedScreen.value.loaiCont!.typeContCode;
+    selectTypeCont2.value.typeContCode =
+        getDriverFinishedScreen.value.loaiCont1!.typeContCode;
+    selectTypeProduct.value.maloaiHang =
+        getDriverFinishedScreen.value.maloaiHang!.maloaiHang;
+    selectCustomer.value.tenKhachhang =
+        getDriverFinishedScreen.value.maKhachHang!.tenKhachhang;
     if (getDriverFinishedScreen.value.loaiCont!.typeContCode != null) {
       selectNumberCont.value.id = 1;
     } else if (getDriverFinishedScreen.value.loaiCont1!.typeContCode != null) {
@@ -285,6 +329,37 @@ class CustomerEditRegisterController extends GetxController {
     }
   }
 
+  // Danh sách trong tai
+  Future<List<ListMaTrongTai>> getTrongTai(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/selectbox';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var warehome = response.data["trongTai"];
+        if (warehome != null) {
+          return ListMaTrongTai.fromJsonList(warehome);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   // Danh sách loại xe
   Future<List<ListTypeCarModel>> getDataTypeCar(query) async {
     var dio = Dio();
@@ -365,6 +440,7 @@ class CustomerEditRegisterController extends GetxController {
     required String? loaiCont,
     required String? loaiCont1,
     required String? nameCustomer,
+    required String? maTrongTai,
   }) async {
     var dio = Dio();
     Response response;
@@ -409,6 +485,7 @@ class CustomerEditRegisterController extends GetxController {
       trangthaihang1: false,
       trangthaikhoa1: false,
       maloaiHang: typeProduct,
+      maTrongTai: maTrongTai,
       typeInvote: 0,
     );
 
@@ -446,8 +523,6 @@ class CustomerEditRegisterController extends GetxController {
           );
         } else {
           getSnack(messageText: "${data["detail"]}");
-
-          Get.toNamed(Routes.LIST_TICKER_CUSTOMER);
         }
       }
     } on DioError catch (e) {

@@ -14,6 +14,7 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_driver_for_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
@@ -42,6 +43,8 @@ class CustomerRegisterController extends GetxController {
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
 
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
+
+  Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
   String? selectItems;
 
   TextEditingController numberCar = TextEditingController();
@@ -147,6 +150,7 @@ class CustomerRegisterController extends GetxController {
     required String? idProduct,
     required int? numberCont,
     required String? nameCustomer,
+    required String? maTrongtai,
   }) async {
     var token = await SharePerApi().getTokenNPT();
     var idTeamCar = await SharePerApi().getIdKH();
@@ -185,6 +189,7 @@ class CustomerRegisterController extends GetxController {
       trangthaikhoa1: false,
       maloaiHang: idProduct,
       typeInvote: 0,
+      maTrongTai: maTrongtai,
     );
     var jsonData = create.toJson();
 
@@ -222,6 +227,7 @@ class CustomerRegisterController extends GetxController {
             ),
           );
         } else {
+          getSnack(messageText: data["detail"]);
           Get.toNamed(Routes.DETAILS_REGISTER_CUSTOMER, arguments: [
             RegisterModel(
               maTaixe: idTaixe,
@@ -371,6 +377,37 @@ class CustomerRegisterController extends GetxController {
     }
   }
 
+  // Danh sách trong tai
+  Future<List<ListMaTrongTai>> getTrongTai(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/selectbox';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var warehome = response.data["trongTai"];
+        if (warehome != null) {
+          return ListMaTrongTai.fromJsonList(warehome);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   // Danh sách loại hàng
   Future<List<ListTypeProductModel>> getDataTypeProduct(query) async {
     var dio = Dio();
@@ -441,5 +478,25 @@ class CustomerRegisterController extends GetxController {
     } catch (error) {
       rethrow;
     }
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

@@ -3,10 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
-import 'package:tbs_logistics_tms/app/config/widget/custom_timeline.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/driver_list_ticker_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/controller/driver_status_details_controller.dart';
@@ -173,28 +171,46 @@ class ListStatusUnfinishedDetailsScreen
             ),
           ),
           const SizedBox(height: 30),
-          Container(
-            height: 40,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.orangeAccent,
-              border: Border.all(width: 1, color: Colors.white),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: TextButton.icon(
-              onPressed: controller.onShare,
-              icon: const Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
-              label: const Text(
-                "Share",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Center(
+                  child: Text(
+                    controller.getDriverFinishedScreen.value
+                        .pdriverInOutWarehouseCode!,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 10),
+              Container(
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.orangeAccent,
+                  border: Border.all(width: 1, color: Colors.white),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextButton.icon(
+                  onPressed: controller.onShare,
+                  icon: const Icon(
+                    Icons.share,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Share",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

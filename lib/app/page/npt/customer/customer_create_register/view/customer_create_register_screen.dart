@@ -11,6 +11,7 @@ import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/controller/customer_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -268,6 +269,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   Widget _formCar(CustomerRegisterController controller) {
     return Column(
       children: [
+        _listTrongTai(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
           title: "Số seal",
@@ -442,6 +444,110 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     );
   }
 
+  Widget _listTrongTai(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Trọng tải *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListMaTrongTai>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getTrongTai(filter),
+            onChanged: (ListMaTrongTai? data) {
+              setState(() {
+                controller.selectTrongTai.value.maTrongTai = data!.maTrongTai;
+              });
+            },
+            dropdownBuilder: (BuildContext context, ListMaTrongTai? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.tenTrongTai == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trọng tải",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.tenTrongTai!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder:
+                (BuildContext context, ListMaTrongTai item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.tenTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: Text(
+                      item.maTrongTai!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _numberCar(CustomerRegisterController controller) {
     return CustomFormFiels(
       keyboardType: TextInputType.text,
@@ -460,13 +566,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "Khách hàng *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.green,
                     fontSize: 16,
                   ),
                 )
@@ -1266,6 +1372,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
               numberBook1: controller.numberBook1.text,
               typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
               idProduct: controller.selectTypeProduct.value.maloaiHang,
+              maTrongtai: controller.selectTrongTai.value.maTrongTai,
               numberTan1: double.parse(controller.numberTan1.text),
               numberCont: numberSelectCont,
               nameCustomer: controller.selectCustomer.value.tenKhachhang,
@@ -1301,6 +1408,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           typeCont1: controller.selectTypeCont2.value.typeContCode,
           numberTan1: double.parse(controller.numberTan1.text),
           idProduct: controller.selectTypeProduct.value.maloaiHang,
+          maTrongtai: controller.selectTrongTai.value.maTrongTai,
           numberCont: numberSelectCont,
           nameCustomer: controller.selectCustomer.value.tenKhachhang,
         );

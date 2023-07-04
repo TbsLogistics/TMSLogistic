@@ -201,7 +201,7 @@ class _DriverCreateRegisterScreenState
                         ? _listCustomer(controller)
                         : Container(),
                   ),
-                  _listTrongTai(controller),
+                  // _listTrongTai(controller),
 
                   //danh sách loại hàng
                   _listTypeProduct(controller),
@@ -228,6 +228,7 @@ class _DriverCreateRegisterScreenState
                                 icon: Icons.abc,
                                 color: Colors.green,
                               ),
+                              _listTrongTai(controller),
                               CustomFormFiels(
                                 keyboardType: TextInputType.number,
                                 title: "Khối lượng (Kg)",
@@ -367,7 +368,6 @@ class _DriverCreateRegisterScreenState
             onChanged: (value) {
               controller.selectCustomer.value.maKhachHang = value!.maKhachHang;
               controller.selectCustomer.value.tenKhachhang = value.tenKhachhang;
-              print(controller.selectCustomer.value.maKhachHang);
             },
             dropdownBuilder:
                 (BuildContext context, CustomerOfWareHomeModel? item) {

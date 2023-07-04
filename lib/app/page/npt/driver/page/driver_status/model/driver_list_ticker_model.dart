@@ -224,7 +224,7 @@ class MaKhachHang {
   String? mota;
   String? createtime;
   String? modifiedDate;
-  String? status;
+  bool? status;
   String? maKhachHang;
   String? diaChi;
   String? email;

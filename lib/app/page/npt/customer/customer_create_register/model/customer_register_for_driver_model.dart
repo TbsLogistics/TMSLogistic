@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 class RegisterModel {
   String? giodukien;
   String? soxe;

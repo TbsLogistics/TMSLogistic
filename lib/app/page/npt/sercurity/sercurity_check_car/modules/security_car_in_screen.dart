@@ -3,6 +3,7 @@ import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/controller/sercurity_check_car_controller.dart';
@@ -18,50 +19,75 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _buildCustomer(
-              // items: controller.detailEntryVote.value,
-              textController: controller.zoneController,
-              // textFocus: controller.khuvucFocus,
-              size: size,
-              context: context,
-              controller: controller,
-              title: "Khu vực : ",
-              content: "",
-              // "${controller.detailEntryVote.value.khuVuc!.tenKhuVuc}",
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(
+                    child: Text(
+                      "Mã phiếu : ",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Center(
+                      child: Text(
+                        controller.detailEntryVote.value
+                                .pdriverInOutWarehouseCode ??
+                            "",
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            _buildCustomer(
-              textController: controller.doorController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
-              size: size,
-              context: context,
-              controller: controller,
-              title: "Cổng : ",
-              content: "",
-              // "${controller.detailEntryVote.value.capcongs![0].tencongBV}",
+            Obx(
+              () => controller.isLoadUser.value
+                  ? Column(
+                      children: [
+                        _buildInfo(
+                          title: "Khu vực : ",
+                          content:
+                              "${controller.detailUser.value.nhanvien!.area!.tenKhuVuc}",
+                          size: size,
+                          context: context,
+                        ),
+                        _buildInfo(
+                          title: "Cổng : ",
+                          content:
+                              "${controller.detailUser.value.nhanvien!.gateWithWareHouse![0].tencongBV}",
+                          size: size,
+                          context: context,
+                        ),
+                        _buildInfo(
+                          title: "Kho : ",
+                          content:
+                              "${controller.detailUser.value.nhanvien!.maKho}",
+                          size: size,
+                          context: context,
+                        ),
+                      ],
+                    )
+                  : Container(
+                      child: CircularProgressIndicator(
+                        color: Colors.orangeAccent,
+                      ),
+                    ),
             ),
-            _buildCustomer(
-              textController: controller.warehomeController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
-              size: size,
-              context: context,
+            _listTypeKH(
               controller: controller,
-              title: "Kho : ",
-              content: "",
-
-              // "${controller.detailEntryVote.value.phieuvao!.kho!.tenKho}",
-            ),
-            _buildCustomer(
-              textController: controller.customerController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
-              size: size,
-              context: context,
-              controller: controller,
-              title: "Khách hàng : ",
-              content: "",
-              // "${controller.detailEntryVote.value.khachhangRe!.tenKhachhang}",
+              onChanged: (CustomerOfWareHomeModel? data) {
+                controller
+                    .getCusomter(controller.detailUser.value.nhanvien!.maKho);
+              },
+              title: 'Khách hàng :',
             ),
             _buildCustomer(
               textController: controller.nameDriverController,
@@ -308,6 +334,70 @@ Widget _buildCustomerConvert({
               ),
             ),
           )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildInfo({
+  // required DetailEntryVoteModel items,
+  required String title,
+  required String content,
+  required Size size,
+  required BuildContext context,
+}) {
+  return Card(
+    // shadowColor: Colors.grey,
+    // elevation: 5,
+    shape: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(
+        color: Colors.orangeAccent,
+        width: 1,
+      ),
+    ),
+    child: Container(
+      height: size.width * 0.1,
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: Colors.orangeAccent,
+        ),
+        borderRadius: BorderRadius.circular(15),
+        // color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.green,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                content,
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     ),
@@ -1068,6 +1158,123 @@ Widget _listTypeCar(
                         selected: isSelected,
                         title: Text(
                           item.tenLoaiXe!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _listTypeKH(
+    {required SercurityCheckCarController controller,
+    required Function(CustomerOfWareHomeModel?) onChanged,
+    required String title}) {
+  return Card(
+    shape: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(
+        color: Colors.orangeAccent,
+        width: 1,
+      ),
+    ),
+    child: SizedBox(
+      height: 80,
+      child: Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.only(left: 5),
+                child: const Row(
+                  children: [
+                    Text(
+                      "Khách hàng *",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              flex: 2,
+              child: FindDropdown<CustomerOfWareHomeModel>(
+                showSearchBox: false,
+                onFind: (String filter) => controller.getCusomter(
+                    "${controller.detailUser.value.nhanvien!.maKho}"),
+                onChanged: onChanged,
+                dropdownBuilder:
+                    (BuildContext context, CustomerOfWareHomeModel? item) {
+                  return Card(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(
+                        color: Colors.orangeAccent,
+                      ),
+                    ),
+                    child: (item?.tenKhachhang == null)
+                        ? ListTile(
+                            title: Text(
+                              title,
+                              style: TextStyle(
+                                color: Colors.orangeAccent,
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black,
+                            ),
+                          )
+                        : ListTile(
+                            title: Text(
+                              item!.tenKhachhang!,
+                              style: const TextStyle(
+                                color: Colors.orangeAccent,
+                              ),
+                            ),
+                          ),
+                  );
+                },
+                dropdownItemBuilder: (BuildContext context,
+                    CustomerOfWareHomeModel item, bool isSelected) {
+                  return Container(
+                    decoration: !isSelected
+                        ? null
+                        : BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                          ),
+                    child: Card(
+                      shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(
+                          color: Colors.orangeAccent,
+                        ),
+                      ),
+                      child: ListTile(
+                        selected: isSelected,
+                        title: Text(
+                          item.tenKhachhang!,
                           style: const TextStyle(
                             color: Colors.orangeAccent,
                             fontSize: 15,

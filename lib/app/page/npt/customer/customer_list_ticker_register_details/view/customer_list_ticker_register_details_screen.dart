@@ -14,9 +14,8 @@ class CustomerListTickerRegisterDetailsScreen
 
   @override
   Widget build(BuildContext context) {
-    var day = DateFormat("dd-MM-yyyy");
     var datetime = DateFormat("dd/MM/yyyy HH:mm");
-    var hour = DateFormat("hh-mm a");
+
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CustomerListTickerRegisterDetailsController>(
         init: CustomerListTickerRegisterDetailsController(),
@@ -199,28 +198,45 @@ class CustomerListTickerRegisterDetailsScreen
             ),
           ),
           const SizedBox(height: 30),
-          Container(
-            height: 40,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.orangeAccent,
-              border: Border.all(width: 1, color: Colors.white),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: TextButton.icon(
-              onPressed: controller.onShare,
-              icon: const Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
-              label: const Text(
-                "Share",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Center(
+                  child: Text(
+                    controller.listTracking.value.pdriverInOutWarehouseCode!,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 10),
+              Container(
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.orangeAccent,
+                  border: Border.all(width: 1, color: Colors.white),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextButton.icon(
+                  onPressed: controller.onShare,
+                  icon: const Icon(
+                    Icons.share,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Share",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -240,7 +256,7 @@ class CustomerListTickerRegisterDetailsScreen
         ),
       ),
       child: Container(
-        height: size.width * 0.4,
+        height: size.width * 0.6,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -257,6 +273,7 @@ class CustomerListTickerRegisterDetailsScreen
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
+                    flex: 2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -319,12 +336,66 @@ class CustomerListTickerRegisterDetailsScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Text(
-                                "CBM/ Số Kiện / Kg :",
+                                "Số Kiện :",
                                 style: CustomTextStyle.titleDetails,
                               ),
                               Expanded(
                                 child: Text(
-                                  "${items.sokhoi}/ ${items.soKien}/ ${items.soTan}",
+                                  "${items.soKien}",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "CBM :",
+                                style: CustomTextStyle.titleDetails,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "${items.sokhoi}",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Kg :",
+                                style: CustomTextStyle.titleDetails,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "${items.soTan}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Theme.of(context).primaryColorLight,
@@ -546,7 +617,7 @@ class CustomerListTickerRegisterDetailsScreen
         ),
       ),
       child: Container(
-        height: size.width * 0.7,
+        height: size.width * 0.8,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -716,6 +787,34 @@ class CustomerListTickerRegisterDetailsScreen
                       ),
                     ),
                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Kg ",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("${items.soTan}"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -878,6 +977,34 @@ class CustomerListTickerRegisterDetailsScreen
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text("${items.sokhoi1}"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Kg",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("${items.soTan1}"),
                             ],
                           ),
                         ],

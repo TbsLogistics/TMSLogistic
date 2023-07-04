@@ -18,6 +18,7 @@ class CustomFormFiels extends StatelessWidget {
   final String Function(String?)? validator;
   final Color color;
   final TextInputType keyboardType;
+  // final TextCapitalization textCapitalization;
 
   @override
   Widget build(BuildContext context) {

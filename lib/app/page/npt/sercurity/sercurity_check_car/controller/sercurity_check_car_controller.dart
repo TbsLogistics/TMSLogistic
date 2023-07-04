@@ -7,9 +7,12 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/model/detail_entry_vote_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/detail_user_sercurity_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/register_of_sercurity_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/scan_model.dart';
 
@@ -26,9 +29,12 @@ class SercurityCheckCarController extends GetxController {
   RxBool isShowCont2Local = false.obs;
   RxInt numberSelectCont = 0.obs;
   RxBool isShowCar = false.obs;
+  RxBool isLoadUser = false.obs;
 
   FocusNode cccdFocusNode = FocusNode();
-
+  RxList<CustomerOfWareHomeModel> listKhachhang =
+      <CustomerOfWareHomeModel>[].obs;
+  RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
   Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
@@ -59,9 +65,13 @@ class SercurityCheckCarController extends GetxController {
   TextEditingController CBMController = TextEditingController();
   TextEditingController CBM1Controller = TextEditingController();
 
+  Rx<DetailUserSercurityModel> detailUser = DetailUserSercurityModel().obs;
+
   @override
   void onInit() {
     super.onInit();
+    getKhachhang();
+    getUserSercurity();
   }
 
   void onSubmitField2() {
@@ -145,6 +155,99 @@ class SercurityCheckCarController extends GetxController {
       } else if (e.response!.statusCode == 500) {
         getSnack(messageText: "Lỗi sever !");
       }
+    }
+  }
+
+  void getUserSercurity() async {
+    var dio = Dio();
+    var token = await SharePerApi().getTokenNPT();
+    Response response;
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    var url = "${AppConstants.urlBaseNpt}/convert-token-data";
+    isLoadUser(false);
+    try {
+      response = await dio.get(url, options: Options(headers: headers));
+      if (response.statusCode == 200) {
+        var data = response.data;
+        detailUser.value = DetailUserSercurityModel.fromJson(data);
+        isLoadUser(true);
+      }
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {
+      } else if (e.response!.statusCode == 500) {}
+    }
+  }
+
+  Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
+    listClient.value = [];
+    for (var i = 0; i < listKhachhang.length; i++) {
+      if (listKhachhang[i].maKho == maKho) {
+        var items = listKhachhang[i];
+
+        listClient.add(items);
+      }
+    }
+    if (listClient.isEmpty) {
+      listClient.value = [];
+    }
+
+    return listClient;
+  }
+
+  // Danh sách khách hàng
+  void getKhachhang() async {
+    var dio = Dio();
+    Response response;
+
+    const url = '${AppConstants.urlBaseNpt}/counter-part-has-warehouses';
+
+    try {
+      response = await dio.get(
+        url,
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        List<dynamic> customer = response.data["data"];
+        listKhachhang.value =
+            customer.map((e) => CustomerOfWareHomeModel.fromJson(e)).toList();
+
+        // var data = ListCustomerOfWareHomeModel.fromJsonList(customer);
+      }
+    } on DioError catch (e) {
+      print([e.response!.statusCode, e.response!.statusMessage]);
+    }
+  }
+
+  // Danh sách khách hàng
+  Future<List<ListCustomerForDriverModel>> getDataCustomer(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/danh-sach-khach-hang';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var customer = response.data["data"];
+        if (customer != null) {
+          return ListCustomerForDriverModel.fromJsonList(customer);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } catch (error) {
+      rethrow;
     }
   }
 

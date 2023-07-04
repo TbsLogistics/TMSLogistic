@@ -157,6 +157,29 @@ class CustomerRegisterDetailScreen
             ),
           ),
         ),
+        Card(
+          shadowColor: Colors.grey,
+          elevation: 10,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(
+              color: Colors.orangeAccent,
+              width: 1,
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Center(
+              child: Text(
+                controller.id.value,
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 30),
         Container(
           height: 40,
