@@ -39,19 +39,21 @@ class ListStatusUnfinishedDetailsScreen
             },
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.CREATE_EDIT_REGISTER_DRIVER,
-                  arguments: controller.getDriverFinishedScreen.value,
-                );
-              },
-              icon: Icon(
-                Icons.edit_document,
-                color: Theme.of(context).primaryColorLight,
-                size: 25,
-              ),
-            ),
+            controller.getDriverFinishedScreen.value.giovao == null
+                ? IconButton(
+                    onPressed: () {
+                      Get.toNamed(
+                        Routes.CREATE_EDIT_REGISTER_DRIVER,
+                        arguments: controller.getDriverFinishedScreen.value,
+                      );
+                    },
+                    icon: Icon(
+                      Icons.edit_document,
+                      color: Theme.of(context).primaryColorLight,
+                      size: 25,
+                    ),
+                  )
+                : Container(),
             controller.getDriverFinishedScreen.value.giovao == null
                 ? IconButton(
                     onPressed: () {
@@ -103,24 +105,14 @@ class ListStatusUnfinishedDetailsScreen
                                     SizedBox(
                                       height: size.width * 0.05,
                                     ),
-                                    // _buildStatus(
-                                    //     size,
-                                    //     controller,
-                                    //     context,
-                                    //     controller
-                                    //         .getDriverFinishedScreen.value),
                                     _qrImage(controller, size),
-                                    // controller.showForm.value
-                                    //     ? _buildFormStatus(
-                                    //         controller,
-                                    //         size,
-                                    //         controller
-                                    //             .getDriverFinishedScreen.value)
-                                    //     : Container(),
                                     SizedBox(
                                       height: size.width * 0.05,
                                     ),
-                                    _buildNumberCont(controller, size, context),
+                                    Obx(
+                                      () => _buildNumberCont(
+                                          controller, size, context),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -809,11 +801,13 @@ class ListStatusUnfinishedDetailsScreen
 }
 
 Widget _buildNumberCont(
-    DriverStatusDetailsController items, Size size, BuildContext context) {
+  DriverStatusDetailsController items,
+  Size size,
+  BuildContext context,
+) {
   var itemsCont = items.getDriverFinishedScreen.value;
   return Container(
-    height: size.width * 0.9,
-    padding: const EdgeInsets.symmetric(vertical: 5),
+    height: size.width,
     decoration: BoxDecoration(
       border: Border.all(
         width: 1,
@@ -825,239 +819,249 @@ Widget _buildNumberCont(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
+        itemsCont.loaiCont!.typeContCode != null
+            ? Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Số công 1",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 16,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Số công 1",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                          // const SizedBox(height: 10),
+                          Text(
+                            itemsCont.socont1 != null
+                                ? "${itemsCont.socont1}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
                       ),
                     ),
-                    // const SizedBox(height: 10),
-                    Text(
-                      itemsCont.socont1 != null ? "${itemsCont.socont1}" : "",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Loại Cont",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${itemsCont.loaiCont!.typeContCode}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số seal 1",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.cont1seal1 != null
+                                      ? "${itemsCont.cont1seal1}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số seal 2",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.cont1seal2 != null
+                                      ? "${itemsCont.cont1seal2}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Book",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.soBook != null
+                                      ? "${itemsCont.soBook}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Kiện",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${itemsCont.soKien}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Khối (CBM)",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${itemsCont.sokhoi}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số seal 1",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.cont1seal1 != null
-                                ? "${itemsCont.cont1seal1}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số seal 2",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.cont1seal2 != null
-                                ? "${itemsCont.cont1seal2}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Book",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.soBook != null
-                                ? "${itemsCont.soBook}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Kiện",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.soKien}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Khối (CBM)",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.sokhoi}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Khối (CBM)",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.soTan}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+              )
+            : Container(),
         const VerticalDivider(
           width: 1,
           indent: 15,
@@ -1065,241 +1069,248 @@ Widget _buildNumberCont(
           color: Colors.orangeAccent,
           thickness: 1,
         ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
+        itemsCont.loaiCont1!.typeContCode != null
+            ? Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Số công 2",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 16,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Số công 2",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            itemsCont.socont2 != null
+                                ? "${itemsCont.socont2}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColorLight),
+                          ),
+                        ],
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    Text(
-                      itemsCont.socont2 != null ? "${itemsCont.socont2}" : "",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColorLight),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Loại Cont",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.loaiCont1!.typeContCode ?? "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số seal 1",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.cont2seal1 != null
+                                      ? "${itemsCont.cont2seal1}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số seal 2",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.cont2seal2 != null
+                                      ? "${itemsCont.cont2seal2}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Book",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemsCont.soBook1 != null
+                                      ? "${itemsCont.soBook1}"
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Kiện",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${itemsCont.sokien1}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Số Khối (CBM)",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${itemsCont.sokhoi1}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số seal 1",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.cont2seal1 != null
-                                ? "${itemsCont.cont2seal1}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số seal 2",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.cont2seal2 != null
-                                ? "${itemsCont.cont2seal2}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Book",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            itemsCont.soBook1 != null
-                                ? "${itemsCont.soBook1}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Kiện",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.sokien1}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Khối (CBM)",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.sokhoi1}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Số Khối (CBM)",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${itemsCont.soTan1}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColorLight),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+              )
+            : Container(),
       ],
     ),
   );

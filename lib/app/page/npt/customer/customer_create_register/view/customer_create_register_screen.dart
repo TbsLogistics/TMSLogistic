@@ -2,6 +2,7 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:find_dropdown/find_dropdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 class CustomerRegisterScreen extends StatefulWidget {
   const CustomerRegisterScreen({Key? key}) : super(key: key);
@@ -63,7 +65,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
       },
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2025),
     );
     if (selected != null && selected != selectedDate) {
@@ -90,6 +92,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           child: child!,
         );
       },
+      initialEntryMode: TimePickerEntryMode.input,
       context: context,
       initialTime: selectedTime,
     );
@@ -242,17 +245,35 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                 ),
                 _listTypeProduct(controller),
                 _listTypeCar(controller),
-                Obx(
-                  () => controller.selectTypeCar.value != "" &&
-                          controller.selectTypeCar.value.maLoaiXe == "tai"
-                      ? _formCar(controller)
-                      : controller.selectTypeCar.value != "" &&
-                              controller.selectTypeCar.value.maLoaiXe == "con"
-                          ? _listNumberCont(controller, size)
-                          : Container(),
-                ),
-                numberSelectCont >= 1 ? _contFirt(controller) : Container(),
-                numberSelectCont >= 2 ? _contSecond(controller) : Container(),
+                Obx(() => controller.selectTypeCar.value != "" &&
+                        controller.selectTypeCar.value.maLoaiXe == "con"
+                    ? Column(
+                        children: [
+                          _contFirt(controller),
+                          Center(
+                            child: IconButton(
+                              onPressed: () {
+                                controller.changeHideShowCont2();
+                              },
+                              icon: controller.isShowCont2.value
+                                  ? const Icon(
+                                      Icons.remove_circle,
+                                      size: 30,
+                                      color: Colors.red,
+                                    )
+                                  : const Icon(
+                                      Icons.add_circle,
+                                      size: 30,
+                                      color: Colors.green,
+                                    ),
+                            ),
+                          ),
+                          controller.isShowCont2.value
+                              ? _contSecond(controller)
+                              : Container(),
+                        ],
+                      )
+                    : _formCar(controller)),
                 ButtonFormSubmit(
                     onPressed: () {
                       onSignUp(controller);
@@ -1343,45 +1364,41 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     // print(dateinput.text);
     else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
-        if (controller.selectItems != null) {
-          if (numberSelectCont == 1 &&
-                  controller.selectTypeCont1.value.typeContCode != null ||
-              numberSelectCont == 2 &&
-                  controller.selectTypeCont1.value.typeContCode != null &&
-                  controller.selectTypeCont2.value.typeContCode != null) {
-            controller.postRegisterCustomer(
-              idTaixe: controller.selectDriver.value.maTaixe,
-              maKhachHang: controller.selectCustomer.value.maKhachHang!,
-              time: dateinput.text,
-              idKho: controller.selectWareHome.value.maKho,
-              idCar: controller.selectTypeCar.value.maLoaiXe,
-              numberCar: controller.numberCar.text,
-              numberCont1: controller.numberCont1.text,
-              numberCont2: controller.numberCont2.text,
-              numberCont1Seal1: controller.numberCont1Seal1.text,
-              numberCont1Seal2: controller.numberCont1Seal2.text,
-              numberKhoi: double.parse(controller.numberKhoi.text),
-              numberKien: double.parse(controller.numberKien.text),
-              typeCont: "${controller.selectTypeCont1.value.typeContCode}",
-              numberBook: controller.numberBook.text,
-              numberTan: double.parse(controller.numberTan.text),
-              numberCont2Seal1: controller.numberCont2Seal1.text,
-              numberCont2Seal2: controller.numberCont2Seal2.text,
-              numberKhoi1: double.parse(controller.numberKhoi1.text),
-              numberKien1: double.parse(controller.numberKien1.text),
-              numberBook1: controller.numberBook1.text,
-              typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
-              idProduct: controller.selectTypeProduct.value.maloaiHang,
-              maTrongtai: controller.selectTrongTai.value.maTrongTai,
-              numberTan1: double.parse(controller.numberTan1.text),
-              numberCont: numberSelectCont,
-              nameCustomer: controller.selectCustomer.value.tenKhachhang,
-            );
-          } else {
-            getSnack(messageText: "Chọn loại cont * !");
-          }
+        if (controller.isShowCont2.value == false &&
+                controller.selectTypeCont1.value.typeContCode != null ||
+            controller.isShowCont2.value == true &&
+                controller.selectTypeCont1.value.typeContCode != null &&
+                controller.selectTypeCont2.value.typeContCode != null) {
+          controller.postRegisterCustomer(
+            idTaixe: controller.selectDriver.value.maTaixe,
+            maKhachHang: controller.selectCustomer.value.maKhachHang!,
+            time: dateinput.text,
+            idKho: controller.selectWareHome.value.maKho,
+            idCar: controller.selectTypeCar.value.maLoaiXe,
+            numberCar: controller.numberCar.text,
+            numberCont1: controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text,
+            numberKhoi: double.parse(controller.numberKhoi.text),
+            numberKien: double.parse(controller.numberKien.text),
+            typeCont: "${controller.selectTypeCont1.value.typeContCode}",
+            numberBook: controller.numberBook.text,
+            numberTan: double.parse(controller.numberTan.text),
+            numberCont2Seal1: controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text,
+            numberKhoi1: double.parse(controller.numberKhoi1.text),
+            numberKien1: double.parse(controller.numberKien1.text),
+            numberBook1: controller.numberBook1.text,
+            typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
+            idProduct: controller.selectTypeProduct.value.maloaiHang,
+            maTrongtai: controller.selectTrongTai.value.maTrongTai,
+            numberTan1: double.parse(controller.numberTan1.text),
+            numberCont: numberSelectCont,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang,
+          );
         } else {
-          getSnack(messageText: "Chọn số lượng cont * !");
+          getSnack(messageText: "Chọn loại cont * !");
         }
       } else {
         controller.postRegisterCustomer(

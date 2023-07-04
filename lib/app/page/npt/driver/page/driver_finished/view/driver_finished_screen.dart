@@ -61,7 +61,7 @@ class DriverFinishedScreen extends GetView<DriverFinishedController> {
                             ),
                           ),
                           customer: "",
-                          status: items[index].status == true,
+                          status: items[index].giovao == null,
                         ),
                       );
                     });

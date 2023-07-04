@@ -69,13 +69,13 @@ class DriverCreateRegisterDetailsScreen
                 _buildCustomer(
                     controller.detailsTicker.value, size, context, controller),
                 const SizedBox(height: 10),
-                controller.detailsTicker.value.loaixe == "tai"
-                    ? _buildProductCar(
-                        controller.detailsTicker.value, size, context)
-                    : controller.numberCont.value != 0
-                        ? _buildProductCont(controller.detailsTicker.value,
-                            size, context, controller)
-                        : Container(),
+                Obx(
+                  () => controller.detailsTicker.value.loaixe == "con"
+                      ? _buildProductCont(controller.detailsTicker.value, size,
+                          context, controller)
+                      : _buildProductCar(
+                          controller.detailsTicker.value, size, context),
+                ),
                 const SizedBox(height: 10),
                 _qrImage(controller, size),
               ],
@@ -581,7 +581,7 @@ Widget _buildProductCont(RegisterModel items, Size size, BuildContext context,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          controller.numberCont.value >= 1
+          controller.detailsTicker.value.loaiCont == null
               ? Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -743,7 +743,7 @@ Widget _buildProductCont(RegisterModel items, Size size, BuildContext context,
             color: Colors.orangeAccent,
             thickness: 1,
           ),
-          controller.numberCont.value == 2
+          controller.detailsTicker.value.loaiCont1 != null
               ? Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

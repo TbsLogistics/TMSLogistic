@@ -215,82 +215,34 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                   Obx(
                     () => controller.selectTypeCar.value != "" &&
                             controller.selectTypeCar.value.maLoaiXe == "tai"
-                        ? Column(
+                        ? _inputCar()
+                        : Column(
                             children: [
-                              _listTrongTai(controller),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số seal",
-                                controller: controller.numberCont1Seal1,
-                                hintText: "Nhập Số Seal",
-                                icon: Icons.abc,
-                                color: Colors.green,
+                              _contFirt(controller),
+                              Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    controller.changeHideShowCont2();
+                                  },
+                                  icon: controller.isShowCont2.value
+                                      ? const Icon(
+                                          Icons.remove_circle,
+                                          size: 30,
+                                          color: Colors.red,
+                                        )
+                                      : const Icon(
+                                          Icons.add_circle,
+                                          size: 30,
+                                          color: Colors.green,
+                                        ),
+                                ),
                               ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số Book",
-                                controller: controller.numberBook,
-                                hintText: "Nhập Số Book",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Khối lượng (Kg)",
-                                controller: controller.numberTan,
-                                hintText: "Nhập Khối lượng (Kg)",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Khối (CBM)",
-                                controller: controller.numberKhoi,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Kiện",
-                                controller: controller.numberKien,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
+                              controller.isShowCont2.value
+                                  ? _contSecond(controller)
+                                  : Container(),
                             ],
-                          )
-                        : controller.getDriverFinishedScreen.value.socont1 !=
-                                    "" &&
-                                controller.getDriverFinishedScreen.value.loaixe!
-                                        .maLoaiXe ==
-                                    "con"
-                            ? _listNumberCont(controller)
-                            : Container(),
+                          ),
                   ),
-                  controller.selectTypeCar.value.maLoaiXe == "con" ||
-                          controller.getDriverFinishedScreen.value.loaixe!
-                                  .maLoaiXe ==
-                              "con"
-                      ? Column(
-                          children: [
-                            controller.getDriverFinishedScreen.value.loaiCont!
-                                        .typeContCode !=
-                                    null
-                                ? controller.selectNumberCont.value.id! >= 1
-                                    ? _contFirt(controller)
-                                    : Container()
-                                : Container(),
-                            controller.getDriverFinishedScreen.value.loaiCont1!
-                                        .status !=
-                                    null
-                                ? controller.selectNumberCont.value.id == 2
-                                    ? _contSecond(controller)
-                                    : Container()
-                                : Container(),
-                          ],
-                        )
-                      : Container(),
                   ButtonFormSubmit(
                       onPressed: () {
                         _signUpProcess(context, controller);
@@ -303,6 +255,54 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _inputCar() {
+    return Column(
+      children: [
+        _listTrongTai(controller),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số seal",
+          controller: controller.numberCont1Seal1,
+          hintText: "Nhập Số Seal",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số Book",
+          controller: controller.numberBook,
+          hintText: "Nhập Số Book",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
+          controller: controller.numberTan,
+          hintText: "Nhập Khối lượng (Kg)",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Khối (CBM)",
+          controller: controller.numberKhoi,
+          hintText: "",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Kiện",
+          controller: controller.numberKien,
+          hintText: "",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+      ],
     );
   }
 
@@ -346,8 +346,11 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                 child: (item?.tenTrongTai == null)
                     ? ListTile(
                         title: Text(
-                          controller.getDriverFinishedScreen.value.maTrongTai!
-                              .tenTrongTai!,
+                          controller.getDriverFinishedScreen.value.maTrongTai !=
+                                  null
+                              ? controller.getDriverFinishedScreen.value
+                                  .maTrongTai!.tenTrongTai!
+                              : "Chọn trọng tải ",
                           style: TextStyle(
                             color: Colors.orangeAccent,
                           ),
@@ -1070,7 +1073,10 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                     ? ListTile(
                         title: Text(
                           controller.getDriverFinishedScreen.value.loaiCont!
-                              .typeContname!,
+                                      .typeContCode !=
+                                  null
+                              ? "${controller.getDriverFinishedScreen.value.loaiCont!.typeContname}"
+                              : "Chọn loại Cont",
                           style: TextStyle(
                             color: Colors.orangeAccent,
                           ),

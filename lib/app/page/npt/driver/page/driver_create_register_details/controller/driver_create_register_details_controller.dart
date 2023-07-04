@@ -14,7 +14,7 @@ import 'package:wc_flutter_share/wc_flutter_share.dart';
 class DriverCreateRegisterDetailsController extends GetxController {
   Rx<RegisterModel> detailsTicker = RegisterModel().obs;
   RxString id = "".obs;
-  RxInt numberCont = 0.obs;
+
   RxString nameCustomer = "".obs;
 
   GlobalKey qrDriverKey = GlobalKey();
@@ -22,12 +22,12 @@ class DriverCreateRegisterDetailsController extends GetxController {
   void onInit() {
     var items = Get.arguments[0] as RegisterModel; // thong tin phieu
     var items1 = Get.arguments[1]; // id phieu
-    var items2 = Get.arguments[2]; // so luong cont
-    var items3 = Get.arguments[3]; // tên khách hàng
+
+    var items2 = Get.arguments[2]; // tên khách hàng
     detailsTicker.value = items;
     id.value = items1;
-    numberCont.value = items2;
-    nameCustomer.value = items3;
+    nameCustomer.value = items2;
+
     super.onInit();
   }
 

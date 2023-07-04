@@ -39,22 +39,24 @@ class CustomerListTickerRegisterDetailsScreen
                   ),
                 ),
                 actions: [
-                  IconButton(
-                    onPressed: () async {
-                      var result = await Get.toNamed(
-                        Routes.CREATE_EDIT_REGISTER_CUSTOMER,
-                        arguments: controller.listTracking.value,
-                      );
-                      if (result == true && result is bool) {
-                        controller.listTracking.value;
-                      }
-                    },
-                    icon: Icon(
-                      Icons.edit_document,
-                      color: Theme.of(context).primaryColorLight,
-                      size: 25,
-                    ),
-                  ),
+                  controller.listTracking.value.giovao == null
+                      ? IconButton(
+                          onPressed: () async {
+                            var result = await Get.toNamed(
+                              Routes.CREATE_EDIT_REGISTER_CUSTOMER,
+                              arguments: controller.listTracking.value,
+                            );
+                            if (result == true && result is bool) {
+                              controller.listTracking.value;
+                            }
+                          },
+                          icon: Icon(
+                            Icons.edit_document,
+                            color: Theme.of(context).primaryColorLight,
+                            size: 25,
+                          ),
+                        )
+                      : Container(),
                   controller.listTracking.value.giovao == null
                       ? IconButton(
                           onPressed: () {
@@ -105,7 +107,11 @@ class CustomerListTickerRegisterDetailsScreen
                                     ),
                                     Text(
                                       "Giờ dự kiến : ${datetime.format(DateTime.parse(controller.listTracking.value.giodukien.toString()))}",
-                                      style: CustomTextStyle.contentDetails,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -143,8 +149,10 @@ class CustomerListTickerRegisterDetailsScreen
                           title2: "Loại hàng",
                           content1:
                               "${controller.listTracking.value.khoRe!.tenKho}",
-                          content2:
-                              "${controller.listTracking.value.maloaiHang!.tenLoaiHang}",
+                          content2: controller.listTracking.value.maloaiHang !=
+                                  null
+                              ? "${controller.listTracking.value.maloaiHang!.tenLoaiHang}"
+                              : "",
                         ),
                         _qrImage(controller, size),
                         controller.listTracking.value.loaixe!.maLoaiXe == "tai"
@@ -839,7 +847,7 @@ class CustomerListTickerRegisterDetailsScreen
                           style: CustomTextStyle.titleDetails,
                         ),
                         const SizedBox(height: 5),
-                        Text("${items.socont2}"),
+                        Text(items.socont2 ?? ""),
                       ],
                     ),
                   ),
@@ -864,7 +872,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.cont2seal1}"),
+                              Text(items.cont2seal1 ?? ""),
                             ],
                           ),
                         ],
@@ -892,7 +900,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.cont2seal2}"),
+                              Text(items.cont2seal2 ?? ""),
                             ],
                           ),
                         ],

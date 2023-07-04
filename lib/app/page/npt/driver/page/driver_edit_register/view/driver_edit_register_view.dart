@@ -214,90 +214,39 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
                   _listTypeCar(controller),
                   Obx(
                     () => controller.selectTypeCar.value != "" &&
-                            controller.selectTypeCar.value.maLoaiXe == "tai"
+                            controller.selectTypeCar.value.maLoaiXe == "con"
                         ? Column(
                             children: [
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số seal",
-                                controller: controller.numberCont1Seal1,
-                                hintText:
-                                    "${controller.getDriverFinishedScreen.value.cont1seal1}",
-                                icon: Icons.abc,
-                                color: Colors.green,
+                              _contFirt(controller),
+                              Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    controller.changeHideShowCont2();
+                                  },
+                                  icon: controller.isShowCont2.value
+                                      ? const Icon(
+                                          Icons.remove_circle,
+                                          size: 30,
+                                          color: Colors.red,
+                                        )
+                                      : const Icon(
+                                          Icons.add_circle,
+                                          size: 30,
+                                          color: Colors.green,
+                                        ),
+                                ),
                               ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số Book",
-                                controller: controller.numberBook,
-                                hintText:
-                                    "${controller.getDriverFinishedScreen.value.soBook}",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              _listTrongTai(controller),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Khối lượng (Kg)",
-                                controller: controller.numberTan,
-                                hintText:
-                                    "${controller.getDriverFinishedScreen.value.soTan}",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Khối",
-                                controller: controller.numberKhoi,
-                                hintText:
-                                    "${controller.getDriverFinishedScreen.value.sokhoi}",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Kiện",
-                                controller: controller.numberKien,
-                                hintText:
-                                    "${controller.getDriverFinishedScreen.value.soKien}",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
+                              controller.isShowCont2.value
+                                  ? _contSecond(controller)
+                                  : Container(),
                             ],
                           )
-                        : controller.getDriverFinishedScreen.value.socont1 !=
-                                        "" &&
-                                    controller.getDriverFinishedScreen.value
-                                            .loaixe!.maLoaiXe ==
-                                        "con" ||
-                                controller.selectTypeCar.value.maLoaiXe == "con"
-                            ? Column(
-                                children: [
-                                  _listNumberCont(controller),
-                                  controller.selectNumberCont.value.id! >= 1
-                                      ? _contFirt(controller)
-                                      : Container(),
-                                  controller.selectNumberCont.value.id == 2
-                                      ? _contSecond(controller)
-                                      : Container(),
-                                ],
-                              )
-                            : Container(),
+                        : _inputCar(),
                   ),
-                  // controller.selectTypeCar.value.maLoaiXe == "con" ||
-                  //         controller.getDriverFinishedScreen.value.loaixe!
-                  //                 .maLoaiXe ==
-                  //             "con"
-                  //     ? Column(
-                  //         children: [
 
-                  //         ],
-                  //       )
-                  //     : Container(),
                   ButtonFormSubmit(
                       onPressed: () {
                         _signUpProcess(context, controller);
-                        // print(numberSelectCont);
                       },
                       text: "Thay đổi")
                 ],
@@ -306,6 +255,54 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _inputCar() {
+    return Column(
+      children: [
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số seal",
+          controller: controller.numberCont1Seal1,
+          hintText: "${controller.getDriverFinishedScreen.value.cont1seal1}",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.text,
+          title: "Số Book",
+          controller: controller.numberBook,
+          hintText: "${controller.getDriverFinishedScreen.value.soBook}",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        _listTrongTai(controller),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Khối lượng (Kg)",
+          controller: controller.numberTan,
+          hintText: "${controller.getDriverFinishedScreen.value.soTan}",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Khối",
+          controller: controller.numberKhoi,
+          hintText: "${controller.getDriverFinishedScreen.value.sokhoi}",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+        CustomFormFiels(
+          keyboardType: TextInputType.number,
+          title: "Số Kiện",
+          controller: controller.numberKien,
+          hintText: "${controller.getDriverFinishedScreen.value.soKien}",
+          icon: Icons.abc,
+          color: Colors.green,
+        ),
+      ],
     );
   }
 
@@ -763,8 +760,7 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
                 child: (item?.tenLoaiHang == null)
                     ? ListTile(
                         title: Text(
-                          controller.getDriverFinishedScreen.value.maloaiHang!
-                              .tenLoaiHang!,
+                          controller.selectTypeProduct.value.maloaiHang ?? "",
                           style: const TextStyle(
                             color: Colors.orangeAccent,
                           ),
@@ -1433,62 +1429,45 @@ class _DriverEditRegisterScreenState extends State<DriverEditRegisterScreen> {
 
   void _signUpProcess(
       BuildContext context, DriverEditCreateRegisterController controller) {
-    print([
-      controller.selectNumberCont.value.id,
-      controller.selectTypeCont1.value.typeContCode,
-      controller.selectTypeCont2.value.typeContCode
-    ]);
     if (controller.selectTypeCar.value.maLoaiXe == "con") {
-      if (controller.selectNumberCont.value.id != null) {
-        if (controller.selectNumberCont.value.id == 1 &&
-                controller.selectTypeCont1.value.typeContCode != null ||
-            controller.selectNumberCont.value.id == 2 &&
-                controller.selectTypeCont1.value.typeContCode != null &&
-                controller.selectTypeCont2.value.typeContCode != null) {
-          controller.puttRegisterDriver(
-            maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: controller.dateinput.text,
-            typeWarehome: controller.selectWareHome.value.maKho,
-            typeCar: controller.selectTypeCar.value.maLoaiXe,
-            numberCar: controller.numberCar.text,
-            numberCont1: controller.numberCont1.text,
-            numberCont2: controller.numberCont2.text,
-            numberCont1Seal1: controller.numberCont1Seal1.text,
-            numberCont1Seal2: controller.numberCont1Seal2.text,
-            numberKhoi: double.parse(controller.numberKhoi.text),
-            numberKien: double.parse(controller.numberKien.text),
-            numberBook: controller.numberBook.text,
-            numberTan: double.parse(controller.numberTan.text),
-            loaiCont: controller.selectTypeCont1.value.typeContCode!,
-            numberCont2Seal1: controller.numberCont2Seal1.text == ""
-                ? null
-                : controller.numberCont2Seal1.text,
-            numberCont2Seal2: controller.numberCont2Seal2.text == ""
-                ? null
-                : controller.numberCont2Seal1.text,
-            numberKhoi1: double.parse(controller.numberKhoi1.text),
-            numberKien1: double.parse(controller.numberKien1.text),
-            numberBook1: controller.numberBook1.text,
-            numberTan1: double.parse(controller.numberTan1.text),
-            loaiCont1: controller.selectTypeCont2.value.typeContCode,
-            typeProduct: controller.selectTypeProduct.value.maloaiHang,
-            maTrongTai: controller.selectTrongTai.value.maTrongTai,
-            numberCont: numberSelectCont,
-            nameCustomer: controller.selectCustomer.value.tenKhachhang,
-          );
-        } else {
-          getSnack(messageText: "Chọn loại cont * !");
-        }
+      if (controller.isShowCont2.value == false &&
+              controller.selectTypeCont1.value.typeContCode != null ||
+          controller.isShowCont2.value == true &&
+              controller.selectTypeCont1.value.typeContCode != null &&
+              controller.selectTypeCont2.value.typeContCode != null) {
+        controller.puttRegisterDriver(
+          maKhachHang: controller.selectCustomer.value.maKhachHang!,
+          time: controller.dateinput.text,
+          typeWarehome: controller.selectWareHome.value.maKho,
+          typeCar: controller.selectTypeCar.value.maLoaiXe,
+          numberCar: controller.numberCar.text,
+          numberCont1: controller.numberCont1.text,
+          numberCont2: controller.numberCont2.text,
+          numberCont1Seal1: controller.numberCont1Seal1.text,
+          numberCont1Seal2: controller.numberCont1Seal2.text,
+          numberKhoi: double.parse(controller.numberKhoi.text),
+          numberKien: double.parse(controller.numberKien.text),
+          numberBook: controller.numberBook.text,
+          numberTan: double.parse(controller.numberTan.text),
+          loaiCont: controller.selectTypeCont1.value.typeContCode!,
+          numberCont2Seal1: controller.numberCont2Seal1.text == ""
+              ? null
+              : controller.numberCont2Seal1.text,
+          numberCont2Seal2: controller.numberCont2Seal2.text == ""
+              ? null
+              : controller.numberCont2Seal1.text,
+          numberKhoi1: double.parse(controller.numberKhoi1.text),
+          numberKien1: double.parse(controller.numberKien1.text),
+          numberBook1: controller.numberBook1.text,
+          numberTan1: double.parse(controller.numberTan1.text),
+          loaiCont1: controller.selectTypeCont2.value.typeContCode,
+          typeProduct: controller.selectTypeProduct.value.maloaiHang,
+          maTrongTai: controller.selectTrongTai.value.maTrongTai,
+          numberCont: numberSelectCont,
+          nameCustomer: controller.selectCustomer.value.tenKhachhang,
+        );
       } else {
-        if (controller.selectNumberCont.value.id == null) {
-          getSnack(messageText: "Chọn số lượng cont * !");
-        }
-        if (controller.selectTypeCont1.value.typeContCode == null &&
-                controller.selectNumberCont.value.id == 1 ||
-            controller.selectTypeCont2.value.typeContCode == null &&
-                controller.selectNumberCont.value.id == 2) {
-          getSnack(messageText: "Chọn loại Cont * !");
-        }
+        getSnack(messageText: "Chọn loại cont * !");
       }
     } else {
       controller.puttRegisterDriver(

@@ -50,14 +50,12 @@ class DriverCreateRegisterController extends GetxController {
   TextEditingController contRa1seal2 = TextEditingController();
   TextEditingController contRa2seal1 = TextEditingController();
   TextEditingController contRa2seal2 = TextEditingController();
-
   TextEditingController searchTextEditingController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
   RxList<ListCustomerForDriverModel> selectListCustomer =
       <ListCustomerForDriverModel>[].obs;
-
   Rx<ListCustomerForDriverModel> selectCustomer =
       ListCustomerForDriverModel().obs;
   Rx<ListCustomerForDriverModel> selectCustomerName =
@@ -72,17 +70,28 @@ class DriverCreateRegisterController extends GetxController {
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
   var isClientSelect = true.obs;
   var selectListItem = <SelectedListItem>[].obs;
-  String? selectItems;
+
   var selectedKhachhang = "";
+
   RxList<CustomerOfWareHomeModel> listKhachhang =
       <CustomerOfWareHomeModel>[].obs;
   RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
 
+  RxBool isShowCont2 = false.obs;
   @override
   void onInit() async {
     formKey;
     super.onInit();
     getKhachhang();
+    print(isShowCont2.value);
+  }
+
+  void changeHideShowCont2() {
+    isShowCont2.value = !isShowCont2.value;
+    if (isShowCont2.value == false) {
+      selectTypeCont2.value.typeContCode = null;
+    }
+    print(isShowCont2.value);
   }
 
   Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
@@ -124,7 +133,6 @@ class DriverCreateRegisterController extends GetxController {
     required String? typeProduct,
     required String? loaiCont,
     required String? loaiCont1,
-    required int? numberCont,
     required String? nameCustomer,
     required String? maTrongTai,
   }) async {
@@ -219,6 +227,7 @@ class DriverCreateRegisterController extends GetxController {
               soxe: numberCar,
               socont1: numberCont1,
               socont2: numberCont2,
+              loaiCont: loaiCont,
               cont1seal1: numberCont1Seal1,
               cont1seal2: numberCont1Seal2,
               soKien: numberKien,
@@ -226,6 +235,7 @@ class DriverCreateRegisterController extends GetxController {
               soBook: numberBook,
               trangthaihang: false,
               trangthaikhoa: false,
+              loaiCont1: loaiCont1,
               cont2seal1: numberCont2Seal1,
               cont2seal2: numberCont2Seal2,
               sokien1: numberKien1,
@@ -239,7 +249,6 @@ class DriverCreateRegisterController extends GetxController {
               soTan1: numberTan1,
             ),
             data["data"]["code"],
-            numberCont,
             nameCustomer,
           ]);
         }

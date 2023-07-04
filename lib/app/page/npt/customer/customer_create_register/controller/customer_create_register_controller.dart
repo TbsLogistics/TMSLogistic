@@ -20,6 +20,7 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/driver_list_ticker_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class CustomerRegisterController extends GetxController {
@@ -71,10 +72,19 @@ class CustomerRegisterController extends GetxController {
   TextEditingController numberBook = TextEditingController();
   TextEditingController numberBook1 = TextEditingController();
 
+  RxBool isShowCont2 = false.obs;
   @override
   void onInit() {
     getKhachhang();
     super.onInit();
+  }
+
+  void changeHideShowCont2() {
+    isShowCont2.value = !isShowCont2.value;
+    if (isShowCont2.value == false) {
+      selectTypeCont2.value.typeContCode = null;
+    }
+    print(isShowCont2.value);
   }
 
   Future<List<CustomerOfWareHomeModel>> getCusomter(String? maKho) async {
@@ -245,6 +255,7 @@ class CustomerRegisterController extends GetxController {
               sokhoi: numberKhoi ?? 0,
               soBook: numberBook,
               soTan: numberTan ?? 0,
+              loaiCont: typeCont,
               trangthaihang: false,
               trangthaikhoa: false,
               cont2seal1: numberCont2Seal1,
@@ -253,6 +264,7 @@ class CustomerRegisterController extends GetxController {
               sokhoi1: numberKhoi1 ?? 0,
               soBook1: numberBook1,
               soTan1: numberTan1 ?? 0,
+              loaiCont1: typeCont1,
               trangthaihang1: false,
               trangthaikhoa1: false,
               maloaiHang: idProduct,

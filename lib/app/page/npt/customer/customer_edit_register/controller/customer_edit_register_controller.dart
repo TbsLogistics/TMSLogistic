@@ -124,14 +124,24 @@ class CustomerEditRegisterController extends GetxController {
         getDriverFinishedScreen.value.loaiCont!.typeContCode;
     selectTypeCont2.value.typeContCode =
         getDriverFinishedScreen.value.loaiCont1!.typeContCode;
-    selectTypeProduct.value.maloaiHang =
-        getDriverFinishedScreen.value.maloaiHang!.maloaiHang;
+    if (getDriverFinishedScreen.value.maloaiHang != null) {
+      selectTypeProduct.value.maloaiHang =
+          getDriverFinishedScreen.value.maloaiHang!.maloaiHang;
+    }
+
     selectCustomer.value.tenKhachhang =
         getDriverFinishedScreen.value.maKhachHang!.tenKhachhang;
     if (getDriverFinishedScreen.value.loaiCont!.typeContCode != null) {
       selectNumberCont.value.id = 1;
     } else if (getDriverFinishedScreen.value.loaiCont1!.typeContCode != null) {
       selectNumberCont.value.id = 2;
+    }
+  }
+
+  void changeHideShowCont2() {
+    isShowCont2.value = !isShowCont2.value;
+    if (isShowCont2.value == false) {
+      selectTypeCont2.value.typeContCode = null;
     }
   }
 

@@ -172,8 +172,6 @@ class _DriverCreateRegisterScreenState
             padding: EdgeInsets.only(
               top: 20,
               bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 10,
-              right: 10,
             ),
             // decoration: const BoxDecoration(gradient: CustomColor.gradient),
             child: Form(
@@ -207,61 +205,81 @@ class _DriverCreateRegisterScreenState
                   _listTypeProduct(controller),
                   //danh sách loại xe
                   _listTypeCar(controller),
-                  Obx(
-                    () => controller.selectTypeCar.value != "" &&
-                            controller.selectTypeCar.value.maLoaiXe == "tai"
-                        ? Column(
-                            children: [
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số seal",
-                                controller: controller.numberCont1Seal1,
-                                hintText: "Nhập Số Seal",
-                                icon: Icons.abc,
-                                color: Colors.green,
+                  Obx(() => controller.selectTypeCar.value != "" &&
+                          controller.selectTypeCar.value.maLoaiXe == "con"
+                      ? Column(
+                          children: [
+                            _contFirt(controller),
+                            Center(
+                              child: IconButton(
+                                onPressed: () {
+                                  controller.changeHideShowCont2();
+                                },
+                                icon: controller.isShowCont2.value
+                                    ? const Icon(
+                                        Icons.remove_circle,
+                                        size: 30,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(
+                                        Icons.add_circle,
+                                        size: 30,
+                                        color: Colors.green,
+                                      ),
                               ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.text,
-                                title: "Số Book",
-                                controller: controller.numberBook,
-                                hintText: "Nhập Số Book",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              _listTrongTai(controller),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Khối lượng (Kg)",
-                                controller: controller.numberTan,
-                                hintText: "Nhập Khối lượng (Kg)",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Khối (CBM)",
-                                controller: controller.numberKhoi,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                              CustomFormFiels(
-                                keyboardType: TextInputType.number,
-                                title: "Số Kiện",
-                                controller: controller.numberKien,
-                                hintText: "",
-                                icon: Icons.abc,
-                                color: Colors.green,
-                              ),
-                            ],
-                          )
-                        : controller.selectTypeCar.value != "" &&
-                                controller.selectTypeCar.value.maLoaiXe == "con"
-                            ? _listNumberCont(controller, size)
-                            : Container(),
-                  ),
-                  numberSelectCont >= 1 ? _contFirt(controller) : Container(),
-                  numberSelectCont >= 2 ? _contSecond(controller) : Container(),
+                            ),
+                            controller.isShowCont2.value
+                                ? _contSecond(controller)
+                                : Container(),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            CustomFormFiels(
+                              keyboardType: TextInputType.text,
+                              title: "Số seal",
+                              controller: controller.numberCont1Seal1,
+                              hintText: "Nhập Số Seal",
+                              icon: Icons.abc,
+                              color: Colors.green,
+                            ),
+                            CustomFormFiels(
+                              keyboardType: TextInputType.text,
+                              title: "Số Book",
+                              controller: controller.numberBook,
+                              hintText: "Nhập Số Book",
+                              icon: Icons.abc,
+                              color: Colors.green,
+                            ),
+                            _listTrongTai(controller),
+                            CustomFormFiels(
+                              keyboardType: TextInputType.number,
+                              title: "Khối lượng (Kg)",
+                              controller: controller.numberTan,
+                              hintText: "Nhập Khối lượng (Kg)",
+                              icon: Icons.abc,
+                              color: Colors.green,
+                            ),
+                            CustomFormFiels(
+                              keyboardType: TextInputType.number,
+                              title: "Số Khối (CBM)",
+                              controller: controller.numberKhoi,
+                              hintText: "",
+                              icon: Icons.abc,
+                              color: Colors.green,
+                            ),
+                            CustomFormFiels(
+                              keyboardType: TextInputType.number,
+                              title: "Số Kiện",
+                              controller: controller.numberKien,
+                              hintText: "",
+                              icon: Icons.abc,
+                              color: Colors.green,
+                            ),
+                          ],
+                        )),
+                  // numberSelectCont >= 1 ? _contFirt(controller) : Container(),
+                  // numberSelectCont >= 2 ? _contSecond(controller) : Container(),
                   ButtonFormSubmit(
                       onPressed: () {
                         _signUpProcess(context, controller);
@@ -274,69 +292,6 @@ class _DriverCreateRegisterScreenState
           ),
         ),
       ),
-    );
-  }
-
-  Widget _listNumberCont(DriverCreateRegisterController controller, Size size) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.only(left: 5),
-          child: const Row(
-            children: [
-              Text(
-                "Số lượng cont *",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 16,
-                ),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: size.width,
-          child: Card(
-            shape: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.orangeAccent,
-                width: 1,
-              ),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: DropdownButton<String>(
-                  isExpanded: false,
-                  value: controller.selectItems,
-                  onChanged: (String? value) {
-                    setState(() {
-                      controller.selectItems = value!;
-                      numberSelectCont = int.parse(value);
-                    });
-                  },
-                  alignment: Alignment.centerLeft,
-                  style: const TextStyle(
-                    color: Colors.orangeAccent,
-                    fontSize: 16,
-                  ),
-                  underline: Container(color: Colors.transparent),
-                  items: numberCont.map<DropdownMenuItem<String>>(
-                    (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    },
-                  ).toList(),
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
     );
   }
 
@@ -963,7 +918,7 @@ class _DriverCreateRegisterScreenState
                   "Loại cont *",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Colors.green,
+                    color: Colors.red,
                     fontSize: 16,
                   ),
                 )
@@ -1063,10 +1018,10 @@ class _DriverCreateRegisterScreenState
             child: const Row(
               children: [
                 Text(
-                  "Loại cont *",
+                  "Loại cont (Cont 2)*",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    color: Colors.green,
+                    color: Colors.red,
                     fontSize: 16,
                   ),
                 )
@@ -1216,11 +1171,11 @@ class _DriverCreateRegisterScreenState
         _listTypeCont1(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
-          title: "Số cont 1",
+          title: "Số Cont 1",
           controller: controller.numberCont1,
           hintText: "Nhập số cont",
           icon: Icons.abc,
-          color: Colors.green,
+          color: Colors.red,
         ),
         CustomFormFiels(
           keyboardType: TextInputType.text,
@@ -1285,7 +1240,7 @@ class _DriverCreateRegisterScreenState
           controller: controller.numberCont2,
           hintText: "Nhập số cont",
           icon: Icons.abc,
-          color: Colors.green,
+          color: Colors.red,
         ),
         CustomFormFiels(
           keyboardType: TextInputType.text,
@@ -1353,48 +1308,43 @@ class _DriverCreateRegisterScreenState
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     } else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
-        if (controller.selectItems != null) {
-          if (numberSelectCont == 1 &&
-                  controller.selectTypeCont1.value.typeContCode != null ||
-              numberSelectCont == 2 &&
-                  controller.selectTypeCont1.value.typeContCode != null &&
-                  controller.selectTypeCont2.value.typeContCode != null) {
-            controller.postRegisterDriver(
-              maKhachHang: controller.selectCustomer.value.maKhachHang!,
-              time: dateinput.text,
-              typeWarehome: controller.selectWareHome.value.maKho,
-              typeCar: controller.selectTypeCar.value.maLoaiXe,
-              numberCar: controller.numberCar.text,
-              numberCont1: controller.numberCont1.text,
-              numberCont2: controller.numberCont2.text,
-              numberCont1Seal1: controller.numberCont1Seal1.text,
-              numberCont1Seal2: controller.numberCont1Seal2.text,
-              numberKhoi: double.parse(controller.numberKhoi.text),
-              numberKien: double.parse(controller.numberKien.text),
-              numberBook: controller.numberBook.text,
-              numberTan: double.parse(controller.numberTan.text),
-              loaiCont: controller.selectTypeCont1.value.typeContCode,
-              maTrongTai: controller.selectTrongTai.value.maTrongTai,
-              numberCont2Seal1: controller.numberCont2Seal1.text == ""
-                  ? null
-                  : controller.numberCont2Seal1.text,
-              numberCont2Seal2: controller.numberCont2Seal2.text == ""
-                  ? null
-                  : controller.numberCont2Seal1.text,
-              numberKhoi1: double.parse(controller.numberKhoi1.text),
-              numberKien1: double.parse(controller.numberKien1.text),
-              numberBook1: controller.numberBook1.text,
-              numberTan1: double.parse(controller.numberTan1.text),
-              loaiCont1: controller.selectTypeCont2.value.typeContCode,
-              typeProduct: controller.selectTypeProduct.value.maloaiHang,
-              numberCont: numberSelectCont,
-              nameCustomer: controller.selectCustomer.value.tenKhachhang,
-            );
-          } else {
-            getSnack(messageText: "Chọn loại cont * !");
-          }
+        if (controller.isShowCont2.value == false &&
+                controller.selectTypeCont1.value.typeContCode != null ||
+            controller.isShowCont2.value == true &&
+                controller.selectTypeCont1.value.typeContCode != null &&
+                controller.selectTypeCont2.value.typeContCode != null) {
+          controller.postRegisterDriver(
+            maKhachHang: controller.selectCustomer.value.maKhachHang!,
+            time: dateinput.text,
+            typeWarehome: controller.selectWareHome.value.maKho,
+            typeCar: controller.selectTypeCar.value.maLoaiXe,
+            numberCar: controller.numberCar.text,
+            numberCont1: controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text,
+            numberKhoi: double.parse(controller.numberKhoi.text),
+            numberKien: double.parse(controller.numberKien.text),
+            numberBook: controller.numberBook.text,
+            numberTan: double.parse(controller.numberTan.text),
+            loaiCont: controller.selectTypeCont1.value.typeContCode,
+            maTrongTai: controller.selectTrongTai.value.maTrongTai,
+            numberCont2Seal1: controller.numberCont2Seal1.text == ""
+                ? null
+                : controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text == ""
+                ? null
+                : controller.numberCont2Seal1.text,
+            numberKhoi1: double.parse(controller.numberKhoi1.text),
+            numberKien1: double.parse(controller.numberKien1.text),
+            numberBook1: controller.numberBook1.text,
+            numberTan1: double.parse(controller.numberTan1.text),
+            loaiCont1: controller.selectTypeCont2.value.typeContCode,
+            typeProduct: controller.selectTypeProduct.value.maloaiHang,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang,
+          );
         } else {
-          getSnack(messageText: "Chọn số lượng cont * !");
+          getSnack(messageText: "Chọn loại cont * !");
         }
       } else {
         controller.postRegisterDriver(
@@ -1421,7 +1371,6 @@ class _DriverCreateRegisterScreenState
           numberTan1: double.parse(controller.numberTan1.text),
           loaiCont1: controller.selectTypeCont2.value.typeContCode,
           typeProduct: controller.selectTypeProduct.value.maloaiHang,
-          numberCont: numberSelectCont,
           nameCustomer: controller.selectCustomer.value.tenKhachhang,
         );
       }

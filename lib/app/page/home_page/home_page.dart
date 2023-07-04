@@ -65,43 +65,44 @@ class HomeScreen extends GetView<HomeController> {
                   //   child: Text('Check for Update'),
                   //   onPressed: () => controller.checkForUpdate(),
                   // ),
-                  Obx(
-                    () => controller.tokenTms.value != ""
-                        ? controller.user.value.accType == "TaiXe"
-                            ? _buildForm(
-                                size: size,
-                                color: Colors.orangeAccent,
-                                title: "TMS",
-                                text: "Quản lý chuyến xe của Tài xế",
-                                onTap: () {
-                                  Get.toNamed(Routes.TMS_PAGE);
-                                },
-                              )
-                            : _buildForm(
-                                size: size,
-                                color: Colors.orangeAccent,
-                                title: "TMS",
-                                text: "Thống kê doanh thu",
-                                onTap: () {
-                                  Get.toNamed(Routes.DASH_BOARD_TMS_PAGE);
-                                },
-                              )
-                        : controller.user.value.accType == "TaiXe"
-                            ? _buildForm(
-                                size: size,
-                                color: Colors.grey,
-                                title: "TMS",
-                                text: "Quản lý chuyến xe của Tài xế",
-                                onTap: () {},
-                              )
-                            : _buildForm(
-                                size: size,
-                                color: Colors.grey,
-                                title: "TMS",
-                                text: "Thống kê doanh thu",
-                                onTap: () {},
-                              ),
-                  ),
+                  Obx(() => controller.tokenTms.value != ""
+                          // ? controller.user.value.accType != "TaiXe"
+                          ? _buildForm(
+                              size: size,
+                              color: Colors.orangeAccent,
+                              title: "TMS",
+                              text: "Quản lý chuyến xe của Tài xế",
+                              onTap: () {
+                                Get.toNamed(Routes.TMS_PAGE);
+                              },
+                            )
+                          // : _buildForm(
+                          //     size: size,
+                          //     color: Colors.orangeAccent,
+                          //     title: "TMS",
+                          //     text: "Thống kê doanh thu",
+                          //     onTap: () {
+                          //       Get.toNamed(Routes.DASH_BOARD_TMS_PAGE);
+                          //     },
+                          //   )
+                          :
+                          // controller.user.value.accType == "TaiXe"
+                          //     ?
+                          _buildForm(
+                              size: size,
+                              color: Colors.grey,
+                              title: "TMS",
+                              text: "Quản lý chuyến xe của Tài xế",
+                              onTap: () {},
+                            )
+                      // : _buildForm(
+                      //     size: size,
+                      //     color: Colors.grey,
+                      //     title: "TMS",
+                      //     text: "Thống kê doanh thu",
+                      //     onTap: () {},
+                      //   ),
+                      ),
                   const SizedBox(height: 15),
                   Obx(
                     () => controller.tokenNpt.value != ""

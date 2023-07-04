@@ -113,7 +113,7 @@ class HomeController extends GetxController {
       user.value = UserModel.fromJson(decodedToken);
       var userid_hrm =
           prefs.setString(AppConstants.KEY_USER_TMS, "${user.value.userName}");
-      getDialogMessage("Bạn có thể sử dụng tính năng TMS");
+      // getDialogMessage("Bạn có thể sử dụng tính năng TMS");
       diaLogMessage(size: Get.size);
     }
     var tokenNPT = await SharePerApi().getTokenNPT();
@@ -122,7 +122,7 @@ class HomeController extends GetxController {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(tokenNPT);
 
       user_npt.value = UserNptModel.fromJson(decodedToken);
-      getDialogMessage("Bạn có thể sử dụng tính năng Đăng tài");
+      // getDialogMessage("Bạn có thể sử dụng tính năng Đăng tài");
     }
     var tokenHRM = await SharePerApi().getTokenHRM();
     if (tokenHRM != null) {
@@ -132,7 +132,7 @@ class HomeController extends GetxController {
       var userid_hrm = prefs.setString(
           AppConstants.KEY_USER_HRM, "${user_hrm.value.username}");
 
-      getDialogMessage("Bạn có thể sử dụng tính năng Đăng kí nghỉ phép");
+      // getDialogMessage("Bạn có thể sử dụng tính năng Đăng kí nghỉ phép");
     }
   }
 

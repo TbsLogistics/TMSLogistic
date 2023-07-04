@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
@@ -27,22 +28,6 @@ class CustomerRegisterDetailScreen
         automaticallyImplyLeading: false,
         backgroundColor: CustomColor.backgroundAppbar,
         actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Get.toNamed(
-          //       Routes.QR_CODE_FROM_DETALS_CUSTOMER_SCREEN,
-          //       arguments: [
-          //         controller.id.value,
-          //         controller.detailsTicker.value.maTaixe,
-          //       ],
-          //     );
-          //   },
-          //   icon: const Icon(
-          //     Icons.qr_code,
-          //     size: 25,
-          //     color: Colors.white,
-          //   ),
-          // ),
           IconButton(
             onPressed: () {
               Get.offAllNamed(Routes.CUSTOMER_PAGE);
@@ -66,7 +51,6 @@ class CustomerRegisterDetailScreen
                 children: [
                   _buildDayTime(
                       controller.detailsTicker.value, size, day, hour, context),
-                  // const SizedBox(height: 10),
                   _buildNumberCar(
                     items: controller.detailsTicker.value,
                     size: size,
@@ -78,9 +62,6 @@ class CustomerRegisterDetailScreen
                     title2: 'Số xe',
                     content2: controller.detailsTicker.value.soxe.toString(),
                   ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
                   _buildNumberCar(
                     items: controller.detailsTicker.value,
                     size: size,
@@ -92,9 +73,7 @@ class CustomerRegisterDetailScreen
                     title2: 'Kho',
                     content2: controller.detailsTicker.value.kho.toString(),
                   ),
-                  // const SizedBox(height: 10),
                   _buildCustomer(controller.detailsTicker.value, size, context),
-                  // const SizedBox(height: 10),
                   Divider(
                     indent: size.width * 0.15,
                     endIndent: size.width * 0.15,
@@ -106,10 +85,8 @@ class CustomerRegisterDetailScreen
                   controller.detailsTicker.value.loaixe == "tai"
                       ? _buildProductCar(
                           controller.detailsTicker.value, size, context)
-                      : controller.numberCont.value != 0
-                          ? _buildProductCont(controller.detailsTicker.value,
-                              size, context, controller)
-                          : Container(),
+                      : _buildProductCont(controller.detailsTicker.value, size,
+                          context, controller),
                   // _buildNumberCont(
                   //     controller.detailsTicker.value, size, context),
                   _qrImage(controller, size),
@@ -352,7 +329,7 @@ class CustomerRegisterDetailScreen
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            controller.numberCont.value >= 1
+            items.loaiCont != null
                 ? Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -514,7 +491,7 @@ class CustomerRegisterDetailScreen
               color: Colors.orangeAccent,
               thickness: 1,
             ),
-            controller.numberCont.value == 2
+            items.loaiCont1 != null
                 ? Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
