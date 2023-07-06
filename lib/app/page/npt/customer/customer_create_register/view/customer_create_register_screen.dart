@@ -1,6 +1,7 @@
 // import 'package:dropdown_search/dropdown_search.dart';
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
-import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 class CustomerRegisterScreen extends StatefulWidget {
   const CustomerRegisterScreen({Key? key}) : super(key: key);
@@ -40,7 +40,6 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   int? idTaixe;
   String? selectedProduct;
 
-  TextEditingController dateinput = TextEditingController(text: "");
   bool showDateTime = false;
   bool showDate = false;
   bool showTime = false;
@@ -48,103 +47,103 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            dialogBackgroundColor: Colors.white,
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orangeAccent,
-              onPrimary: Colors.white,
-              onSurface: Colors.blueAccent,
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
-    );
-    if (selected != null && selected != selectedDate) {
-      setState(() {
-        selectedDate = selected;
-      });
-    }
-    return selectedDate;
-  }
+  // Future<DateTime> _selectDate(BuildContext context) async {
+  //   final selected = await showDatePicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: Theme.of(context).copyWith(
+  //           dialogBackgroundColor: Colors.white,
+  //           colorScheme: const ColorScheme.light(
+  //             primary: Colors.orangeAccent,
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.blueAccent,
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(2025),
+  //   );
+  //   if (selected != null && selected != selectedDate) {
+  //     setState(() {
+  //       selectedDate = selected;
+  //     });
+  //   }
+  //   return selectedDate;
+  // }
 
-  Future<TimeOfDay> _selectTime(BuildContext context) async {
-    final selected = await showTimePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orangeAccent,
-              onPrimary: Colors.white,
-              onSurface: Colors.blueAccent,
-              onBackground: Colors.orangeAccent,
-              onSurfaceVariant: Colors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-      initialEntryMode: TimePickerEntryMode.input,
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (selected != null && selected != selectedTime) {
-      setState(() {
-        selectedTime = selected;
-      });
-    }
-    return selectedTime;
-  }
+  // Future<TimeOfDay> _selectTime(BuildContext context) async {
+  //   final selected = await showTimePicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: Theme.of(context).copyWith(
+  //           colorScheme: const ColorScheme.light(
+  //             primary: Colors.orangeAccent,
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.blueAccent,
+  //             onBackground: Colors.orangeAccent,
+  //             onSurfaceVariant: Colors.black,
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     initialEntryMode: TimePickerEntryMode.input,
+  //     context: context,
+  //     initialTime: selectedTime,
+  //   );
+  //   if (selected != null && selected != selectedTime) {
+  //     setState(() {
+  //       selectedTime = selected;
+  //     });
+  //   }
+  //   return selectedTime;
+  // }
 
-  Future _selectDateTime(BuildContext context) async {
-    final date = await _selectDate(context);
-    // ignore: unnecessary_null_comparison
-    if (date == null) return;
+  // Future _selectDateTime(BuildContext context) async {
+  //   final date = await _selectDate(context);
+  //   // ignore: unnecessary_null_comparison
+  //   if (date == null) return;
 
-    // ignore: use_build_context_synchronously
-    final time = await _selectTime(context);
+  //   // ignore: use_build_context_synchronously
+  //   final time = await _selectTime(context);
 
-    // ignore: unnecessary_null_comparison
-    if (time == null) return;
-    setState(() {
-      dateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-      // ignore: unnecessary_string_interpolations
-      dateinput.text = "${getDateTime()}";
-      // print(dateinput.text);
-    });
-  }
+  //   // ignore: unnecessary_null_comparison
+  //   if (time == null) return;
+  //   setState(() {
+  //     dateTime = DateTime(
+  //       date.year,
+  //       date.month,
+  //       date.day,
+  //       time.hour,
+  //       time.minute,
+  //     );
+  //     // ignore: unnecessary_string_interpolations
+  //     dateinput.text = "${getDateTime()}";
+  //     // print(dateinput.text);
+  //   });
+  // }
 
-  String getDate() {
-    // ignore: unnecessary_null_comparison
-    if (selectedDate == null) {
-      return 'select date';
-    } else {
-      return DateFormat('MMM d, yyyy').format(selectedDate);
-    }
-  }
+  // String getDate() {
+  //   // ignore: unnecessary_null_comparison
+  //   if (selectedDate == null) {
+  //     return 'select date';
+  //   } else {
+  //     return DateFormat('MMM d, yyyy').format(selectedDate);
+  //   }
+  // }
 
-  String getDateTime() {
-    // ignore: unnecessary_null_comparison
-    if (dateTime == null) {
-      return 'select date timer';
-    } else {
-      return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
-    }
-  }
+  // String getDateTime() {
+  //   // ignore: unnecessary_null_comparison
+  //   if (dateTime == null) {
+  //     return 'select date timer';
+  //   } else {
+  //     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -212,25 +211,35 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       width: size.width - 10,
                       margin:
                           EdgeInsets.symmetric(vertical: size.height * 0.02),
-                      child: TextFormField(
-                        style: CustomTextStyle.contentDetails,
-                        onTap: () {
-                          _selectDateTime(context);
-                        },
-                        controller: dateinput,
-                        decoration: InputDecoration(
-                          hintText: "Nhập thời gian dự kiến",
+                      child: DateTimePicker(
+                        type: DateTimePickerType.dateTime,
+                        dateMask: 'dd-MM-yyyy HH:mm',
+                        controller: controller.dateinput,
+                        // initialValue: _initialValue,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2100),
+                        decoration: const InputDecoration(
+                          hintText: "Chọn ngày/ giờ vào",
                           hintStyle: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Colors.orangeAccent,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
                           ),
                           border: InputBorder.none,
                           icon: Icon(
-                            Icons.calendar_month,
-                            size: 26,
-                            color: Theme.of(context).primaryColorLight,
+                            Icons.event,
+                            size: 30,
                           ),
-                          isDense: true,
+                          iconColor: Colors.orangeAccent,
                         ),
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        // onChanged: (val) {
+                        //   setState(() => controller.valueDateInput = val);
+                        // },
                       ),
                     ),
                   ],
@@ -1352,7 +1361,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   }
 
   onSignUp(CustomerRegisterController controller) {
-    if (dateinput.text == "" ||
+    if (controller.dateinput.text == "" ||
         controller.numberCar.text == "" ||
         controller.selectCustomer.value == "" ||
         controller.selectDriver.value == "" ||
@@ -1361,7 +1370,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         controller.selectTypeCar.value == "") {
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     }
-    // print(dateinput.text);
+    // print(controller.dateinput.text);
     else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
         if (controller.isShowCont2.value == false &&
@@ -1372,7 +1381,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           controller.postRegisterCustomer(
             idTaixe: controller.selectDriver.value.maTaixe,
             maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: dateinput.text,
+            time: controller.dateinput.text,
             idKho: controller.selectWareHome.value.maKho,
             idCar: controller.selectTypeCar.value.maLoaiXe,
             numberCar: controller.numberCar.text,
@@ -1404,7 +1413,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         controller.postRegisterCustomer(
           idTaixe: controller.selectDriver.value.maTaixe,
           maKhachHang: controller.selectCustomer.value.maKhachHang!,
-          time: dateinput.text,
+          time: controller.dateinput.text,
           idKho: controller.selectWareHome.value.maKho,
           idCar: controller.selectTypeCar.value.maLoaiXe,
           numberCar: controller.numberCar.text,

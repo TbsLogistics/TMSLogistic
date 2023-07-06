@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/model/list_dangtai_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/driver_list_ticker_model.dart';
 
 class SercurityListDangTaiController extends GetxController {
-  RxList<ListDangTaiModel> listDangtai = <ListDangTaiModel>[].obs;
+  RxList<DriverListTickerModel> listDangtai = <DriverListTickerModel>[].obs;
 
   @override
   void onInit() {
@@ -23,7 +23,7 @@ class SercurityListDangTaiController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
-    const url = "${AppConstants.urlBaseNpt}/car-not-in-warehouse";
+    const url = "${AppConstants.urlBaseNpt}/invote/read";
     try {
       response = await dio.get(url, options: Options(headers: headers));
       if (response.statusCode == 200) {
@@ -33,7 +33,7 @@ class SercurityListDangTaiController extends GetxController {
         } else if (data["status_code"] == 200) {
           List data1 = data["data"];
           listDangtai.value =
-              data1.map((e) => ListDangTaiModel.fromJson(e)).toList();
+              data1.map((e) => DriverListTickerModel.fromJson(e)).toList();
         }
       }
     } on DioError catch (e) {

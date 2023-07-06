@@ -1,5 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,6 @@ class _DriverCreateRegisterScreenState
   bool isCheckProduct = false;
   bool isCheckNotProduct = true;
 
-  TextEditingController dateinput = TextEditingController(text: "");
   bool showDateTime = false;
   bool showDate = false;
   bool showTime = false;
@@ -48,102 +48,102 @@ class _DriverCreateRegisterScreenState
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            dialogBackgroundColor: Colors.white,
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orangeAccent,
-              onPrimary: Colors.white,
-              onSurface: Colors.blueAccent,
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
-    );
-    if (selected != null && selected != selectedDate) {
-      setState(() {
-        selectedDate = selected;
-      });
-    }
-    return selectedDate;
-  }
+  // Future<DateTime> _selectDate(BuildContext context) async {
+  //   final selected = await showDatePicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: Theme.of(context).copyWith(
+  //           dialogBackgroundColor: Colors.white,
+  //           colorScheme: const ColorScheme.light(
+  //             primary: Colors.orangeAccent,
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.blueAccent,
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(2025),
+  //   );
+  //   if (selected != null && selected != selectedDate) {
+  //     setState(() {
+  //       selectedDate = selected;
+  //     });
+  //   }
+  //   return selectedDate;
+  // }
 
-  Future<TimeOfDay> _selectTime(BuildContext context) async {
-    final selected = await showTimePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orangeAccent,
-              onPrimary: Colors.white,
-              onSurface: Colors.blueAccent,
-              onBackground: Colors.orangeAccent,
-              onSurfaceVariant: Colors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (selected != null && selected != selectedTime) {
-      setState(() {
-        selectedTime = selected;
-      });
-    }
-    return selectedTime;
-  }
+  // Future<TimeOfDay> _selectTime(BuildContext context) async {
+  //   final selected = await showTimePicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: Theme.of(context).copyWith(
+  //           colorScheme: const ColorScheme.light(
+  //             primary: Colors.orangeAccent,
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.blueAccent,
+  //             onBackground: Colors.orangeAccent,
+  //             onSurfaceVariant: Colors.black,
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     context: context,
+  //     initialTime: selectedTime,
+  //   );
+  //   if (selected != null && selected != selectedTime) {
+  //     setState(() {
+  //       selectedTime = selected;
+  //     });
+  //   }
+  //   return selectedTime;
+  // }
 
-  Future _selectDateTime(BuildContext context) async {
-    final date = await _selectDate(context);
-    // ignore: unnecessary_null_comparison
-    if (date == null) return;
+  // Future _selectDateTime(BuildContext context) async {
+  //   final date = await _selectDate(context);
+  //   // ignore: unnecessary_null_comparison
+  //   if (date == null) return;
 
-    // ignore: use_build_context_synchronously
-    final time = await _selectTime(context);
+  //   // ignore: use_build_context_synchronously
+  //   final time = await _selectTime(context);
 
-    // ignore: unnecessary_null_comparison
-    if (time == null) return;
-    setState(() {
-      dateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-      // ignore: unnecessary_string_interpolations
-      dateinput.text = "${getDateTime()}";
-      // print(dateinput.text);
-    });
-  }
+  //   // ignore: unnecessary_null_comparison
+  //   if (time == null) return;
+  //   setState(() {
+  //     dateTime = DateTime(
+  //       date.year,
+  //       date.month,
+  //       date.day,
+  //       time.hour,
+  //       time.minute,
+  //     );
+  //     // ignore: unnecessary_string_interpolations
+  //     controller.dateinput.text = "${getDateTime()}";
+  //     // print(controller.dateinput.text);
+  //   });
+  // }
 
-  String getDate() {
-    // ignore: unnecessary_null_comparison
-    if (selectedDate == null) {
-      return 'select date';
-    } else {
-      return DateFormat('MMM d, yyyy').format(selectedDate);
-    }
-  }
+  // String getDate() {
+  //   // ignore: unnecessary_null_comparison
+  //   if (selectedDate == null) {
+  //     return 'select date';
+  //   } else {
+  //     return DateFormat('MMM d, yyyy').format(selectedDate);
+  //   }
+  // }
 
-  String getDateTime() {
-    // ignore: unnecessary_null_comparison
-    if (dateTime == null) {
-      return 'select date timer';
-    } else {
-      return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
-    }
-  }
+  // String getDateTime() {
+  //   // ignore: unnecessary_null_comparison
+  //   if (dateTime == null) {
+  //     return 'select date timer';
+  //   } else {
+  //     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -1136,31 +1136,73 @@ class _DriverCreateRegisterScreenState
             // color: Colors.white,
             borderRadius: BorderRadius.circular(5.0),
           ),
-          padding: const EdgeInsets.only(top: 10, left: 10),
+          padding: const EdgeInsets.only(top: 5, left: 10),
           height: 60,
           width: size.width - 10,
           margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-          child: TextFormField(
-            onTap: () {
-              _selectDateTime(context);
-              showDateTime = true;
-            },
-            controller: dateinput,
-            decoration: InputDecoration(
-              hintText: "Nhập thời gian dự kiến",
+          child: DateTimePicker(
+            type: DateTimePickerType.dateTime,
+            dateMask: 'dd-MM-yyyy HH:mm',
+            controller: controller.dateinput,
+            // initialValue: _initialValue,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2100),
+            decoration: const InputDecoration(
+              hintText: "Chọn ngày/ giờ vào",
               hintStyle: TextStyle(
-                color: Theme.of(context).primaryColorLight,
+                color: Colors.orangeAccent,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
               ),
               border: InputBorder.none,
-              icon: const Icon(
-                Icons.calendar_month,
-                size: 26,
+              icon: Icon(
+                Icons.event,
+                size: 30,
               ),
-              isDense: true,
+              iconColor: Colors.orangeAccent,
             ),
+            style: const TextStyle(
+              color: Colors.red,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            // onChanged: (val) {
+            //   setState(() => controller.valueDateInput = val);
+            // },
           ),
         ),
       ],
+    );
+  }
+
+  Widget _dateTime(DriverCreateRegisterController controller) {
+    return DateTimePicker(
+      type: DateTimePickerType.dateTime,
+      dateMask: 'dd-MM-yyyy HH:mm',
+      controller: controller.dateinput,
+      // initialValue: _initialValue,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+      icon: Icon(Icons.event),
+      dateLabelText: 'Ngày vào',
+      timeLabelText: "Giờ vào",
+      dateHintText: "dsad",
+      // use24Hou rFormat: false,
+      // selectableDayPredicate: (date) {
+      //   if (date.weekday == 6 || date.weekday == 7) {
+      //     return false;
+      //   }
+      //   return true;
+      // },
+      onChanged: (val) {
+        print(val);
+        setState(() => controller.valueDateInput = val);
+      },
+      // validator: (val) {
+      //   setState(() => _valueToValidate1 = val ?? '');
+      //   return null;
+      // },
+      // onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
     );
   }
 
@@ -1298,7 +1340,7 @@ class _DriverCreateRegisterScreenState
 
   void _signUpProcess(
       BuildContext context, DriverCreateRegisterController controller) {
-    if (dateinput.text == "" ||
+    if (controller.dateinput.text == "" ||
         controller.numberCar.text == "" ||
         controller.selectCustomer.value == "" ||
         controller.selectWareHome.value == "" ||
@@ -1315,7 +1357,7 @@ class _DriverCreateRegisterScreenState
                 controller.selectTypeCont2.value.typeContCode != null) {
           controller.postRegisterDriver(
             maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: dateinput.text,
+            time: controller.dateinput.text,
             typeWarehome: controller.selectWareHome.value.maKho,
             typeCar: controller.selectTypeCar.value.maLoaiXe,
             numberCar: controller.numberCar.text,
@@ -1349,7 +1391,7 @@ class _DriverCreateRegisterScreenState
       } else {
         controller.postRegisterDriver(
           maKhachHang: controller.selectCustomer.value.maKhachHang,
-          time: dateinput.text,
+          time: controller.dateinput.text,
           typeWarehome: controller.selectWareHome.value.maKho,
           typeCar: controller.selectTypeCar.value.maLoaiXe,
           numberCar: controller.numberCar.text,

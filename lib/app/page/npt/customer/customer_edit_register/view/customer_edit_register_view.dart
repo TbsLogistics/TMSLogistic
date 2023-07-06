@@ -183,8 +183,6 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  // //Loai phieu
-                  // _listTypeVote(controller),
                   //THoi gian du kien
                   buildDateTime(size, controller),
                   // _listDriver(controller),
@@ -1425,92 +1423,6 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
     );
   }
 
-  // void _signUpProcess(
-  //     BuildContext context, CustomerEditRegisterController controller) {
-  //   if (controller.dateinput.text == "" ||
-  //       controller.numberCar.text == "" ||
-  //       controller.selectCustomer.value == "" ||
-  //       controller.selectWareHome.value == "" ||
-  //       controller.selectTypeProduct.value == "" ||
-  //       controller.selectTypeCar.value == "" ||
-  //       controller.selectTypeVote.value == "") {
-  //     getSnack(messageText: "Nhập đầy đủ thông tin *");
-  //   } else {
-  //     if (controller.selectTypeCar.value.maLoaiXe == "con") {
-  //       if (controller.selectItems != null) {
-  //         if (numberSelectCont == 1 &&
-  //                 controller.selectTypeCont1.value.typeContCode != null ||
-  //             numberSelectCont == 2 &&
-  //                 controller.selectTypeCont1.value.typeContCode != null &&
-  //                 controller.selectTypeCont2.value.typeContCode != null) {
-  //           controller.puttRegisterDriver(
-  //             maKhachHang: controller.selectCustomer.value.maKhachHang!,
-  //             time: controller.dateinput.text,
-  //             typeWarehome: controller.selectWareHome.value.maKho,
-  //             typeCar: controller.selectTypeCar.value.maLoaiXe,
-  //             numberCar: controller.numberCar.text,
-  //             numberCont1: controller.numberCont1.text,
-  //             numberCont2: controller.numberCont2.text,
-  //             numberCont1Seal1: controller.numberCont1Seal1.text,
-  //             numberCont1Seal2: controller.numberCont1Seal2.text,
-  //             numberKhoi: double.parse(controller.numberKhoi.text),
-  //             numberKien: double.parse(controller.numberKien.text),
-  //             numberBook: controller.numberBook.text,
-  //             numberTan: double.parse(controller.numberTan.text),
-  //             loaiCont: controller.selectTypeCont1.value.typeContCode!,
-  //             numberCont2Seal1: controller.numberCont2Seal1.text == ""
-  //                 ? null
-  //                 : controller.numberCont2Seal1.text,
-  //             numberCont2Seal2: controller.numberCont2Seal2.text == ""
-  //                 ? null
-  //                 : controller.numberCont2Seal1.text,
-  //             numberKhoi1: double.parse(controller.numberKhoi1.text),
-  //             numberKien1: double.parse(controller.numberKien1.text),
-  //             numberBook1: controller.numberBook1.text,
-  //             numberTan1: double.parse(controller.numberTan1.text),
-  //             loaiCont1: controller.selectTypeCont2.value.typeContCode,
-  //             typeProduct: controller.selectTypeProduct.value.maloaiHang,
-  //             numberCont: numberSelectCont,
-  //             nameCustomer: controller.selectCustomer.value.tenKhachhang,
-  //             typeInvote: controller.selectTypeVote.value.id,
-  //           );
-  //         } else {
-  //           getSnack(messageText: "Chọn loại cont * !");
-  //         }
-  //       } else {
-  //         getSnack(messageText: "Chọn số lượng cont * !");
-  //       }
-  //     } else {
-  //       controller.puttRegisterDriver(
-  //         maKhachHang: controller.selectCustomer.value.maKhachHang!,
-  //         time: controller.dateinput.text,
-  //         typeWarehome: controller.selectWareHome.value.maKho,
-  //         typeCar: controller.selectTypeCar.value.maLoaiXe,
-  //         numberCar: controller.numberCar.text,
-  //         numberCont1: controller.numberCont1.text,
-  //         numberCont2: controller.numberCont2.text,
-  //         numberCont1Seal1: controller.numberCont1Seal1.text,
-  //         numberCont1Seal2: controller.numberCont1Seal2.text,
-  //         numberKhoi: double.parse(controller.numberKhoi.text),
-  //         numberKien: double.parse(controller.numberKien.text),
-  //         numberBook: controller.numberBook.text,
-  //         numberTan: double.parse(controller.numberTan.text),
-  //         loaiCont: controller.selectTypeCont1.value.typeContCode!,
-  //         numberCont2Seal1: controller.numberCont2Seal1.text,
-  //         numberCont2Seal2: controller.numberCont2Seal2.text,
-  //         numberKhoi1: double.parse(controller.numberKhoi1.text),
-  //         numberKien1: double.parse(controller.numberKien1.text),
-  //         numberBook1: controller.numberBook1.text,
-  //         numberTan1: double.parse(controller.numberTan1.text),
-  //         loaiCont1: controller.selectTypeCont2.value.typeContCode!,
-  //         typeProduct: controller.selectTypeProduct.value.maloaiHang,
-  //         numberCont: numberSelectCont,
-  //         nameCustomer: controller.selectCustomer.value.tenKhachhang,
-  //         typeInvote: controller.selectTypeVote.value.id,
-  //       );
-  //     }
-  //   }
-  // }
   void _signUpProcess(
     BuildContext context,
     CustomerEditRegisterController controller,
@@ -1586,100 +1498,6 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
       nameCustomer: controller.selectCustomer.value.tenKhachhang ??
           controller.getDriverFinishedScreen.value.maKhachHang!.tenKhachhang,
     );
-    // }
-    // Widget _listDriver(CustomerEditRegisterController controller) {
-    //   return SizedBox(
-    //     height: 120,
-    //     child: Column(
-    //       children: [
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 5),
-    //           child: const Row(
-    //             children: [
-    //               Text(
-    //                 "Tài xế *",
-    //                 textAlign: TextAlign.left,
-    //                 style: TextStyle(
-    //                   color: Colors.green,
-    //                   fontSize: 16,
-    //                 ),
-    //               )
-    //             ],
-    //           ),
-    //         ),
-    //         const SizedBox(height: 10),
-    //         FindDropdown<ListDriverByCustomerModel>(
-    //           showSearchBox: false,
-    //           onFind: (String filter) => controller.getDataDriver(filter),
-    //           onChanged: (value) {
-    //             controller.selectDriver.value.maTaixe = value!.maTaixe;
-    //           },
-    //           dropdownBuilder:
-    //               (BuildContext context, ListDriverByCustomerModel? item) {
-    //             return Card(
-    //               shape: OutlineInputBorder(
-    //                 borderRadius: BorderRadius.circular(5),
-    //                 borderSide: const BorderSide(
-    //                   color: Colors.orangeAccent,
-    //                 ),
-    //               ),
-    //               child: (item?.tenTaixe == null)
-    //                   ? const ListTile(
-    //                       title: Text(
-    //                         "Chọn tài xế",
-    //                         style: TextStyle(
-    //                           color: Colors.orangeAccent,
-    //                         ),
-    //                       ),
-    //                       trailing: Icon(
-    //                         Icons.arrow_drop_down,
-    //                         color: Colors.black,
-    //                       ),
-    //                     )
-    //                   : ListTile(
-    //                       title: Text(
-    //                         item!.tenTaixe!,
-    //                         style: const TextStyle(
-    //                           color: Colors.orangeAccent,
-    //                         ),
-    //                       ),
-    //                     ),
-    //             );
-    //           },
-    //           dropdownItemBuilder: (BuildContext context,
-    //               ListDriverByCustomerModel item, bool isSelected) {
-    //             return Container(
-    //               // height: 100,
-    //               decoration: !isSelected
-    //                   ? null
-    //                   : BoxDecoration(
-    //                       border:
-    //                           Border.all(color: Theme.of(context).primaryColor),
-    //                       borderRadius: BorderRadius.circular(5),
-    //                       color: Colors.white,
-    //                     ),
-    //               child: Card(
-    //                 shape: OutlineInputBorder(
-    //                   borderRadius: BorderRadius.circular(5),
-    //                   borderSide: const BorderSide(
-    //                     color: Colors.orangeAccent,
-    //                   ),
-    //                 ),
-    //                 child: ListTile(
-    //                   selected: isSelected,
-    //                   title: Text(
-    //                     item.tenTaixe!,
-    //                     style: const TextStyle(color: Colors.orangeAccent),
-    //                   ),
-    //                 ),
-    //               ),
-    //             );
-    //           },
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
 
     void getSnack({required String messageText}) {
       Get.snackbar(

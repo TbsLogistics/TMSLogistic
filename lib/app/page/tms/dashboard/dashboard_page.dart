@@ -56,7 +56,7 @@ class DashBoardTmsPage extends GetView<DashBoardTmsController> {
                           title: ChartTitle(
                               text: 'Thống kê vận đơn và chuyến theo tháng'),
                           // Enable legend
-                          legend: const Legend(
+                          legend: Legend(
                             isVisible: true,
                             position: LegendPosition.bottom,
                           ),
@@ -101,7 +101,7 @@ class DashBoardTmsPage extends GetView<DashBoardTmsController> {
                           title: ChartTitle(
                               text: 'Thống kê Chi Phí,Lợi Nhuận, Doanh Thu'),
                           // Enable legend
-                          legend: const Legend(
+                          legend: Legend(
                             isVisible: true,
                             position: LegendPosition.bottom,
                           ),

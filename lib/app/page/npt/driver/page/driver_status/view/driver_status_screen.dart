@@ -64,7 +64,16 @@ class DriverStatusScreen extends GetView<DriverStatusController> {
                             title: Row(
                               children: [
                                 Text(
-                                  "${controller.listDriverFinishedScreen.value[index].khoRe!.maKhuVuc}",
+                                  "${controller.listDriverFinishedScreen.value[index].pdriverInOutWarehouseCode}",
+                                  style: TextStyle(
+                                    color: controller.listDriverFinishedScreen
+                                                .value[index].giovao !=
+                                            null
+                                        ? Colors.red
+                                        : Colors.green,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(
                                   width: 10,

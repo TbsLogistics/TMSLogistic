@@ -630,7 +630,9 @@ class LoginController extends GetxController {
       }
     } on DioError catch (e) {
       // print("Status Code : ${e.response!.statusCode}");
-      if (e.response!.statusCode == 400) {
+      if (e.response == null) {
+        getSnack(messageText: "Lỗi mạng !");
+      } else if (e.response!.statusCode == 400) {
         getSnack(messageText: "Tài khoản hoặc mật khẩu không đúng !");
       } else if (e.response!.statusCode == 500) {
         getSnack(messageText: "Lỗi ! Khoảng 5 phút sau đăng nhập lại !");

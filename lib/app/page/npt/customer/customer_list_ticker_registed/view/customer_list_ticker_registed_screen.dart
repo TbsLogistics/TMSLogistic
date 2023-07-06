@@ -54,16 +54,24 @@ class CustomerListTickerRegisted
                                 ),
                               ),
                               child: ListTile(
-                                onTap: () {
-                                  Get.toNamed(
+                                onTap: () async {
+                                  var result = await Get.toNamed(
                                     Routes.DETAILS_LIST_TICKER_OF_CUSTOMER,
                                     arguments: items[index],
                                   );
+                                  if (result == true && result is bool) {
+                                    controller.getListRegistedCustomer();
+                                  }
                                 },
                                 title: Row(
                                   children: [
                                     Text(
-                                      "${items[index].khoRe!.maKhuVuc}",
+                                      "${items[index].pdriverInOutWarehouseCode}",
+                                      style: TextStyle(
+                                        color: items[index].giovao != null
+                                            ? Colors.red
+                                            : Colors.green,
+                                      ),
                                     ),
                                     const SizedBox(
                                       width: 10,

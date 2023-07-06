@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  date_time_picker:
+    dependency: "direct main"
+    description:
+      name: date_time_picker
+      sha256: "6923c568bcb67a66ab7e083708d0adbcae8214b41bb84d49febc17e89e06fc4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   dio:
     dependency: "direct main"
     description:
@@ -332,10 +340,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.0"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -625,18 +633,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: "806ee3e7b4870e37afde0ee29294d0d5b687d469715fd63ae8fa39d6503b0c23"
+      sha256: "0222ac9d8cb6c671f014effe9bd5c0aef35eadb16471355345ba87cc0ac007b3"
       url: "https://pub.dev"
     source: hosted
-    version: "22.1.34"
+    version: "20.4.54"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "952f5ee970bc3fba2db95a8dac71a295d9a70ad2c0993c7279e3a883c3e1459f"
+      sha256: "3979f0b1c5a97422cadae52d476c21fa3e0fb671ef51de6cae1d646d8b99fe1f"
       url: "https://pub.dev"
     source: hosted
-    version: "22.1.34"
+    version: "20.4.54"
   term_glyph:
     dependency: transitive
     description:
@@ -653,14 +661,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  time_picker_spinner_pop_up:
-    dependency: "direct main"
-    description:
-      name: time_picker_spinner_pop_up
-      sha256: "048f174e5043555b67456118355f448339a1e13ca045eaefc415aefd0c615098"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   typed_data:
     dependency: transitive
     description:
@@ -766,5 +766,5 @@ packages:
     source: hosted
     version: "1.0.0"
 sdks:
-  dart: ">=3.0.0-0 <4.0.0"
+  dart: ">=3.0.3 <4.0.0"
   flutter: ">=3.3.0"

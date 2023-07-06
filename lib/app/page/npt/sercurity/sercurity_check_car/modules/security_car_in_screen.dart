@@ -19,34 +19,28 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Center(
-                    child: Text(
-                      "Mã phiếu : ",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Text(
-                        controller.detailEntryVote.value
-                                .pdriverInOutWarehouseCode ??
-                            "",
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            _buildCustomer(
+              context: context,
+              size: size,
+              textController: controller.idController,
+              controller: controller,
+              // content: 'Mã phiếu',
+              onChanged: (value) {
+                if (value != "") {
+                  var string = value.split("|");
+                  var maPhieu = controller
+                      .detailEntryVote.value.pdriverInOutWarehouseCode;
+                  print([string[0], maPhieu]);
+                  if (string[0].length == 12) {
+                    controller.getCheckCCCD(CCCD: string[0]);
+                  } else {
+                    controller.getDetailEntryVote(maPhieuvao: value);
+                  }
+                }
+                controller.update();
+              },
+              title: 'Mã phiếu :',
+              textFocus: controller.idFocusNode,
             ),
             Obx(
               () => controller.isLoadUser.value
@@ -81,13 +75,17 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                       ),
                     ),
             ),
-            _listTypeKH(
-              controller: controller,
-              onChanged: (CustomerOfWareHomeModel? data) {
-                controller
-                    .getCusomter(controller.detailUser.value.nhanvien!.maKho);
-              },
-              title: 'Khách hàng :',
+            Obx(
+              () => _listTypeKH(
+                controller: controller,
+                onChanged: (CustomerOfWareHomeModel? data) {
+                  controller
+                      .getCusomter(controller.detailUser.value.nhanvien!.maKho);
+                },
+                title: controller
+                        .detailEntryVote.value.maKhachHang?.tenKhachhang ??
+                    "",
+              ),
             ),
             _buildCustomer(
               textController: controller.nameDriverController,
@@ -97,24 +95,29 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
               context: context,
               controller: controller,
               title: "Tên tài xế : ",
-              content: "",
+              // content: "",
               // "${controller.detailEntryVote.value.taixeRe!.tenTaixe}",
             ),
             _buildCustomer(
-                textController: controller.cccdController,
-                // textFocus: controller.khuvucFocus,
-                // items: controller.detailEntryVote.value,
-                size: size,
-                context: context,
-                controller: controller,
-                title: "CCCD : ",
-                content: "",
-                textFocus: controller.cccdFocusNode,
-                // content: "${controller.detailEntryVote.value.taixeRe!.cCCD}",
-                icon: Icons.qr_code,
-                onPressedIcon: () {
-                  controller.scanQr(idCode: "CCCD");
-                }),
+              textController: controller.cccdController,
+              // textFocus: controller.khuvucFocus,
+              // items: controller.detailEntryVote.value,
+              size: size,
+              context: context,
+              controller: controller,
+              title: "CCCD : ",
+              // content: "",
+              textFocus: controller.cccdFocusNode,
+              // content: "${controller.detailEntryVote.value.taixeRe!.cCCD}",
+              // icon: Icons.qr_code,
+              onChanged: (value) {
+                // controller.scanQr(idCode: "CCCD");
+                controller.getCheckCCCD(CCCD: value);
+              },
+              // onPressedIcon: () {
+              //   controller.scanQr(idCode: "CCCD");
+              // },
+            ),
             _buildCustomer(
               textController: controller.phoneController,
               // textFocus: controller.khuvucFocus,
@@ -125,7 +128,7 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
               controller: controller,
               title: "Số điện thoại : ",
               // content: "${controller.detailEntryVote.value.taixeRe!.phone}",
-              content: "",
+              // content: "",
             ),
             Obx(
               () => _listTypeCar(
@@ -378,7 +381,7 @@ Widget _buildInfo({
                 title,
                 style: const TextStyle(
                   color: Colors.green,
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -407,7 +410,7 @@ Widget _buildInfo({
 Widget _buildCustomer({
   // required DetailEntryVoteModel items,
   required String title,
-  required String content,
+  // required String content,
   required Size size,
   required BuildContext context,
   required SercurityCheckCarController controller,
@@ -416,6 +419,7 @@ Widget _buildCustomer({
   FocusNode? textFocus,
   IconData? icon,
   VoidCallback? onPressedIcon,
+  Function(String)? onChanged,
   // FocusNode ?focusNode,
 }) {
   return Card(
@@ -449,7 +453,7 @@ Widget _buildCustomer({
                 title,
                 style: const TextStyle(
                   color: Colors.green,
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -485,6 +489,7 @@ Widget _buildCustomer({
                   textInputAction: TextInputAction.done,
                   controller: textController,
                   focusNode: textFocus,
+                  onChanged: onChanged,
                 ),
               ),
             ),
@@ -1205,7 +1210,7 @@ Widget _listTypeKH(
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.green,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     )

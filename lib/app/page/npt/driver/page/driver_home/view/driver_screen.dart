@@ -93,7 +93,7 @@ class DriverScreen extends GetView<DriverHomeController> {
                     children: [
                       Expanded(
                         child: Text(
-                          "Danh sách chưa hoàn thành",
+                          "Danh sách phiếu",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Theme.of(context).primaryColorLight,
@@ -106,39 +106,39 @@ class DriverScreen extends GetView<DriverHomeController> {
                   ),
                 ),
               ),
-              SizedBox(height: size.width * 0.1),
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const DriverFinishedScreen());
-                },
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    // color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.orangeAccent.withOpacity(0.6),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "Danh sách các phiếu đã đăng ký",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // SizedBox(height: size.width * 0.1),
+              // GestureDetector(
+              //   onTap: () {
+              //     Get.to(() => const DriverFinishedScreen());
+              //   },
+              //   child: Container(
+              //     height: 100,
+              //     decoration: BoxDecoration(
+              //       // color: Colors.white.withOpacity(0.6),
+              //       borderRadius: BorderRadius.circular(10),
+              //       border: Border.all(
+              //         width: 1,
+              //         color: Colors.orangeAccent.withOpacity(0.6),
+              //       ),
+              //     ),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Expanded(
+              //           child: Text(
+              //             "Danh sách các phiếu đã đăng ký",
+              //             style: TextStyle(
+              //               color: Theme.of(context).primaryColorLight,
+              //               fontSize: 20,
+              //               fontWeight: FontWeight.bold,
+              //             ),
+              //             textAlign: TextAlign.center,
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

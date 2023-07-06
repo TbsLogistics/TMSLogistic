@@ -31,7 +31,6 @@ class SercurityCheckCarController extends GetxController {
   RxBool isShowCar = false.obs;
   RxBool isLoadUser = false.obs;
 
-  FocusNode cccdFocusNode = FocusNode();
   RxList<CustomerOfWareHomeModel> listKhachhang =
       <CustomerOfWareHomeModel>[].obs;
   RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
@@ -65,6 +64,10 @@ class SercurityCheckCarController extends GetxController {
   TextEditingController CBMController = TextEditingController();
   TextEditingController CBM1Controller = TextEditingController();
 
+  TextEditingController idController = TextEditingController();
+  FocusNode idFocusNode = FocusNode();
+  FocusNode cccdFocusNode = FocusNode();
+
   Rx<DetailUserSercurityModel> detailUser = DetailUserSercurityModel().obs;
 
   @override
@@ -72,6 +75,7 @@ class SercurityCheckCarController extends GetxController {
     super.onInit();
     getKhachhang();
     getUserSercurity();
+    idFocusNode.requestFocus();
   }
 
   void onSubmitField2() {
@@ -251,7 +255,7 @@ class SercurityCheckCarController extends GetxController {
     }
   }
 
-  void getDetailEntryVote({required String maPhieuvao, String? cccd}) async {
+  void getDetailEntryVote({String? maPhieuvao, String? cccd}) async {
     var dio = Dio();
     var token = await SharePerApi().getTokenNPT();
     Response response;
@@ -275,16 +279,19 @@ class SercurityCheckCarController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        idFocusNode.requestFocus();
         if (response.data["status_code"] == 204) {
           getSnack(messageText: response.data["detail"]);
         } else {
           getSnack(messageText: response.data["detail"]);
           var data = DetailEntryVoteModel.fromJson(response.data["data"]);
-          print("tenloaijxe: ${selectTypeCar.value.tenLoaiXe}");
+          idController.text = "";
+
           detailEntryVote.value = data;
 
           customerController.text =
               detailEntryVote.value.maKhachHang!.tenKhachhang!;
+
           nameDriverController.text = detailEntryVote.value.maTaixe!.tenTaixe!;
           cccdController.text = detailEntryVote.value.maTaixe!.cCCD!;
           phoneController.text = detailEntryVote.value.maTaixe!.phone!;
@@ -301,7 +308,7 @@ class SercurityCheckCarController extends GetxController {
           seal12Controller.text = detailEntryVote.value.cont1seal2 ?? "";
           kienController.text = detailEntryVote.value.soKien.toString();
           tanController.text = detailEntryVote.value.soTan.toString();
-          bkController.text = detailEntryVote.value.soBook.toString();
+          bkController.text = detailEntryVote.value.soBook ?? "";
           CBMController.text = detailEntryVote.value.sokhoi.toString();
 
           //cont2
@@ -314,7 +321,7 @@ class SercurityCheckCarController extends GetxController {
           seal22Controller.text = detailEntryVote.value.cont2seal2 ?? "";
           kien1Controller.text = detailEntryVote.value.sokien1.toString();
           tan1Controller.text = detailEntryVote.value.soTan1.toString();
-          bk1Controller.text = detailEntryVote.value.soBook1.toString();
+          bk1Controller.text = detailEntryVote.value.soBook1 ?? "";
           CBM1Controller.text = detailEntryVote.value.sokhoi1.toString();
           if (selectTypeCar.value.maLoaiXe == "con") {
             isShowCar(false);
@@ -334,8 +341,13 @@ class SercurityCheckCarController extends GetxController {
       }
     } on DioError catch (e) {
       print(e.response!.statusCode);
-      if (e.response!.statusCode == 400) {
-      } else if (e.response!.statusCode == 500) {}
+      if (e.response == null) {
+        getSnack(messageText: "Lỗi mạng !");
+      } else if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi , vui lòng thử lại giây lát !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi sever, vui lòng thử lại giây lát !");
+      }
     }
   }
 
@@ -488,11 +500,14 @@ class SercurityCheckCarController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data;
+        idFocusNode.requestFocus();
 
         if (data["status_code"] == 204) {
           getSnack(messageText: data["detail"]);
+          idController.text = "";
         } else if (data["status_code"] == 200) {
           getSnack(messageText: data["detail"]);
+          idController.text = "";
           if (detailEntryVote.value.pdriverInOutWarehouseCode == null) {
             getDialogMessage(
               "Thông tin tài xế",

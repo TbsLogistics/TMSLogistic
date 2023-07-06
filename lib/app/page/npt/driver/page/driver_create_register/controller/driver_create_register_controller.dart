@@ -72,6 +72,8 @@ class DriverCreateRegisterController extends GetxController {
   var selectListItem = <SelectedListItem>[].obs;
 
   var selectedKhachhang = "";
+  TextEditingController dateinput = TextEditingController(text: "");
+  String valueDateInput = "";
 
   RxList<CustomerOfWareHomeModel> listKhachhang =
       <CustomerOfWareHomeModel>[].obs;

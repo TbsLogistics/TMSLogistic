@@ -72,6 +72,8 @@ class CustomerRegisterController extends GetxController {
   TextEditingController numberBook = TextEditingController();
   TextEditingController numberBook1 = TextEditingController();
 
+  TextEditingController dateinput = TextEditingController(text: "");
+
   RxBool isShowCont2 = false.obs;
   @override
   void onInit() {

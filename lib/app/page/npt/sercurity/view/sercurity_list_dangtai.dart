@@ -50,11 +50,13 @@ class SercurityListDangTaiScreen
                 return _customListTitle(
                   stt: "${i + 1}",
                   nameDriver: '${items.maTaixe!.tenTaixe}',
-                  CCCD: '${items.maTaixe!.cCCD}',
+                  IDPhieu: '${items.pdriverInOutWarehouseCode}',
+                  colorID: items.giovao != null ? Colors.red : Colors.green,
                   soCont: '${items.socont1}',
                   numberCar: '${items.soxe}',
+                  titleTime: items.giovao != null ? "Giờ vào" : "Giờ dự kiến",
                   time: hours.format(
-                    DateTime.parse("${items.giodukien}"),
+                    DateTime.parse("${items.giovao ?? items.giodukien}"),
                   ),
                   onTap: () {
                     Get.toNamed(
@@ -75,10 +77,12 @@ class SercurityListDangTaiScreen
   Widget _customListTitle({
     required String stt,
     required String nameDriver,
-    required String CCCD,
+    required String IDPhieu,
     required String soCont,
     required String numberCar,
     required String time,
+    required String titleTime,
+    required Color colorID,
     Function()? onTap,
   }) {
     return Card(
@@ -142,9 +146,9 @@ class SercurityListDangTaiScreen
                           ),
                           Expanded(
                             child: Text(
-                              CCCD,
-                              style: const TextStyle(
-                                color: Colors.green,
+                              IDPhieu,
+                              style: TextStyle(
+                                color: colorID,
                                 fontSize: 16,
                               ),
                             ),
@@ -213,11 +217,11 @@ class SercurityListDangTaiScreen
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Expanded(
+                          Expanded(
                             flex: 1,
                             child: Text(
-                              "Giờ dự kiến :",
-                              style: TextStyle(
+                              titleTime,
+                              style: const TextStyle(
                                 color: Colors.green,
                                 fontSize: 16,
                               ),
