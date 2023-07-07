@@ -103,12 +103,14 @@ class SercurityCheckCarController extends GetxController {
       socont2: cont2Controller.text,
       cont1seal1: seal11Controller.text,
       cont1seal2: seal12Controller.text,
-      loaiCont: selectTypeCont1.value.typeContCode,
+      loaiCont: selectTypeCont1.value.typeContCode ??
+          detailEntryVote.value.loaiCont?.typeContCode,
       trangthaihang: false,
       trangthaikhoa: false,
       cont2seal1: seal21Controller.text,
       cont2seal2: seal22Controller.text,
-      loaiCont1: selectTypeCont2.value.typeContCode,
+      loaiCont1: selectTypeCont2.value.typeContCode ??
+          detailEntryVote.value.loaiCont1?.typeContCode,
       trangthaihang1: false,
       trangthaikhoa1: false,
     );
@@ -120,8 +122,11 @@ class SercurityCheckCarController extends GetxController {
         data: jsonData,
         options: Options(headers: headers),
       );
-
-      if (response.statusCode == 200) {
+      idFocusNode.requestFocus();
+      if (response.statusCode == 204) {
+      } else
+        getSnack(messageText: "${response.data["detail"]}");
+      {
         var data = response.data;
         print("data : $data");
         getSnack(
