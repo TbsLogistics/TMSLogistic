@@ -4,7 +4,6 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tbs_logistics_tms/app/config/data/validate.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
@@ -47,103 +46,6 @@ class _DriverCreateRegisterScreenState
   DateTime dateTime = DateTime.now();
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
-
-  // Future<DateTime> _selectDate(BuildContext context) async {
-  //   final selected = await showDatePicker(
-  //     builder: (context, child) {
-  //       return Theme(
-  //         data: Theme.of(context).copyWith(
-  //           dialogBackgroundColor: Colors.white,
-  //           colorScheme: const ColorScheme.light(
-  //             primary: Colors.orangeAccent,
-  //             onPrimary: Colors.white,
-  //             onSurface: Colors.blueAccent,
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //     context: context,
-  //     initialDate: selectedDate,
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2025),
-  //   );
-  //   if (selected != null && selected != selectedDate) {
-  //     setState(() {
-  //       selectedDate = selected;
-  //     });
-  //   }
-  //   return selectedDate;
-  // }
-
-  // Future<TimeOfDay> _selectTime(BuildContext context) async {
-  //   final selected = await showTimePicker(
-  //     builder: (context, child) {
-  //       return Theme(
-  //         data: Theme.of(context).copyWith(
-  //           colorScheme: const ColorScheme.light(
-  //             primary: Colors.orangeAccent,
-  //             onPrimary: Colors.white,
-  //             onSurface: Colors.blueAccent,
-  //             onBackground: Colors.orangeAccent,
-  //             onSurfaceVariant: Colors.black,
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //     context: context,
-  //     initialTime: selectedTime,
-  //   );
-  //   if (selected != null && selected != selectedTime) {
-  //     setState(() {
-  //       selectedTime = selected;
-  //     });
-  //   }
-  //   return selectedTime;
-  // }
-
-  // Future _selectDateTime(BuildContext context) async {
-  //   final date = await _selectDate(context);
-  //   // ignore: unnecessary_null_comparison
-  //   if (date == null) return;
-
-  //   // ignore: use_build_context_synchronously
-  //   final time = await _selectTime(context);
-
-  //   // ignore: unnecessary_null_comparison
-  //   if (time == null) return;
-  //   setState(() {
-  //     dateTime = DateTime(
-  //       date.year,
-  //       date.month,
-  //       date.day,
-  //       time.hour,
-  //       time.minute,
-  //     );
-  //     // ignore: unnecessary_string_interpolations
-  //     controller.dateinput.text = "${getDateTime()}";
-  //     // print(controller.dateinput.text);
-  //   });
-  // }
-
-  // String getDate() {
-  //   // ignore: unnecessary_null_comparison
-  //   if (selectedDate == null) {
-  //     return 'select date';
-  //   } else {
-  //     return DateFormat('MMM d, yyyy').format(selectedDate);
-  //   }
-  // }
-
-  // String getDateTime() {
-  //   // ignore: unnecessary_null_comparison
-  //   if (dateTime == null) {
-  //     return 'select date timer';
-  //   } else {
-  //     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +199,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listCustomer(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -315,7 +217,6 @@ class _DriverCreateRegisterScreenState
               ],
             ),
           ),
-          const SizedBox(height: 10),
           FindDropdown<CustomerOfWareHomeModel>(
             showSearchBox: false,
             onFind: (String filter) => controller
@@ -359,7 +260,7 @@ class _DriverCreateRegisterScreenState
             dropdownItemBuilder: (BuildContext context,
                 CustomerOfWareHomeModel item, bool isSelected) {
               return Container(
-                // height: 100,
+                // height: 60,
                 decoration: !isSelected
                     ? null
                     : BoxDecoration(
@@ -393,7 +294,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listWareHome(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -497,7 +398,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTrongTai(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -601,7 +502,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTypeProduct(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -619,7 +520,6 @@ class _DriverCreateRegisterScreenState
               ],
             ),
           ),
-          const SizedBox(height: 10),
           FindDropdown<ListTypeProductModel>(
             // label: "Khách hàng",
             validate: (ListTypeProductModel? value) =>
@@ -707,7 +607,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTypeCar(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -809,7 +709,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTypeVote(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -907,7 +807,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTypeCont1(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(
@@ -1010,7 +910,7 @@ class _DriverCreateRegisterScreenState
 
   Widget _listTypeCont2(DriverCreateRegisterController controller) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: Column(
         children: [
           Container(

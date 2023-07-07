@@ -49,11 +49,11 @@ class SercurityListDangTaiScreen
                 var items = controller.listDangtai[i];
                 return _customListTitle(
                   stt: "${i + 1}",
-                  nameDriver: '${items.maTaixe!.tenTaixe}',
-                  IDPhieu: '${items.pdriverInOutWarehouseCode}',
+                  nameDriver: items.maTaixe!.tenTaixe ?? "",
+                  IDPhieu: items.pdriverInOutWarehouseCode ?? "",
                   colorID: items.giovao != null ? Colors.red : Colors.green,
-                  soCont: '${items.socont1}',
-                  numberCar: '${items.soxe}',
+                  soCont: items.socont1 ?? "",
+                  numberCar: items.soxe ?? "",
                   titleTime: items.giovao != null ? "Giờ vào" : "Giờ dự kiến",
                   time: hours.format(
                     DateTime.parse("${items.giovao ?? items.giodukien}"),

@@ -85,7 +85,6 @@ class DriverCreateRegisterController extends GetxController {
     formKey;
     super.onInit();
     getKhachhang();
-    print(isShowCont2.value);
   }
 
   void changeHideShowCont2() {

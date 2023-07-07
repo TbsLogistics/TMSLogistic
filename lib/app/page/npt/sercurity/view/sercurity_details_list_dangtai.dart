@@ -38,50 +38,78 @@ class SercurityDetailsListDangTaiScreen
             horizontal: 10,
             vertical: 10,
           ),
-          child: Column(
-            children: [
-              formInfo(
-                title1: 'Tên tài xế',
-                content1: '${controller.items.value.maTaixe!.tenTaixe}',
-                title2: 'CCCD',
-                content2: '${controller.items.value.maTaixe!.cCCD}',
-              ),
-              formInfo(
-                title1: 'Số điện thoại tài xế',
-                content1: '${controller.items.value.maTaixe!.phone}',
-                title2: 'Khách hàng',
-                content2: '${controller.items.value.khachhangRe!.tenKhachhang}',
-              ),
-              formInfo(
-                title1: 'Số xe',
-                content1: '${controller.items.value.soxe}',
-                title2: 'Loại xe',
-                content2: '${controller.items.value.loaixe!.tenLoaiXe}',
-              ),
-              formInfo(
-                title1: 'Giờ dự kiện',
-                content1: hours.format(
-                  DateTime.parse("${controller.items.value.giodukien}"),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                formInfo(
+                  title1: 'Tên tài xế',
+                  content1: controller.items.value.maTaixe!.tenTaixe ?? "",
+                  title2: 'CCCD',
+                  content2: controller.items.value.maTaixe!.cCCD ?? "",
                 ),
-                title2: 'Kho',
-                content2: '${controller.items.value.kho!.tenKho}',
-              ),
-              formCont(
-                cont: '${controller.items.value.socont1}',
-                seal1: '${controller.items.value.cont1seal1}',
-                seal2: '${controller.items.value.cont1seal2}',
-                typeCont: '${controller.items.value.loaiCont!.typeContname}',
-              ),
-              controller.items.value.socont2 != ""
-                  ? formCont(
-                      cont: '${controller.items.value.socont2}',
-                      seal1: '${controller.items.value.cont2seal1}',
-                      seal2: '${controller.items.value.cont2seal2}',
-                      typeCont:
-                          '${controller.items.value.loaiCont1!.typeContname}',
-                    )
-                  : Container(),
-            ],
+                formInfo(
+                  title1: 'Số điện thoại tài xế',
+                  content1: controller.items.value.maTaixe!.phone ?? "",
+                  title2: 'Khách hàng',
+                  content2:
+                      controller.items.value.maKhachHang!.tenKhachhang ?? "",
+                ),
+                formInfo(
+                  title1: 'Số xe',
+                  content1: controller.items.value.soxe ?? "",
+                  title2: 'Loại xe',
+                  content2: controller.items.value.loaixe!.tenLoaiXe ?? "",
+                ),
+                formInfo(
+                  title1: 'Giờ dự kiện',
+                  content1: hours.format(
+                    DateTime.parse("${controller.items.value.giodukien}"),
+                  ),
+                  title2: 'Kho',
+                  content2: controller.items.value.khoRe!.tenKho ?? "",
+                ),
+                controller.items.value.loaixe!.maLoaiXe == "con"
+                    ? Column(
+                        children: [
+                          formCont(
+                            cont: controller.items.value.socont1 ?? "",
+                            seal1: controller.items.value.cont1seal1 ?? "",
+                            seal2: controller.items.value.cont1seal2 ?? "",
+                            typeCont:
+                                controller.items.value.loaiCont!.typeContname ??
+                                    "",
+                            soBook: controller.items.value.soBook ?? "",
+                            soKien: controller.items.value.soKien ?? 0.0,
+                            CBM: controller.items.value.sokhoi ?? 0.0,
+                            Kg: controller.items.value.soTan ?? 0.0,
+                          ),
+                          controller.items.value.loaiCont1!.typeContCode != null
+                              ? formCont(
+                                  cont: controller.items.value.socont2 ?? "",
+                                  seal1:
+                                      controller.items.value.cont2seal1 ?? "",
+                                  seal2:
+                                      controller.items.value.cont2seal2 ?? "",
+                                  typeCont: controller.items.value.loaiCont1!
+                                          .typeContname ??
+                                      "",
+                                  soBook: controller.items.value.soBook1 ?? "",
+                                  soKien: controller.items.value.sokien1 ?? 0.0,
+                                  CBM: controller.items.value.sokhoi1 ?? 0.0,
+                                  Kg: controller.items.value.soTan1 ?? 0.0,
+                                )
+                              : Container(),
+                        ],
+                      )
+                    : formCar(
+                        seal: controller.items.value.cont1seal1 ?? "",
+                        soBook: controller.items.value.cont1seal2 ?? "",
+                        soKien: controller.items.value.soKien ?? 0.0,
+                        CBM: controller.items.value.sokhoi ?? 0.0,
+                        Kg: controller.items.value.soTan ?? 0.0,
+                        size: MediaQuery.of(context).size),
+              ],
+            ),
           ),
         ),
       ),
@@ -164,6 +192,10 @@ class SercurityDetailsListDangTaiScreen
     required String cont,
     required String seal1,
     required String seal2,
+    required String soBook,
+    required double soKien,
+    required double CBM,
+    required double Kg,
     required String typeCont,
   }) {
     return Card(
@@ -179,7 +211,7 @@ class SercurityDetailsListDangTaiScreen
       shadowColor: Colors.grey,
       elevation: 10,
       child: Container(
-        height: seal2 == "" ? 120 : 180,
+        height: 220,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
@@ -219,27 +251,127 @@ class SercurityDetailsListDangTaiScreen
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  seal2 != ""
-                      ? const Text(
-                          "Số seal",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 16,
-                          ),
-                        )
-                      : Container(),
-                  seal2 != ""
-                      ? Text(
-                          seal2,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      : Container(),
+                  const Text(
+                    "Số seal",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    seal2,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    "Số Book",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    soBook,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const Text(
+                    "Số Kiện/ CBM/ Kg",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    "${soKien} /${CBM} /${Kg}",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  )
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget formCar({
+    required String seal,
+    required String soBook,
+    required double soKien,
+    required double CBM,
+    required double Kg,
+    required Size size,
+  }) {
+    return Card(
+      shape: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+        borderSide: BorderSide(
+          width: 1,
+          color: Colors.orangeAccent,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Container(
+          height: 130,
+          width: size.width - 10,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Số seal",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                seal,
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                "Số Book",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                soBook,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+              const Text(
+                "Số Kiện/ CBM/ Kg",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                "${soKien} /${CBM} /${Kg}",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              )
             ],
           ),
         ),
