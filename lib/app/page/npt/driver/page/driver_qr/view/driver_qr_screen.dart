@@ -42,7 +42,7 @@ class QrCodeDriverScreen extends GetView<QRCodeDriverController> {
                   key: controller.qrDriverKey,
                   child: Obx(() {
                     // print(controller.user.value.maTaixe);
-                    return QrImage(
+                    return QrImageView(
                       backgroundColor: Colors.white,
                       data:
                           "${controller.idPhieuvao.value},${controller.user.value.maTaixe}",

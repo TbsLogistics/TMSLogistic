@@ -351,7 +351,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         _listTypeCont1(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
-          title: "Số cont 1",
+          title: "Số cont 1 *",
           controller: controller.numberCont1,
           hintText: "Nhập số cont",
           icon: Icons.abc,
@@ -416,7 +416,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
         _listTypeCont2(controller),
         CustomFormFiels(
           keyboardType: TextInputType.text,
-          title: "Số cont 2",
+          title: "Số cont 2 *",
           controller: controller.numberCont2,
           hintText: "Nhập số cont",
           icon: Icons.abc,
@@ -1378,34 +1378,38 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             controller.isShowCont2.value == true &&
                 controller.selectTypeCont1.value.typeContCode != null &&
                 controller.selectTypeCont2.value.typeContCode != null) {
-          controller.postRegisterCustomer(
-            idTaixe: controller.selectDriver.value.maTaixe,
-            maKhachHang: controller.selectCustomer.value.maKhachHang!,
-            time: controller.dateinput.text,
-            idKho: controller.selectWareHome.value.maKho,
-            idCar: controller.selectTypeCar.value.maLoaiXe,
-            numberCar: controller.numberCar.text,
-            numberCont1: controller.numberCont1.text,
-            numberCont2: controller.numberCont2.text,
-            numberCont1Seal1: controller.numberCont1Seal1.text,
-            numberCont1Seal2: controller.numberCont1Seal2.text,
-            numberKhoi: double.parse(controller.numberKhoi.text),
-            numberKien: double.parse(controller.numberKien.text),
-            typeCont: "${controller.selectTypeCont1.value.typeContCode}",
-            numberBook: controller.numberBook.text,
-            numberTan: double.parse(controller.numberTan.text),
-            numberCont2Seal1: controller.numberCont2Seal1.text,
-            numberCont2Seal2: controller.numberCont2Seal2.text,
-            numberKhoi1: double.parse(controller.numberKhoi1.text),
-            numberKien1: double.parse(controller.numberKien1.text),
-            numberBook1: controller.numberBook1.text,
-            typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
-            idProduct: controller.selectTypeProduct.value.maloaiHang,
-            maTrongtai: controller.selectTrongTai.value.maTrongTai,
-            numberTan1: double.parse(controller.numberTan1.text),
-            numberCont: numberSelectCont,
-            nameCustomer: controller.selectCustomer.value.tenKhachhang,
-          );
+          if (controller.numberCont1.text != "") {
+            controller.postRegisterCustomer(
+              idTaixe: controller.selectDriver.value.maTaixe,
+              maKhachHang: controller.selectCustomer.value.maKhachHang!,
+              time: controller.dateinput.text,
+              idKho: controller.selectWareHome.value.maKho,
+              idCar: controller.selectTypeCar.value.maLoaiXe,
+              numberCar: controller.numberCar.text,
+              numberCont1: controller.numberCont1.text,
+              numberCont2: controller.numberCont2.text,
+              numberCont1Seal1: controller.numberCont1Seal1.text,
+              numberCont1Seal2: controller.numberCont1Seal2.text,
+              numberKhoi: double.parse(controller.numberKhoi.text),
+              numberKien: double.parse(controller.numberKien.text),
+              typeCont: "${controller.selectTypeCont1.value.typeContCode}",
+              numberBook: controller.numberBook.text,
+              numberTan: double.parse(controller.numberTan.text),
+              numberCont2Seal1: controller.numberCont2Seal1.text,
+              numberCont2Seal2: controller.numberCont2Seal2.text,
+              numberKhoi1: double.parse(controller.numberKhoi1.text),
+              numberKien1: double.parse(controller.numberKien1.text),
+              numberBook1: controller.numberBook1.text,
+              typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
+              idProduct: controller.selectTypeProduct.value.maloaiHang,
+              maTrongtai: controller.selectTrongTai.value.maTrongTai,
+              numberTan1: double.parse(controller.numberTan1.text),
+              numberCont: numberSelectCont,
+              nameCustomer: controller.selectCustomer.value.tenKhachhang,
+            );
+          } else {
+            getSnack(messageText: "Nhập số Cont *");
+          }
         } else {
           getSnack(messageText: "Chọn loại cont * !");
         }

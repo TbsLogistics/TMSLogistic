@@ -75,7 +75,7 @@ class CustomerListDriverDetailsOfCustomerScreen
                 ),
                 _buildStatus(
                     size, controller.statusDriver.value, controller, context),
-                _qrImage(controller, size),
+                _QrImageView(controller, size),
                 controller.showForm.value
                     ? _buildFormStatus(controller.statusDriver.value, size)
                     : Container(),
@@ -90,7 +90,7 @@ class CustomerListDriverDetailsOfCustomerScreen
     );
   }
 
-  Widget _qrImage(
+  Widget _QrImageView(
       CustomerListDriverDetailsOfCustomerController controller, Size size) {
     return Card(
       shadowColor: Colors.grey,
@@ -111,7 +111,7 @@ class CustomerListDriverDetailsOfCustomerScreen
               child: RepaintBoundary(
                 key: controller.qrKey,
                 child: Obx(
-                  () => QrImage(
+                  () => QrImageView(
                     backgroundColor: Colors.white,
                     data:
                         "${controller.statusDriver.value.maPhieuvao},${controller.statusDriver.value.taixeRe!.maTaixe}",

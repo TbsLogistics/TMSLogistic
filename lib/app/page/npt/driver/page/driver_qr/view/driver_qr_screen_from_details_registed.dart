@@ -42,7 +42,7 @@ class QrCodeDetailsRegistedDriverScreen
                 child: RepaintBoundary(
                   key: controller.qrDriverKey,
                   child: Obx(
-                    () => QrImage(
+                    () => QrImageView(
                       backgroundColor: Colors.white,
                       data:
                           "${controller.idPhieuvao.value},${controller.user.value.maTaixe}",

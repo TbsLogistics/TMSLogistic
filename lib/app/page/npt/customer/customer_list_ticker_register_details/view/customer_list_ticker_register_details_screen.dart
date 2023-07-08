@@ -154,7 +154,7 @@ class CustomerListTickerRegisterDetailsScreen
                               ? "${controller.listTracking.value.maloaiHang!.tenLoaiHang}"
                               : "",
                         ),
-                        _qrImage(controller, size),
+                        _QrImageView(controller, size),
                         controller.listTracking.value.loaixe!.maLoaiXe == "tai"
                             ? _buildProductCar(
                                 controller.listTracking.value, size, context)
@@ -173,7 +173,7 @@ class CustomerListTickerRegisterDetailsScreen
             ));
   }
 
-  Widget _qrImage(
+  Widget _QrImageView(
       CustomerListTickerRegisterDetailsController controller, Size size) {
     return Card(
       shadowColor: Colors.grey,
@@ -194,7 +194,7 @@ class CustomerListTickerRegisterDetailsScreen
               child: RepaintBoundary(
                 key: controller.qrDriverKey,
                 child: Obx(() {
-                  return QrImage(
+                  return QrImageView(
                     backgroundColor: Colors.white,
                     data:
                         "${controller.listTracking.value.pdriverInOutWarehouseCode}",

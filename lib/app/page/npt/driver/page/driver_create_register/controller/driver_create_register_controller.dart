@@ -60,7 +60,7 @@ class DriverCreateRegisterController extends GetxController {
       ListCustomerForDriverModel().obs;
   Rx<ListCustomerForDriverModel> selectCustomerName =
       ListCustomerForDriverModel().obs;
-  Rx<ListTypeVoteModel> selectTypeVote = ListTypeVoteModel().obs;
+
   Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
   Rx<ListWareHomeModel> selectWareHome = ListWareHomeModel().obs;

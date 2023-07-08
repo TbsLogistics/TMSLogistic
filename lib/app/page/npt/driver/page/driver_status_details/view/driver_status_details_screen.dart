@@ -105,7 +105,7 @@ class ListStatusUnfinishedDetailsScreen
                                     SizedBox(
                                       height: size.width * 0.05,
                                     ),
-                                    _qrImage(controller, size),
+                                    _QrImageView(controller, size),
                                     SizedBox(
                                       height: size.width * 0.05,
                                     ),
@@ -131,7 +131,7 @@ class ListStatusUnfinishedDetailsScreen
     );
   }
 
-  Widget _qrImage(DriverStatusDetailsController controller, Size size) {
+  Widget _QrImageView(DriverStatusDetailsController controller, Size size) {
     return Card(
       shadowColor: Colors.grey,
       elevation: 10,
@@ -151,7 +151,7 @@ class ListStatusUnfinishedDetailsScreen
               child: RepaintBoundary(
                 key: controller.qrDriverKey,
                 child: Obx(() {
-                  return QrImage(
+                  return QrImageView(
                     backgroundColor: Colors.white,
                     data:
                         "${controller.getDriverFinishedScreen.value.pdriverInOutWarehouseCode}",

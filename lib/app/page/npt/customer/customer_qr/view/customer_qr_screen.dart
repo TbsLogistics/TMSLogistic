@@ -1,14 +1,10 @@
 // ignore_for_file: must_be_immutable
 
-
-
 import 'package:flutter/material.dart';
-
 
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_qr/controller/customer_qr_controller.dart';
-
 
 class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
   const QrCodeCustomerScreen({super.key});
@@ -48,7 +44,7 @@ class QrCodeCustomerScreen extends GetView<QRCodeCustomerController> {
                 child: RepaintBoundary(
                   key: controller.qrKey,
                   child: Obx(
-                    () => QrImage(
+                    () => QrImageView(
                       backgroundColor: Colors.white,
                       data:
                           "${controller.idPhieuvao.value},${controller.idDriver.value}",

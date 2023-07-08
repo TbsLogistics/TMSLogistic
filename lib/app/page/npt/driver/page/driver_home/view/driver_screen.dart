@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/config/routes/pages.dart';
-
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_finished/view/driver_finished_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_home/controller/driver_home_controller.dart';
 
 class DriverScreen extends GetView<DriverHomeController> {

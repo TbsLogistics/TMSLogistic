@@ -77,7 +77,7 @@ class DriverCreateRegisterDetailsScreen
                           controller.detailsTicker.value, size, context),
                 ),
                 const SizedBox(height: 10),
-                _qrImage(controller, size),
+                _QrImageView(controller, size),
               ],
             ),
           ),
@@ -87,7 +87,8 @@ class DriverCreateRegisterDetailsScreen
   }
 }
 
-Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
+Widget _QrImageView(
+    DriverCreateRegisterDetailsController controller, Size size) {
   return Card(
     shadowColor: Colors.grey,
     elevation: 10,
@@ -106,7 +107,7 @@ Widget _qrImage(DriverCreateRegisterDetailsController controller, Size size) {
             child: RepaintBoundary(
               key: controller.qrDriverKey,
               child: Obx(() {
-                return QrImage(
+                return QrImageView(
                   backgroundColor: Colors.white,
                   data: controller.id.value,
                   version: QrVersions.auto,

@@ -31,10 +31,22 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                   var maPhieu = controller
                       .detailEntryVote.value.pdriverInOutWarehouseCode;
                   print([string[0], maPhieu]);
-                  if (string[0].length == 12) {
-                    controller.getCheckCCCD(CCCD: string[0]);
+                  // if (string[0].length == 12) {
+                  //   controller.getCheckCCCD(CCCD: string[0]);
+                  // } else {
+                  //   controller.getDetailEntryVote(maPhieuvao: value);
+                  // }
+                  if (maPhieu != null) {
+                    if (string[0].length == 12) {
+                      controller.getDetailEntryVote(
+                          maPhieuvao: maPhieu, cccd: string[0]);
+                    }
                   } else {
-                    controller.getDetailEntryVote(maPhieuvao: value);
+                    if (string[0].length == 12) {
+                      controller.getDetailEntryVote(cccd: string[0]);
+                    } else {
+                      controller.getDetailEntryVote(maPhieuvao: value);
+                    }
                   }
                 }
                 controller.update();
@@ -89,46 +101,55 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
             ),
             _buildCustomer(
               textController: controller.nameDriverController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
               size: size,
               context: context,
               controller: controller,
               title: "Tên tài xế : ",
-              // content: "",
-              // "${controller.detailEntryVote.value.taixeRe!.tenTaixe}",
+            ),
+            Obx(
+              () => controller.isShowCheckCccd.value
+                  ? Container(
+                      child: Text(
+                        controller.checkInvoteCccdModel.value.taixe?.tenTaixe ??
+                            "",
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
+                  : Container(),
             ),
             _buildCustomer(
               textController: controller.cccdController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
               size: size,
               context: context,
               controller: controller,
               title: "CCCD : ",
-              // content: "",
               textFocus: controller.cccdFocusNode,
-              // content: "${controller.detailEntryVote.value.taixeRe!.cCCD}",
-              // icon: Icons.qr_code,
               onChanged: (value) {
-                // controller.scanQr(idCode: "CCCD");
                 controller.getCheckCCCD(CCCD: value);
               },
-              // onPressedIcon: () {
-              //   controller.scanQr(idCode: "CCCD");
-              // },
+            ),
+            Obx(
+              () => controller.isShowCheckCccd.value
+                  ? Container(
+                      child: Text(
+                        controller.checkInvoteCccdModel.value.taixe?.cCCD ?? "",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
+                  : Container(),
             ),
             _buildCustomer(
               textController: controller.phoneController,
-              // textFocus: controller.khuvucFocus,
-              // items: controller.detailEntryVote.value,
-
               size: size,
               context: context,
               controller: controller,
               title: "Số điện thoại : ",
-              // content: "${controller.detailEntryVote.value.taixeRe!.phone}",
-              // content: "",
             ),
             Obx(
               () => _listTypeCar(

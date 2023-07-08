@@ -89,7 +89,7 @@ class CustomerRegisterDetailScreen
                           context, controller),
                   // _buildNumberCont(
                   //     controller.detailsTicker.value, size, context),
-                  _qrImage(controller, size),
+                  _QrImageView(controller, size),
                 ],
               ),
             ),
@@ -99,7 +99,7 @@ class CustomerRegisterDetailScreen
     );
   }
 
-  Widget _qrImage(CustomerRegisterDetailsController controller, Size size) {
+  Widget _QrImageView(CustomerRegisterDetailsController controller, Size size) {
     return Column(
       children: [
         Card(
@@ -118,7 +118,7 @@ class CustomerRegisterDetailScreen
               child: RepaintBoundary(
                 key: controller.qrKey,
                 child: Obx(
-                  () => QrImage(
+                  () => QrImageView(
                     backgroundColor: Colors.white,
                     data:
                         "${controller.id.value},${controller.detailsTicker.value.maTaixe}",

@@ -49,7 +49,7 @@ class QrCodeFromDetailsCustomerScreen
                       if (!snapshot.hasData) {
                         return const SizedBox(width: 280, height: 280);
                       }
-                      return QrImage(
+                      return QrImageView(
                         backgroundColor: Colors.white,
                         data:
                             "${controller.idPhieuvao.value},${controller.idDriver.value}",

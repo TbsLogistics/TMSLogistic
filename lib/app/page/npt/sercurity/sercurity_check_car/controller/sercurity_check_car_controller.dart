@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart' hide Response;
+
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
@@ -12,6 +13,7 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/model/detail_entry_vote_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/check_invote_cccd_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/detail_user_sercurity_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/register_of_sercurity_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/model/scan_model.dart';
@@ -30,7 +32,7 @@ class SercurityCheckCarController extends GetxController {
   RxInt numberSelectCont = 0.obs;
   RxBool isShowCar = false.obs;
   RxBool isLoadUser = false.obs;
-
+  RxBool isShowCheckCccd = false.obs;
   RxList<CustomerOfWareHomeModel> listKhachhang =
       <CustomerOfWareHomeModel>[].obs;
   RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
@@ -39,6 +41,8 @@ class SercurityCheckCarController extends GetxController {
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
 
   Rx<DetailEntryVoteModel> detailEntryVote = DetailEntryVoteModel().obs;
+  Rx<CheckInvoteCccdModel> checkInvoteCccdModel = CheckInvoteCccdModel().obs;
+  Rx<CheckTaixe> checkTaixe = CheckTaixe().obs;
   TextEditingController zoneController = TextEditingController();
   TextEditingController doorController = TextEditingController();
   TextEditingController warehomeController = TextEditingController();
@@ -275,7 +279,7 @@ class SercurityCheckCarController extends GetxController {
     var jsonData = result.toJson();
 
     var url = "${AppConstants.urlBaseNpt}/scan/checkCCCDandInvoteID";
-
+    isShowCheckCccd(false);
     try {
       response = await dio.post(
         url,
@@ -289,58 +293,38 @@ class SercurityCheckCarController extends GetxController {
           getSnack(messageText: response.data["detail"]);
         } else {
           getSnack(messageText: response.data["detail"]);
-          var data = DetailEntryVoteModel.fromJson(response.data["data"]);
           idController.text = "";
 
-          detailEntryVote.value = data;
-
-          customerController.text =
-              detailEntryVote.value.maKhachHang!.tenKhachhang!;
-
-          nameDriverController.text = detailEntryVote.value.maTaixe!.tenTaixe!;
-          cccdController.text = detailEntryVote.value.maTaixe!.cCCD!;
-          phoneController.text = detailEntryVote.value.maTaixe!.phone!;
-          selectTypeCar.value.tenLoaiXe =
-              detailEntryVote.value.loaixe!.tenLoaiXe!;
-          print("tenloaijxe: ${selectTypeCar.value.tenLoaiXe}");
-          selectTypeCar.value.maLoaiXe = detailEntryVote.value.loaixe!.maLoaiXe;
-
-          numberCarController.text = detailEntryVote.value.soxe!;
-
-          //cont1
-          cont1Controller.text = detailEntryVote.value.socont1 ?? "";
-          seal11Controller.text = detailEntryVote.value.cont1seal1 ?? "";
-          seal12Controller.text = detailEntryVote.value.cont1seal2 ?? "";
-          kienController.text = detailEntryVote.value.soKien.toString();
-          tanController.text = detailEntryVote.value.soTan.toString();
-          bkController.text = detailEntryVote.value.soBook ?? "";
-          CBMController.text = detailEntryVote.value.sokhoi.toString();
-
-          //cont2
-          cont2Controller.text = detailEntryVote.value.socont2 ?? "";
-          if (cont2Controller.text != "") {
-            isShowCont2(true);
-            isShowCont2Local(true);
-          }
-          seal21Controller.text = detailEntryVote.value.cont2seal1 ?? "";
-          seal22Controller.text = detailEntryVote.value.cont2seal2 ?? "";
-          kien1Controller.text = detailEntryVote.value.sokien1.toString();
-          tan1Controller.text = detailEntryVote.value.soTan1.toString();
-          bk1Controller.text = detailEntryVote.value.soBook1 ?? "";
-          CBM1Controller.text = detailEntryVote.value.sokhoi1.toString();
-          if (selectTypeCar.value.maLoaiXe == "con") {
-            isShowCar(false);
-            isShowCont1(true);
-            if (detailEntryVote.value.loaiCont1!.typeContCode != null) {
-              isShowCont2(true);
-              isShowCont2Local(true);
+          if (maPhieuvao != null) {
+            if (cccd != null) {
+              if (response.data["status_code"] == 204) {
+                getSnack(messageText: response.data["detail"]);
+              } else {
+                var checkVoteCccd =
+                    CheckInvoteCccdModel.fromJson(response.data["data"]);
+                checkInvoteCccdModel.value = checkVoteCccd;
+                isShowCheckCccd(true);
+              }
+              // Check Tai xe hop le
+            } else {
+              if (response.data["status_code"] == 204) {
+                getSnack(messageText: response.data["detail"]);
+              } else {
+                var data = DetailEntryVoteModel.fromJson(response.data["data"]);
+                // Check phieu vao
+                checkPhieu(data);
+              }
             }
           } else {
-            isShowCar(true);
-            isShowCont1(false);
-            isShowCont2(false);
-            isShowCont2Local(false);
+            //check info driver
+            if (response.data["status_code"] == 204) {
+              getSnack(messageText: response.data["detail"]);
+            } else {
+              var data = CheckTaixe.fromJson(response.data["data"]);
+              checkTaixe.value = data;
+            }
           }
+
           update();
         }
       }
@@ -353,6 +337,52 @@ class SercurityCheckCarController extends GetxController {
       } else if (e.response!.statusCode == 500) {
         getSnack(messageText: "Lỗi sever, vui lòng thử lại giây lát !");
       }
+    }
+  }
+
+  void checkPhieu(DetailEntryVoteModel data) {
+    detailEntryVote.value = data;
+
+    customerController.text = detailEntryVote.value.maKhachHang!.tenKhachhang!;
+
+    nameDriverController.text = detailEntryVote.value.maTaixe!.tenTaixe!;
+    cccdController.text = detailEntryVote.value.maTaixe!.cCCD!;
+    phoneController.text = detailEntryVote.value.maTaixe!.phone!;
+    selectTypeCar.value.tenLoaiXe = detailEntryVote.value.loaixe!.tenLoaiXe!;
+    selectTypeCar.value.maLoaiXe = detailEntryVote.value.loaixe!.maLoaiXe;
+    numberCarController.text = detailEntryVote.value.soxe!;
+    //cont1
+    cont1Controller.text = detailEntryVote.value.socont1 ?? "";
+    seal11Controller.text = detailEntryVote.value.cont1seal1 ?? "";
+    seal12Controller.text = detailEntryVote.value.cont1seal2 ?? "";
+    kienController.text = detailEntryVote.value.soKien.toString();
+    tanController.text = detailEntryVote.value.soTan.toString();
+    bkController.text = detailEntryVote.value.soBook ?? "";
+    CBMController.text = detailEntryVote.value.sokhoi.toString();
+    //cont2
+    cont2Controller.text = detailEntryVote.value.socont2 ?? "";
+    if (cont2Controller.text != "") {
+      isShowCont2(true);
+      isShowCont2Local(true);
+    }
+    seal21Controller.text = detailEntryVote.value.cont2seal1 ?? "";
+    seal22Controller.text = detailEntryVote.value.cont2seal2 ?? "";
+    kien1Controller.text = detailEntryVote.value.sokien1.toString();
+    tan1Controller.text = detailEntryVote.value.soTan1.toString();
+    bk1Controller.text = detailEntryVote.value.soBook1 ?? "";
+    CBM1Controller.text = detailEntryVote.value.sokhoi1.toString();
+    if (selectTypeCar.value.maLoaiXe == "con") {
+      isShowCar(false);
+      isShowCont1(true);
+      if (detailEntryVote.value.loaiCont1!.typeContCode != null) {
+        isShowCont2(true);
+        isShowCont2Local(true);
+      }
+    } else {
+      isShowCar(true);
+      isShowCont1(false);
+      isShowCont2(false);
+      isShowCont2Local(false);
     }
   }
 
