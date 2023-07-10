@@ -40,9 +40,9 @@ class DriverStatusScreen extends GetView<DriverStatusController> {
         child: GetBuilder<DriverStatusController>(
           init: DriverStatusController(),
           builder: (controller) {
-            return controller.isLoadList.value
-                ? Obx(
-                    () => ListView.builder(
+            return Obx(
+              () => controller.isLoadList.value
+                  ? ListView.builder(
                       itemCount: controller.listDriverFinishedScreen.length,
                       itemBuilder: (context, index) {
                         return Card(
@@ -124,13 +124,13 @@ class DriverStatusScreen extends GetView<DriverStatusController> {
                           ),
                         );
                       },
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.orangeAccent,
+                      ),
                     ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.orangeAccent,
-                    ),
-                  );
+            );
           },
         ),
       ),

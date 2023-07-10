@@ -4,7 +4,7 @@ import 'package:tbs_logistics_tms/app/config/data/color.dart';
 import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/controller/sercurity_check_car_controller.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/modules/button_print.dart';
+// import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/modules/button_print.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/modules/security_car_in_screen.dart';
 
 class SercurityScreen extends GetView<SercurityCheckCarController> {
@@ -30,9 +30,9 @@ class SercurityScreen extends GetView<SercurityCheckCarController> {
             Icons.arrow_back_ios_new_outlined,
           ),
         ),
-        actions: [
-          SaveBtnBuilder(),
-        ],
+        // actions: [
+        //   SaveBtnBuilder(),
+        // ],
       ),
       body: GetBuilder<SercurityCheckCarController>(
         init: SercurityCheckCarController(),

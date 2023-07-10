@@ -10,6 +10,7 @@ class CustomFormFiels extends StatelessWidget {
     this.validator,
     required this.color,
     required this.keyboardType,
+    this.forcusNode,
   });
   final String title;
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class CustomFormFiels extends StatelessWidget {
   final String Function(String?)? validator;
   final Color color;
   final TextInputType keyboardType;
+  final FocusNode? forcusNode;
   // final TextCapitalization textCapitalization;
 
   @override

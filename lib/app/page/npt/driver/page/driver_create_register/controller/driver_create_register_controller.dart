@@ -13,6 +13,7 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_product_lock_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -67,7 +68,12 @@ class DriverCreateRegisterController extends GetxController {
   Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
   Rx<ListTypeProductModel> selectTypeProduct = ListTypeProductModel().obs;
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct2 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock2 = ListProductLockModel().obs;
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
+
   var isClientSelect = true.obs;
   var selectListItem = <SelectedListItem>[].obs;
 
@@ -80,11 +86,23 @@ class DriverCreateRegisterController extends GetxController {
   RxList<CustomerOfWareHomeModel> listClient = <CustomerOfWareHomeModel>[].obs;
 
   RxBool isShowCont2 = false.obs;
+
+  FocusNode numberCarFocus = FocusNode();
+
   @override
   void onInit() async {
     formKey;
     super.onInit();
     getKhachhang();
+    checkoutFocus();
+  }
+
+  void checkoutFocus() {
+    numberCarFocus.addListener(() {
+      if (!numberCarFocus.hasFocus) {
+        numberCarFocus.unfocus();
+      }
+    });
   }
 
   void changeHideShowCont2() {
@@ -111,32 +129,35 @@ class DriverCreateRegisterController extends GetxController {
     return listClient;
   }
 
-  Future<void> postRegisterDriver({
-    required String? maKhachHang,
-    required String? time,
-    required String? typeWarehome,
-    required String? typeCar,
-    required String? numberCar,
-    required String? numberCont1,
-    required String? numberCont1Seal1,
-    required String? numberCont1Seal2,
-    required double? numberKien,
-    required double? numberKhoi,
-    required String? numberBook,
-    required double? numberTan,
-    required String? numberCont2,
-    required String? numberCont2Seal1,
-    required String? numberCont2Seal2,
-    required double? numberKien1,
-    required double? numberKhoi1,
-    required String? numberBook1,
-    required double? numberTan1,
-    required String? typeProduct,
-    required String? loaiCont,
-    required String? loaiCont1,
-    required String? nameCustomer,
-    required String? maTrongTai,
-  }) async {
+  Future<void> postRegisterDriver(
+      {required String? maKhachHang,
+      required String? time,
+      required String? typeWarehome,
+      required String? typeCar,
+      required String? numberCar,
+      required String? numberCont1,
+      required String? numberCont1Seal1,
+      required String? numberCont1Seal2,
+      required double? numberKien,
+      required double? numberKhoi,
+      required String? numberBook,
+      required double? numberTan,
+      required String? numberCont2,
+      required String? numberCont2Seal1,
+      required String? numberCont2Seal2,
+      required double? numberKien1,
+      required double? numberKhoi1,
+      required String? numberBook1,
+      required double? numberTan1,
+      required String? typeProduct,
+      required String? loaiCont,
+      required String? loaiCont1,
+      required String? nameCustomer,
+      required String? maTrongTai,
+      required bool? statusKhoa1,
+      required bool? statusKhoa2,
+      required bool? statusHang1,
+      required bool? statusHang2}) async {
     var dio = Dio();
     Response response;
     var token = await SharePerApi().getTokenNPT();
@@ -166,8 +187,8 @@ class DriverCreateRegisterController extends GetxController {
       soBook: numberBook,
       soTan: numberTan ?? 0,
       loaiCont: loaiCont,
-      trangthaihang: false,
-      trangthaikhoa: false,
+      trangthaihang: statusHang1,
+      trangthaikhoa: statusKhoa1,
       cont2seal1: numberCont2Seal1,
       cont2seal2: numberCont2Seal2,
       sokien1: numberKien1 ?? 0,
@@ -176,8 +197,8 @@ class DriverCreateRegisterController extends GetxController {
       soTan1: numberTan1 ?? 0,
       loaiCont1: loaiCont1,
       maTrongTai: maTrongTai,
-      trangthaihang1: false,
-      trangthaikhoa1: false,
+      trangthaihang1: statusHang2,
+      trangthaikhoa1: statusKhoa2,
       maloaiHang: typeProduct,
       typeInvote: 0,
     );
@@ -472,6 +493,24 @@ class DriverCreateRegisterController extends GetxController {
     return ListTypeVoteModel.fromJsonList(listVote);
   }
 
+  // Danh sách trang thai co KHOA
+  Future<List<ListProductLockModel>> getDataProductTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Có", "trangthai": true},
+      {"id": 2, "name": "Không có", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
+  // Danh sách trang thai co hang
+  Future<List<ListProductLockModel>> getDataProductLockTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Khóa", "trangthai": true},
+      {"id": 2, "name": "Không khóa", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
   // Danh sách loại cont
   Future<List<ListTypeContModel>> getDataTypeCont(query) async {
     var dio = Dio();
@@ -520,5 +559,11 @@ class DriverCreateRegisterController extends GetxController {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    numberCarFocus.dispose();
+    super.dispose();
   }
 }

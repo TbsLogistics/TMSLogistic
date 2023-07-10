@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -20,6 +19,7 @@ buildPrintableData(image, font) => pw.Container(
                       font: font,
                       fontWeight: pw.FontWeight.bold,
                       color: PdfColors.black,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -30,7 +30,7 @@ buildPrintableData(image, font) => pw.Container(
                 top: 0,
                 child: pw.Image(
                   image,
-                  width: 50,
+                  width: 100,
                   height: 30,
                 ),
               )
@@ -43,16 +43,25 @@ buildPrintableData(image, font) => pw.Container(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  "ĐƠN VỊ : ICD60 .......",
-                  style: pw.TextStyle(font: font),
+                  "ĐƠN VỊ : ..............",
+                  style: pw.TextStyle(
+                    font: font,
+                    fontSize: 10,
+                  ),
                 ),
                 pw.Text(
-                  "SỐ XE : 51H 374748",
-                  style: pw.TextStyle(font: font),
+                  "SỐ XE : ............... ",
+                  style: pw.TextStyle(
+                    font: font,
+                    fontSize: 10,
+                  ),
                 ),
                 pw.Text(
                   "ROMOOC : ............... ",
-                  style: pw.TextStyle(font: font),
+                  style: pw.TextStyle(
+                    font: font,
+                    fontSize: 10,
+                  ),
                 ),
               ],
             ),
@@ -201,12 +210,18 @@ buildPrintableData(image, font) => pw.Container(
                   child: pw.Column(children: [
                     pw.Text(
                       "XÁC NHẬN CỦA TÀI XẾ",
-                      style: pw.TextStyle(font: font),
+                      style: pw.TextStyle(
+                        font: font,
+                        fontSize: 10,
+                      ),
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(
                       "NGUYỄN MẠNH TIẾN",
-                      style: pw.TextStyle(font: font),
+                      style: pw.TextStyle(
+                        font: font,
+                        fontSize: 10,
+                      ),
                     )
                   ]),
                 ),
@@ -215,12 +230,18 @@ buildPrintableData(image, font) => pw.Container(
                   child: pw.Column(children: [
                     pw.Text(
                       "XÁC NHẬN CỦA BẢO VỆ",
-                      style: pw.TextStyle(font: font),
+                      style: pw.TextStyle(
+                        font: font,
+                        fontSize: 10,
+                      ),
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(
                       "BẢO VỆ KHO 6",
-                      style: pw.TextStyle(font: font),
+                      style: pw.TextStyle(
+                        font: font,
+                        fontSize: 10,
+                      ),
                     )
                   ]),
                 ),
@@ -237,7 +258,7 @@ buildPrintableData(image, font) => pw.Container(
                 pw.Text("YÊU CẦU TÀI XẾ/ CHỦ HÀNG",
                     style: pw.TextStyle(
                       font: font,
-                      fontSize: 12,
+                      fontSize: 10,
                       color: PdfColors.black,
                     )),
                 pw.Text("1. ĐỀ NGHỊ TÀI XẾ CHO XE VÀO BÃI CHỜ",

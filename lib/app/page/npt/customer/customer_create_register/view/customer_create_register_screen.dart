@@ -6,14 +6,13 @@ import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:tbs_logistics_tms/app/config/data/text_style.dart';
 import 'package:tbs_logistics_tms/app/config/data/validate.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_form_submit.dart';
 import 'package:tbs_logistics_tms/app/config/widget/custom_text_form_field.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/controller/customer_create_register_controller.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_product_lock_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -254,35 +253,38 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                 ),
                 _listTypeProduct(controller),
                 _listTypeCar(controller),
-                Obx(() => controller.selectTypeCar.value != "" &&
-                        controller.selectTypeCar.value.maLoaiXe == "con"
-                    ? Column(
-                        children: [
-                          _contFirt(controller),
-                          Center(
-                            child: IconButton(
-                              onPressed: () {
-                                controller.changeHideShowCont2();
-                              },
-                              icon: controller.isShowCont2.value
-                                  ? const Icon(
-                                      Icons.remove_circle,
-                                      size: 30,
-                                      color: Colors.red,
-                                    )
-                                  : const Icon(
-                                      Icons.add_circle,
-                                      size: 30,
-                                      color: Colors.green,
-                                    ),
-                            ),
-                          ),
-                          controller.isShowCont2.value
-                              ? _contSecond(controller)
-                              : Container(),
-                        ],
-                      )
-                    : _formCar(controller)),
+                Obx(
+                  () => controller.selectTypeCar.value.maLoaiXe != null
+                      ? controller.selectTypeCar.value.maLoaiXe == "con"
+                          ? Column(
+                              children: [
+                                _contFirt(controller),
+                                Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      controller.changeHideShowCont2();
+                                    },
+                                    icon: controller.isShowCont2.value
+                                        ? const Icon(
+                                            Icons.remove_circle,
+                                            size: 30,
+                                            color: Colors.red,
+                                          )
+                                        : const Icon(
+                                            Icons.add_circle,
+                                            size: 30,
+                                            color: Colors.green,
+                                          ),
+                                  ),
+                                ),
+                                controller.isShowCont2.value
+                                    ? _contSecond(controller)
+                                    : Container(),
+                              ],
+                            )
+                          : _formCar(controller)
+                      : Container(),
+                ),
                 ButtonFormSubmit(
                     onPressed: () {
                       onSignUp(controller);
@@ -340,6 +342,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           icon: Icons.abc,
           color: Colors.green,
         ),
+        _listhaveProduct1(controller),
+        _listProductLock1(controller),
       ],
     );
   }
@@ -405,6 +409,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           icon: Icons.abc,
           color: Colors.green,
         ),
+        _listhaveProduct1(controller),
+        _listProductLock1(controller),
       ],
     );
   }
@@ -470,6 +476,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           icon: Icons.abc,
           color: Colors.green,
         ),
+        _listhaveProduct2(controller),
+        _listProductLock2(controller),
       ],
     );
   }
@@ -586,6 +594,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
       hintText: "Nhập số xe",
       icon: Icons.abc,
       color: Colors.green,
+      forcusNode: controller.numberCarFocus,
     );
   }
 
@@ -1360,6 +1369,402 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     );
   }
 
+  Widget _listhaveProduct1(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Chọn trạng thái hàng",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListProductLockModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataProductTrue(filter),
+            onChanged: (ListProductLockModel? data) {
+              setState(() {
+                controller.selectHaveProduct1.value.trangthai = data!.trangthai;
+              });
+              print(
+                  "Khoa cont1 : ${controller.selectHaveProduct1.value.trangthai}");
+            },
+            dropdownBuilder:
+                (BuildContext context, ListProductLockModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.name == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trạng thái hàng *",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.name!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context,
+                ListProductLockModel item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listhaveProduct2(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Chọn trạng thái hàng",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListProductLockModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataProductTrue(filter),
+            onChanged: (ListProductLockModel? data) {
+              setState(() {
+                controller.selectHaveProduct2.value.trangthai = data!.trangthai;
+              });
+            },
+            dropdownBuilder:
+                (BuildContext context, ListProductLockModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.name == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trạng thái hàng *",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.name!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context,
+                ListProductLockModel item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listProductLock1(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Chọn trạng thái khóa",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListProductLockModel>(
+            showSearchBox: false,
+            onFind: (String filter) =>
+                controller.getDataProductLockTrue(filter),
+            onChanged: (ListProductLockModel? data) {
+              setState(() {
+                controller.selectProductLock1.value.trangthai = data!.trangthai;
+              });
+            },
+            dropdownBuilder:
+                (BuildContext context, ListProductLockModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.name == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trạng thái khóa *",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.name!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context,
+                ListProductLockModel item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listProductLock2(CustomerRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Chọn trạng thái khóa",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListProductLockModel>(
+            showSearchBox: false,
+            onFind: (String filter) =>
+                controller.getDataProductLockTrue(filter),
+            onChanged: (ListProductLockModel? data) {
+              setState(() {
+                controller.selectProductLock2.value.trangthai = data!.trangthai;
+              });
+            },
+            dropdownBuilder:
+                (BuildContext context, ListProductLockModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.name == null)
+                    ? const ListTile(
+                        title: Text(
+                          "Chọn trạng thái khóa *",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.name!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context,
+                ListProductLockModel item, bool isSelected) {
+              return Container(
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   onSignUp(CustomerRegisterController controller) {
     if (controller.dateinput.text == "" ||
         controller.numberCar.text == "" ||
@@ -1379,34 +1784,49 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                 controller.selectTypeCont1.value.typeContCode != null &&
                 controller.selectTypeCont2.value.typeContCode != null) {
           if (controller.numberCont1.text != "") {
-            controller.postRegisterCustomer(
-              idTaixe: controller.selectDriver.value.maTaixe,
-              maKhachHang: controller.selectCustomer.value.maKhachHang!,
-              time: controller.dateinput.text,
-              idKho: controller.selectWareHome.value.maKho,
-              idCar: controller.selectTypeCar.value.maLoaiXe,
-              numberCar: controller.numberCar.text,
-              numberCont1: controller.numberCont1.text,
-              numberCont2: controller.numberCont2.text,
-              numberCont1Seal1: controller.numberCont1Seal1.text,
-              numberCont1Seal2: controller.numberCont1Seal2.text,
-              numberKhoi: double.parse(controller.numberKhoi.text),
-              numberKien: double.parse(controller.numberKien.text),
-              typeCont: "${controller.selectTypeCont1.value.typeContCode}",
-              numberBook: controller.numberBook.text,
-              numberTan: double.parse(controller.numberTan.text),
-              numberCont2Seal1: controller.numberCont2Seal1.text,
-              numberCont2Seal2: controller.numberCont2Seal2.text,
-              numberKhoi1: double.parse(controller.numberKhoi1.text),
-              numberKien1: double.parse(controller.numberKien1.text),
-              numberBook1: controller.numberBook1.text,
-              typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
-              idProduct: controller.selectTypeProduct.value.maloaiHang,
-              maTrongtai: controller.selectTrongTai.value.maTrongTai,
-              numberTan1: double.parse(controller.numberTan1.text),
-              numberCont: numberSelectCont,
-              nameCustomer: controller.selectCustomer.value.tenKhachhang,
-            );
+            if (controller.selectTypeCont1.value.typeContCode != null &&
+                    controller.selectHaveProduct1.value.trangthai != null &&
+                    controller.selectProductLock1.value.trangthai != null ||
+                controller.selectTypeCont2.value.typeContCode != null &&
+                    controller.selectHaveProduct2.value.trangthai != null &&
+                    controller.selectProductLock2.value.trangthai != null) {
+              controller.postRegisterCustomer(
+                idTaixe: controller.selectDriver.value.maTaixe,
+                maKhachHang: controller.selectCustomer.value.maKhachHang!,
+                time: controller.dateinput.text,
+                idKho: controller.selectWareHome.value.maKho,
+                idCar: controller.selectTypeCar.value.maLoaiXe,
+                numberCar: controller.numberCar.text,
+                numberCont1: controller.numberCont1.text,
+                numberCont2: controller.numberCont2.text,
+                numberCont1Seal1: controller.numberCont1Seal1.text,
+                numberCont1Seal2: controller.numberCont1Seal2.text,
+                numberKhoi: double.parse(controller.numberKhoi.text),
+                numberKien: double.parse(controller.numberKien.text),
+                typeCont: "${controller.selectTypeCont1.value.typeContCode}",
+                numberBook: controller.numberBook.text,
+                numberTan: double.parse(controller.numberTan.text),
+                statusHang1: controller.selectHaveProduct1.value.trangthai,
+                statusKhoa1: controller.selectProductLock1.value.trangthai,
+                numberCont2Seal1: controller.numberCont2Seal1.text,
+                numberCont2Seal2: controller.numberCont2Seal2.text,
+                numberKhoi1: double.parse(controller.numberKhoi1.text),
+                numberKien1: double.parse(controller.numberKien1.text),
+                numberBook1: controller.numberBook1.text,
+                typeCont1: "${controller.selectTypeCont2.value.typeContCode}",
+                idProduct: controller.selectTypeProduct.value.maloaiHang,
+                maTrongtai: controller.selectTrongTai.value.maTrongTai,
+                numberTan1: double.parse(controller.numberTan1.text),
+                statusHang2:
+                    controller.selectHaveProduct2.value.trangthai ?? false,
+                statusKhoa2:
+                    controller.selectProductLock2.value.trangthai ?? false,
+                numberCont: numberSelectCont,
+                nameCustomer: controller.selectCustomer.value.tenKhachhang,
+              );
+            } else {
+              getSnack(messageText: "Chọn trạng thái Khóa, Hàng *");
+            }
           } else {
             getSnack(messageText: "Nhập số Cont *");
           }
@@ -1414,34 +1834,43 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
           getSnack(messageText: "Chọn loại cont * !");
         }
       } else {
-        controller.postRegisterCustomer(
-          idTaixe: controller.selectDriver.value.maTaixe,
-          maKhachHang: controller.selectCustomer.value.maKhachHang!,
-          time: controller.dateinput.text,
-          idKho: controller.selectWareHome.value.maKho,
-          idCar: controller.selectTypeCar.value.maLoaiXe,
-          numberCar: controller.numberCar.text,
-          numberCont1: controller.numberCont1.text,
-          numberCont2: controller.numberCont2.text,
-          numberCont1Seal1: controller.numberCont1Seal1.text,
-          numberCont1Seal2: controller.numberCont1Seal2.text,
-          numberKhoi: double.parse(controller.numberKhoi.text),
-          numberKien: double.parse(controller.numberKien.text),
-          numberBook: controller.numberBook.text,
-          typeCont: controller.selectTypeCont1.value.typeContCode,
-          numberTan: double.parse(controller.numberTan.text),
-          numberCont2Seal1: controller.numberCont2Seal1.text,
-          numberCont2Seal2: controller.numberCont2Seal2.text,
-          numberKhoi1: double.parse(controller.numberKhoi1.text),
-          numberKien1: double.parse(controller.numberKien1.text),
-          numberBook1: controller.numberBook1.text,
-          typeCont1: controller.selectTypeCont2.value.typeContCode,
-          numberTan1: double.parse(controller.numberTan1.text),
-          idProduct: controller.selectTypeProduct.value.maloaiHang,
-          maTrongtai: controller.selectTrongTai.value.maTrongTai,
-          numberCont: numberSelectCont,
-          nameCustomer: controller.selectCustomer.value.tenKhachhang,
-        );
+        if (controller.selectHaveProduct1.value.trangthai != null &&
+            controller.selectProductLock1.value.trangthai != null) {
+          controller.postRegisterCustomer(
+            idTaixe: controller.selectDriver.value.maTaixe,
+            maKhachHang: controller.selectCustomer.value.maKhachHang!,
+            time: controller.dateinput.text,
+            idKho: controller.selectWareHome.value.maKho,
+            idCar: controller.selectTypeCar.value.maLoaiXe,
+            numberCar: controller.numberCar.text,
+            numberCont1: controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text,
+            numberKhoi: double.parse(controller.numberKhoi.text),
+            numberKien: double.parse(controller.numberKien.text),
+            numberBook: controller.numberBook.text,
+            typeCont: controller.selectTypeCont1.value.typeContCode,
+            numberTan: double.parse(controller.numberTan.text),
+            statusHang1: controller.selectHaveProduct1.value.trangthai,
+            statusKhoa1: controller.selectProductLock1.value.trangthai,
+            numberCont2Seal1: controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text,
+            numberKhoi1: double.parse(controller.numberKhoi1.text),
+            numberKien1: double.parse(controller.numberKien1.text),
+            numberBook1: controller.numberBook1.text,
+            typeCont1: controller.selectTypeCont2.value.typeContCode,
+            numberTan1: double.parse(controller.numberTan1.text),
+            statusHang2: false,
+            statusKhoa2: false,
+            idProduct: controller.selectTypeProduct.value.maloaiHang,
+            maTrongtai: controller.selectTrongTai.value.maTrongTai,
+            numberCont: numberSelectCont,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang,
+          );
+        } else {
+          getSnack(messageText: "Chọn trạng thái Khóa, Hàng *");
+        }
       }
     }
   }

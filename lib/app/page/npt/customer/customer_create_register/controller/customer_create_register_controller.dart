@@ -16,11 +16,11 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_product_lock_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
-import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/driver_list_ticker_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class CustomerRegisterController extends GetxController {
@@ -29,21 +29,18 @@ class CustomerRegisterController extends GetxController {
 
   Rx<ListCustomerForDriverModel> selectCustomer =
       ListCustomerForDriverModel().obs;
-
   Rx<ListDriverForCustomerModel> selectDriver =
       ListDriverForCustomerModel().obs;
-
   Rx<ListWareHomeModel> selectWareHome = ListWareHomeModel().obs;
-
   Rx<ListTypeProductModel> selectTypeProduct = ListTypeProductModel().obs;
-
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
-
   Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
-
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
-
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct2 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock2 = ListProductLockModel().obs;
 
   Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
   String? selectItems;
@@ -75,10 +72,21 @@ class CustomerRegisterController extends GetxController {
   TextEditingController dateinput = TextEditingController(text: "");
 
   RxBool isShowCont2 = false.obs;
+
+  FocusNode numberCarFocus = FocusNode();
   @override
   void onInit() {
     getKhachhang();
     super.onInit();
+    checkoutFocus();
+  }
+
+  void checkoutFocus() {
+    numberCarFocus.addListener(() {
+      if (!numberCarFocus.hasFocus) {
+        numberCarFocus.unfocus();
+      }
+    });
   }
 
   void changeHideShowCont2() {
@@ -136,34 +144,37 @@ class CustomerRegisterController extends GetxController {
     }
   }
 
-  Future<void> postRegisterCustomer({
-    required int? idTaixe,
-    required String maKhachHang,
-    required String? time,
-    required String? idKho,
-    required String? idCar,
-    required String? numberCar,
-    required String? numberCont1,
-    required String? numberCont2,
-    required String? numberCont1Seal1,
-    required String? numberCont1Seal2,
-    required String? numberCont2Seal1,
-    required String? numberCont2Seal2,
-    required double? numberKien,
-    required double? numberKien1,
-    required double? numberKhoi,
-    required double? numberKhoi1,
-    required String? numberBook,
-    required String? numberBook1,
-    required double? numberTan,
-    required double? numberTan1,
-    required String? typeCont,
-    required String? typeCont1,
-    required String? idProduct,
-    required int? numberCont,
-    required String? nameCustomer,
-    required String? maTrongtai,
-  }) async {
+  Future<void> postRegisterCustomer(
+      {required int? idTaixe,
+      required String maKhachHang,
+      required String? time,
+      required String? idKho,
+      required String? idCar,
+      required String? numberCar,
+      required String? numberCont1,
+      required String? numberCont2,
+      required String? numberCont1Seal1,
+      required String? numberCont1Seal2,
+      required String? numberCont2Seal1,
+      required String? numberCont2Seal2,
+      required double? numberKien,
+      required double? numberKien1,
+      required double? numberKhoi,
+      required double? numberKhoi1,
+      required String? numberBook,
+      required String? numberBook1,
+      required double? numberTan,
+      required double? numberTan1,
+      required String? typeCont,
+      required String? typeCont1,
+      required String? idProduct,
+      required int? numberCont,
+      required String? nameCustomer,
+      required String? maTrongtai,
+      required bool? statusKhoa1,
+      required bool? statusKhoa2,
+      required bool? statusHang1,
+      required bool? statusHang2}) async {
     var token = await SharePerApi().getTokenNPT();
     var idTeamCar = await SharePerApi().getIdKH();
 
@@ -188,8 +199,8 @@ class CustomerRegisterController extends GetxController {
       soBook: typeCont == "null" ? null : numberBook,
       soTan: numberTan ?? 0,
       loaiCont: typeCont == "null" ? null : typeCont,
-      trangthaihang: false,
-      trangthaikhoa: false,
+      trangthaihang: statusHang1,
+      trangthaikhoa: statusKhoa1,
       cont2seal1: typeCont1 == "null" ? null : numberCont2Seal1,
       cont2seal2: typeCont1 == "null" ? null : numberCont2Seal2,
       sokien1: numberKien1 ?? 0,
@@ -197,8 +208,8 @@ class CustomerRegisterController extends GetxController {
       soTan1: numberTan1 ?? 0,
       loaiCont1: typeCont1 == "null" ? null : typeCont1,
       soBook1: typeCont1 == "null" ? null : numberBook1,
-      trangthaihang1: false,
-      trangthaikhoa1: false,
+      trangthaihang1: statusHang2,
+      trangthaikhoa1: statusKhoa2,
       maloaiHang: idProduct,
       typeInvote: 0,
       maTrongTai: maTrongtai,
@@ -258,8 +269,8 @@ class CustomerRegisterController extends GetxController {
               soBook: numberBook,
               soTan: numberTan ?? 0,
               loaiCont: typeCont,
-              trangthaihang: false,
-              trangthaikhoa: false,
+              trangthaihang: statusHang1,
+              trangthaikhoa: statusKhoa1,
               cont2seal1: numberCont2Seal1,
               cont2seal2: numberCont2Seal2,
               sokien1: numberKien1 ?? 0,
@@ -267,8 +278,8 @@ class CustomerRegisterController extends GetxController {
               soBook1: numberBook1,
               soTan1: numberTan1 ?? 0,
               loaiCont1: typeCont1,
-              trangthaihang1: false,
-              trangthaikhoa1: false,
+              trangthaihang1: statusHang2,
+              trangthaikhoa1: statusKhoa2,
               maloaiHang: idProduct,
             ),
             data["data"]["code"],
@@ -391,6 +402,24 @@ class CustomerRegisterController extends GetxController {
     }
   }
 
+  // Danh sách trang thai co KHOA
+  Future<List<ListProductLockModel>> getDataProductTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Có", "trangthai": true},
+      {"id": 2, "name": "Không có", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
+  // Danh sách trang thai co hang
+  Future<List<ListProductLockModel>> getDataProductLockTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Khóa", "trangthai": true},
+      {"id": 2, "name": "Không khóa", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
   // Danh sách trong tai
   Future<List<ListMaTrongTai>> getTrongTai(query) async {
     var dio = Dio();
@@ -492,6 +521,12 @@ class CustomerRegisterController extends GetxController {
     } catch (error) {
       rethrow;
     }
+  }
+
+  @override
+  void dispose() {
+    numberCarFocus.dispose();
+    super.dispose();
   }
 
   void getSnack({required String messageText}) {

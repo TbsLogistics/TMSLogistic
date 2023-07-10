@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tbs_logistics_tms/app/config/data/color.dart';
@@ -317,7 +316,7 @@ class CustomerRegisterDetailScreen
         ),
       ),
       child: Container(
-        height: size.width * 0.6,
+        height: size.width * 0.7,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -447,6 +446,7 @@ class CustomerRegisterDetailScreen
                           ),
                         ),
                         Expanded(
+                          flex: 2,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
@@ -605,6 +605,7 @@ class CustomerRegisterDetailScreen
                           ),
                         ),
                         Expanded(
+                          flex: 2,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(

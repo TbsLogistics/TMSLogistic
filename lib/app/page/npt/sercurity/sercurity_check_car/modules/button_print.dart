@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/modules/view_invote_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/widgets/print_table_data.dart';
 
 import 'package:printing/printing.dart';
@@ -16,11 +14,6 @@ class SaveBtnBuilder extends StatelessWidget {
     return IconButton(
       onPressed: () {
         printDoc();
-        // print("oke");
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const ViewInvoteScreen()),
-        // );
       },
       icon: const Icon(Icons.print),
     );
@@ -33,7 +26,7 @@ class SaveBtnBuilder extends StatelessWidget {
     final font = await PdfGoogleFonts.nunitoExtraBold();
     final doc = pw.Document();
     doc.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
+        pageFormat: PdfPageFormat.a5,
         build: (pw.Context context) {
           return buildPrintableData(image, font);
         }));

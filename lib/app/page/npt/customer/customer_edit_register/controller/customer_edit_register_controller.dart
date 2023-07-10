@@ -9,6 +9,7 @@ import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_product_lock_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_car.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_cont_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
@@ -65,6 +66,10 @@ class CustomerEditRegisterController extends GetxController {
   Rx<ListTypeContModel> selectTypeCont2 = ListTypeContModel().obs;
   Rx<ListWareHomeModel> selectWareHome = ListWareHomeModel().obs;
   Rx<ListTypeProductModel> selectTypeProduct = ListTypeProductModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectHaveProduct2 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock1 = ListProductLockModel().obs;
+  Rx<ListProductLockModel> selectProductLock2 = ListProductLockModel().obs;
   Rx<ListTypeCarModel> selectTypeCar = ListTypeCarModel().obs;
   var isClientSelect = true.obs;
 
@@ -370,6 +375,24 @@ class CustomerEditRegisterController extends GetxController {
     }
   }
 
+  // Danh sách trang thai co KHOA
+  Future<List<ListProductLockModel>> getDataProductTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Có", "trangthai": true},
+      {"id": 2, "name": "Không có", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
+  // Danh sách trang thai co hang
+  Future<List<ListProductLockModel>> getDataProductLockTrue(query) async {
+    List<Map<String, dynamic>> listVote = [
+      {"id": 1, "name": "Khóa", "trangthai": true},
+      {"id": 2, "name": "Không khóa", "trangthai": false},
+    ];
+    return ListProductLockModel.fromJsonList(listVote);
+  }
+
   // Danh sách loại xe
   Future<List<ListTypeCarModel>> getDataTypeCar(query) async {
     var dio = Dio();
@@ -451,6 +474,10 @@ class CustomerEditRegisterController extends GetxController {
     required String? loaiCont1,
     required String? nameCustomer,
     required String? maTrongTai,
+    required bool? statusHang1,
+    required bool? statusHang2,
+    required bool? statusKhoa1,
+    required bool? statusKhoa2,
   }) async {
     var dio = Dio();
     Response response;
@@ -483,8 +510,8 @@ class CustomerEditRegisterController extends GetxController {
       soBook: loaiCont1 == "null" ? null : numberBook,
       soTan: numberTan == "" ? 0 : double.parse(numberTan!),
       loaiCont: loaiCont == "null" ? null : loaiCont,
-      trangthaihang: false,
-      trangthaikhoa: false,
+      trangthaihang: statusHang1,
+      trangthaikhoa: statusKhoa1,
       cont2seal1: loaiCont1 == "null" ? null : numberCont2Seal1,
       cont2seal2: loaiCont1 == "null" ? null : numberCont2Seal2,
       sokien1: numberKien1 == "" ? 0 : double.parse(numberKien1!),
@@ -492,8 +519,8 @@ class CustomerEditRegisterController extends GetxController {
       soBook1: loaiCont1 == "null" ? null : numberBook1,
       soTan1: numberTan1 == "" ? 0 : double.parse(numberTan1!),
       loaiCont1: loaiCont1 == "null" ? null : loaiCont1,
-      trangthaihang1: false,
-      trangthaikhoa1: false,
+      trangthaihang1: statusHang2,
+      trangthaikhoa1: statusKhoa2,
       maloaiHang: typeProduct,
       maTrongTai: maTrongTai,
       typeInvote: 0,
