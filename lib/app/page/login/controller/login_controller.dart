@@ -539,6 +539,7 @@ class LoginController extends GetxController {
                 "${AppConstants.urlBaseTms}/api/User/Login",
                 data: jsonTms,
               );
+
               if (responseTms.statusCode == 200) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 var data = responseTms.data;

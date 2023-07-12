@@ -33,9 +33,9 @@ class AppConstants {
   // Url
   static const String urlBaseTms = "https://apitest.tbslogistics.com.vn";
   // static const String urlBaseTms = "https://api.tbslogistics.com.vn";
-  // static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
+  static const String urlBaseNpt = "https://tlogapi.tbslogistics.com.vn:200";
   // static const String urlBaseNpt = "https://192.168.0.68:200";
-  static const String urlBaseNpt = "https://192.168.0.25:200";
+  // static const String urlBaseNpt = "https://192.168.0.104:200";
   static const String urlBaseHrm = "http://tlogapi.tbslogistics.com.vn:202";
 
   // static const String urlBaseHrm = "https://tlogapi.tbslogistics.com.vn:300";

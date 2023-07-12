@@ -149,148 +149,154 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CustomerRegisterController>(
       init: CustomerRegisterController(),
-      builder: (controller) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text(
-            "TBS Logistics",
-            style: TextStyle(
-              color: Theme.of(context).primaryColorLight,
+      builder: (controller) => GestureDetector(
+        onTap: () {
+          // FocusScope.of(context).requestFocus(new FocusNode());
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            title: Text(
+              "TBS Logistics",
+              style: TextStyle(
+                color: Theme.of(context).primaryColorLight,
+              ),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                size: 24,
+                color: Theme.of(context).primaryColorLight,
+              ),
             ),
           ),
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new_outlined,
-              size: 24,
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
-        ),
-        body: Container(
-          height: size.height,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: const Row(
-                        children: [
-                          Text(
-                            "Thời gian dự kiến *",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          // color: Color(0xFFF3BD60),
-                          color: Colors.orangeAccent,
-                        ),
-                        // color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      padding: const EdgeInsets.only(top: 10, left: 10),
-                      height: 60,
-                      width: size.width - 10,
-                      margin:
-                          EdgeInsets.symmetric(vertical: size.height * 0.02),
-                      child: DateTimePicker(
-                        type: DateTimePickerType.dateTime,
-                        dateMask: 'dd-MM-yyyy HH:mm',
-                        controller: controller.dateinput,
-                        // initialValue: _initialValue,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2100),
-                        decoration: const InputDecoration(
-                          hintText: "Chọn ngày/ giờ vào",
-                          hintStyle: TextStyle(
-                            color: Colors.orangeAccent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          border: InputBorder.none,
-                          icon: Icon(
-                            Icons.event,
-                            size: 30,
-                          ),
-                          iconColor: Colors.orangeAccent,
-                        ),
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        // onChanged: (val) {
-                        //   setState(() => controller.valueDateInput = val);
-                        // },
-                      ),
-                    ),
-                  ],
-                ),
-                _numberCar(controller),
-                _listDriver(controller),
-                _listWareHome(controller),
-                Obx(
-                  () => controller.selectWareHome.value.maKho != null
-                      ? _listCustomer(controller)
-                      : Container(),
-                ),
-                _listTypeProduct(controller),
-                _listTypeCar(controller),
-                Obx(
-                  () => controller.selectTypeCar.value.maLoaiXe != null
-                      ? controller.selectTypeCar.value.maLoaiXe == "con"
-                          ? Column(
-                              children: [
-                                _contFirt(controller),
-                                Center(
-                                  child: IconButton(
-                                    onPressed: () {
-                                      controller.changeHideShowCont2();
-                                    },
-                                    icon: controller.isShowCont2.value
-                                        ? const Icon(
-                                            Icons.remove_circle,
-                                            size: 30,
-                                            color: Colors.red,
-                                          )
-                                        : const Icon(
-                                            Icons.add_circle,
-                                            size: 30,
-                                            color: Colors.green,
-                                          ),
-                                  ),
-                                ),
-                                controller.isShowCont2.value
-                                    ? _contSecond(controller)
-                                    : Container(),
-                              ],
+          body: Container(
+            height: size.height,
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Thời gian dự kiến *",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 16,
+                              ),
                             )
-                          : _formCar(controller)
-                      : Container(),
-                ),
-                ButtonFormSubmit(
-                    onPressed: () {
-                      onSignUp(controller);
-                    },
-                    text: "Đăng ký")
-              ],
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            // color: Color(0xFFF3BD60),
+                            color: Colors.orangeAccent,
+                          ),
+                          // color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        padding: const EdgeInsets.only(top: 10, left: 10),
+                        height: 60,
+                        width: size.width - 10,
+                        margin:
+                            EdgeInsets.symmetric(vertical: size.height * 0.02),
+                        child: DateTimePicker(
+                          type: DateTimePickerType.dateTime,
+                          dateMask: 'dd-MM-yyyy HH:mm',
+                          controller: controller.dateinput,
+                          // initialValue: _initialValue,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2100),
+                          decoration: const InputDecoration(
+                            hintText: "Chọn ngày/ giờ vào",
+                            hintStyle: TextStyle(
+                              color: Colors.orangeAccent,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.event,
+                              size: 30,
+                            ),
+                            iconColor: Colors.orangeAccent,
+                          ),
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          // onChanged: (val) {
+                          //   setState(() => controller.valueDateInput = val);
+                          // },
+                        ),
+                      ),
+                    ],
+                  ),
+                  _numberCar(controller),
+                  _listDriver(controller),
+                  _listWareHome(controller),
+                  Obx(
+                    () => controller.selectWareHome.value.maKho != null
+                        ? _listCustomer(controller)
+                        : Container(),
+                  ),
+                  _listTypeProduct(controller),
+                  _listTypeCar(controller),
+                  Obx(
+                    () => controller.selectTypeCar.value.maLoaiXe != null
+                        ? controller.selectTypeCar.value.maLoaiXe == "con"
+                            ? Column(
+                                children: [
+                                  _contFirt(controller),
+                                  Center(
+                                    child: IconButton(
+                                      onPressed: () {
+                                        controller.changeHideShowCont2();
+                                      },
+                                      icon: controller.isShowCont2.value
+                                          ? const Icon(
+                                              Icons.remove_circle,
+                                              size: 30,
+                                              color: Colors.red,
+                                            )
+                                          : const Icon(
+                                              Icons.add_circle,
+                                              size: 30,
+                                              color: Colors.green,
+                                            ),
+                                    ),
+                                  ),
+                                  controller.isShowCont2.value
+                                      ? _contSecond(controller)
+                                      : Container(),
+                                ],
+                              )
+                            : _formCar(controller)
+                        : Container(),
+                  ),
+                  ButtonFormSubmit(
+                      onPressed: () {
+                        onSignUp(controller);
+                      },
+                      text: "Đăng ký")
+                ],
+              ),
             ),
           ),
         ),
@@ -1768,11 +1774,10 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   onSignUp(CustomerRegisterController controller) {
     if (controller.dateinput.text == "" ||
         controller.numberCar.text == "" ||
-        controller.selectCustomer.value == "" ||
-        controller.selectDriver.value == "" ||
-        controller.selectWareHome.value == "" ||
-        controller.selectTypeProduct.value == "" ||
-        controller.selectTypeCar.value == "") {
+        controller.selectCustomer.value.maKhachHang == null ||
+        controller.selectWareHome.value.maKho == null ||
+        controller.selectTypeProduct.value.maloaiHang == null ||
+        controller.selectTypeCar.value.maLoaiXe == null) {
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     }
     // print(controller.dateinput.text);

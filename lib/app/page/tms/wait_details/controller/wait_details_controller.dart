@@ -22,14 +22,52 @@ class AwaitDetailsController extends GetxController {
   List listLat = [];
   List listLong = [];
 
+  //ListPlaceZone
+  List listPlace = [];
+  RxList listTatolPlace = [].obs;
+  RxList listGiveEmpty = [].obs;
+  RxList listGive = [].obs;
+  RxList listReceiveEmpty = [].obs;
+  RxList listReceive = [].obs;
+
   RxList<String> items = ['Item 1', 'Hello 2', 'Win 3', 'Item 4'].obs;
 
   @override
   void onInit() {
     var orDerDriver = Get.arguments as TmsOrdersModel;
     detailOrder.value = orDerDriver;
-
+    listPlaceZone();
     super.onInit();
+  }
+
+  void listPlaceZone() {
+    for (var i = 0; i < detailOrder.value.getDataHandlingMobiles!.length; i++) {
+      var items = detailOrder.value.getDataHandlingMobiles![i];
+      listPlace.add({
+        "giveEmpty": items.diemLayRong,
+        "give": items.diemLayHang,
+        "receive": items.diemTraHang,
+        "receiveEmpty": items.diemTraRong
+      });
+    }
+    for (var i = 0; i < listPlace.length; i++) {
+      var items = listPlace[i];
+      listReceiveEmpty.add(items["giveEmpty"]);
+      listReceive.add(items["give"]);
+      listGive.add(items["receive"]);
+      listGiveEmpty.add(items["receiveEmpty"]);
+    }
+    // listTatolPlace = {
+    //   "ReceiveEmpty": listReceiveEmpty,
+    //   "Receive": listReceive,
+    //   "Give": listGive,
+    //   "GiveEmpty": listGiveEmpty,
+    // };
+    listReceive.value = listReceive.toSet().toList();
+    listReceiveEmpty.value = listReceiveEmpty.toSet().toList();
+    listGive.value = listGive.toSet().toList();
+    listGiveEmpty.value = listGiveEmpty.toSet().toList();
+    print([listReceive, listReceiveEmpty, listGive, listGiveEmpty]);
   }
 
   void onReorder(int oldIndex, int newIndex) {

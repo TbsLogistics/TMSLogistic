@@ -53,7 +53,7 @@ class TmsOrdersModel {
 
 class GetDataHandlingMobiles {
   int? handlingId;
-  String? thuTuGiaoHang;
+  int? thuTuGiaoHang;
   String? bookingNo;
   String? maPTVC;
   String? maVanDon;

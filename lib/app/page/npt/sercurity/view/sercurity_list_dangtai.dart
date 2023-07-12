@@ -44,30 +44,38 @@ class SercurityListDangTaiScreen
         builder: (controller) => Obx(
           () => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: ListView.builder(
-              itemBuilder: (c, i) {
-                var items = controller.listDangtai[i];
-                return _customListTitle(
-                  stt: "${i + 1}",
-                  nameDriver: items.maTaixe!.tenTaixe ?? "",
-                  IDPhieu: items.pdriverInOutWarehouseCode ?? "",
-                  colorID: items.giovao != null ? Colors.red : Colors.green,
-                  soCont: items.socont1 ?? "",
-                  numberCar: items.soxe ?? "",
-                  titleTime: items.giovao != null ? "Giờ vào" : "Giờ dự kiến",
-                  time: hours.format(
-                    DateTime.parse("${items.giovao ?? items.giodukien}"),
+            child: controller.isLoad.value
+                ? ListView.builder(
+                    itemBuilder: (c, i) {
+                      var items = controller.listDangtai[i];
+                      return _customListTitle(
+                        stt: "${i + 1}",
+                        nameDriver: items.maTaixe!.tenTaixe ?? "",
+                        IDPhieu: items.pdriverInOutWarehouseCode ?? "",
+                        colorID:
+                            items.giovao != null ? Colors.red : Colors.green,
+                        soCont: items.socont1 ?? "",
+                        numberCar: items.soxe ?? "",
+                        titleTime:
+                            items.giovao != null ? "Giờ vào" : "Giờ dự kiến",
+                        time: hours.format(
+                          DateTime.parse("${items.giovao ?? items.giodukien}"),
+                        ),
+                        onTap: () {
+                          Get.toNamed(
+                            Routes.SERCURITY_DETAILS_LIST_DANGTAI,
+                            arguments: items,
+                          );
+                        },
+                      );
+                    },
+                    itemCount: controller.listDangtai.length,
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.orangeAccent,
+                    ),
                   ),
-                  onTap: () {
-                    Get.toNamed(
-                      Routes.SERCURITY_DETAILS_LIST_DANGTAI,
-                      arguments: items,
-                    );
-                  },
-                );
-              },
-              itemCount: controller.listDangtai.length,
-            ),
           ),
         ),
       ),

@@ -9,6 +9,7 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/model/d
 
 class SercurityListDangTaiController extends GetxController {
   RxList<DriverListTickerModel> listDangtai = <DriverListTickerModel>[].obs;
+  RxBool isLoad = false.obs;
 
   @override
   void onInit() {
@@ -23,6 +24,7 @@ class SercurityListDangTaiController extends GetxController {
     Map<String, dynamic> headers = {
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
+    isLoad(false);
     const url = "${AppConstants.urlBaseNpt}/invote/read";
     try {
       response = await dio.get(url, options: Options(headers: headers));
@@ -34,6 +36,7 @@ class SercurityListDangTaiController extends GetxController {
           List data1 = data["data"];
           listDangtai.value =
               data1.map((e) => DriverListTickerModel.fromJson(e)).toList();
+          isLoad(true);
         }
       }
     } on DioError catch (e) {

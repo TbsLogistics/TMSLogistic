@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:tbs_logistics_tms/app/page/tms/finished/view/finished_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/pending/view/pending_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/tms_page/controller/tms_controller.dart';
+import 'package:tbs_logistics_tms/app/page/tms/tms_page/modules/custom_animated_bottom_bar.dart';
 import 'package:tbs_logistics_tms/app/page/tms/wait/view/wait_screen.dart';
 
 import '../../../config/data/color.dart';
@@ -37,75 +37,106 @@ class TmsPage extends GetView<TmsController> {
                     Get.back();
                   },
                 ),
-                // actions: [
-                //   Column(
-                //     children: [
-                //       Obx(() => Text(controller.count.value.toString())),
-                //       Obx(() =>
-                //           Text(controller.distances.value.round().toString())),
-                //       Obx(() =>
-                //           Text(controller.locationMessage.value.toString())),
-                //     ],
-                //   ),
-                //   IconButton(
-                //     onPressed: () {
-                //       controller.timerRealTime();
-                //     },
-                //     icon: const Icon(Icons.safety_check),
-                //   ),
-                //   IconButton(
-                //     onPressed: () {
-                //       controller.cancelTimer();
-                //     },
-                //     icon: const Icon(Icons.archive),
-                //   ),
-                // ],
                 title: const Text("TMS PAGE"),
                 centerTitle: true,
                 backgroundColor: CustomColor.backgroundAppbar,
               ),
-              body: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: TabBarView(
-                        controller: controller.controller,
-                        children: const [
-                          TmsAwait(),
-                          TmsPending(),
-                          TmsFinished(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(
-                          25.0,
-                        ),
-                      ),
-                      child: TabBar(
-                        controller: controller.controller,
-                        indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            25.0,
-                          ),
-                          color: Colors.orangeAccent.shade200,
-                        ),
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.black,
-                        tabs: controller.myTabs,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // body: Container(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       Expanded(
+              //         child: TabBarView(
+              //           controller: controller.controller,
+              //           children: const [
+              //             TmsAwait(),
+              //             TmsPending(),
+              //             TmsFinished(),
+              //           ],
+              //         ),
+              //       ),
+              //       Container(
+              //         height: 50,
+              //         decoration: BoxDecoration(
+              //           color: Colors.grey[300],
+              //           borderRadius: BorderRadius.circular(
+              //             25.0,
+              //           ),
+              //         ),
+              //         child: TabBar(
+              //           controller: controller.controller,
+              //           indicator: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(
+              //               25.0,
+              //             ),
+              //             color: Colors.orangeAccent.shade200,
+              //           ),
+              //           labelColor: Colors.white,
+              //           unselectedLabelColor: Colors.black,
+              //           tabs: controller.myTabs,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              body: getBody(),
+              bottomNavigationBar: _buildBottomBar(),
             ),
           )),
+    );
+  }
+
+  Widget _buildBottomBar() {
+    return CustomAnimatedBottomBar(
+      containerHeight: 70,
+      backgroundColor: Colors.white,
+      selectedIndex: controller.currentIndex,
+      showElevation: true,
+      itemCornerRadius: 24,
+      curve: Curves.easeIn,
+      onItemSelected: (index) {
+        controller.currentIndex = index;
+        controller.update();
+      },
+      items: <BottomNavyBarItem>[
+        BottomNavyBarItem(
+          icon: Icon(Icons.av_timer),
+          title: Text('Lệnh chờ'),
+          activeColor: Colors.green,
+          inactiveColor: controller.inactiveColor,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(Icons.add_location_rounded),
+          title: Text('Lệnh thực hiện'),
+          activeColor: Colors.purpleAccent,
+          inactiveColor: controller.inactiveColor,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(Icons.add_task_sharp),
+          title: Text(
+            'Hoàn thành ',
+          ),
+          activeColor: Colors.pink,
+          inactiveColor: controller.inactiveColor,
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget getBody() {
+    List<Widget> pages = [
+      TmsAwait(),
+      TmsPending(),
+      TmsFinished(),
+    ];
+    return IndexedStack(
+      index: controller.currentIndex,
+      children: pages,
     );
   }
 }

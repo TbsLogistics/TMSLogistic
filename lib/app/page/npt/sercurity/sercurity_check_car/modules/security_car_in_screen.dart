@@ -30,12 +30,7 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                   var string = value.split("|");
                   var maPhieu = controller
                       .detailEntryVote.value.pdriverInOutWarehouseCode;
-                  print([string[0], maPhieu]);
-                  // if (string[0].length == 12) {
-                  //   controller.getCheckCCCD(CCCD: string[0]);
-                  // } else {
-                  //   controller.getDetailEntryVote(maPhieuvao: value);
-                  // }
+
                   if (maPhieu != null) {
                     if (string[0].length == 12) {
                       controller.getDetailEntryVote(
@@ -265,14 +260,22 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                 inputSubmit(
                   size: size,
                   onPressed: () {
-                    controller.putInOut(typeInvote: 1);
+                    if (controller.selectTypeCar.value.maLoaiXe != null) {
+                      controller.putInOut(typeInvote: 1);
+                    } else {
+                      controller.getSnack(messageText: "Trống dữ liệu");
+                    }
                   },
                   title: 'Xác nhận vào',
                 ),
                 inputSubmit(
                   size: size,
                   onPressed: () {
-                    controller.putInOut(typeInvote: 2);
+                    if (controller.selectTypeCar.value.maLoaiXe != null) {
+                      controller.putInOut(typeInvote: 2);
+                    } else {
+                      controller.getSnack(messageText: "Trống dữ liệu");
+                    }
                   },
                   title: 'Xác nhận ra',
                 ),

@@ -15,6 +15,9 @@ import 'package:tbs_logistics_tms/app/page/tms/wait/model/tms_order_model.dart';
 
 class TmsController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  int currentIndex = 0;
+
+  final inactiveColor = Colors.grey;
   var dio = Dio();
   late Response response;
 
@@ -28,6 +31,7 @@ class TmsController extends GetxController
   RxInt count = 0.obs;
   List listLat = [];
   List listLong = [];
+  int visit = 0;
 
   final List<Tab> myTabs = <Tab>[
     const Tab(text: 'Lệnh chờ'),

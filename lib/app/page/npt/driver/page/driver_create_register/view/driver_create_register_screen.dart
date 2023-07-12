@@ -53,107 +53,113 @@ class _DriverCreateRegisterScreenState
 
     return GetBuilder<DriverCreateRegisterController>(
       init: DriverCreateRegisterController(),
-      builder: (controller) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new,
-                size: 25, color: Theme.of(context).primaryColorLight),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-          title: Text(
-            'Đăng ký phiếu vào',
-            style: TextStyle(color: Theme.of(context).primaryColorLight),
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(
-              top: 20,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
+      builder: (controller) => GestureDetector(
+        onTap: () {
+          // FocusScope.of(context).requestFocus(new FocusNode());
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new,
+                  size: 25, color: Theme.of(context).primaryColorLight),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            // decoration: const BoxDecoration(gradient: CustomColor.gradient),
-            child: Form(
-              key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  //THoi gian du kien
-                  buildDateTime(size, controller),
-                  //Nhập số xe
-                  CustomFormFiels(
-                    forcusNode: controller.numberCarFocus,
-                    keyboardType: TextInputType.text,
-                    title: "Số xe *",
-                    controller: controller.numberCar,
-                    hintText: "Nhập số xe",
-                    icon: Icons.abc,
-                    color: Colors.green,
-                  ),
-                  //danh sách kho
-                  _listWareHome(controller),
-                  //Danh sách khách hàng
-                  Obx(
-                    () => controller.selectWareHome.value.maKho != null
-                        ? _listCustomer(controller)
-                        : Container(),
-                  ),
-                  // _listTrongTai(controller),
-                  //danh sách loại hàng
-                  _listTypeProduct(controller),
-                  //danh sách loại xe
-                  _listTypeCar(controller),
-                  Obx(() {
-                    // print(
-                    //   [
-                    //     controller.selectTypeCar.value.maLoaiXe != "",
-                    //     controller.selectTypeCar.value.maLoaiXe,
-                    //     controller.selectTypeCar.value.maLoaiXe == ""
-                    //   ],
-                    // );
-                    return controller.selectTypeCar.value.maLoaiXe != null
-                        ? controller.selectTypeCar.value.maLoaiXe == "con"
-                            ? Column(
-                                children: [
-                                  _contFirt(controller),
-                                  Center(
-                                    child: IconButton(
-                                      onPressed: () {
-                                        controller.changeHideShowCont2();
-                                      },
-                                      icon: controller.isShowCont2.value
-                                          ? const Icon(
-                                              Icons.remove_circle,
-                                              size: 30,
-                                              color: Colors.red,
-                                            )
-                                          : const Icon(
-                                              Icons.add_circle,
-                                              size: 30,
-                                              color: Colors.green,
-                                            ),
+            title: Text(
+              'Đăng ký phiếu vào',
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
+            ),
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              // decoration: const BoxDecoration(gradient: CustomColor.gradient),
+              child: Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    //THoi gian du kien
+                    buildDateTime(size, controller),
+                    //Nhập số xe
+                    CustomFormFiels(
+                      forcusNode: controller.numberCarFocus,
+                      keyboardType: TextInputType.text,
+                      title: "Số xe *",
+                      controller: controller.numberCar,
+                      hintText: "Nhập số xe",
+                      icon: Icons.abc,
+                      color: Colors.green,
+                    ),
+                    //danh sách kho
+                    _listWareHome(controller),
+                    //Danh sách khách hàng
+                    Obx(
+                      () => controller.selectWareHome.value.maKho != null
+                          ? _listCustomer(controller)
+                          : Container(),
+                    ),
+                    // _listTrongTai(controller),
+                    //danh sách loại hàng
+                    _listTypeProduct(controller),
+                    //danh sách loại xe
+                    _listTypeCar(controller),
+                    Obx(() {
+                      // print(
+                      //   [
+                      //     controller.selectTypeCar.value.maLoaiXe != "",
+                      //     controller.selectTypeCar.value.maLoaiXe,
+                      //     controller.selectTypeCar.value.maLoaiXe == ""
+                      //   ],
+                      // );
+                      return controller.selectTypeCar.value.maLoaiXe != null
+                          ? controller.selectTypeCar.value.maLoaiXe == "con"
+                              ? Column(
+                                  children: [
+                                    _contFirt(controller),
+                                    Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          controller.changeHideShowCont2();
+                                        },
+                                        icon: controller.isShowCont2.value
+                                            ? const Icon(
+                                                Icons.remove_circle,
+                                                size: 30,
+                                                color: Colors.red,
+                                              )
+                                            : const Icon(
+                                                Icons.add_circle,
+                                                size: 30,
+                                                color: Colors.green,
+                                              ),
+                                      ),
                                     ),
-                                  ),
-                                  controller.isShowCont2.value
-                                      ? _contSecond(controller)
-                                      : Container(),
-                                ],
-                              )
-                            : _formCar(controller)
-                        : Container();
-                  }),
+                                    controller.isShowCont2.value
+                                        ? _contSecond(controller)
+                                        : Container(),
+                                  ],
+                                )
+                              : _formCar(controller)
+                          : Container();
+                    }),
 
-                  ButtonFormSubmit(
-                      onPressed: () {
-                        _signUpProcess(context, controller);
-                        // print(numberSelectCont);
-                      },
-                      text: "Đăng ký")
-                ],
+                    ButtonFormSubmit(
+                        onPressed: () {
+                          _signUpProcess(context, controller);
+                          // print(numberSelectCont);
+                        },
+                        text: "Đăng ký")
+                  ],
+                ),
               ),
             ),
           ),
@@ -1559,10 +1565,10 @@ class _DriverCreateRegisterScreenState
       BuildContext context, DriverCreateRegisterController controller) {
     if (controller.dateinput.text == "" ||
         controller.numberCar.text == "" ||
-        controller.selectCustomer.value == "" ||
-        controller.selectWareHome.value == "" ||
-        controller.selectTypeProduct.value == "" ||
-        controller.selectTypeCar.value == "") {
+        controller.selectCustomer.value.maKhachHang == null ||
+        controller.selectWareHome.value.maKho == null ||
+        controller.selectTypeProduct.value.maloaiHang == null ||
+        controller.selectTypeCar.value.maLoaiXe == null) {
       getSnack(messageText: "Nhập đầy đủ thông tin *");
     } else {
       if (controller.selectTypeCar.value.maLoaiXe == "con") {
