@@ -10,7 +10,14 @@ class SplashScreen extends GetView<SplashController> {
     return GetBuilder<SplashController>(
       init: SplashController(),
       builder: (controller) {
-        return Image.asset("assets/images/logo@2x.png");
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Image.asset("assets/images/logo@2x.png"),
+            )
+          ],
+        );
       },
     );
   }

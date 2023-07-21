@@ -294,7 +294,7 @@ class CustomerListTickerRegisterDetailsScreen
                           height: 10,
                         ),
                         Text(
-                          "${items.cont1seal1}",
+                          items.cont1seal1 ?? "",
                           style: TextStyle(
                             fontSize: 16,
                             color: Theme.of(context).primaryColorLight,
@@ -319,7 +319,7 @@ class CustomerListTickerRegisterDetailsScreen
                                 style: CustomTextStyle.titleDetails,
                               ),
                               Text(
-                                "${items.soBook}",
+                                items.soBook ?? "",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Theme.of(context).primaryColorLight,
@@ -651,7 +651,7 @@ class CustomerListTickerRegisterDetailsScreen
                           style: CustomTextStyle.titleDetails,
                         ),
                         const SizedBox(height: 5),
-                        Text("${items.socont1}"),
+                        Text(items.socont1 ?? ""),
                       ],
                     ),
                   ),
@@ -676,7 +676,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.cont1seal1}"),
+                              Text(items.cont1seal1 ?? ""),
                             ],
                           ),
                         ],
@@ -704,7 +704,7 @@ class CustomerListTickerRegisterDetailsScreen
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${items.cont1seal2}"),
+                              Text(items.cont1seal2 ?? ""),
                             ],
                           ),
                         ],

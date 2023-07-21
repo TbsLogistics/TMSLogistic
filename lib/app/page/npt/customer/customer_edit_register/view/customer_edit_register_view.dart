@@ -18,6 +18,7 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_registe
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_product_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_type_vote_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_warehome_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/model/list_driver_by_customer_model.dart';
 
 class CustomerEditRegisterPage extends StatefulWidget {
   const CustomerEditRegisterPage({super.key});
@@ -196,6 +197,8 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                     icon: Icons.abc,
                     color: Colors.green,
                   ),
+                  //Danh sach Tai xe
+                  _listDriver(controller),
                   //danh sách kho
                   _listWareHome(controller),
                   //Danh sách khách hàng
@@ -658,8 +661,7 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                 child: (item?.tenLoaiHang == null)
                     ? ListTile(
                         title: Text(
-                          controller.getDriverFinishedScreen.value.maloaiHang!
-                              .tenLoaiHang!,
+                          "${controller.getDriverFinishedScreen.value.maloaiHang!.tenLoaiHang!}",
                           style: const TextStyle(
                             color: Colors.orangeAccent,
                           ),
@@ -1477,11 +1479,11 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
                                   ? "Không có"
                                   : "Có hàng"
                               : "",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.orangeAccent,
                           ),
                         ),
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.black,
                         ),
@@ -1844,6 +1846,101 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
     );
   }
 
+  Widget _listDriver(CustomerEditRegisterController controller) {
+    return SizedBox(
+      height: 120,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            child: const Row(
+              children: [
+                Text(
+                  "Tài xế *",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          FindDropdown<ListDriverByCustomerModel>(
+            showSearchBox: false,
+            onFind: (String filter) => controller.getDataDriver(filter),
+            onChanged: (value) {
+              controller.selectDriver.value.maTaixe = value!.maTaixe;
+            },
+            dropdownBuilder:
+                (BuildContext context, ListDriverByCustomerModel? item) {
+              return Card(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: const BorderSide(
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                child: (item?.tenTaixe == null)
+                    ? ListTile(
+                        title: Text(
+                          controller
+                              .getDriverFinishedScreen.value.maTaixe!.tenTaixe!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                      )
+                    : ListTile(
+                        title: Text(
+                          item!.tenTaixe!,
+                          style: const TextStyle(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+              );
+            },
+            dropdownItemBuilder: (BuildContext context,
+                ListDriverByCustomerModel item, bool isSelected) {
+              return Container(
+                // height: 100,
+                decoration: !isSelected
+                    ? null
+                    : BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                child: Card(
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  child: ListTile(
+                    selected: isSelected,
+                    title: Text(
+                      item.tenTaixe!,
+                      style: const TextStyle(color: Colors.orangeAccent),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   void _signUpProcess(
     BuildContext context,
     CustomerEditRegisterController controller,
@@ -1854,94 +1951,116 @@ class _CustomerEditRegisterPageState extends State<CustomerEditRegisterPage> {
     } else {
       controller.selectTypeCont1.value.typeContCode;
     }
-    controller.puttRegisterDriver(
-      maKhachHang: controller.selectCustomer.value.maKhachHang ??
-          controller.getDriverFinishedScreen.value.maKhachHang!.maKhachHang,
-      time: controller.dateinput.text == ""
-          ? controller.getDriverFinishedScreen.value.giodukien
-          : controller.dateinput.text,
-      maTrongTai: controller.selectTrongTai.value.maTrongTai,
-      typeWarehome: controller.selectWareHome.value.maKho ??
-          controller.getDriverFinishedScreen.value.khoRe!.maKho,
-      typeCar: controller.selectTypeCar.value.maLoaiXe ??
-          controller.getDriverFinishedScreen.value.loaixe!.maLoaiXe,
-      numberCar: controller.numberCar.text == ""
-          ? controller.getDriverFinishedScreen.value.soxe
-          : controller.numberCar.text,
-      numberCont1: controller.numberCont1.text == ""
-          ? controller.getDriverFinishedScreen.value.socont1
-          : controller.numberCont1.text,
-      numberCont2: controller.numberCont2.text == ""
-          ? controller.getDriverFinishedScreen.value.socont2
-          : controller.numberCont2.text,
-      numberCont1Seal1: controller.numberCont1Seal1.text == ""
-          ? controller.getDriverFinishedScreen.value.cont1seal1
-          : controller.numberCont1Seal1.text,
-      numberCont1Seal2: controller.numberCont1Seal2.text == ""
-          ? controller.getDriverFinishedScreen.value.cont1seal2
-          : controller.numberCont1Seal2.text,
-      numberKhoi: controller.numberKhoi.text == ""
-          ? controller.getDriverFinishedScreen.value.sokhoi.toString()
-          : controller.numberKhoi.text,
-      numberKien: controller.numberKien.text == ""
-          ? controller.getDriverFinishedScreen.value.soKien.toString()
-          : controller.numberKien.text,
-      numberBook: controller.numberBook.text == ""
-          ? controller.getDriverFinishedScreen.value.soBook
-          : controller.numberBook.text,
-      numberTan: controller.numberTan.text == ""
-          ? controller.getDriverFinishedScreen.value.soTan.toString()
-          : controller.numberTan.text,
-      statusHang1: controller.selectHaveProduct1.value.trangthai ?? false,
-      statusKhoa1: controller.selectProductLock1.value.trangthai ?? false,
-      loaiCont: controller.selectTypeCont1.value.typeContCode ??
-          controller.getDriverFinishedScreen.value.loaiCont!.typeContCode,
-      numberCont2Seal1: controller.numberCont2Seal1.text == ""
-          ? controller.getDriverFinishedScreen.value.cont2seal1
-          : controller.numberCont2Seal1.text,
-      numberCont2Seal2: controller.numberCont2Seal2.text == ""
-          ? controller.getDriverFinishedScreen.value.cont2seal2
-          : controller.numberCont2Seal2.text,
-      numberKhoi1: controller.numberKhoi1.text == ""
-          ? controller.getDriverFinishedScreen.value.sokhoi1.toString()
-          : controller.numberKhoi1.text,
-      numberKien1: controller.numberKien1.text == ""
-          ? controller.getDriverFinishedScreen.value.sokien1.toString()
-          : controller.numberKien1.text,
-      numberBook1: controller.numberBook1.text == ""
-          ? controller.getDriverFinishedScreen.value.soBook1
-          : controller.numberBook1.text,
-      numberTan1: controller.numberTan1.text == ""
-          ? controller.getDriverFinishedScreen.value.soTan1.toString()
-          : controller.numberTan1.text,
-      statusHang2: controller.selectHaveProduct2.value.trangthai ?? false,
-      statusKhoa2: controller.selectProductLock2.value.trangthai ?? false,
-      loaiCont1: controller.selectTypeCont2.value.typeContCode ??
-          controller.getDriverFinishedScreen.value.loaiCont1!.typeContCode,
-      typeProduct: controller.selectTypeProduct.value.maloaiHang ??
-          controller.getDriverFinishedScreen.value.maloaiHang!.maloaiHang,
-      nameCustomer: controller.selectCustomer.value.tenKhachhang ??
-          controller.getDriverFinishedScreen.value.maKhachHang!.tenKhachhang,
-    );
-
-    void getSnack({required String messageText}) {
-      Get.snackbar(
-        "",
-        "",
-        titleText: const Text(
-          "Thông báo",
-          style: TextStyle(
-            color: Colors.red,
-            fontSize: 16,
-          ),
-        ),
-        messageText: Text(
-          messageText,
-          style: const TextStyle(
-            color: Colors.green,
-          ),
-        ),
-      );
+    if (controller.isShowCont2.value == true &&
+        controller.selectTypeCont1.value.typeContCode != null &&
+        controller.selectTypeCont2.value.typeContCode != null) {
+      if (controller.numberCont2.text != "") {
+        if (controller.selectTypeCont2.value.typeContCode != null &&
+            controller.selectHaveProduct2.value.trangthai != null &&
+            controller.selectProductLock2.value.trangthai != null) {
+          controller.puttRegisterDriver(
+            maTaiXe:
+                controller.getDriverFinishedScreen.value.maTaixe!.maTaixe ??
+                    controller.getDriverFinishedScreen.value.maTaixe!.maTaixe,
+            maKhachHang: controller.selectCustomer.value.maKhachHang ??
+                controller
+                    .getDriverFinishedScreen.value.maKhachHang!.maKhachHang,
+            time: controller.dateinput.text == ""
+                ? controller.getDriverFinishedScreen.value.giodukien
+                : controller.dateinput.text,
+            maTrongTai: controller.selectTrongTai.value.maTrongTai,
+            typeWarehome: controller.selectWareHome.value.maKho ??
+                controller.getDriverFinishedScreen.value.khoRe!.maKho,
+            typeCar: controller.selectTypeCar.value.maLoaiXe ??
+                controller.getDriverFinishedScreen.value.loaixe!.maLoaiXe,
+            numberCar: controller.numberCar.text == ""
+                ? controller.getDriverFinishedScreen.value.soxe
+                : controller.numberCar.text,
+            numberCont1: controller.numberCont1.text == ""
+                ? controller.getDriverFinishedScreen.value.socont1
+                : controller.numberCont1.text,
+            numberCont2: controller.numberCont2.text == ""
+                ? controller.getDriverFinishedScreen.value.socont2
+                : controller.numberCont2.text,
+            numberCont1Seal1: controller.numberCont1Seal1.text == ""
+                ? controller.getDriverFinishedScreen.value.cont1seal1
+                : controller.numberCont1Seal1.text,
+            numberCont1Seal2: controller.numberCont1Seal2.text == ""
+                ? controller.getDriverFinishedScreen.value.cont1seal2
+                : controller.numberCont1Seal2.text,
+            numberKhoi: controller.numberKhoi.text == ""
+                ? controller.getDriverFinishedScreen.value.sokhoi.toString()
+                : controller.numberKhoi.text,
+            numberKien: controller.numberKien.text == ""
+                ? controller.getDriverFinishedScreen.value.soKien.toString()
+                : controller.numberKien.text,
+            numberBook: controller.numberBook.text == ""
+                ? controller.getDriverFinishedScreen.value.soBook
+                : controller.numberBook.text,
+            numberTan: controller.numberTan.text == ""
+                ? controller.getDriverFinishedScreen.value.soTan.toString()
+                : controller.numberTan.text,
+            statusHang1: controller.selectHaveProduct1.value.trangthai ?? false,
+            statusKhoa1: controller.selectProductLock1.value.trangthai ?? false,
+            loaiCont: controller.selectTypeCont1.value.typeContCode ??
+                controller.getDriverFinishedScreen.value.loaiCont!.typeContCode,
+            numberCont2Seal1: controller.numberCont2Seal1.text == ""
+                ? controller.getDriverFinishedScreen.value.cont2seal1
+                : controller.numberCont2Seal1.text,
+            numberCont2Seal2: controller.numberCont2Seal2.text == ""
+                ? controller.getDriverFinishedScreen.value.cont2seal2
+                : controller.numberCont2Seal2.text,
+            numberKhoi1: controller.numberKhoi1.text == ""
+                ? controller.getDriverFinishedScreen.value.sokhoi1.toString()
+                : controller.numberKhoi1.text,
+            numberKien1: controller.numberKien1.text == ""
+                ? controller.getDriverFinishedScreen.value.sokien1.toString()
+                : controller.numberKien1.text,
+            numberBook1: controller.numberBook1.text == ""
+                ? controller.getDriverFinishedScreen.value.soBook1
+                : controller.numberBook1.text,
+            numberTan1: controller.numberTan1.text == ""
+                ? controller.getDriverFinishedScreen.value.soTan1.toString()
+                : controller.numberTan1.text,
+            statusHang2: controller.selectHaveProduct2.value.trangthai ?? false,
+            statusKhoa2: controller.selectProductLock2.value.trangthai ?? false,
+            loaiCont1: controller.selectTypeCont2.value.typeContCode ??
+                controller
+                    .getDriverFinishedScreen.value.loaiCont1!.typeContCode,
+            typeProduct: controller.selectTypeProduct.value.maloaiHang ??
+                controller.getDriverFinishedScreen.value.maloaiHang!.maloaiHang,
+            nameCustomer: controller.selectCustomer.value.tenKhachhang ??
+                controller
+                    .getDriverFinishedScreen.value.maKhachHang!.tenKhachhang,
+          );
+        } else {
+          getSnack(messageText: "Chọn trạng thái Khóa, Hàng *");
+        }
+      } else {
+        getSnack(messageText: "Nhập số Cont *");
+      }
+    } else {
+      getSnack(messageText: "Chọn loại cont * !");
     }
+  }
+
+  void getSnack({required String messageText}) {
+    Get.snackbar(
+      "",
+      "",
+      titleText: const Text(
+        "Thông báo",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 16,
+        ),
+      ),
+      messageText: Text(
+        messageText,
+        style: const TextStyle(
+          color: Colors.green,
+        ),
+      ),
+    );
   }
 }

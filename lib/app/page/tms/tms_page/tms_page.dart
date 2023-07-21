@@ -22,7 +22,7 @@ class TmsPage extends GetView<TmsController> {
         return false;
       },
       child: DefaultTabController(
-          length: 3,
+          length: 2,
           child: GetBuilder<TmsController>(
             init: TmsController(),
             builder: (controller) => Scaffold(
@@ -81,8 +81,48 @@ class TmsPage extends GetView<TmsController> {
               //     ],
               //   ),
               // ),
-              body: getBody(),
-              bottomNavigationBar: _buildBottomBar(),
+              body: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(
+                          25.0,
+                        ),
+                      ),
+                      child: TabBar(
+                        controller: controller.controller,
+                        indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25.0,
+                          ),
+                          color: Colors.orangeAccent.shade200,
+                        ),
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.black,
+                        tabs: controller.myTabs,
+                      ),
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: controller.controller,
+                        children: const [
+                          TmsAwait(),
+                          // TmsPending(),
+                          TmsFinished(),
+                        ],
+                      ),
+                    ),
+                    Container(height: 30),
+                  ],
+                ),
+              ),
+              // bottomNavigationBar: _buildBottomBar(),
             ),
           )),
     );

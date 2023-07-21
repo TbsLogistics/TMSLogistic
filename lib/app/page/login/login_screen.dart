@@ -29,10 +29,10 @@ class LoginScreen extends GetView<LoginController> {
                   key: formKey,
                   autovalidateMode: AutovalidateMode.always,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    // mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: size.height * 0.3,
+                        height: size.height * 0.25,
                         width: size.width,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -49,7 +49,7 @@ class LoginScreen extends GetView<LoginController> {
                         ),
                       ),
                       SizedBox(
-                        height: size.width * 0.05,
+                        height: size.width * 0.01,
                       ),
                       Container(
                         height: size.height * 0.1,
@@ -62,7 +62,7 @@ class LoginScreen extends GetView<LoginController> {
                         ),
                       ),
                       SizedBox(
-                        height: size.width * 0.05,
+                        height: size.width * 0.02,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -142,7 +142,7 @@ class LoginScreen extends GetView<LoginController> {
                           ),
                         ),
                       ),
-                      SizedBox(height: size.width * 0.05),
+                      SizedBox(height: size.width * 0.025),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: size.width * 0.05,

@@ -77,13 +77,18 @@ class TmsAwait extends GetView<AwaitController> {
                             "",
                         onTap: () async {
                           var result = await Get.toNamed(
-                            Routes.START_DETAIL_TMS,
+                            Routes.PENDING_DETAIL_TMS,
                             arguments: controller.listOrder[i],
                           );
                           if (result is bool && result == true) {
                             controller.getData();
                           }
                         },
+                        colorIcon: controller.listOrder[i]
+                                    .getDataHandlingMobiles![0].trangThai ==
+                                "Chờ Vận Chuyển"
+                            ? Colors.green
+                            : Colors.red,
                       );
                     },
                   ),
@@ -109,6 +114,7 @@ class TmsAwait extends GetView<AwaitController> {
     required String sub4,
     required String subContent4,
     required Function()? onTap,
+    required Color colorIcon,
   }) {
     const double height = 5;
     return Card(
@@ -157,6 +163,15 @@ class TmsAwait extends GetView<AwaitController> {
                           ),
                         ],
                       )),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.adjust,
+                            color: colorIcon,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

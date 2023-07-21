@@ -6,6 +6,7 @@ import 'package:get/get.dart' hide Response;
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/share_preferences/share_preferences.dart';
 import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/customer_of_ware_home_model.dart';
+import 'package:tbs_logistics_tms/app/page/npt/customer/customer_create_register/model/list_driver_for_customer_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_customer_for_driver_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_matrongtai_model.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_create_register/model/list_number_cont_model.dart';
@@ -59,7 +60,10 @@ class CustomerEditRegisterController extends GetxController {
       ListCustomerForDriverModel().obs;
   Rx<ListCustomerForDriverModel> selectCustomerName =
       ListCustomerForDriverModel().obs;
+  Rx<ListDriverForCustomerModel> selectDriver =
+      ListDriverForCustomerModel().obs;
   Rx<ListMaTrongTai> selectTrongTai = ListMaTrongTai().obs;
+
   Rx<ListTypeVoteModel> selectTypeVote = ListTypeVoteModel().obs;
   Rx<ListNumberContModel> selectNumberCont = ListNumberContModel().obs;
   Rx<ListTypeContModel> selectTypeCont1 = ListTypeContModel().obs;
@@ -93,6 +97,8 @@ class CustomerEditRegisterController extends GetxController {
     getDriverFinishedScreen.value = driverFinishedScreen;
     selectCustomer.value.maKhachHang =
         getDriverFinishedScreen.value.maKhachHang!.maKhachHang!;
+    selectDriver.value.maTaixe =
+        getDriverFinishedScreen.value.maTaixe!.maTaixe!;
     dateinput.text = getDriverFinishedScreen.value.giodukien!;
     selectWareHome.value.maKho = getDriverFinishedScreen.value.khoRe!.maKho;
     selectTypeCar.value.maLoaiXe =
@@ -136,47 +142,27 @@ class CustomerEditRegisterController extends GetxController {
 
     selectCustomer.value.tenKhachhang =
         getDriverFinishedScreen.value.maKhachHang!.tenKhachhang;
+    selectDriver.value.tenTaixe =
+        getDriverFinishedScreen.value.maTaixe!.tenTaixe;
     if (getDriverFinishedScreen.value.loaiCont!.typeContCode != null) {
       selectNumberCont.value.id = 1;
     } else if (getDriverFinishedScreen.value.loaiCont1!.typeContCode != null) {
       selectNumberCont.value.id = 2;
     }
+    selectHaveProduct1.value.trangthai =
+        getDriverFinishedScreen.value.trangthaihang;
+    selectHaveProduct2.value.trangthai =
+        getDriverFinishedScreen.value.trangthaihang1;
+    selectProductLock1.value.trangthai =
+        getDriverFinishedScreen.value.trangthaikhoa;
+    selectProductLock2.value.trangthai =
+        getDriverFinishedScreen.value.trangthaikhoa1;
   }
 
   void changeHideShowCont2() {
     isShowCont2.value = !isShowCont2.value;
     if (isShowCont2.value == false) {
       selectTypeCont2.value.typeContCode = null;
-    }
-  }
-
-  Future<List<ListDriverByCustomerModel>> getDataDriver(query) async {
-    var dio = Dio();
-    Response response;
-    var token = await SharePerApi().getTokenNPT();
-
-    const url = '${AppConstants.urlBaseNpt}/LayDanhSachCuaTaiXe';
-    Map<String, dynamic> headers = {
-      HttpHeaders.authorizationHeader: "Bearer $token"
-    };
-    try {
-      response = await dio.get(
-        url,
-        options: Options(headers: headers),
-        queryParameters: {"query": query},
-      );
-      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
-        var driver = response.data;
-        if (driver != null) {
-          return ListDriverByCustomerModel.fromJsonList(driver);
-        }
-        return [];
-      } else {
-        return [];
-      }
-    } on DioError catch (e) {
-      if (e.response!.statusCode == 400) {}
-      return [];
     }
   }
 
@@ -449,8 +435,48 @@ class CustomerEditRegisterController extends GetxController {
     return ListNumberContModel.fromJsonList(listNumberCont);
   }
 
+  //Danh sach tai xe
+  Future<List<ListDriverByCustomerModel>> getDataDriver(query) async {
+    var dio = Dio();
+    Response response;
+    var token = await SharePerApi().getTokenNPT();
+
+    const url = '${AppConstants.urlBaseNpt}/LayDanhSachCuaTaiXe';
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    };
+    try {
+      response = await dio.get(
+        url,
+        options: Options(headers: headers),
+        queryParameters: {"query": query},
+      );
+      if (response.statusCode == AppConstants.RESPONSE_CODE_SUCCESS) {
+        var driver = response.data;
+        if (driver != null) {
+          return ListDriverByCustomerModel.fromJsonList(driver);
+        }
+        return [];
+      } else {
+        return [];
+      }
+    } on DioError catch (e) {
+      if (e.response == null) {
+        getSnack(
+            messageText:
+                "Lỗi mạng , vui lòng xem lại kết nối wifi, dữ liệu mạng !");
+      } else if (e.response!.statusCode == 400) {
+        getSnack(messageText: "Lỗi !");
+      } else if (e.response!.statusCode == 500) {
+        getSnack(messageText: "Lỗi máy chủ, vui lòng thử lại trong giây lát !");
+      }
+      return [];
+    }
+  }
+
   Future<void> puttRegisterDriver({
     required String? maKhachHang,
+    required int? maTaiXe,
     required String? time,
     required String? typeWarehome,
     required String? typeCar,
@@ -482,7 +508,7 @@ class CustomerEditRegisterController extends GetxController {
     var dio = Dio();
     Response response;
     var token = await SharePerApi().getTokenNPT();
-    var idDriver = await SharePerApi().getIdUser();
+    // var idDriver = await SharePerApi().getIdUser();
     var idTeamCar = await SharePerApi().getIdKHforTX();
 
     Map<String, dynamic> headers = {
@@ -492,7 +518,7 @@ class CustomerEditRegisterController extends GetxController {
         "${AppConstants.urlBaseNpt}/invote/update/${getDriverFinishedScreen.value.pdriverInOutWarehouseCode}";
 
     var create = RegisterModel(
-      maTaixe: int.parse(idDriver),
+      maTaixe: maTaiXe,
       maKhachHang: maKhachHang,
       maDoixe: idTeamCar,
       giodukien: time,

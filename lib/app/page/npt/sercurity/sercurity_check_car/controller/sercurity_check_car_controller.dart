@@ -289,11 +289,11 @@ class SercurityCheckCarController extends GetxController {
 
       if (response.statusCode == 200) {
         idFocusNode.requestFocus();
+        idController.text = "";
         if (response.data["status_code"] == 204) {
           getSnack(messageText: response.data["detail"]);
         } else {
           getSnack(messageText: response.data["detail"]);
-          idController.text = "";
 
           if (maPhieuvao != null) {
             if (cccd != null) {

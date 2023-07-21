@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:in_app_update/in_app_update.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:new_version_plus/new_version_plus.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tbs_logistics_tms/app/config/constants/constants.dart';
 import 'package:tbs_logistics_tms/app/config/widget/button_success.dart';
@@ -36,28 +36,28 @@ class HomeController extends GetxController {
     getUser();
 
     super.onInit();
-    final newVersion = NewVersionPlus(
-      // iOSId: 'your_ios_app_id',
-      androidId: 'com.tbslogistic.tms.name',
-    );
+    // final newVersion = NewVersionPlus(
+    //   // iOSId: 'your_ios_app_id',
+    //   androidId: 'com.tbslogistic.tms.name',
+    // );
 
-    newVersion.showAlertIfNecessary(context: Get.context!);
+    // newVersion.showAlertIfNecessary(context: Get.context!);
 
-    final status = await newVersion.getVersionStatus();
+    // final status = await newVersion.getVersionStatus();
 
-    if (status != null) {
-      // debugPrint(status.releaseNotes);
-      // debugPrint(status.appStoreLink);
-      // debugPrint(status.localVersion);
-      // debugPrint(status.storeVersion);
-      // debugPrint(status.canUpdate.toString());
-      // Xét Phiên Bản Trên Cửa Hàng Lớn Hơn Phiên Bản Ở Thiết Bị Thì Chạy Popup Cập Nhật
-      if (status.canUpdate) {
-        getSnack(
-            messageText:
-                "Có phiên mới, vui lòng cập nhật phiên bản mới để hoàn thiện tính năng !");
-      }
-    }
+    // if (status != null) {
+    //   // debugPrint(status.releaseNotes);
+    //   // debugPrint(status.appStoreLink);
+    //   // debugPrint(status.localVersion);
+    //   // debugPrint(status.storeVersion);
+    //   // debugPrint(status.canUpdate.toString());
+    //   // Xét Phiên Bản Trên Cửa Hàng Lớn Hơn Phiên Bản Ở Thiết Bị Thì Chạy Popup Cập Nhật
+    //   if (status.canUpdate) {
+    //     getSnack(
+    //         messageText:
+    //             "Có phiên mới, vui lòng cập nhật phiên bản mới để hoàn thiện tính năng !");
+    //   }
+    // }
   }
 
   void getCurrentLocation() async {

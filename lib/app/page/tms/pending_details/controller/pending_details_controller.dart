@@ -26,6 +26,10 @@ class PendingDetailController extends GetxController {
   late LocationPermission permission;
   Timer? timer;
 
+  RxDouble distances = 0.0.obs;
+  List listLat = [];
+  List listLong = [];
+
   //status
 
   RxList<StatusModel> checkStatus = <StatusModel>[].obs;
@@ -461,6 +465,40 @@ class PendingDetailController extends GetxController {
     }
   }
 
+  //Bắt đầu chuyến
+  void postSetRuningStart({required int id}) async {
+    var dio = Dio();
+    Response response;
+    var tokens = await SharePerApi().getTokenTMS();
+    Map<String, dynamic> headers = {
+      HttpHeaders.authorizationHeader: "Bearer $tokens"
+    };
+    var url =
+        "${AppConstants.urlBaseTms}/api/Mobile/ChangeStatusHandling?id=$id&maChuyen=${listOrder.value.maChuyen}";
+    try {
+      response = await dio.post(
+        url,
+        options: Options(
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var data = response.data;
+
+        // Get.back(result: true);
+        getSnack(message: data["message"]);
+
+        listOrder.value;
+        timerRealTime();
+      }
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {
+        getSnack(message: e.response!.data);
+      }
+    }
+  }
+
   void postCancel(
       {required int firstIndex,
       required int secondsIndex,
@@ -573,6 +611,7 @@ class PendingDetailController extends GetxController {
         var data = response.data;
         Get.back(result: true);
         getSnack(message: "${response.data["message"]}");
+        cancelTimer();
       }
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
@@ -1903,6 +1942,55 @@ class PendingDetailController extends GetxController {
         break;
       default:
     }
+  }
+
+  void timerRealTime() {
+    timer = Timer.periodic(
+      const Duration(seconds: 30),
+      (timer) {
+        getCurrentLocation();
+        // count.value = count.value + 1;
+        var count1 = locationMessage.value.indexOf(",");
+        if (count1 != -1 && locationMessage.value != "") {
+          var lat = locationMessage.value.substring(0, count1 - 1);
+          var long = locationMessage.value
+              .substring(count1 + 1, locationMessage.value.length);
+          listLat.add(lat);
+          listLong.add(long);
+        }
+
+        if (listLat.length >= 2) {
+          for (int i = 1; i < listLat.length; i++) {
+            double distance = Geolocator.distanceBetween(
+              double.parse(listLat[listLat.length - 2]),
+              double.parse(listLong[listLat.length - 2]),
+              double.parse(listLat[listLong.length - 1]),
+              double.parse(listLong[listLong.length - 1]),
+            );
+
+            // distances.value = Geolocator.distanceBetween(
+            //   double.parse(listLat[i - 1]),
+            //   double.parse(listLat[i]),
+            //   double.parse(listLong[i - 1]),
+            //   double.parse(listLong[i]),
+            // );
+            distances.value = distance;
+            print([distances.value.round().toInt(), distance]);
+
+            if (distances.value.round().toInt() < 100) {
+              // getDialogMessage("Bạn dừng ở vị trí quá lâu !");
+              print("ERROR");
+            } else {
+              print("object");
+            }
+          }
+        }
+
+        print([locationMessage.value]);
+
+        // print([count, locationMessage.value.substring(0, count1)]);
+      },
+    );
   }
 
   void cancelTimer() {

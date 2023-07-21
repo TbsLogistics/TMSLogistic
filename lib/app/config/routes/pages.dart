@@ -24,10 +24,12 @@ import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_qr/view/driver_qr_screen_from_details_registed.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status/view/driver_status_screen.dart';
 import 'package:tbs_logistics_tms/app/page/npt/driver/page/driver_status_details/view/driver_status_details_screen.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/repass_driver/repass_driver.dart';
 import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_check_car/view/sercurity_check_car_view.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_page.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/view/sercurity_details_list_dangtai.dart';
-import 'package:tbs_logistics_tms/app/page/npt/sercurity/view/sercurity_list_dangtai.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_home/sercurity_home.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_list_registed/sercurity_list_registed_page.dart';
+import 'package:tbs_logistics_tms/app/page/npt/sercurity/sercurity_list_registed_details/sercurity_list_registed_details.dart';
+
 import 'package:tbs_logistics_tms/app/page/splash/splash_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/camera/view/camera_screen.dart';
 import 'package:tbs_logistics_tms/app/page/tms/cancel/view/cancel_screen.dart';
@@ -207,6 +209,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.CREATE_EDIT_REGISTER_CUSTOMER,
       page: () => const CustomerEditRegisterPage(),
+    ),
+    GetPage(
+      name: Routes.SERCURITY_RE_PASSWORD,
+      page: () => const SercurityRePassScreen(),
     ),
 
     //------------------Tính năng HRM-------------------------------

@@ -30,6 +30,7 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                   var string = value.split("|");
                   var maPhieu = controller
                       .detailEntryVote.value.pdriverInOutWarehouseCode;
+                  // print([string[0], maPhieu, string[0].contains("-")]);
 
                   if (maPhieu != null) {
                     if (string[0].length == 12) {
@@ -37,7 +38,8 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                           maPhieuvao: maPhieu, cccd: string[0]);
                     }
                   } else {
-                    if (string[0].length == 12) {
+                    if (string[0].length == 12 &&
+                        string[0].contains("-") == false) {
                       controller.getDetailEntryVote(cccd: string[0]);
                     } else {
                       controller.getDetailEntryVote(maPhieuvao: value);
@@ -116,25 +118,26 @@ class SercurityCarInScreen extends GetView<SercurityCheckCarController> {
                   : Container(),
             ),
             _buildCustomer(
-              textController: controller.cccdController,
-              size: size,
-              context: context,
-              controller: controller,
-              title: "CCCD : ",
-              textFocus: controller.cccdFocusNode,
-              onChanged: (value) {
-                controller.getCheckCCCD(CCCD: value);
-              },
-            ),
+                textController: controller.cccdController,
+                size: size,
+                context: context,
+                controller: controller,
+                title: "CCCD : ",
+                textFocus: controller.cccdFocusNode,
+                onChanged: (value) {
+                  controller.getCheckCCCD(CCCD: value);
+                },
+                icon: Icons.qr_code,
+                onPressedIcon: () {
+                  controller.scanQr(idCode: "CCCD");
+                }),
             Obx(
               () => controller.isShowCheckCccd.value
-                  ? Container(
-                      child: Text(
-                        controller.checkInvoteCccdModel.value.taixe?.cCCD ?? "",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 14,
-                        ),
+                  ? Text(
+                      controller.checkInvoteCccdModel.value.taixe?.cCCD ?? "",
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
                       ),
                     )
                   : Container(),

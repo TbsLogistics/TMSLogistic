@@ -34,7 +34,7 @@ class TmsController extends GetxController
   int visit = 0;
 
   final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'Lệnh chờ'),
+    // const Tab(text: 'Lệnh chờ'),
     const Tab(text: 'Lệnh thực hiện'),
     const Tab(text: 'Lệnh hoàn thành'),
   ];

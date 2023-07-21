@@ -1788,7 +1788,11 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             controller.isShowCont2.value == true &&
                 controller.selectTypeCont1.value.typeContCode != null &&
                 controller.selectTypeCont2.value.typeContCode != null) {
-          if (controller.numberCont1.text != "") {
+          if (controller.selectTypeCont1.value.typeContCode != null &&
+                  controller.numberCont1.text != "" ||
+              controller.selectTypeCont2.value.typeContCode != null &&
+                  controller.numberCont1 != "" &&
+                  controller.numberCont2 != "") {
             if (controller.selectTypeCont1.value.typeContCode != null &&
                     controller.selectHaveProduct1.value.trangthai != null &&
                     controller.selectProductLock1.value.trangthai != null ||

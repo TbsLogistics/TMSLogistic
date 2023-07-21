@@ -57,10 +57,29 @@ class PendingDetailTms extends GetView<PendingDetailController> {
                 child: controller.isLoad.value
                     ? Column(
                         children: [
-                          _buttonStatus(
+                          Obx(
+                            () => _buttonStatus(
                               text: "Bắt đầu chuyến",
-                              onPressed: () {},
-                              color: Colors.black.withOpacity(0.4)),
+                              onPressed: () {
+                                if (controller.listOrder.value
+                                        .getDataHandlingMobiles![0].trangThai ==
+                                    "Chờ Vận Chuyển") {
+                                  controller.postSetRuningStart(
+                                    id: controller.listOrder.value
+                                        .getDataHandlingMobiles![0].handlingId!,
+                                  );
+                                }
+                              },
+                              color: controller
+                                          .listOrder
+                                          .value
+                                          .getDataHandlingMobiles![0]
+                                          .trangThai ==
+                                      "Chờ Vận Chuyển"
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
+                          ),
                           _buildReciveEmpty(size),
                           _buildRecive(size),
                           _buildGive(size),

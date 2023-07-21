@@ -67,6 +67,8 @@ abstract class Routes {
 
   static const CREATE_EDIT_REGISTER_CUSTOMER = "/CREATE_EDIT_REGISTER_CUSTOMER";
 
+  static const SERCURITY_RE_PASSWORD = "/SERCURITY_RE_PASSWORD";
+
   //---------------------- Tính năng HRM ----------------------------
   static const CHANGE_PASSWORD_FULL_SCREEN = "/CHANGE_PASSWORD_FULL_SCREEN";
   static const DETAIL_SINGLE_VIEW = "/DETAIL_SINGLE_VIEW";
